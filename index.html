@@ -15,6 +15,9 @@
     
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Apex Widget -->
+    <script src="../widget.js"></script>
 
     <!-- Tailwind Config for Custom Colors -->
     <script>
@@ -46,9 +49,9 @@
     <style>
         /* Base Styles & Smooth Scrolling */
         html { scroll-behavior: smooth; background-color: #05050A; color: white; }
-        body { overflow-x: hidden; }
+        body { overflow-x: hidden; -webkit-tap-highlight-color: transparent; }
 
-        /* Custom Grid Background for that "Tech" feel */
+        /* Custom Grid Background */
         .bg-grid {
             background-size: 40px 40px;
             background-image: 
@@ -58,18 +61,38 @@
             -webkit-mask-image: linear-gradient(to bottom, transparent 5%, black 40%, black 80%, transparent 100%);
         }
 
-        /* Typography Gradients */
-        .text-gradient {
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-image: linear-gradient(90deg, #FFFFFF, #9CA3AF);
+        /* Nav Link Animated Underline */
+        .nav-link { position: relative; padding-bottom: 4px; }
+        .nav-link::after {
+            content: ''; position: absolute; width: 0; height: 2px;
+            bottom: 0; left: 50%; background-color: #3B82F6;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            transform: translateX(-50%);
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.8);
+            border-radius: 2px;
         }
-        .text-gradient-blue {
-            background-clip: text;
+        .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+
+        /* 'Alive' Hero Text Animation */
+        @keyframes breathe-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .animate-alive {
+            display: inline-block;
+            animation: breathe-float 4s ease-in-out infinite;
+        }
+        .gradient-alive {
+            background: linear-gradient(270deg, #60A5FA, #3B82F6, #8B5CF6, #60A5FA);
+            background-size: 200% 200%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-image: linear-gradient(90deg, #60A5FA, #3B82F6);
+            animation: gradient-shift 6s ease infinite;
         }
 
         /* SPA Page Transitions */
@@ -139,7 +162,6 @@
         }
         .glow-card > * { position: relative; z-index: 1; }
 
-        /* Pulsing Status Dot */
         @keyframes pulse-green {
             0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
             70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
@@ -152,40 +174,18 @@
             animation: pulse-green 2s infinite;
         }
 
-        /* NEW: Nav Link Animated Underline */
-        .nav-link { position: relative; padding-bottom: 4px; }
-        .nav-link::after {
-            content: ''; position: absolute; width: 0; height: 2px;
-            bottom: 0; left: 50%; background-color: #3B82F6;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-            transform: translateX(-50%);
-            box-shadow: 0 0 10px rgba(59, 130, 246, 0.8);
-            border-radius: 2px;
+        /* WIDGET ISOLATION ENGINE: Hides global widgets when not on Platform page */
+        body.hide-n8n-widget #apex-widget-wrapper,
+        body.hide-n8n-widget #n8n-chat-widget,
+        body.hide-n8n-widget .n8n-chat,
+        body.hide-n8n-widget iframe[src*="n8n"],
+        body.hide-n8n-widget div[data-chat-widget] {
+            display: none !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+            visibility: hidden !important;
+            z-index: -9999 !important;
         }
-        .nav-link:hover::after, .nav-link.active::after { width: 100%; }
-
-        /* NEW: 'Alive' Hero Text Animation */
-        @keyframes breathe-float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
-        }
-        @keyframes gradient-shift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        .animate-alive {
-            display: inline-block;
-            animation: breathe-float 4s ease-in-out infinite;
-        }
-        .gradient-alive {
-            background: linear-gradient(270deg, #60A5FA, #3B82F6, #8B5CF6, #60A5FA);
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: gradient-shift 6s ease infinite;
-        }
-
     </style>
 </head>
 <body class="font-sans antialiased bg-bg text-gray-300 min-h-screen flex flex-col relative selection:bg-primary/30 selection:text-white">
@@ -196,16 +196,16 @@
     <div class="fixed bottom-[-20%] right-[-10%] w-[40%] h-[40%] bg-blue-600/5 blur-[120px] rounded-full pointer-events-none z-[-1]"></div>
 
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 border-b border-white/5 bg-bg/70 backdrop-blur-lg">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+    <nav class="fixed top-0 w-full z-50 border-b border-white/5 bg-bg/80 backdrop-blur-xl">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between relative">
             <!-- Premium Silicon Valley Logo -->
-            <div class="flex items-center gap-3 cursor-pointer" onclick="navigate('home')">
+            <div class="flex items-center gap-3 cursor-pointer z-50" onclick="navigate('home')">
                 <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-blue-900 flex items-center justify-center shadow-[0_0_20px_rgba(59,130,246,0.4)] border border-blue-400/30">
                     <i data-lucide="zap" class="w-5 h-5 text-white"></i>
                 </div>
                 <div class="flex flex-col">
                     <span class="font-heading font-bold text-2xl tracking-tighter text-white leading-none">ACG</span>
-                    <span class="text-[9px] text-gray-500 font-mono tracking-widest leading-tight mt-0.5">APEX CONVERSION GROUP</span>
+                    <span class="text-[9px] text-gray-500 font-mono tracking-widest leading-tight mt-0.5 uppercase">Apex Conversion Group</span>
                 </div>
             </div>
 
@@ -219,23 +219,38 @@
                 <a href="#security" onclick="navigate('security')" class="hover:text-white transition-colors nav-link">Security</a>
             </div>
 
-            <!-- Actions -->
-            <div class="flex items-center gap-4">
+            <!-- Actions (Desktop) -->
+            <div class="hidden lg:flex items-center gap-4">
                 <div class="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono">
                     <div class="status-dot"></div>
                     SERVER LIVE: APEX NODE-01
                 </div>
-                <!-- 
-                  DEVELOPER NOTE: Replace YOUR_GOOGLE_CALENDAR_LINK with your actual Workspace booking link
-                -->
                 <button onclick="window.open('YOUR_GOOGLE_CALENDAR_LINK', '_blank')" class="bg-primary text-white px-5 py-2.5 rounded-md font-medium text-sm hover:bg-primaryGlow transition-colors shadow-[0_0_20px_rgba(59,130,246,0.3)]">
                     Book Demo
                 </button>
             </div>
+
+            <!-- Mobile Menu Button -->
+            <button onclick="toggleMobileMenu()" class="lg:hidden p-2 text-gray-400 hover:text-white z-50 transition-colors active:scale-95">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <!-- Smooth Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="fixed inset-x-0 top-20 bg-[#05050A]/95 backdrop-blur-xl border-b border-white/10 flex-col p-6 gap-6 shadow-2xl lg:hidden opacity-0 pointer-events-none -translate-y-4 transition-all duration-300 ease-in-out z-40 h-[calc(100vh-5rem)] overflow-y-auto">
+            <a href="#home" onclick="navigate('home')" class="mobile-nav-link text-white font-medium text-lg border-b border-white/5 pb-4">Platform</a>
+            <a href="#features" onclick="navigate('features')" class="mobile-nav-link text-gray-400 hover:text-white font-medium text-lg border-b border-white/5 pb-4 transition-colors">Features</a>
+            <a href="#architecture" onclick="navigate('architecture')" class="mobile-nav-link text-gray-400 hover:text-white font-medium text-lg border-b border-white/5 pb-4 transition-colors">Architecture</a>
+            <a href="#roi" onclick="navigate('roi')" class="mobile-nav-link text-gray-400 hover:text-white font-medium text-lg border-b border-white/5 pb-4 transition-colors">Economics</a>
+            <a href="#trends" onclick="navigate('trends')" class="mobile-nav-link text-blue-400 hover:text-blue-300 font-medium text-lg border-b border-white/5 pb-4 transition-colors">Live Field Data</a>
+            <a href="#security" onclick="navigate('security')" class="mobile-nav-link text-gray-400 hover:text-white font-medium text-lg border-b border-white/5 pb-4 transition-colors">Security</a>
+            <button onclick="window.open('YOUR_GOOGLE_CALENDAR_LINK', '_blank')" class="bg-primary text-white px-5 py-4 rounded-xl font-bold text-base hover:bg-primaryGlow transition-colors mt-4 text-center shadow-[0_0_20px_rgba(59,130,246,0.3)] active:scale-95">
+                Book a Live Demo
+            </button>
         </div>
     </nav>
 
-    <!-- Main Content Area (SPA Router Container) -->
+    <!-- Main Content Area -->
     <main class="flex-grow pt-28 pb-20 px-6 max-w-7xl mx-auto w-full relative">
 
         <!-- ==========================================
@@ -253,7 +268,7 @@
                     <span class="animate-alive mt-2 md:mt-0"><span class="gradient-alive">Not Just Sitting There.</span></span>
                 </h1>
                 <p class="text-lg md:text-xl text-gray-400 mb-10 max-w-3xl mx-auto font-light leading-relaxed">
-                    Whether you're under a hood at noon or closed for the night, Apex AI is on your site quoting jobs, capturing phone numbers, and filtering leads. Stop losing business because you're too busy to answer the phone. Custom-built for independent auto repair centers.
+                    Whether you're under a hood at noon or closed for the night, Apex AI is on your site quoting jobs, capturing phone numbers, and filtering leads. Stop losing business because you're too busy to answer the phone.
                 </p>
                 <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
                     <button onclick="navigate('roi')" class="w-full sm:w-auto px-8 py-4 bg-primary hover:bg-primaryGlow text-white rounded-lg font-semibold text-lg transition-all shadow-[0_0_30px_rgba(59,130,246,0.3)] hover:shadow-[0_0_40px_rgba(59,130,246,0.5)] transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
@@ -265,25 +280,43 @@
                 </div>
             </div>
 
-            <!-- Marketing Trust Markers -->
+            <!-- Trust Markers -->
             <div class="flex flex-wrap justify-center gap-6 md:gap-12 mb-16 reveal opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500">
                 <div class="flex items-center gap-3 text-gray-400">
                     <div class="w-8 h-8 rounded-full bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20">
                         <i data-lucide="check" class="w-4 h-4 text-emerald-400"></i>
                     </div>
-                    <span class="font-mono text-xs uppercase tracking-widest">Seamless SMS Handoff</span>
+                    <span class="font-mono text-xs uppercase tracking-widest">SMS Handoff</span>
                 </div>
                 <div class="flex items-center gap-3 text-gray-400">
                     <div class="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center border border-blue-500/20">
                         <i data-lucide="check" class="w-4 h-4 text-blue-400"></i>
                     </div>
-                    <span class="font-mono text-xs uppercase tracking-widest">Zero Dashboards to Learn</span>
+                    <span class="font-mono text-xs uppercase tracking-widest">Zero Dashboards</span>
                 </div>
                 <div class="flex items-center gap-3 text-gray-400">
                     <div class="w-8 h-8 rounded-full bg-purple-500/10 flex items-center justify-center border border-purple-500/20">
                         <i data-lucide="check" class="w-4 h-4 text-purple-400"></i>
                     </div>
-                    <span class="font-mono text-xs uppercase tracking-widest">NHTSA DB Integrated</span>
+                    <span class="font-mono text-xs uppercase tracking-widest">NHTSA Integrated</span>
+                </div>
+            </div>
+
+            <!-- Home Page Data Teaser -->
+            <div class="max-w-4xl mx-auto mb-16 reveal cursor-pointer" onclick="navigate('trends')">
+                <div class="glow-card rounded-2xl border border-blue-500/20 bg-blue-900/10 p-6 flex flex-col md:flex-row items-center justify-between gap-6 group">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center shrink-0 border border-blue-500/30">
+                            <i data-lucide="bar-chart-2" class="w-6 h-6 text-blue-400"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-white font-bold text-lg group-hover:text-blue-400 transition-colors">View the 60-Day Macro Field Test</h3>
+                            <p class="text-gray-400 text-sm">See exact SMS lead counts and conversion rates across distinct auto shops in TN & VA.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 text-blue-400 font-medium text-sm whitespace-nowrap bg-blue-500/10 px-4 py-2 rounded-lg group-hover:bg-blue-500/20 transition-colors">
+                        Explore Data <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </div>
                 </div>
             </div>
 
@@ -298,7 +331,7 @@
                             <i data-lucide="play" class="w-8 h-8 text-white ml-1 pl-0.5"></i>
                         </div>
                     </div>
-                    <!-- Fake thumbnail (Replace src with your actual video thumbnail) -->
+                    <!-- Fake thumbnail -->
                     <div class="absolute inset-0 z-10 opacity-30 bg-[url('https://images.unsplash.com/photo-1610491465225-b461da87f8aa?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center mix-blend-overlay transition-opacity duration-500 group-hover:opacity-40"></div>
                     <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black via-black/80 to-transparent z-20 flex justify-between items-end">
                         <div>
@@ -312,53 +345,82 @@
                 </div>
             </div>
 
-            <!-- THE WIDGET DROP ZONE (Ready for vs code paste) -->
-            <div class="mb-24 reveal mt-10">
-                <div class="text-center mb-8">
-                    <h2 class="font-heading text-2xl font-bold text-white mb-2">Test Drive The AI</h2>
-                    <p class="text-gray-500 text-sm font-mono">Powered by proprietary Edge MoE infrastructure</p>
+            <!-- THE PROBLEM STATEMENT SECTION -->
+            <div class="mb-24 reveal">
+                <div class="text-center mb-12">
+                    <h2 class="font-heading text-3xl md:text-4xl font-bold text-white mb-4">The Front Desk is Your Biggest Bottleneck.</h2>
+                    <p class="text-gray-400 max-w-2xl mx-auto text-lg font-light">Traffic to your website means nothing if you aren't capturing it. Here is exactly how traditional shops are bleeding revenue daily.</p>
                 </div>
 
-                <!-- 
-                  ========================================================
-                  DEVELOPER NOTE: PASTE YOUR N8N WIDGET SCRIPT RIGHT HERE
-                  ========================================================
-                -->
-                <div class="relative w-full max-w-sm mx-auto perspective-1000">
-                    <!-- Decorative back glows -->
-                    <div class="absolute -inset-4 bg-gradient-to-br from-blue-600/30 to-purple-600/30 rounded-[3rem] blur-2xl opacity-50 pointer-events-none"></div>
-                    
-                    <!-- Premium Glass Interface Shell -->
-                    <div class="relative h-[650px] bg-gradient-to-b from-white/10 to-white/5 border border-white/20 rounded-[2.5rem] shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col backdrop-blur-2xl ring-1 ring-white/10">
-                        
-                        <!-- Top Header Bar (macOS style) -->
-                        <div class="h-12 w-full bg-black/40 border-b border-white/10 flex items-center px-6 relative z-10 backdrop-blur-md">
-                            <div class="flex gap-2">
-                                <div class="w-3 h-3 rounded-full bg-red-500/80 border border-red-500"></div>
-                                <div class="w-3 h-3 rounded-full bg-yellow-500/80 border border-yellow-500"></div>
-                                <div class="w-3 h-3 rounded-full bg-green-500/80 border border-green-500"></div>
-                            </div>
-                            <div class="absolute left-1/2 transform -translate-x-1/2 text-[10px] text-gray-400 font-mono tracking-wider">ACG_NODE_SECURE</div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-black/40 border border-white/5 p-6 rounded-2xl group hover:border-red-500/30 transition-colors">
+                        <div class="w-10 h-10 rounded-full bg-red-500/10 flex items-center justify-center mb-4 border border-red-500/20 group-hover:bg-red-500/20 transition-colors">
+                            <i data-lucide="moon" class="w-5 h-5 text-red-400"></i>
                         </div>
-                        
-                        <!-- Inner Content Area -->
-                        <div class="flex-grow relative bg-[#05050A]/80 flex flex-col items-center justify-center p-6 text-center">
-                            
-                            <!-- Placeholder Content (Replace with Widget Script) -->
-                            <div class="absolute inset-0 flex flex-col items-center justify-center p-8 pointer-events-none">
-                                <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center mb-6 border border-white/10 shadow-[0_0_30px_rgba(59,130,246,0.2)]">
-                                    <i data-lucide="bot" class="w-8 h-8 text-blue-400"></i>
-                                </div>
-                                <h3 class="text-lg font-bold text-white mb-2">Embed Interface Here</h3>
-                                <p class="text-xs text-gray-500 leading-relaxed mb-6">
-                                    Drop your self-encoded n8n script directly into this container. The glassmorphic shell will beautifully frame your chat UI.
-                                </p>
-                                <div class="px-3 py-2 bg-black/60 rounded text-[10px] font-mono text-emerald-400 border border-emerald-500/20 w-full text-center">
-                                    &lt;script src="..."&gt;&lt;/script&gt;
-                                </div>
-                            </div>
-                            <!-- END Placeholder -->
+                        <h4 class="text-white font-bold mb-2">The 9-to-5 Trap</h4>
+                        <p class="text-sm text-gray-400 leading-relaxed">Your shop closes at 6 PM, but cars break down at 9 PM. If a customer can't get an immediate answer on your site, they find someone who will.</p>
+                    </div>
+                    <div class="bg-black/40 border border-white/5 p-6 rounded-2xl group hover:border-orange-500/30 transition-colors">
+                        <div class="w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center mb-4 border border-orange-500/20 group-hover:bg-orange-500/20 transition-colors">
+                            <i data-lucide="phone-missed" class="w-5 h-5 text-orange-400"></i>
+                        </div>
+                        <h4 class="text-white font-bold mb-2">Under-the-Hood Misses</h4>
+                        <p class="text-sm text-gray-400 leading-relaxed">You're knee-deep in a diagnostic. The phone rings and goes to voicemail. That voicemail just cost you a $1,200 repair order.</p>
+                    </div>
+                    <div class="bg-black/40 border border-white/5 p-6 rounded-2xl group hover:border-blue-500/30 transition-colors">
+                        <div class="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center mb-4 border border-blue-500/20 group-hover:bg-blue-500/20 transition-colors">
+                            <i data-lucide="message-square-dashed" class="w-5 h-5 text-blue-400"></i>
+                        </div>
+                        <h4 class="text-white font-bold mb-2">Call-Reluctant Drivers</h4>
+                        <p class="text-sm text-gray-400 leading-relaxed">An entire demographic of younger drivers actively avoids making phone calls. If they can't text for a quote, they bounce.</p>
+                    </div>
+                    <div class="bg-black/40 border border-white/5 p-6 rounded-2xl group hover:border-emerald-500/30 transition-colors">
+                        <div class="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center mb-4 border border-emerald-500/20 group-hover:bg-emerald-500/20 transition-colors">
+                            <i data-lucide="user-check" class="w-5 h-5 text-emerald-400"></i>
+                        </div>
+                        <h4 class="text-white font-bold mb-2">Website Ghosting</h4>
+                        <p class="text-sm text-gray-400 leading-relaxed">Getting website hits means nothing if they just check your hours and leave. We force them to drop a name and symptom before disappearing.</p>
+                    </div>
+                </div>
+            </div>
 
+            <!-- THE FUTURE / MARKET LOCKOUT BANNER -->
+            <div class="mb-24 reveal">
+                <div class="glow-card rounded-3xl border border-blue-500/30 p-8 md:p-12 relative overflow-hidden text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-8 bg-gradient-to-r from-blue-900/20 to-purple-900/20">
+                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2000&auto=format&fit=crop')] opacity-5 bg-cover mix-blend-overlay"></div>
+                    
+                    <div class="relative z-10 md:w-2/3">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/20 border border-red-500/30 text-red-400 text-[10px] font-mono mb-4 uppercase tracking-widest font-bold animate-pulse">
+                            Market Lockout Warning
+                        </div>
+                        <h3 class="font-heading text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">The future of automotive quoting is changing. <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Be the first to adapt.</span></h3>
+                        <p class="text-gray-300 text-lg leading-relaxed">
+                            The first shop in your zip code to offer instant, AI-driven, 24/7 SMS quotes will completely monopolize the local market share. Secure your territory with our promotional pricing before the shop down the street beats you to it.
+                        </p>
+                    </div>
+                    <div class="relative z-10 md:w-1/3 flex justify-center md:justify-end w-full">
+                        <button onclick="navigate('roi')" class="w-full md:w-auto px-8 py-5 bg-white text-black rounded-xl font-bold text-lg hover:bg-gray-200 transition-all shadow-[0_0_40px_rgba(255,255,255,0.2)] flex flex-col items-center group">
+                            <span>Claim Your Territory</span>
+                            <span class="text-[10px] font-mono text-gray-500 mt-1 uppercase tracking-widest group-hover:text-blue-600 transition-colors">Lock in Promo Pricing</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DIRECT WIDGET CALL TO ACTION -->
+            <div class="mb-24 reveal mt-10">
+                <div class="glow-card rounded-3xl border border-blue-500/30 p-8 md:p-16 text-center relative overflow-hidden bg-gradient-to-br from-blue-900/20 to-purple-900/20 shadow-[0_0_50px_rgba(59,130,246,0.15)] max-w-4xl mx-auto">
+                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2000&auto=format&fit=crop')] opacity-5 bg-cover bg-center mix-blend-overlay"></div>
+                    <div class="relative z-10">
+                        <div class="w-20 h-20 mx-auto bg-blue-500/10 rounded-full flex items-center justify-center mb-6 border border-blue-500/30 shadow-[0_0_30px_rgba(59,130,246,0.4)]">
+                            <i data-lucide="bot" class="w-10 h-10 text-blue-400"></i>
+                        </div>
+                        <h2 class="font-heading text-3xl md:text-5xl font-bold text-white mb-4">Test Drive The AI Now</h2>
+                        <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-8 leading-relaxed">
+                            Our Edge MoE Node-01 is currently live and active on this page. Look at the bottom right corner of your screen to interact with the proprietary Apex Virtual Advisor.
+                        </p>
+                        <div class="flex items-center justify-center gap-2 text-blue-400 font-mono text-sm uppercase tracking-widest font-bold">
+                            Widget Active <i data-lucide="arrow-down-right" class="w-6 h-6 animate-bounce ml-2"></i>
                         </div>
                     </div>
                 </div>
@@ -367,53 +429,33 @@
         </section>
 
         <!-- ==========================================
-             PAGE 2: FEATURES / SELLING POINTS
+             PAGE 2: FEATURES
         =========================================== -->
         <section id="page-features" class="page-view">
-            
             <div class="max-w-3xl mx-auto text-center pt-12 pb-16 reveal">
                 <h1 class="font-heading text-4xl md:text-5xl font-bold text-white mb-6">Built For <span class="text-gradient">Service Writers.</span></h1>
-                <p class="text-lg text-gray-400 font-light">
-                    Generic chatbots frustrate customers and waste your time. Apex AI is custom-engineered to qualify leads, gather diagnostic data, and quote accurately based on your shop's specific parameters.
-                </p>
+                <p class="text-lg text-gray-400 font-light">Apex AI is custom-engineered to qualify leads, gather diagnostic data, and quote accurately based on your shop's specific parameters.</p>
             </div>
-
-            <!-- 2x2 Feature Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
-                <!-- Feature 1 -->
                 <div class="glow-card rounded-2xl p-10 reveal group">
                     <div class="text-xs font-mono text-blue-400 tracking-widest uppercase mb-4">Intelligent Intake</div>
                     <h3 class="text-3xl font-heading font-bold text-white mb-4 group-hover:text-blue-400 transition-colors">Exact Vehicle Match</h3>
-                    <p class="text-gray-400 leading-relaxed">
-                        No more messy text inputs. Our widget forces customers to select their exact Year/Make/Model from the NHTSA database before asking a single question. The AI knows exactly what car is on the hook.
-                    </p>
+                    <p class="text-gray-400 leading-relaxed">Customers select their exact Year/Make/Model from the NHTSA database. The AI knows exactly what car is on the hook.</p>
                 </div>
-
-                <!-- Feature 2 -->
                 <div class="glow-card rounded-2xl p-10 reveal group" style="transition-delay: 100ms;">
                     <div class="text-xs font-mono text-blue-400 tracking-widest uppercase mb-4">Custom Engine</div>
                     <h3 class="text-3xl font-heading font-bold text-white mb-4 group-hover:text-blue-400 transition-colors">Your Exact Labor Rates</h3>
-                    <p class="text-gray-400 leading-relaxed">
-                        You hold the keys to the math. You have total control to adjust your exact hourly rates, flat costs, and parts buffers in real-time, ensuring the AI quotes exactly how you would at the front desk.
-                    </p>
+                    <p class="text-gray-400 leading-relaxed">Adjust your hourly rates and parts buffers in real-time, ensuring the AI quotes exactly how you would at the front desk.</p>
                 </div>
-
-                <!-- Feature 3 -->
                 <div class="glow-card rounded-2xl p-10 reveal group">
                     <div class="text-xs font-mono text-blue-400 tracking-widest uppercase mb-4">Smart Triage</div>
                     <h3 class="text-3xl font-heading font-bold text-white mb-4 group-hover:text-blue-400 transition-colors">Protects Your Liability</h3>
-                    <p class="text-gray-400 leading-relaxed">
-                        It knows the difference between a known repair and a vague symptom. Instead of blindly guessing parts, it actively sells your diagnostic fee to get the car into a bay for a proper inspection.
-                    </p>
+                    <p class="text-gray-400 leading-relaxed">It knows the difference between a known repair and a vague symptom. Instead of blindly guessing parts, it actively sells your diagnostic fee.</p>
                 </div>
-
-                <!-- Feature 4 -->
                 <div class="glow-card rounded-2xl p-10 reveal group" style="transition-delay: 100ms;">
                     <div class="text-xs font-mono text-blue-400 tracking-widest uppercase mb-4">Zero Dashboards</div>
                     <h3 class="text-3xl font-heading font-bold text-white mb-4 group-hover:text-blue-400 transition-colors">Instant SMS Handoff</h3>
-                    <p class="text-gray-400 leading-relaxed">
-                        No new apps to learn. The second the AI qualifies a hot lead, it sends a formatted text message straight to your pocket with the customer's car, symptom, phone number, and quote. Just tap to call.
-                    </p>
+                    <p class="text-gray-400 leading-relaxed">The second the AI qualifies a hot lead, it sends a formatted text message straight to your pocket with the customer's car, symptom, and quote.</p>
                 </div>
             </div>
 
@@ -423,6 +465,7 @@
                     <div class="lg:w-1/2">
                         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-mono mb-6">
                             <i data-lucide="scan-face" class="w-3 h-3"></i> Vision-Language Integration
+                            <span class="bg-purple-500/20 text-purple-300 text-[9px] px-2 py-0.5 rounded border border-purple-500/30 animate-pulse font-bold tracking-widest uppercase ml-1">Coming Soon</span>
                         </div>
                         <h3 class="font-heading text-4xl font-bold text-white mb-6 leading-tight">Customers don't know car parts.<br><span class="text-purple-400">Our AI does.</span></h3>
                         <p class="text-gray-400 mb-8 leading-relaxed text-lg font-light">
@@ -478,7 +521,7 @@
                                             <i data-lucide="zap" class="w-3 h-3 text-white"></i>
                                         </div>
                                         <p class="text-sm text-gray-300 leading-relaxed">
-                                            Based on the photo, that is your <strong class="text-white">front lower control arm</strong>, and it is severely bent. It is unsafe to drive the vehicle in this condition. I can schedule a tow to our shop, and our current flat rate for a control arm replacement on your vehicle starts at $385 + alignment. Would you like me to send a tow truck?
+                                            Based on the photo, that is your <strong class="text-white">front lower control arm</strong>, and it is severely bent. It is unsafe to drive the vehicle in this condition. I can schedule a tow to our shop, and our current flat rate for a control arm replacement starts at $385 + alignment. Would you like me to send a tow truck?
                                         </p>
                                     </div>
                                 </div>
@@ -487,51 +530,47 @@
                     </div>
                 </div>
             </div>
-
         </section>
 
         <!-- ==========================================
              PAGE 3: ARCHITECTURE
         =========================================== -->
         <section id="page-architecture" class="page-view">
-            
             <div class="max-w-3xl mx-auto text-center pt-12 pb-16 reveal">
                 <h1 class="font-heading text-4xl md:text-5xl font-bold text-white mb-6">Proprietary <span class="text-gradient">Hardware.</span></h1>
-                <p class="text-lg text-gray-400 font-light">
-                    SaaS wrappers are a liability. We don't send your data to OpenAI. We built a proprietary, isolated inference engine that runs directly on Mac Studio architecture.
-                </p>
+                <p class="text-lg text-gray-400 font-light">We built a proprietary, isolated inference engine that runs directly on Mac Studio architecture. Never rely on third-party SaaS APIs again.</p>
             </div>
-
+            
             <!-- Hardware Dashboard Mockup -->
             <div class="glow-card rounded-2xl border border-white/10 p-8 mb-16 reveal">
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
                     <div class="bg-black/30 rounded-xl p-5 border border-white/5">
-                        <span class="text-gray-500 text-xs font-mono uppercase tracking-wider flex justify-between">Silicon Yield <i data-lucide="cpu" class="w-4 h-4 text-blue-500"></i></span>
+                        <span class="text-gray-500 text-[10px] sm:text-xs font-mono uppercase tracking-wider flex justify-between">Silicon <i data-lucide="cpu" class="w-4 h-4 text-blue-500"></i></span>
                         <div class="mt-2">
-                            <span class="text-2xl font-bold text-white font-mono">28</span> <span class="text-sm text-gray-400">Core</span>
-                            <div class="text-xs text-gray-500 mt-1">UltraFusion Array</div>
+                            <span class="text-xl sm:text-2xl font-bold text-white font-mono">28</span> <span class="text-xs sm:text-sm text-gray-400">Core</span>
+                            <div class="text-[10px] sm:text-xs text-gray-500 mt-1">UltraFusion Array</div>
                         </div>
                     </div>
                     <div class="bg-black/30 rounded-xl p-5 border border-white/5">
-                        <span class="text-gray-500 text-xs font-mono uppercase tracking-wider flex justify-between">Throughput <i data-lucide="activity" class="w-4 h-4 text-purple-500"></i></span>
+                        <span class="text-gray-500 text-[10px] sm:text-xs font-mono uppercase tracking-wider flex justify-between">Speed <i data-lucide="activity" class="w-4 h-4 text-purple-500"></i></span>
                         <div class="mt-2">
-                            <span class="text-2xl font-bold text-white font-mono">82.4</span> <span class="text-sm text-gray-400">t/s</span>
-                            <div class="text-xs text-gray-500 mt-1">(8-bit MoE Engine)</div>
+                            <span class="text-xl sm:text-2xl font-bold text-white font-mono">82.4</span> <span class="text-xs sm:text-sm text-gray-400">t/s</span>
+                            <div class="text-[10px] sm:text-xs text-gray-500 mt-1">(8-bit MoE Engine)</div>
                         </div>
                     </div>
                     <div class="bg-black/30 rounded-xl p-5 border border-white/5">
-                        <span class="text-gray-500 text-xs font-mono uppercase tracking-wider flex justify-between">Unified RAM <i data-lucide="database" class="w-4 h-4 text-cyan-500"></i></span>
+                        <span class="text-gray-500 text-[10px] sm:text-xs font-mono uppercase tracking-wider flex justify-between">RAM <i data-lucide="database" class="w-4 h-4 text-cyan-500"></i></span>
                         <div class="mt-2">
-                            <span class="text-2xl font-bold text-white font-mono">96</span> <span class="text-sm text-gray-400">GB</span>
-                            <div class="text-xs text-gray-500 mt-1">LPDDR5x</div>
+                            <span class="text-xl sm:text-2xl font-bold text-white font-mono">96</span> <span class="text-xs sm:text-sm text-gray-400">GB</span>
+                            <div class="text-[10px] sm:text-xs text-gray-500 mt-1">LPDDR5x Memory</div>
                         </div>
                     </div>
                     <div class="bg-black/30 rounded-xl p-5 border border-emerald-500/20 relative overflow-hidden group">
                         <div class="absolute inset-0 bg-emerald-500/10 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-700"></div>
-                        <span class="text-emerald-500 text-xs font-mono uppercase tracking-wider flex justify-between relative z-10">Privacy Score <i data-lucide="shield-check" class="w-4 h-4"></i></span>
+                        <span class="text-emerald-500 text-[10px] sm:text-xs font-mono uppercase tracking-wider flex justify-between relative z-10">Privacy <i data-lucide="shield-check" class="w-4 h-4"></i></span>
                         <div class="mt-2 relative z-10">
-                            <span class="text-2xl font-bold text-emerald-400 font-mono">100%</span>
-                            <div class="text-xs text-emerald-500/70 mt-1">Air-Gapped Local</div>
+                            <span class="text-xl sm:text-2xl font-bold text-emerald-400 font-mono">100%</span>
+                            <div class="text-[10px] sm:text-xs text-emerald-500/70 mt-1">Air-Gapped Local</div>
                         </div>
                     </div>
                 </div>
@@ -539,37 +578,22 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                     <div>
                         <h3 class="text-xl font-heading font-bold text-white mb-6 flex items-center gap-2">
-                            <i data-lucide="microchip" class="w-5 h-5 text-gray-400"></i> UltraFusion Memory Allocation
+                            <i data-lucide="microchip" class="w-5 h-5 text-gray-400"></i> UltraFusion Allocation
                         </h3>
                         <p class="text-sm text-gray-400 mb-6 leading-relaxed">
-                            By utilizing 96GB of unified LPDDR5x memory, we bypass the PCIe bottlenecks of traditional Nvidia server racks. The model weights, context window, and system overhead exist in the exact same memory pool.
+                            By utilizing 96GB of unified memory, we bypass the PCIe bottlenecks of traditional Nvidia server racks. The model weights and context window exist in the exact same memory pool.
                         </p>
                         <div class="space-y-5">
                             <div>
-                                <div class="flex justify-between text-xs font-mono text-gray-400 mb-2">
-                                    <span>MODEL WEIGHTS (8-BIT)</span>
-                                    <span class="text-blue-400">38 GB</span>
-                                </div>
+                                <div class="flex justify-between text-xs font-mono text-gray-400 mb-2"><span>MODEL WEIGHTS</span><span class="text-blue-400">38 GB</span></div>
                                 <div class="h-1.5 w-full bg-black rounded-full overflow-hidden border border-white/5">
                                     <div class="h-full bg-blue-500 w-[40%] rounded-full shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
                                 </div>
                             </div>
                             <div>
-                                <div class="flex justify-between text-xs font-mono text-gray-400 mb-2">
-                                    <span>KV CACHE (CONTEXT)</span>
-                                    <span class="text-cyan-400">42 GB</span>
-                                </div>
+                                <div class="flex justify-between text-xs font-mono text-gray-400 mb-2"><span>KV CACHE (CONTEXT)</span><span class="text-cyan-400">42 GB</span></div>
                                 <div class="h-1.5 w-full bg-black rounded-full overflow-hidden border border-white/5">
                                     <div class="h-full bg-cyan-500 w-[44%] rounded-full shadow-[0_0_10px_rgba(6,182,212,0.5)]"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between text-xs font-mono text-gray-400 mb-2">
-                                    <span>SYSTEM OVERHEAD</span>
-                                    <span class="text-gray-500">16 GB</span>
-                                </div>
-                                <div class="h-1.5 w-full bg-black rounded-full overflow-hidden border border-white/5">
-                                    <div class="h-full bg-gray-500 w-[16%] rounded-full"></div>
                                 </div>
                             </div>
                         </div>
@@ -581,13 +605,7 @@
                         <div class="bg-black/40 rounded-xl p-6 border border-white/5 mb-4">
                             <h4 class="font-bold text-white mb-2">The Speed Demon</h4>
                             <p class="text-sm text-gray-400 leading-relaxed">
-                                Our text responses are powered by a proprietary Mixture of Experts (MoE) architecture. While it has billions of parameters of knowledge, it only activates a fraction per word. Result? It writes faster than your customers can read.
-                            </p>
-                        </div>
-                        <div class="bg-black/40 rounded-xl p-6 border border-white/5">
-                            <h4 class="font-bold text-white mb-2">8-Bit Quantization</h4>
-                            <p class="text-sm text-gray-400 leading-relaxed">
-                                We run models at highly optimized 8-bit quantization. This provides virtually zero degradation in automotive reasoning power compared to raw uncompressed models, but runs at absolute lightning speeds.
+                                Our text responses are powered by a proprietary Mixture of Experts (MoE) architecture activating a fraction of its total parameters per word for sub-second responses.
                             </p>
                         </div>
                     </div>
@@ -598,7 +616,7 @@
             <div class="mt-20 reveal mb-20">
                 <div class="text-center mb-10">
                     <h2 class="font-heading text-3xl font-bold text-white mb-3">The Digital Switchboard</h2>
-                    <p class="text-gray-400 max-w-2xl mx-auto font-light">See how our n8n logic engine parses incoming traffic in milliseconds to conserve processing power and lower response latency.</p>
+                    <p class="text-gray-400 max-w-2xl mx-auto font-light">See how our logic engine parses incoming traffic in milliseconds to conserve processing power and lower response latency.</p>
                 </div>
 
                 <div class="bg-surface border border-white/10 rounded-2xl p-8 lg:p-12 overflow-x-auto relative">
@@ -614,7 +632,7 @@
                             </div>
                         </div>
 
-                        <!-- Step 2: IF Node (Fixed overlap) -->
+                        <!-- Step 2: IF Node -->
                         <div class="flex flex-col items-center mb-8 relative w-full">
                             <div class="bg-[#161925] border border-gray-600 text-white px-8 py-4 rounded-xl font-bold text-sm z-20 relative shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex items-center gap-3">
                                 <i data-lucide="git-branch-plus" class="w-5 h-5 text-gray-400"></i> 
@@ -673,26 +691,24 @@
                     </div>
                 </div>
             </div>
-
         </section>
 
         <!-- ==========================================
-             PAGE 4: ROI / ECONOMICS CALCULATOR
+             PAGE 4: ECONOMICS (PROMO ADDED)
         =========================================== -->
         <section id="page-roi" class="page-view">
             <div class="max-w-5xl mx-auto pt-12 pb-16 reveal">
                 <div class="text-center mb-12">
                     <h1 class="font-heading text-4xl md:text-5xl font-bold text-white mb-6">Stop Bleeding <span class="text-emerald-400">Revenue.</span></h1>
                     <p class="text-lg text-gray-400 font-light max-w-3xl mx-auto">
-                        Every hour your shop is closed, or every time a service writer places a customer on hold, you are losing highly qualified leads to the shop down the street. See exactly how much money is slipping through the cracks.
+                        Every hour your shop is closed, or every time a service writer places a customer on hold, you are losing highly qualified leads to the shop down the street.
                     </p>
                 </div>
 
-                <!-- Presets -->
                 <div class="flex flex-wrap justify-center gap-4 mb-12">
                     <button onclick="setROIPreset(1, this)" class="px-6 py-2 rounded-full border border-white/10 bg-surface hover:bg-white/5 text-sm font-medium text-gray-300 transition-colors focus:ring-2 focus:ring-emerald-500">1-2 Bay Shop</button>
                     <button onclick="setROIPreset(3, this)" class="px-6 py-2 rounded-full border border-white/10 bg-surface hover:bg-white/5 text-sm font-medium text-gray-300 transition-colors focus:ring-2 focus:ring-emerald-500">3-4 Bay Shop</button>
-                    <button onclick="setROIPreset(5, this)" class="px-6 py-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-sm font-medium text-emerald-400 transition-colors focus:ring-2 focus:ring-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.2)]">5+ Bay Facility</button>
+                    <button onclick="setROIPreset(5, this)" class="px-6 py-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-sm font-medium text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.2)] focus:ring-2 focus:ring-emerald-500">5+ Bay Facility</button>
                 </div>
 
                 <div class="flex flex-col lg:flex-row gap-8">
@@ -700,166 +716,130 @@
                     <div class="lg:w-1/2 glow-card rounded-2xl p-8 border border-white/10">
                         <div class="space-y-8">
                             
-                            <!-- Slider 1 -->
                             <div>
-                                <div class="flex justify-between text-sm mb-2">
-                                    <span class="text-gray-300 font-medium">Hourly Labor Rate</span>
-                                    <span class="text-emerald-400 font-mono font-bold">$<span id="val-rate">150</span>/hr</span>
-                                </div>
-                                <input type="range" id="slider-rate" min="80" max="300" step="5" value="150" class="w-full h-2 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-emerald-500">
+                                <div class="flex justify-between text-sm mb-2"><span class="text-gray-300">Hourly Labor Rate</span><span class="text-emerald-400 font-mono font-bold">$<span id="val-rate">150</span>/hr</span></div>
+                                <input type="range" id="slider-rate" min="80" max="300" step="5" value="150" class="w-full h-3 md:h-2 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-emerald-500">
                             </div>
-
-                            <!-- Slider 2 -->
                             <div>
-                                <div class="flex justify-between text-sm mb-2">
-                                    <span class="text-gray-300 font-medium">Average Billed Hours per Job</span>
-                                    <span class="text-blue-400 font-mono font-bold"><span id="val-hours">2.5</span> hrs</span>
-                                </div>
-                                <input type="range" id="slider-hours" min="1" max="10" step="0.5" value="2.5" class="w-full h-2 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-blue-500">
+                                <div class="flex justify-between text-sm mb-2"><span class="text-gray-300">Average Billed Hours</span><span class="text-blue-400 font-mono font-bold"><span id="val-hours">2.5</span> hrs</span></div>
+                                <input type="range" id="slider-hours" min="1" max="10" step="0.5" value="2.5" class="w-full h-3 md:h-2 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-blue-500">
                             </div>
-
-                            <!-- Slider 3 (NEW: Overhead Cost) -->
                             <div>
-                                <div class="flex justify-between text-sm mb-2">
-                                    <span class="text-gray-300 font-medium">Shop Overhead Cost</span>
-                                    <span class="text-orange-400 font-mono font-bold"><span id="val-overhead-pct">40</span>% (<span id="val-overhead-dol">$0</span>)</span>
-                                </div>
-                                <p class="text-xs text-gray-500 mb-2">Percentage of gross revenue consumed by rent, payroll, and utilities.</p>
-                                <input type="range" id="slider-overhead" min="10" max="80" step="5" value="40" class="w-full h-2 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-orange-500">
+                                <div class="flex justify-between text-sm mb-2"><span class="text-gray-300">Shop Overhead Cost</span><span class="text-orange-400 font-mono font-bold"><span id="val-overhead-pct">40</span>% (<span id="val-overhead-dol">$0</span>)</span></div>
+                                <p class="text-xs text-gray-500 mb-2">Percentage consumed by rent, payroll, utilities.</p>
+                                <input type="range" id="slider-overhead" min="10" max="80" step="5" value="40" class="w-full h-3 md:h-2 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-orange-500">
                             </div>
-
-                            <!-- Slider 4 -->
                             <div>
-                                <div class="flex justify-between text-sm mb-2">
-                                    <span class="text-gray-300 font-medium">Missed Inquiries per Week</span>
-                                    <span class="text-red-400 font-mono font-bold"><span id="val-missed">20</span> leads</span>
-                                </div>
+                                <div class="flex justify-between text-sm mb-2"><span class="text-gray-300">Missed Inquiries per Week</span><span class="text-red-400 font-mono font-bold"><span id="val-missed">20</span> leads</span></div>
                                 <p class="text-xs text-gray-500 mb-2">Voicemails, drop-offs, and calls placed on hold.</p>
-                                <input type="range" id="slider-missed" min="5" max="100" step="5" value="20" class="w-full h-2 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-red-500">
+                                <input type="range" id="slider-missed" min="5" max="100" step="5" value="20" class="w-full h-3 md:h-2 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-red-500">
                             </div>
-
-                            <!-- Slider 5 -->
                             <div class="pt-4 border-t border-white/10">
-                                <div class="flex justify-between text-sm mb-2">
-                                    <span class="text-gray-300 font-medium">Apex AI Conversion Rate</span>
-                                    <span class="text-emerald-400 font-mono font-bold"><span id="val-conversion">15</span>%</span>
-                                </div>
+                                <div class="flex justify-between text-sm mb-2"><span class="text-gray-300">AI Conversion Rate</span><span class="text-emerald-400 font-mono font-bold"><span id="val-conversion">15</span>%</span></div>
                                 <p class="text-xs text-gray-500 mb-2">Percentage of missed leads the AI successfully books.</p>
-                                <input type="range" id="slider-conversion" min="5" max="60" step="5" value="15" class="w-full h-2 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-emerald-500">
+                                <input type="range" id="slider-conversion" min="5" max="60" step="5" value="15" class="w-full h-3 md:h-2 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-emerald-500">
                             </div>
 
-                            <!-- Apex Infrastructure Deployment Plan -->
+                            <!-- PROMO Pricing Selection -->
                             <div class="pt-5 border-t border-white/10">
                                 <div class="flex items-end justify-between mb-4">
                                     <div>
-                                        <div class="text-sm font-medium text-gray-300">Deployment Plan</div>
+                                        <div class="text-sm font-medium text-gray-300 flex items-center gap-2">
+                                            Deployment Plan 
+                                            <span class="bg-red-500/20 text-red-400 text-[9px] px-2 py-0.5 rounded border border-red-500/30 animate-pulse font-bold tracking-widest uppercase">Promo Active</span>
+                                        </div>
                                         <div class="text-xs text-gray-500 mt-1">Select your infrastructure tier.</div>
                                     </div>
-                                    <div class="text-blue-400 font-mono font-bold text-lg">$<span id="val-platform-cost">399</span><span class="text-sm text-gray-500 font-normal">/mo</span></div>
+                                    <div class="text-right">
+                                        <div class="text-gray-500 text-xs line-through mb-0.5" id="val-platform-old-cost">$399</div>
+                                        <div class="text-blue-400 font-mono font-bold text-xl leading-none">$<span id="val-platform-cost">299</span><span class="text-sm text-gray-500 font-normal">/mo</span></div>
+                                    </div>
                                 </div>
                                 
-                                <!-- Payment Mode Toggle -->
-                                <div class="flex p-1 bg-[#05050A] rounded-xl border border-white/10 mb-4 relative z-10">
-                                    <button onclick="setPaymentMode('monthly', this)" id="btn-pay-monthly" class="flex-1 py-2 text-xs font-bold rounded-lg bg-blue-500/20 text-blue-400 transition-all border border-blue-500/30 shadow-[0_0_15px_rgba(59,130,246,0.15)]">Monthly Agreement</button>
+                                <div class="flex p-1 bg-[#05050A] rounded-xl border border-white/10 mb-4">
+                                    <button onclick="setPaymentMode('monthly', this)" id="btn-pay-monthly" class="flex-1 py-2 text-xs font-bold rounded-lg bg-blue-500/20 text-blue-400 transition-all shadow-[0_0_15px_rgba(59,130,246,0.15)]">Monthly Agreement</button>
                                     <button onclick="setPaymentMode('upfront', this)" id="btn-pay-upfront" class="flex-1 py-2 text-xs font-bold rounded-lg text-gray-500 hover:text-gray-300 transition-all border border-transparent">CapEx (Pay Upfront)</button>
                                 </div>
 
-                                <!-- Term Selection Grid (Monthly) -->
-                                <div class="grid grid-cols-3 gap-3" id="term-grid-monthly">
-                                    <div onclick="setPlan(399, this)" id="btn-default-monthly" class="plan-btn px-2 py-4 rounded-xl border border-blue-500/40 bg-blue-500/10 text-center transition-all cursor-pointer shadow-[0_0_20px_rgba(59,130,246,0.15)] relative overflow-hidden group">
-                                        <div class="text-[10px] text-blue-400/80 uppercase tracking-widest mb-1">No Contract</div>
-                                        <div class="text-xl font-heading font-bold text-white">$399</div>
+                                <!-- Monthly Pricing Grid -->
+                                <div class="grid grid-cols-3 gap-2 sm:gap-3" id="term-grid-monthly">
+                                    <div onclick="setPlan(299, 399, this)" id="btn-default-monthly" class="plan-btn px-2 py-3 rounded-xl border border-blue-500/40 bg-blue-500/10 text-center cursor-pointer shadow-[0_0_20px_rgba(59,130,246,0.15)]">
+                                        <div class="text-[9px] sm:text-[10px] text-blue-400/80 uppercase mb-1 font-bold">No Contract</div>
+                                        <div class="flex items-baseline justify-center gap-1.5">
+                                            <span class="text-[10px] text-gray-500 line-through">$399</span>
+                                            <span class="text-lg sm:text-xl font-bold text-white">$299</span>
+                                        </div>
                                     </div>
-                                    <div onclick="setPlan(349, this)" class="plan-btn px-2 py-4 rounded-xl border border-white/10 bg-black/40 text-center hover:bg-white/5 transition-all cursor-pointer relative overflow-hidden group">
-                                        <div class="text-[10px] text-gray-500 uppercase tracking-widest mb-1 group-hover:text-blue-400/80 transition-colors">3-Month</div>
-                                        <div class="text-xl font-heading font-bold text-white">$349</div>
+                                    <div onclick="setPlan(249, 349, this)" class="plan-btn px-2 py-3 rounded-xl border border-white/10 bg-black/40 text-center cursor-pointer hover:bg-white/5 transition-all">
+                                        <div class="text-[9px] sm:text-[10px] text-gray-500 uppercase mb-1 font-bold">3-Month</div>
+                                        <div class="flex items-baseline justify-center gap-1.5">
+                                            <span class="text-[10px] text-gray-500 line-through">$349</span>
+                                            <span class="text-lg sm:text-xl font-bold text-white">$249</span>
+                                        </div>
                                     </div>
-                                    <div onclick="setPlan(299, this)" class="plan-btn px-2 py-4 rounded-xl border border-white/10 bg-black/40 text-center hover:bg-white/5 transition-all cursor-pointer relative overflow-hidden group">
-                                        <div class="text-[10px] text-gray-500 uppercase tracking-widest mb-1 group-hover:text-blue-400/80 transition-colors">12-Month</div>
-                                        <div class="text-xl font-heading font-bold text-white">$299</div>
+                                    <div onclick="setPlan(199, 299, this)" class="plan-btn px-2 py-3 rounded-xl border border-white/10 bg-black/40 text-center cursor-pointer hover:bg-white/5 transition-all">
+                                        <div class="text-[9px] sm:text-[10px] text-gray-500 uppercase mb-1 font-bold">12-Month</div>
+                                        <div class="flex items-baseline justify-center gap-1.5">
+                                            <span class="text-[10px] text-gray-500 line-through">$299</span>
+                                            <span class="text-lg sm:text-xl font-bold text-white">$199</span>
+                                        </div>
                                     </div>
                                 </div>
                                 
-                                <!-- Term Selection Grid (Upfront) -->
-                                <div class="grid grid-cols-3 gap-3 hidden" id="term-grid-upfront">
-                                    <div onclick="setPlan(314, this)" class="plan-btn px-2 py-4 rounded-xl border border-white/10 bg-black/40 text-center hover:bg-white/5 transition-all cursor-pointer relative overflow-hidden group">
-                                        <div class="absolute inset-0 bg-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                                        <div class="text-[10px] text-gray-500 uppercase tracking-widest mb-1 group-hover:text-emerald-400/80 transition-colors">3-Month</div>
-                                        <div class="text-xl font-heading font-bold text-emerald-400">$314<span class="text-xs font-sans text-gray-500">/mo</span></div>
+                                <!-- Upfront Pricing Grid (Updated to 2 Options) -->
+                                <div class="grid grid-cols-2 gap-3 sm:gap-4 hidden" id="term-grid-upfront">
+                                    <div onclick="setPlan(225, 249, this)" class="plan-btn px-2 py-3 rounded-xl border border-white/10 bg-black/40 text-center cursor-pointer hover:bg-white/5 transition-all">
+                                        <div class="text-[9px] sm:text-[10px] text-gray-500 uppercase mb-1 font-bold">3-Month</div>
+                                        <div class="flex items-baseline justify-center gap-1">
+                                            <span class="text-[10px] text-gray-500 line-through">$249</span>
+                                            <span class="text-lg sm:text-xl font-bold text-emerald-400">$225<span class="text-[10px] font-sans text-gray-500">/mo</span></span>
+                                        </div>
                                     </div>
-                                    <div onclick="setPlan(263, this)" class="plan-btn px-2 py-4 rounded-xl border border-white/10 bg-black/40 text-center hover:bg-white/5 transition-all cursor-pointer relative overflow-hidden group">
-                                        <div class="text-[10px] text-gray-500 uppercase tracking-widest mb-1 group-hover:text-emerald-400/80 transition-colors">6-Month</div>
-                                        <div class="text-xl font-heading font-bold text-emerald-400">$263<span class="text-xs font-sans text-gray-500">/mo</span></div>
-                                    </div>
-                                    <div onclick="setPlan(231, this)" id="btn-default-upfront" class="plan-btn px-2 py-4 rounded-xl border border-emerald-500/40 bg-emerald-500/10 text-center transition-all cursor-pointer shadow-[0_0_20px_rgba(16,185,129,0.15)] relative overflow-hidden group">
-                                        <div class="text-[10px] text-emerald-400/80 uppercase tracking-widest mb-1">12-Month</div>
-                                        <div class="text-xl font-heading font-bold text-emerald-400">$231<span class="text-xs font-sans text-gray-500">/mo</span></div>
+                                    <div onclick="setPlan(150, 199, this)" id="btn-default-upfront" class="plan-btn px-2 py-3 rounded-xl border border-emerald-500/40 bg-emerald-500/10 text-center cursor-pointer shadow-[0_0_20px_rgba(16,185,129,0.15)]">
+                                        <div class="text-[9px] sm:text-[10px] text-emerald-400/80 uppercase mb-1 font-bold">12-Month</div>
+                                        <div class="flex items-baseline justify-center gap-1">
+                                            <span class="text-[10px] text-gray-500 line-through">$199</span>
+                                            <span class="text-lg sm:text-xl font-bold text-emerald-400">$150<span class="text-[10px] font-sans text-gray-500">/mo</span></span>
+                                        </div>
                                     </div>
                                 </div>
-
                             </div>
-
                         </div>
                     </div>
 
-                    <!-- Output (Right - 3 High-End Cards) -->
+                    <!-- Output Right -->
                     <div class="lg:w-1/2 flex flex-col gap-5">
                         
-                        <!-- Card 1: Total Uncaptured Pipeline (Updated Narrative) -->
-                        <div class="bg-red-900/10 border border-red-500/20 rounded-2xl p-6 text-center relative overflow-hidden flex-1 flex flex-col justify-center">
-                            <div class="absolute top-0 right-0 p-4 opacity-10">
-                                <i data-lucide="trending-down" class="w-24 h-24 text-red-500"></i>
-                            </div>
-                            <span class="text-red-400 text-xs font-mono tracking-widest uppercase mb-1 block relative z-10">Total Uncaptured Pipeline</span>
-                            <div class="text-4xl font-heading font-bold text-white relative z-10">
-                                $<span id="out-lost">32,475</span>
-                            </div>
-                            <p class="text-gray-500 text-xs mt-2 mb-3 relative z-10">The gross revenue walking out your door.</p>
-                            <div class="inline-block relative z-10 bg-red-500/10 border border-red-500/20 text-red-400 text-[10px] font-mono px-3 py-1 rounded-full">
-                                Based on <span id="out-monthly-missed">87</span> missed leads/mo.
-                            </div>
+                        <!-- New Monthly Repair Orders Card (Concrete Metric) -->
+                        <div class="bg-blue-900/10 border border-blue-500/20 rounded-2xl p-6 text-center relative overflow-hidden flex-1 flex flex-col justify-center">
+                            <div class="absolute top-0 right-0 p-4 opacity-10"><i data-lucide="car" class="w-24 h-24 text-blue-500"></i></div>
+                            <span class="text-blue-400 text-xs font-mono tracking-widest uppercase mb-1 relative z-10">New Monthly Repair Orders</span>
+                            <div class="text-4xl sm:text-5xl font-heading font-bold text-white relative z-10"><span id="out-new-ros">13</span> <span class="text-lg text-blue-400 font-sans font-normal">Jobs</span></div>
+                            <p class="text-gray-500 text-xs mt-2 mb-3 relative z-10">Vehicles successfully scheduled by AI.</p>
+                            <div class="inline-block relative z-10 bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-mono px-3 py-1 rounded-full">At <span id="out-lost-conv">15</span>% conversion capture.</div>
                         </div>
 
-                        <!-- Card 2: Recovered Revenue -->
                         <div class="bg-emerald-900/10 border border-emerald-500/20 rounded-2xl p-6 text-center relative overflow-hidden flex-1 flex flex-col justify-center">
-                            <div class="absolute top-0 right-0 p-4 opacity-10">
-                                <i data-lucide="trending-up" class="w-24 h-24 text-emerald-500"></i>
-                            </div>
-                            <span class="text-emerald-400 text-xs font-mono tracking-widest uppercase mb-1 block relative z-10">Gross Recovered Revenue</span>
-                            <div class="text-4xl font-heading font-bold text-white relative z-10">
-                                $<span id="out-recovered">4,871</span>
-                            </div>
-                            <div class="mt-2 flex items-center justify-center gap-2 text-xs text-gray-400 font-medium relative z-10">
-                                <i data-lucide="arrow-up-right" class="w-3 h-3 text-emerald-400"></i>
-                                Top-line revenue added before expenses
-                            </div>
+                            <div class="absolute top-0 right-0 p-4 opacity-10"><i data-lucide="trending-up" class="w-24 h-24 text-emerald-500"></i></div>
+                            <span class="text-emerald-400 text-xs font-mono tracking-widest uppercase mb-1 relative z-10">Gross Recovered Revenue</span>
+                            <div class="text-4xl sm:text-5xl font-heading font-bold text-white relative z-10">$<span id="out-recovered">4,871</span></div>
+                            <div class="mt-2 flex items-center justify-center gap-2 text-xs text-gray-400 font-medium relative z-10">Top-line revenue added before expenses</div>
                         </div>
 
-                        <!-- Card 3: Premium Net Profit -->
                         <div class="bg-gradient-to-br from-[#0B1528] to-[#120D26] border border-blue-500/40 rounded-2xl p-6 text-center relative overflow-hidden flex-1 flex flex-col justify-center shadow-[0_0_40px_rgba(59,130,246,0.15)] group">
-                            <!-- Premium animated glow -->
                             <div class="absolute inset-0 bg-gradient-to-tr from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                            <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                                <i data-lucide="gem" class="w-24 h-24 text-blue-400"></i>
-                            </div>
-                            
-                            <span class="text-blue-400 text-xs font-mono tracking-widest uppercase mb-1 block relative z-10">Pure Net Profit (Take-Home)</span>
-                            <div class="text-5xl font-heading font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300 relative z-10" style="text-shadow: 0 0 30px rgba(59,130,246,0.2);">
-                                $<span id="out-profit">1,927</span>
-                            </div>
+                            <div class="absolute top-0 right-0 p-4 opacity-10"><i data-lucide="gem" class="w-24 h-24 text-blue-400"></i></div>
+                            <span class="text-blue-400 text-xs font-mono tracking-widest uppercase mb-1 relative z-10">Pure Net Profit (Take-Home)</span>
+                            <div class="text-5xl sm:text-6xl font-heading font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300 relative z-10">$<span id="out-profit">1,927</span></div>
                             <div class="mt-3 relative z-10">
-                                <p class="text-[11px] text-gray-400 font-mono">After <span id="out-overhead-deducted">$1,948</span> overhead & <span id="out-platform-deducted">$399</span> AI software cost.</p>
-                                <div class="inline-block mt-2 bg-blue-500/10 border border-blue-500/20 text-blue-300 text-xs font-bold px-3 py-1 rounded-full shadow-lg">
-                                    <span id="out-roi-mult">1.9</span>x Return on Investment
-                                </div>
+                                <p class="text-[10px] sm:text-[11px] text-gray-400 font-mono">After <span id="out-overhead-deducted">$1,948</span> overhead & <span id="out-platform-deducted">$299</span> AI software cost.</p>
+                                <div class="inline-block mt-2 bg-blue-500/10 border border-blue-500/20 text-blue-300 text-xs font-bold px-3 py-1 rounded-full"><span id="out-roi-mult">1.9</span>x ROI</div>
                             </div>
                         </div>
-
                     </div>
                 </div>
                 
                 <div class="text-center mt-12">
-                     <p class="text-sm text-gray-500 mb-6 max-w-2xl mx-auto">*Estimates are based on conservative labor-only calculations and do not include the standard 40-50% markup on parts sales, meaning true recovered revenue is likely significantly higher.</p>
                      <button onclick="window.open('YOUR_GOOGLE_CALENDAR_LINK', '_blank')" class="px-8 py-4 bg-primary text-white rounded-lg font-bold text-lg hover:bg-primaryGlow transition-colors shadow-[0_0_30px_rgba(59,130,246,0.3)]">
                         Secure Your Territory Today
                     </button>
@@ -868,129 +848,110 @@
         </section>
 
         <!-- ==========================================
-             PAGE 5: CASE STUDIES / TRENDS
+             PAGE 5: CASE STUDIES (TRENDS)
         =========================================== -->
         <section id="page-trends" class="page-view">
             <div class="max-w-6xl mx-auto pt-12 pb-16 reveal">
                 
                 <div class="text-center mb-12">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono mb-6 uppercase tracking-widest">
-                        60-Day Macro Field Test
-                    </div>
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono mb-6 uppercase tracking-widest">60-Day Macro Field Test</div>
                     <h1 class="font-heading text-4xl md:text-5xl font-bold text-white mb-6">Let's See The <span class="text-gradient-blue">Real Numbers.</span></h1>
-                    <p class="text-lg text-gray-400 font-light max-w-3xl mx-auto leading-relaxed">
-                        We didn't just build this in a lab. We deployed our Edge AI infrastructure across 6 distinct repair facilities in the Southeast for 60 days. From metro volume centers to rural specialty shops, here is exactly what the AI captured.
-                    </p>
+                    <p class="text-lg text-gray-400 font-light max-w-3xl mx-auto leading-relaxed">Deployed across distinct facilities. From metro volume centers to rural specialty shops.</p>
                 </div>
 
-                <!-- Interactive City Toggle -->
-                <div class="flex flex-col md:flex-row justify-center gap-4 mb-10 relative z-10">
-                    <button onclick="updateTrend('nashville', this)" id="btn-nashville" class="trend-btn px-6 py-4 rounded-xl border border-blue-500/30 bg-blue-500/10 transition-all focus:outline-none shadow-[0_0_20px_rgba(59,130,246,0.15)] transform scale-105">
-                        <div class="text-white font-bold text-lg">Nashville, TN</div>
-                        <div class="text-blue-400 text-xs font-mono uppercase tracking-widest mt-1">1 Property (Metro)</div>
+                <!-- Interactive City Toggle Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4 mb-10 relative z-10">
+                    <button onclick="updateTrend('nashville', this)" id="btn-nashville" class="trend-btn px-4 py-6 rounded-xl border border-blue-500/30 bg-blue-500/10 transition-all shadow-[0_0_20px_rgba(59,130,246,0.15)] transform scale-105">
+                        <div class="text-white font-bold text-sm md:text-base">Nashville, TN</div>
+                        <div class="text-blue-400 text-[10px] font-mono uppercase mt-1">Metro</div>
                     </button>
-                    <button onclick="updateTrend('johnson', this)" class="trend-btn px-6 py-4 rounded-xl border border-white/10 bg-surface hover:bg-white/5 transition-all focus:outline-none">
-                        <div class="text-gray-300 font-bold text-lg">Johnson City, TN</div>
-                        <div class="text-gray-500 text-xs font-mono uppercase tracking-widest mt-1">2 Properties (Mid-Market)</div>
+                    <button onclick="updateTrend('johnson', this)" class="trend-btn px-4 py-6 rounded-xl border border-white/10 bg-surface hover:bg-white/5 transition-all">
+                        <div class="text-gray-300 font-bold text-sm md:text-base">Johnson City, TN</div>
+                        <div class="text-gray-500 text-[10px] font-mono uppercase mt-1">Mid-Market</div>
                     </button>
-                    <button onclick="updateTrend('abingdon', this)" class="trend-btn px-6 py-4 rounded-xl border border-white/10 bg-surface hover:bg-white/5 transition-all focus:outline-none">
-                        <div class="text-gray-300 font-bold text-lg">Abingdon, VA</div>
-                        <div class="text-gray-500 text-xs font-mono uppercase tracking-widest mt-1">3 Properties (Rural)</div>
+                    <button onclick="updateTrend('abingdon', this)" class="trend-btn px-4 py-6 rounded-xl border border-white/10 bg-surface hover:bg-white/5 transition-all">
+                        <div class="text-gray-300 font-bold text-sm md:text-base">Abingdon, VA</div>
+                        <div class="text-gray-500 text-[10px] font-mono uppercase mt-1">Rural</div>
+                    </button>
+                    <!-- Coming Soon Markets -->
+                    <button onclick="showComingSoon('Knoxville, TN', this)" class="trend-btn px-4 py-6 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-all relative group text-left">
+                        <div class="text-gray-400 font-bold text-sm md:text-base">Knoxville, TN</div>
+                        <div class="text-gray-500 text-[10px] font-mono uppercase mt-1">Metro Expansion</div>
+                        <div class="text-[9px] text-blue-400 font-mono absolute top-2 right-2 flex items-center gap-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span> SOON
+                        </div>
+                    </button>
+                    <button onclick="showComingSoon('Chattanooga, TN', this)" class="trend-btn px-4 py-6 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-all relative group text-left">
+                        <div class="text-gray-400 font-bold text-sm md:text-base">Chattanooga, TN</div>
+                        <div class="text-gray-500 text-[10px] font-mono uppercase mt-1">Market Entry</div>
+                        <div class="text-[9px] text-blue-400 font-mono absolute top-2 right-2 flex items-center gap-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span> SOON
+                        </div>
                     </button>
                 </div>
 
-                <!-- Dynamic Data Display (Injected via JS) -->
-                <div class="glow-card rounded-3xl border border-white/10 p-8 lg:p-12 mb-16 relative overflow-hidden transition-opacity duration-300" id="trend-properties-container">
-                    <!-- Populated by updateTrend() -->
+                <div class="glow-card rounded-3xl border border-white/10 p-8 lg:p-12 mb-16 relative overflow-hidden transition-opacity duration-300 min-h-[300px]" id="trend-properties-container">
+                    <!-- Populated by JS -->
                 </div>
 
-                <!-- Macro Comparative Chart (All 6 Properties) -->
-                <div class="bg-[#0A0C10] border border-white/5 rounded-2xl p-8 relative overflow-hidden">
-                    <h3 class="font-heading text-2xl font-bold text-white mb-8 border-b border-white/10 pb-4">Full Market Performance Comparison</h3>
-                    
+                <!-- Comparison Chart -->
+                <div class="bg-[#0A0C10] border border-white/5 rounded-2xl p-6 md:p-8">
+                    <h3 class="font-heading text-2xl font-bold text-white mb-8">Performance Summary</h3>
                     <div class="space-y-6">
-                        <!-- Nashville Row -->
                         <div class="relative group">
-                            <div class="flex justify-between text-xs font-mono text-gray-400 mb-2">
-                                <span class="text-white">Nashville, TN <span class="text-blue-400 border border-blue-500/30 bg-blue-500/10 px-2 py-0.5 rounded ml-2">3-4 Bay</span></span>
-                                <span class="text-emerald-400 font-bold">11% Conversion</span>
+                            <div class="flex justify-between text-[10px] sm:text-xs font-mono text-gray-400 mb-2">
+                                <span class="text-white whitespace-nowrap">Nashville, TN <span class="text-blue-400 border border-blue-500/30 bg-blue-500/10 px-1.5 py-0.5 rounded ml-1 hidden sm:inline-block">3-4 Bay</span></span>
+                                <span class="text-emerald-400 font-bold whitespace-nowrap">11% Conv</span>
                             </div>
-                            <div class="flex h-6 w-full bg-black rounded overflow-hidden border border-white/5">
-                                <div class="h-full bg-blue-600 transition-all duration-1000 relative flex items-center shadow-[0_0_15px_rgba(37,99,235,0.4)]" style="width: 67%;">
-                                    <span class="text-[10px] text-white font-bold font-mono pl-3">45 AI SMS Leads</span>
-                                </div>
+                            <div class="flex h-5 sm:h-6 w-full bg-black rounded overflow-hidden border border-white/5">
+                                <div class="h-full bg-blue-600 transition-all duration-1000 relative flex items-center shadow-[0_0_15px_rgba(37,99,235,0.4)]" style="width: 67%;"><span class="text-[9px] sm:text-[10px] text-white font-bold font-mono pl-3 whitespace-nowrap">45 AI Leads</span></div>
                             </div>
                         </div>
-
-                        <!-- Johnson City 1 -->
                         <div class="relative group">
-                            <div class="flex justify-between text-xs font-mono text-gray-400 mb-2">
-                                <span class="text-white">Johnson City, TN <span class="text-purple-400 border border-purple-500/30 bg-purple-500/10 px-2 py-0.5 rounded ml-2">5+ Bay</span></span>
-                                <span class="text-emerald-400 font-bold">9% Conversion</span>
+                            <div class="flex justify-between text-[10px] sm:text-xs font-mono text-gray-400 mb-2">
+                                <span class="text-white whitespace-nowrap">Johnson City, TN <span class="text-purple-400 border border-purple-500/30 bg-purple-500/10 px-1.5 py-0.5 rounded ml-1 hidden sm:inline-block">5+ Bay</span></span>
+                                <span class="text-emerald-400 font-bold whitespace-nowrap">9% Conv</span>
                             </div>
-                            <div class="flex h-6 w-full bg-black rounded overflow-hidden border border-white/5">
-                                <div class="h-full bg-blue-600 transition-all duration-1000 relative flex items-center shadow-[0_0_15px_rgba(37,99,235,0.4)]" style="width: 100%;">
-                                    <span class="text-[10px] text-white font-bold font-mono pl-3">67 AI SMS Leads</span>
-                                </div>
+                            <div class="flex h-5 sm:h-6 w-full bg-black rounded overflow-hidden border border-white/5">
+                                <div class="h-full bg-blue-600 transition-all duration-1000 relative flex items-center shadow-[0_0_15px_rgba(37,99,235,0.4)]" style="width: 100%;"><span class="text-[9px] sm:text-[10px] text-white font-bold font-mono pl-3 whitespace-nowrap">67 AI Leads</span></div>
                             </div>
                         </div>
-
-                        <!-- Johnson City 2 -->
                         <div class="relative group">
-                            <div class="flex justify-between text-xs font-mono text-gray-400 mb-2">
-                                <span class="text-white">Johnson City, TN <span class="text-emerald-400 border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 rounded ml-2">1-2 Bay</span></span>
-                                <span class="text-emerald-400 font-bold">8% Conversion</span>
+                            <div class="flex justify-between text-[10px] sm:text-xs font-mono text-gray-400 mb-2">
+                                <span class="text-white whitespace-nowrap">Johnson City, TN <span class="text-emerald-400 border border-emerald-500/30 bg-emerald-500/10 px-1.5 py-0.5 rounded ml-1 hidden sm:inline-block">1-2 Bay</span></span>
+                                <span class="text-emerald-400 font-bold whitespace-nowrap">8% Conv</span>
                             </div>
-                            <div class="flex h-6 w-full bg-black rounded overflow-hidden border border-white/5">
-                                <div class="h-full bg-blue-600 transition-all duration-1000 relative flex items-center shadow-[0_0_15px_rgba(37,99,235,0.4)]" style="width: 30%;">
-                                    <span class="text-[10px] text-white font-bold font-mono pl-3">20 Leads</span>
-                                </div>
+                            <div class="flex h-5 sm:h-6 w-full bg-black rounded overflow-hidden border border-white/5">
+                                <div class="h-full bg-blue-600 transition-all duration-1000 relative flex items-center shadow-[0_0_15px_rgba(37,99,235,0.4)]" style="width: 30%;"><span class="text-[9px] sm:text-[10px] text-white font-bold font-mono pl-3 whitespace-nowrap">20 Leads</span></div>
                             </div>
                         </div>
-
-                        <!-- Abingdon 1 -->
                         <div class="relative group">
-                            <div class="flex justify-between text-xs font-mono text-gray-400 mb-2">
-                                <span class="text-white">Abingdon, VA <span class="text-blue-400 border border-blue-500/30 bg-blue-500/10 px-2 py-0.5 rounded ml-2">3-4 Bay</span></span>
-                                <span class="text-emerald-400 font-bold">6.5% Conversion</span>
+                            <div class="flex justify-between text-[10px] sm:text-xs font-mono text-gray-400 mb-2">
+                                <span class="text-white whitespace-nowrap">Abingdon, VA <span class="text-blue-400 border border-blue-500/30 bg-blue-500/10 px-1.5 py-0.5 rounded ml-1 hidden sm:inline-block">3-4 Bay</span></span>
+                                <span class="text-emerald-400 font-bold whitespace-nowrap">6.5% Conv</span>
                             </div>
-                            <div class="flex h-6 w-full bg-black rounded overflow-hidden border border-white/5">
-                                <div class="h-full bg-blue-600 transition-all duration-1000 relative flex items-center shadow-[0_0_15px_rgba(37,99,235,0.4)]" style="width: 82%;">
-                                    <span class="text-[10px] text-white font-bold font-mono pl-3">55 AI SMS Leads</span>
-                                </div>
+                            <div class="flex h-5 sm:h-6 w-full bg-black rounded overflow-hidden border border-white/5">
+                                <div class="h-full bg-blue-600 transition-all duration-1000 relative flex items-center shadow-[0_0_15px_rgba(37,99,235,0.4)]" style="width: 82%;"><span class="text-[9px] sm:text-[10px] text-white font-bold font-mono pl-3 whitespace-nowrap">55 AI Leads</span></div>
                             </div>
                         </div>
-
-                        <!-- Abingdon 2 -->
                         <div class="relative group">
-                            <div class="flex justify-between text-xs font-mono text-gray-400 mb-2">
-                                <span class="text-white">Abingdon, VA <span class="text-emerald-400 border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 rounded ml-2">1-2 Bay</span></span>
-                                <span class="text-emerald-400 font-bold">8% Conversion</span>
+                            <div class="flex justify-between text-[10px] sm:text-xs font-mono text-gray-400 mb-2">
+                                <span class="text-white whitespace-nowrap">Abingdon, VA <span class="text-emerald-400 border border-emerald-500/30 bg-emerald-500/10 px-1.5 py-0.5 rounded ml-1 hidden sm:inline-block">1-2 Bay</span></span>
+                                <span class="text-emerald-400 font-bold whitespace-nowrap">8% Conv</span>
                             </div>
-                            <div class="flex h-6 w-full bg-black rounded overflow-hidden border border-white/5">
-                                <div class="h-full bg-blue-600 transition-all duration-1000 relative flex items-center shadow-[0_0_15px_rgba(37,99,235,0.4)]" style="width: 52%;">
-                                    <span class="text-[10px] text-white font-bold font-mono pl-3">35 AI SMS Leads</span>
-                                </div>
+                            <div class="flex h-5 sm:h-6 w-full bg-black rounded overflow-hidden border border-white/5">
+                                <div class="h-full bg-blue-600 transition-all duration-1000 relative flex items-center shadow-[0_0_15px_rgba(37,99,235,0.4)]" style="width: 52%;"><span class="text-[9px] sm:text-[10px] text-white font-bold font-mono pl-3 whitespace-nowrap">35 AI Leads</span></div>
                             </div>
                         </div>
-
-                        <!-- Abingdon 3 -->
                         <div class="relative group">
-                            <div class="flex justify-between text-xs font-mono text-gray-400 mb-2">
-                                <span class="text-white">Abingdon, VA <span class="text-emerald-400 border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 rounded ml-2">1-2 Bay</span></span>
-                                <span class="text-emerald-400 font-bold">11% Conversion</span>
+                            <div class="flex justify-between text-[10px] sm:text-xs font-mono text-gray-400 mb-2">
+                                <span class="text-white whitespace-nowrap">Abingdon, VA <span class="text-emerald-400 border border-emerald-500/30 bg-emerald-500/10 px-1.5 py-0.5 rounded ml-1 hidden sm:inline-block">1-2 Bay</span></span>
+                                <span class="text-emerald-400 font-bold whitespace-nowrap">11% Conv</span>
                             </div>
-                            <div class="flex h-6 w-full bg-black rounded overflow-hidden border border-white/5">
-                                <div class="h-full bg-blue-600 transition-all duration-1000 relative flex items-center shadow-[0_0_15px_rgba(37,99,235,0.4)]" style="width: 26%;">
-                                    <span class="text-[10px] text-white font-bold font-mono pl-3">18 Leads</span>
-                                </div>
+                            <div class="flex h-5 sm:h-6 w-full bg-black rounded overflow-hidden border border-white/5">
+                                <div class="h-full bg-blue-600 transition-all duration-1000 relative flex items-center shadow-[0_0_15px_rgba(37,99,235,0.4)]" style="width: 26%;"><span class="text-[9px] sm:text-[10px] text-white font-bold font-mono pl-3 whitespace-nowrap">18 Leads</span></div>
                             </div>
                         </div>
-
-                    </div>
-                    
-                    <div class="mt-8 flex items-center justify-center text-xs font-mono text-gray-500">
-                        <i data-lucide="info" class="w-4 h-4 mr-2"></i> All SMS Leads represent fully qualified inquiries containing actionable vehicle and symptom data.
                     </div>
                 </div>
 
@@ -998,108 +959,95 @@
         </section>
 
         <!-- ==========================================
-             PAGE 6: SECURITY / ZERO TRUST
+             PAGE 6: SECURITY
         =========================================== -->
         <section id="page-security" class="page-view">
-            
             <div class="max-w-3xl mx-auto text-center pt-12 pb-16 reveal">
-                <div class="w-16 h-16 mx-auto bg-emerald-500/10 rounded-full flex items-center justify-center border border-emerald-500/20 mb-6 shadow-[0_0_30px_rgba(16,185,129,0.2)]">
+                <div class="w-16 h-16 mx-auto bg-emerald-500/10 rounded-full flex items-center justify-center border border-emerald-500/20 mb-6">
                     <i data-lucide="shield" class="w-8 h-8 text-emerald-400"></i>
                 </div>
                 <h1 class="font-heading text-4xl md:text-5xl font-bold text-white mb-6">Military-Grade <span class="text-emerald-400">Isolation.</span></h1>
-                <p class="text-lg text-gray-400 font-light">
-                    When customers upload photos of their VIN numbers or license plates, standard AI bots send them to third-party APIs. We process them locally on hardware we physically control.
-                </p>
+                <p class="text-lg text-gray-400 font-light">Data processed locally on hardware we physically control. Never sent to public clouds.</p>
             </div>
-
-            <!-- 3 Pillars of Security -->
+            
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
                 <div class="glow-card p-8 rounded-xl text-center reveal border-t-2 border-t-emerald-500/50">
-                    <div class="w-12 h-12 mx-auto bg-black/50 rounded-lg flex items-center justify-center mb-6 border border-white/5">
-                        <i data-lucide="cloud-off" class="w-6 h-6 text-emerald-400"></i>
-                    </div>
                     <h4 class="text-lg font-bold text-white mb-3">100% Air-Gapped</h4>
-                    <p class="text-sm text-gray-400 leading-relaxed">The LLM inference engine has its outbound internet access restricted. Data enters, quotes leave, but your customer's data is never used to train a global cloud model.</p>
+                    <p class="text-sm text-gray-400 leading-relaxed">The LLM engine has restricted outbound access. Customer data is never used to train global models.</p>
                 </div>
-                <div class="glow-card p-8 rounded-xl text-center reveal border-t-2 border-t-blue-500/50" style="transition-delay: 100ms;">
-                    <div class="w-12 h-12 mx-auto bg-black/50 rounded-lg flex items-center justify-center mb-6 border border-white/5">
-                        <i data-lucide="lock" class="w-6 h-6 text-blue-400"></i>
-                    </div>
+                <div class="glow-card p-8 rounded-xl text-center reveal border-t-2 border-t-blue-500/50">
                     <h4 class="text-lg font-bold text-white mb-3">Cloudflare Tunnels</h4>
-                    <p class="text-sm text-gray-400 leading-relaxed">All widget traffic bypasses public DNS and is routed through encrypted Cloudflare Zero Trust Tunnels directly into our secure, localized ports.</p>
+                    <p class="text-sm text-gray-400 leading-relaxed">Traffic bypasses public DNS and routes through encrypted Zero Trust Tunnels directly into our node.</p>
                 </div>
-                <div class="glow-card p-8 rounded-xl text-center reveal border-t-2 border-t-purple-500/50" style="transition-delay: 200ms;">
-                    <div class="w-12 h-12 mx-auto bg-black/50 rounded-lg flex items-center justify-center mb-6 border border-white/5">
-                        <i data-lucide="database" class="w-6 h-6 text-purple-400"></i>
-                    </div>
+                <div class="glow-card p-8 rounded-xl text-center reveal border-t-2 border-t-purple-500/50">
                     <h4 class="text-lg font-bold text-white mb-3">Ephemeral Memory</h4>
-                    <p class="text-sm text-gray-400 leading-relaxed">The context window (short-term memory) is completely wiped the moment the browser session ends. We enforce zero persistent storage of PII.</p>
+                    <p class="text-sm text-gray-400 leading-relaxed">Short-term memory is wiped the moment the session ends. Zero persistent storage of PII.</p>
                 </div>
             </div>
 
             <!-- The Reality Check: Cloud vs Edge -->
             <div class="bg-black/40 border border-white/5 rounded-3xl p-8 lg:p-12 mb-20 reveal overflow-hidden relative">
-                <!-- Decorative Slash -->
                 <div class="absolute inset-0 w-full h-full opacity-10 pointer-events-none">
                     <div class="absolute top-[-50%] left-[50%] w-[10px] h-[200%] bg-white transform rotate-45 blur-[2px]"></div>
                 </div>
 
                 <div class="text-center mb-12 relative z-10">
                     <h2 class="font-heading text-3xl font-bold text-white mb-3">The Liability of Cloud AI</h2>
-                    <p class="text-gray-400 font-light max-w-2xl mx-auto">Why 99% of "AI Service Advisors" are walking data privacy lawsuits waiting to happen.</p>
+                    <p class="text-gray-400 font-light max-w-2xl mx-auto">Why 99% of generic "AI Service Advisors" are walking data privacy lawsuits waiting to happen.</p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 relative z-10">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 relative z-10">
                     <!-- The Cloud Way -->
                     <div class="bg-red-900/10 border border-red-500/20 rounded-2xl p-8 relative group">
                         <div class="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-40 transition-opacity">
                             <i data-lucide="server-crash" class="w-24 h-24 text-red-500"></i>
                         </div>
                         <h4 class="text-xl font-bold text-red-400 mb-6 flex items-center gap-3">
-                            <i data-lucide="x-circle" class="w-6 h-6"></i> The SaaS Wrapper Way
+                            <i data-lucide="x-circle" class="w-6 h-6"></i> The SaaS Wrapper Trap
                         </h4>
-                        <ul class="space-y-5 text-gray-300">
+                        <ul class="space-y-5 text-gray-300 relative z-10">
                             <li class="flex items-start gap-3">
                                 <div class="w-1.5 h-1.5 rounded-full bg-red-500 mt-2 shrink-0"></div>
-                                <p><strong class="text-white">Data Surrender:</strong> When a customer uploads an insurance card or VIN, that image is sent directly to OpenAI's public API servers.</p>
+                                <p><strong class="text-white">Data Surrender:</strong> When a customer uploads a photo containing a license plate or VIN to a standard bot, it is sent directly to OpenAI's public API servers.</p>
                             </li>
                             <li class="flex items-start gap-3">
                                 <div class="w-1.5 h-1.5 rounded-full bg-red-500 mt-2 shrink-0"></div>
-                                <p><strong class="text-white">Shadow Training:</strong> Hidden in SaaS Terms of Service is clauses allowing your shop's proprietary labor rates to train their future global models.</p>
+                                <p><strong class="text-white">Shadow Training:</strong> Read the fine print. Many third-party wrappers legally allow your shop's proprietary labor rates to train their future global models.</p>
                             </li>
                             <li class="flex items-start gap-3">
                                 <div class="w-1.5 h-1.5 rounded-full bg-red-500 mt-2 shrink-0"></div>
-                                <p><strong class="text-white">API Latency:</strong> Relying on cloud APIs means your widget breaks during their peak hours. If OpenAI goes down, your booking pipeline dies.</p>
+                                <p><strong class="text-white">Shared Vulnerability:</strong> If a major cloud provider experiences a data breach, your customers' phone numbers and repair histories are exposed.</p>
                             </li>
                         </ul>
                     </div>
 
                     <!-- The Apex Way -->
-                    <div class="bg-emerald-900/10 border border-emerald-500/20 rounded-2xl p-8 relative group">
+                    <div class="bg-emerald-900/10 border border-emerald-500/20 rounded-2xl p-8 relative group shadow-[0_0_30px_rgba(16,185,129,0.05)]">
                         <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                             <i data-lucide="shield-check" class="w-24 h-24 text-emerald-500"></i>
                         </div>
                         <h4 class="text-xl font-bold text-emerald-400 mb-6 flex items-center gap-3">
-                            <i data-lucide="check-circle-2" class="w-6 h-6"></i> The Apex Edge
+                            <i data-lucide="check-circle-2" class="w-6 h-6"></i> The ACG Edge Guarantee
                         </h4>
-                        <ul class="space-y-5 text-gray-300">
+                        <ul class="space-y-5 text-gray-300 relative z-10">
                             <li class="flex items-start gap-3">
                                 <div class="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 shrink-0"></div>
-                                <p><strong class="text-white">Total Sovereignty:</strong> Every token generated, every photo analyzed, and every phone number captured stays on hardware we own and control.</p>
+                                <p><strong class="text-white">Total Sovereignty:</strong> Every text token generated, every photo analyzed, and every phone number captured stays entirely on our dedicated hardware.</p>
                             </li>
                             <li class="flex items-start gap-3">
                                 <div class="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 shrink-0"></div>
-                                <p><strong class="text-white">Zero Cloud Dependencies:</strong> Because the models run locally on our Mac Studio arrays, our uptime is not tethered to external AI tech companies.</p>
+                                <p><strong class="text-white">Proprietary Protection:</strong> Your labor matrix, parts margins, and customer lists are cryptographically walled off. We never use your shop's data to train anything.</p>
                             </li>
                             <li class="flex items-start gap-3">
                                 <div class="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 shrink-0"></div>
-                                <p><strong class="text-white">TLS Verification:</strong> End-to-end encryption via Cloudflare means man-in-the-middle attacks on your customer chat logs are mathematically impossible.</p>
+                                <p><strong class="text-white">Zero Third-Party Risk:</strong> Because we process locally and do not rely on standard SaaS APIs, you are completely shielded from corporate data breaches.</p>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
-            
+
+            <!-- Bottom CTA -->
             <div class="text-center pb-12 reveal">
                 <button onclick="window.open('YOUR_GOOGLE_CALENDAR_LINK', '_blank')" class="px-8 py-4 bg-white text-black rounded-lg font-bold text-lg hover:bg-gray-200 transition-colors shadow-[0_0_30px_rgba(255,255,255,0.2)] flex items-center gap-2 mx-auto">
                     Secure Your Territory Today <i data-lucide="arrow-right" class="w-5 h-5"></i>
@@ -1114,165 +1062,128 @@
     <footer class="border-t border-white/5 bg-bg/50 backdrop-blur-sm mt-auto">
         <div class="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between">
             <div class="flex items-center gap-2 mb-4 md:mb-0">
-                <div class="w-6 h-6 rounded-md bg-blue-600 flex items-center justify-center">
-                    <i data-lucide="zap" class="w-3 h-3 text-white"></i>
-                </div>
-                <span class="text-white font-heading font-bold tracking-tight">ACG</span>
+                <div class="w-6 h-6 rounded-md bg-blue-600 flex items-center justify-center"><i data-lucide="zap" class="w-3 h-3 text-white"></i></div>
+                <span class="text-white font-heading font-bold tracking-tight uppercase">ACG</span>
             </div>
-            <div class="text-gray-500 text-xs font-mono mb-4 md:mb-0">
-                &copy; 2026 Apex Conversion Group. All systems nominal.
-            </div>
-            <div class="flex gap-6">
-                <a href="#" class="text-gray-500 hover:text-white transition-colors"><i data-lucide="twitter" class="w-5 h-5"></i></a>
-                <a href="#" class="text-gray-500 hover:text-white transition-colors"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
-            </div>
+            <div class="text-gray-500 text-xs font-mono">© 2026 Apex Conversion Group. Systems Nominal.</div>
         </div>
     </footer>
 
-    <!-- Scripts -->
+    <!-- WIDGET DROP ZONE: Paste your n8n script tags inside this wrapper -->
+    <div id="apex-widget-wrapper">
+        <!-- <script src="..."></script> -->
+    </div>
+
     <script>
-        // Initialize Icons
         lucide.createIcons();
 
-        // --- SPA Navigation Logic ---
-        function navigate(pageId) {
-            // Update active state in nav
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('text-white', 'active', 'text-blue-400');
-                if(link.getAttribute('href') === `#${pageId}`) {
-                    // For Trends page, specifically use the blue accent
-                    if(pageId === 'trends') {
-                        link.classList.add('text-blue-400', 'active');
-                    } else {
-                        link.classList.add('text-white', 'active');
-                    }
-                }
-            });
-
-            // Hide all pages, show target
-            document.querySelectorAll('.page-view').forEach(page => {
-                page.classList.remove('active');
-            });
-            
-            const targetPage = document.getElementById(`page-${pageId}`);
-            if(targetPage) {
-                targetPage.classList.add('active');
-                // Re-trigger reveal animations for the new page
+        // Mobile Menu Toggle (Smooth Animation)
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            if (menu.classList.contains('opacity-0')) {
+                menu.classList.remove('opacity-0', 'pointer-events-none', '-translate-y-4', 'hidden');
+                menu.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0', 'flex');
+            } else {
+                menu.classList.add('opacity-0', 'pointer-events-none', '-translate-y-4');
+                menu.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
                 setTimeout(() => {
-                    triggerReveals();
-                }, 50);
+                    if (menu.classList.contains('opacity-0')) menu.classList.add('hidden');
+                }, 300);
             }
-            
-            window.scrollTo(0, 0);
         }
 
-        // --- Intersection Observer for Scroll Reveals ---
-        const revealOptions = {
-            threshold: 0.1,
-            rootMargin: "0px 0px 0px 0px"
-        };
+        // SPA Navigation & Widget Isolation Engine
+        function navigate(pageId) {
+            // Hide mobile menu if open
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.add('opacity-0', 'pointer-events-none', '-translate-y-4');
+            menu.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+            setTimeout(() => menu.classList.add('hidden'), 300);
 
-        const revealObserver = new IntersectionObserver(function(entries, observer) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
+            // Update Nav Styling
+            document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(link => {
+                link.classList.remove('text-white', 'active', 'text-blue-400');
+                if(link.getAttribute('href') === `#${pageId}`) {
+                    link.classList.add(pageId === 'trends' ? 'text-blue-400' : 'text-white', 'active');
                 }
             });
+            
+            // Switch Page
+            document.querySelectorAll('.page-view').forEach(page => page.classList.remove('active'));
+            const target = document.getElementById(`page-${pageId}`);
+            if(target) { target.classList.add('active'); triggerReveals(); }
+            window.scrollTo(0, 0);
+
+            // WIDGET ISOLATION: Hide widget on all pages except 'home'
+            if (pageId === 'home') {
+                document.body.classList.remove('hide-n8n-widget');
+            } else {
+                document.body.classList.add('hide-n8n-widget');
+            }
+        }
+
+        // Scroll Animations
+        const revealOptions = { threshold: 0.1, rootMargin: "0px" };
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
         }, revealOptions);
 
         function triggerReveals() {
             setTimeout(() => {
                 document.querySelectorAll('.page-view.active .reveal').forEach(el => {
                     revealObserver.observe(el);
-                    
-                    // FALLBACK: Instantly show elements already inside the screen view
-                    // This permanently fixes the bug where you had to scroll for headers to appear
-                    const rect = el.getBoundingClientRect();
-                    if(rect.top < window.innerHeight && rect.bottom > 0) {
-                        el.classList.add('visible');
-                    }
+                    if(el.getBoundingClientRect().top < window.innerHeight) el.classList.add('visible');
                 });
             }, 100);
         }
-        
-        // Initial trigger
         triggerReveals();
 
-        // --- ROI Calculator Logic ---
-        const sliders = {
-            rate: document.getElementById('slider-rate'),
-            hours: document.getElementById('slider-hours'),
-            overhead: document.getElementById('slider-overhead'),
-            missed: document.getElementById('slider-missed'),
-            conversion: document.getElementById('slider-conversion')
-        };
-
-        const values = {
-            rate: document.getElementById('val-rate'),
-            hours: document.getElementById('val-hours'),
-            overheadPct: document.getElementById('val-overhead-pct'),
-            overheadDol: document.getElementById('val-overhead-dol'),
-            missed: document.getElementById('val-missed'),
-            conversion: document.getElementById('val-conversion')
-        };
-
-        const outputs = {
-            lost: document.getElementById('out-lost'),
-            monthlyMissed: document.getElementById('out-monthly-missed'),
-            recovered: document.getElementById('out-recovered'),
-            profit: document.getElementById('out-profit'),
-            overheadDeducted: document.getElementById('out-overhead-deducted'),
-            platformDeducted: document.getElementById('out-platform-deducted'),
-            roiMult: document.getElementById('out-roi-mult')
-        };
-
-        let currentPlatformCost = 399;
+        // ROI/Economics Logic
+        const sliders = { rate: document.getElementById('slider-rate'), hours: document.getElementById('slider-hours'), missed: document.getElementById('slider-missed'), conversion: document.getElementById('slider-conversion'), overhead: document.getElementById('slider-overhead') };
+        const outputs = { newROs: document.getElementById('out-new-ros'), profit: document.getElementById('out-profit'), roiMult: document.getElementById('out-roi-mult') };
+        
+        let currentPlatformCost = 299;
 
         function calculateROI() {
-            // Get current values
             const rate = parseFloat(sliders.rate.value);
             const hours = parseFloat(sliders.hours.value);
-            const overheadPct = parseFloat(sliders.overhead.value) / 100;
             const missed = parseInt(sliders.missed.value);
-            const conversion = parseFloat(sliders.conversion.value) / 100;
-
-            // Math
+            const conversion = parseFloat(sliders.conversion.value)/100;
+            const overheadPct = parseFloat(sliders.overhead.value)/100;
+            
+            // New Calculation based on concrete formulas
             const avgRepairValue = rate * hours;
-            const monthlyMissedCalls = Math.round(missed * 4.33); // 4.33 weeks in a month
-            const totalMonthlyPipeline = monthlyMissedCalls * avgRepairValue;
-            const recoveredMonthly = totalMonthlyPipeline * conversion;
+            const newMonthlyROs = Math.round(missed * 4.33 * conversion); // Missed calls per month * conversion rate
+            const recoveredMonthly = newMonthlyROs * avgRepairValue;
             
-            // Profit Math
             const overheadDollars = recoveredMonthly * overheadPct;
-            const platformCost = currentPlatformCost; 
-            const netProfit = recoveredMonthly - overheadDollars - platformCost;
-            
-            // Safe ROI multiple calculation
-            const roiMultiple = netProfit > 0 ? (recoveredMonthly / platformCost) : 0;
+            const netProfit = recoveredMonthly - overheadDollars - currentPlatformCost;
 
-            // Update UI Labels
-            values.rate.innerText = rate;
-            values.hours.innerText = hours.toFixed(1);
-            values.overheadPct.innerText = (overheadPct * 100).toFixed(0);
-            values.overheadDol.innerText = `-$${Math.round(overheadDollars).toLocaleString()}`;
-            values.missed.innerText = missed;
-            values.conversion.innerText = (conversion * 100).toFixed(0);
-
-            // Update Outputs (with commas)
-            outputs.monthlyMissed.innerText = monthlyMissedCalls.toLocaleString();
+            document.getElementById('val-rate').innerText = rate;
+            document.getElementById('val-hours').innerText = hours.toFixed(1);
+            document.getElementById('val-missed').innerText = missed;
+            document.getElementById('val-conversion').innerText = (conversion * 100).toFixed(0);
+            document.getElementById('val-overhead-pct').innerText = (overheadPct * 100).toFixed(0);
+            document.getElementById('val-overhead-dol').innerText = `-$${Math.round(overheadDollars).toLocaleString()}`;
             
-            // Changed this back to show the FULL problem pipeline, not the remaining
-            outputs.lost.innerText = Math.round(totalMonthlyPipeline).toLocaleString();
+            // Update Concrete Metric Output
+            if(outputs.newROs) outputs.newROs.innerText = newMonthlyROs;
             
-            outputs.recovered.innerText = Math.round(recoveredMonthly).toLocaleString();
+            const lostConvElem = document.getElementById('out-lost-conv');
+            if (lostConvElem) lostConvElem.innerText = (conversion * 100).toFixed(0);
+            
+            const outRecoveredElem = document.getElementById('out-recovered');
+            if (outRecoveredElem) outRecoveredElem.innerText = Math.round(recoveredMonthly).toLocaleString();
+            
+            const overheadDeductedElem = document.getElementById('out-overhead-deducted');
+            if (overheadDeductedElem) overheadDeductedElem.innerText = `-$${Math.round(overheadDollars).toLocaleString()}`;
+            
+            const platformDeductedElem = document.getElementById('out-platform-deducted');
+            if (platformDeductedElem) platformDeductedElem.innerText = `-$${currentPlatformCost}`;
             
             outputs.profit.innerText = netProfit > 0 ? Math.round(netProfit).toLocaleString() : "0";
-            outputs.overheadDeducted.innerText = `-$${Math.round(overheadDollars).toLocaleString()}`;
-            if(outputs.platformDeducted) outputs.platformDeducted.innerText = `-$${platformCost}`;
-            
-            outputs.roiMult.innerText = roiMultiple.toFixed(1);
-            
-            // UI Color shift if profit goes negative
+            outputs.roiMult.innerText = netProfit > 0 ? (recoveredMonthly / currentPlatformCost).toFixed(1) : "0";
+
             if (netProfit <= 0) {
                 outputs.profit.classList.replace('text-transparent', 'text-gray-500');
                 outputs.profit.classList.replace('bg-clip-text', 'bg-transparent');
@@ -1281,217 +1192,163 @@
                 outputs.profit.classList.replace('bg-transparent', 'bg-clip-text');
             }
         }
+        Object.values(sliders).forEach(s => s?.addEventListener('input', calculateROI));
 
-        // Attach listeners to all sliders
-        Object.values(sliders).forEach(slider => {
-            if(slider) {
-                slider.addEventListener('input', calculateROI);
-            }
-        });
-
-        // Interactive Plan Functions
+        // Plan Switching
         function setPaymentMode(mode, btn) {
             document.getElementById('btn-pay-monthly').className = "flex-1 py-2 text-xs font-bold rounded-lg text-gray-500 hover:text-gray-300 transition-all border border-transparent";
             document.getElementById('btn-pay-upfront').className = "flex-1 py-2 text-xs font-bold rounded-lg text-gray-500 hover:text-gray-300 transition-all border border-transparent";
-            
-            btn.className = "flex-1 py-2 text-xs font-bold rounded-lg bg-blue-500/20 text-blue-400 transition-all border border-blue-500/30 shadow-[0_0_15px_rgba(59,130,246,0.15)]";
-
-            if(mode === 'monthly') {
-                document.getElementById('term-grid-monthly').classList.remove('hidden');
-                document.getElementById('term-grid-upfront').classList.add('hidden');
-                document.getElementById('btn-default-monthly').click();
-            } else {
-                document.getElementById('term-grid-monthly').classList.add('hidden');
-                document.getElementById('term-grid-upfront').classList.remove('hidden');
-                document.getElementById('btn-default-upfront').click();
-            }
+            btn.className = "flex-1 py-2 text-xs font-bold rounded-lg bg-blue-500/20 text-blue-400 transition-all shadow-[0_0_15px_rgba(59,130,246,0.15)]";
+            document.getElementById('term-grid-monthly').classList.toggle('hidden', mode === 'upfront');
+            document.getElementById('term-grid-upfront').classList.toggle('hidden', mode === 'monthly');
+            document.getElementById(mode === 'monthly' ? 'btn-default-monthly' : 'btn-default-upfront').click();
         }
 
-        function setPlan(cost, btn) {
+        function setPlan(cost, oldCost, btn) {
             currentPlatformCost = cost;
             document.getElementById('val-platform-cost').innerText = cost;
-            
-            const isUpfront = btn.parentElement.id === 'term-grid-upfront';
+            document.getElementById('val-platform-old-cost').innerText = `$${oldCost}`;
             
             document.querySelectorAll('.plan-btn').forEach(b => {
-                b.className = "plan-btn px-2 py-4 rounded-xl border border-white/10 bg-black/40 text-center hover:bg-white/5 transition-all cursor-pointer relative overflow-hidden group";
-                // Reset text colors
-                const header = b.querySelector('div:first-child');
-                if(header) {
-                    header.classList.remove('text-blue-400/80', 'text-emerald-400/80');
-                    header.classList.add('text-gray-500');
-                }
+                b.classList.replace('border-blue-500/40', 'border-white/10');
+                b.classList.replace('border-emerald-500/40', 'border-white/10');
+                b.classList.replace('bg-blue-500/10', 'bg-black/40');
+                b.classList.replace('bg-emerald-500/10', 'bg-black/40');
+                b.classList.remove('shadow-[0_0_20px_rgba(59,130,246,0.15)]', 'shadow-[0_0_20px_rgba(16,185,129,0.15)]');
+                const title = b.querySelector('div:first-child');
+                title.classList.remove('text-blue-400/80', 'text-emerald-400/80');
+                title.classList.add('text-gray-500');
             });
             
-            if (isUpfront) {
-                btn.className = "plan-btn px-2 py-4 rounded-xl border border-emerald-500/40 bg-emerald-500/10 text-center transition-all cursor-pointer shadow-[0_0_20px_rgba(16,185,129,0.15)] relative overflow-hidden group";
-                const header = btn.querySelector('div:first-child');
-                if(header) {
-                    header.classList.remove('text-gray-500');
-                    header.classList.add('text-emerald-400/80');
-                }
-            } else {
-                btn.className = "plan-btn px-2 py-4 rounded-xl border border-blue-500/40 bg-blue-500/10 text-center transition-all cursor-pointer shadow-[0_0_20px_rgba(59,130,246,0.15)] relative overflow-hidden group";
-                const header = btn.querySelector('div:first-child');
-                if(header) {
-                    header.classList.remove('text-gray-500');
-                    header.classList.add('text-blue-400/80');
-                }
-            }
+            const isUpfront = btn.parentElement.id === 'term-grid-upfront';
+            btn.classList.replace('border-white/10', isUpfront ? 'border-emerald-500/40' : 'border-blue-500/40');
+            btn.classList.replace('bg-black/40', isUpfront ? 'bg-emerald-500/10' : 'bg-blue-500/10');
+            btn.classList.add(isUpfront ? 'shadow-[0_0_20px_rgba(16,185,129,0.15)]' : 'shadow-[0_0_20px_rgba(59,130,246,0.15)]');
             
+            const title = btn.querySelector('div:first-child');
+            title.classList.remove('text-gray-500');
+            title.classList.add(isUpfront ? 'text-emerald-400/80' : 'text-blue-400/80');
+
             calculateROI();
         }
 
-        // Preset Buttons Logic
-        function setROIPreset(bays, btnElement) {
-            // Reset active styles on preset buttons
-            const buttons = document.querySelectorAll('#page-roi button[onclick^="setROIPreset"]');
-            buttons.forEach(btn => {
-                btn.className = "px-6 py-2 rounded-full border border-white/10 bg-surface hover:bg-white/5 text-sm font-medium text-gray-300 transition-colors focus:ring-2 focus:ring-emerald-500";
-            });
+        function setROIPreset(bays, btn) {
+            document.querySelectorAll('#page-roi button[onclick^="setROIPreset"]').forEach(b => b.className = "px-6 py-2 rounded-full border border-white/10 bg-surface hover:bg-white/5 text-sm font-medium text-gray-300 transition-colors");
+            btn.className = "px-6 py-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-sm font-medium text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.2)]";
             
-            // Set active style for clicked button
-            const activeClass = "px-6 py-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-sm font-medium text-emerald-400 transition-colors focus:ring-2 focus:ring-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.2)]";
-            if (btnElement) {
-                btnElement.className = activeClass;
-            }
-
-            if (bays === 1) {
-                sliders.rate.value = 150;
-                sliders.hours.value = 2.5;
-                sliders.overhead.value = 40;
-                sliders.missed.value = 20;
-                sliders.conversion.value = 15;
-            } else if (bays === 3) {
-                sliders.rate.value = 160;
-                sliders.hours.value = 3.0;
-                sliders.overhead.value = 45;
-                sliders.missed.value = 30;
-                sliders.conversion.value = 15;
-            } else if (bays === 5) {
-                sliders.rate.value = 170;
-                sliders.hours.value = 3.5;
-                sliders.overhead.value = 50;
-                sliders.missed.value = 60;
-                sliders.conversion.value = 12;
-            }
+            if(bays === 1) { sliders.rate.value = 150; sliders.hours.value = 2.5; sliders.overhead.value = 40; sliders.missed.value = 20; sliders.conversion.value = 15; }
+            else if(bays === 3) { sliders.rate.value = 160; sliders.hours.value = 3.0; sliders.overhead.value = 45; sliders.missed.value = 30; sliders.conversion.value = 15; }
+            else { sliders.rate.value = 170; sliders.hours.value = 3.5; sliders.overhead.value = 50; sliders.missed.value = 60; sliders.conversion.value = 12; }
             calculateROI();
         }
 
-        // --- Case Studies (Trends) Logic ---
+        // Trends Logic
         const trendData = {
-            nashville: {
-                properties: [
-                    { size: "3-4 Bay Facility", sms: 45, conversion: 11 }
-                ]
-            },
-            johnson: {
-                properties: [
-                    { size: "5+ Bay High-Volume Facility", sms: 67, conversion: 9 },
-                    { size: "1-2 Bay Independent Shop", sms: 20, conversion: 8 }
-                ]
-            },
-            abingdon: {
-                properties: [
-                    { size: "3-4 Bay Facility", sms: 55, conversion: 6.5 },
-                    { size: "1-2 Bay Independent Shop", sms: 35, conversion: 8 },
-                    { size: "1-2 Bay Independent Shop", sms: 18, conversion: 11 }
-                ]
-            }
+            nashville: { props: [{ size: "3-4 Bay Metro Facility", sms: 45, conversion: 11 }] },
+            johnson: { props: [{ size: "5+ Bay High-Volume", sms: 67, conversion: 9 }, { size: "1-2 Bay Specialty", sms: 20, conversion: 8 }] },
+            abingdon: { props: [{ size: "3-4 Bay Rural Facility", sms: 55, conversion: 6.5 }, { size: "1-2 Bay Independent", sms: 35, conversion: 8 }, { size: "1-2 Bay Independent", sms: 18, conversion: 11 }] }
         };
 
-        function updateTrend(city, btnElement) {
-            // Reset Buttons
-            const buttons = document.querySelectorAll('.trend-btn');
-            buttons.forEach(btn => {
-                btn.className = "trend-btn px-6 py-4 rounded-xl border border-white/10 bg-surface hover:bg-white/5 transition-all focus:outline-none";
-                const title = btn.querySelector('div:first-child');
-                if(title) {
-                    title.classList.remove('text-white');
-                    title.classList.add('text-gray-300');
-                }
-                const subtitle = btn.querySelector('div:last-child');
-                if(subtitle) {
-                    subtitle.classList.remove('text-blue-400');
-                    subtitle.classList.add('text-gray-500');
-                }
+        function updateTrend(city, btn) {
+            document.querySelectorAll('.trend-btn').forEach(b => {
+                b.classList.remove('border-blue-500/30', 'bg-blue-500/10', 'shadow-[0_0_20px_rgba(59,130,246,0.15)]', 'transform', 'scale-105');
+                b.classList.add('border-white/10', 'bg-surface');
+                const textWhite = b.querySelector('.text-white');
+                if(textWhite) { textWhite.classList.replace('text-white', 'text-gray-300'); }
+                const textBlue = b.querySelector('.text-blue-400');
+                if(textBlue) { textBlue.classList.replace('text-blue-400', 'text-gray-500'); }
             });
-
-            // Activate Clicked Button
-            btnElement.className = "trend-btn px-6 py-4 rounded-xl border border-blue-500/30 bg-blue-500/10 transition-all focus:outline-none shadow-[0_0_20px_rgba(59,130,246,0.15)] transform scale-105";
-            const activeTitle = btnElement.querySelector('div:first-child');
-            if(activeTitle) {
-                activeTitle.classList.remove('text-gray-300');
-                activeTitle.classList.add('text-white');
-            }
-            const activeSubtitle = btnElement.querySelector('div:last-child');
-            if(activeSubtitle) {
-                activeSubtitle.classList.remove('text-gray-500');
-                activeSubtitle.classList.add('text-blue-400');
-            }
-
-            // Update Data with fade animation
+            
+            btn.classList.remove('border-white/10', 'bg-surface');
+            btn.classList.add('border-blue-500/30', 'bg-blue-500/10', 'shadow-[0_0_20px_rgba(59,130,246,0.15)]', 'transform', 'scale-105');
+            btn.querySelector('.text-gray-300')?.classList.replace('text-gray-300', 'text-white');
+            btn.querySelector('.text-gray-500')?.classList.replace('text-gray-500', 'text-blue-400');
+            
             const container = document.getElementById('trend-properties-container');
             container.style.opacity = '0';
-
             setTimeout(() => {
-                container.innerHTML = '';
-                
-                trendData[city].properties.forEach(prop => {
-                    // Estimate revenue based on a flat $450 average RO for display purposes
-                    const capturedROs = Math.round(prop.sms * (prop.conversion / 100));
-                    const estRevenue = Math.round(capturedROs * 450).toLocaleString();
-
-                    const html = `
-                        <div class="bg-black/60 border border-white/5 rounded-2xl p-6 relative overflow-hidden mb-4 last:mb-0">
-                            <div class="flex items-center gap-3 mb-6 relative z-10">
-                                <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.8)]"></div>
-                                <span class="text-emerald-400 font-mono text-sm uppercase tracking-widest">${prop.size}</span>
+                container.innerHTML = trendData[city].props.map(p => `
+                    <div class="bg-black/60 border border-white/5 rounded-2xl p-6 relative overflow-hidden mb-4 last:mb-0">
+                        <div class="flex items-center gap-3 mb-6 relative z-10">
+                            <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.8)]"></div>
+                            <span class="text-emerald-400 font-mono text-sm uppercase tracking-widest">${p.size}</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+                            <div class="bg-[#12141D] border border-white/5 rounded-xl p-5">
+                                <div class="text-blue-400 text-xs font-mono uppercase mb-2 flex items-center gap-2"><i data-lucide="smartphone" class="w-4 h-4"></i> AI SMS Leads</div>
+                                <div class="text-4xl font-bold text-white font-heading">${p.sms}</div>
+                                <div class="text-xs text-gray-500 mt-2">Fully qualified by AI</div>
                             </div>
-
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
-                                <div class="bg-[#12141D] border border-white/5 rounded-xl p-5">
-                                    <div class="text-blue-400 text-xs font-mono uppercase mb-2 flex items-center gap-2"><i data-lucide="smartphone" class="w-4 h-4"></i> AI SMS Leads</div>
-                                    <div class="text-4xl font-bold text-white font-heading">${prop.sms}</div>
-                                    <div class="text-xs text-gray-500 mt-2">Fully qualified by AI</div>
-                                </div>
-                                <div class="bg-[#12141D] border border-white/5 rounded-xl p-5">
-                                    <div class="text-purple-400 text-xs font-mono uppercase mb-2 flex items-center gap-2"><i data-lucide="target" class="w-4 h-4"></i> Conversion Rate</div>
-                                    <div class="flex items-baseline gap-1">
-                                        <div class="text-4xl font-bold text-white font-heading">${prop.conversion}</div>
-                                        <span class="text-xl text-gray-500">%</span>
-                                    </div>
-                                    <div class="text-xs text-gray-500 mt-2">Shop-Reported ROs (~${capturedROs} Jobs)</div>
-                                </div>
-                                <div class="bg-emerald-900/10 border border-emerald-500/20 rounded-xl p-5 shadow-[0_0_20px_rgba(16,185,129,0.05)]">
-                                    <div class="text-emerald-400 text-xs font-mono uppercase mb-2 flex items-center gap-2"><i data-lucide="dollar-sign" class="w-4 h-4"></i> Est. Revenue Gain</div>
-                                    <div class="flex items-baseline gap-1">
-                                        <span class="text-xl text-emerald-400/50">$</span>
-                                        <div class="text-4xl font-bold text-emerald-400 font-heading">${estRevenue}</div>
-                                    </div>
-                                    <div class="text-xs text-emerald-500/70 mt-2">Based on $450 Avg Repair Order</div>
-                                </div>
+                            <div class="bg-[#12141D] border border-white/5 rounded-xl p-5">
+                                <div class="text-purple-400 text-xs font-mono uppercase mb-2 flex items-center gap-2"><i data-lucide="target" class="w-4 h-4"></i> Conversion Rate</div>
+                                <div class="flex items-baseline gap-1"><div class="text-4xl font-bold text-white font-heading">${p.conversion}</div><span class="text-xl text-gray-500">%</span></div>
+                                <div class="text-xs text-gray-500 mt-2">Shop-Reported ROs</div>
+                            </div>
+                            <div class="bg-emerald-900/10 border border-emerald-500/20 rounded-xl p-5 shadow-[0_0_20px_rgba(16,185,129,0.05)]">
+                                <div class="text-emerald-400 text-xs font-mono uppercase mb-2 flex items-center gap-2"><i data-lucide="dollar-sign" class="w-4 h-4"></i> Est. Revenue Gain</div>
+                                <div class="flex items-baseline gap-1"><span class="text-xl text-emerald-400/50">$</span><div class="text-4xl font-bold text-emerald-400 font-heading">${Math.round(p.sms * (p.conversion/100) * 450).toLocaleString()}</div></div>
+                                <div class="text-xs text-emerald-500/70 mt-2">Based on $450 Avg RO</div>
                             </div>
                         </div>
-                    `;
-                    container.insertAdjacentHTML('beforeend', html);
-                });
-                
-                lucide.createIcons();
+                    </div>
+                `).join('');
                 container.style.opacity = '1';
+                lucide.createIcons();
             }, 300);
         }
 
-        // Initialize default trend to Nashville
-        if(document.getElementById('btn-nashville')) {
-            updateTrend('nashville', document.getElementById('btn-nashville'));
+        function showComingSoon(city, btn) {
+            document.querySelectorAll('.trend-btn').forEach(b => {
+                b.classList.remove('border-blue-500/30', 'bg-blue-500/10', 'shadow-[0_0_20px_rgba(59,130,246,0.15)]', 'transform', 'scale-105');
+                b.classList.add('border-white/10', 'bg-surface');
+                const textWhite = b.querySelector('.text-white');
+                if(textWhite) { textWhite.classList.replace('text-white', 'text-gray-300'); }
+                const textBlue = b.querySelector('.text-blue-400');
+                if(textBlue) { textBlue.classList.replace('text-blue-400', 'text-gray-500'); }
+            });
+            
+            btn.classList.remove('border-white/10', 'bg-surface');
+            btn.classList.add('border-blue-500/30', 'bg-blue-500/10', 'shadow-[0_0_20px_rgba(59,130,246,0.15)]', 'transform', 'scale-105');
+
+            const container = document.getElementById('trend-properties-container');
+            container.style.opacity = '0';
+            setTimeout(() => {
+                container.innerHTML = `
+                    <div class="flex flex-col items-center justify-center p-8 md:p-16 text-center">
+                        <div class="w-20 h-20 rounded-full bg-blue-500/10 flex items-center justify-center mb-6 border border-blue-500/30 shadow-[0_0_30px_rgba(59,130,246,0.2)]">
+                            <i data-lucide="rocket" class="w-10 h-10 text-blue-400"></i>
+                        </div>
+                        <h3 class="font-heading text-3xl font-bold text-white mb-4">Market Expansion in Progress</h3>
+                        <p class="text-gray-400 text-lg max-w-xl mx-auto leading-relaxed mb-6">
+                            Our Edge AI infrastructure is currently being deployed and calibrated for repair facilities in <strong class="text-white">${city}</strong>.
+                        </p>
+                        <div class="inline-flex items-center gap-3 px-4 py-2 rounded-lg bg-black/50 border border-white/10 text-sm font-mono text-gray-500">
+                            <span class="w-2 h-2 rounded-full bg-yellow-500 animate-pulse"></span> Gathering Initial Field Data
+                        </div>
+                    </div>
+                `;
+                container.style.opacity = '1';
+                lucide.createIcons();
+            }, 300);
         }
 
-        // Initial calculation on load
-        if(document.getElementById('slider-rate')) {
-            calculateROI();
+        // Initialize
+        updateTrend('nashville', document.getElementById('btn-nashville'));
+        calculateROI();
+        
+        // Mouse Glow Effect
+        document.addEventListener('mousemove', e => {
+            document.querySelectorAll('.glow-card').forEach(card => {
+                const rect = card.getBoundingClientRect();
+                card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+                card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+            });
+        });
+        
+        // Initialize Apex Widget
+        if (window.ApexWidget) {
+            document.body.appendChild(ApexWidget.create());
         }
-
     </script>
 </body>
 </html>
