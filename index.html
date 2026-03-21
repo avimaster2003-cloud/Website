@@ -108,6 +108,55 @@
             transform: translateY(0);
         }
 
+        @keyframes page-gradient-flow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes page-aura-pulse {
+            0%, 100% { opacity: 0.45; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.03); }
+        }
+        @keyframes page-orb-drift {
+            0% { transform: translate3d(-3%, 0, 0); }
+            100% { transform: translate3d(3%, -2%, 0); }
+        }
+        .page-aura {
+            position: relative;
+            isolation: isolate;
+        }
+        .page-aura::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, rgba(59,130,246,0.08), rgba(14,165,233,0.06), rgba(139,92,246,0.08), rgba(59,130,246,0.08));
+            background-size: 200% 200%;
+            animation: page-gradient-flow 14s ease-in-out infinite, page-aura-pulse 9s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+            mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+        }
+        .page-aura::after {
+            content: "";
+            position: absolute;
+            inset: 6% -8% auto;
+            height: 70%;
+            background:
+                radial-gradient(circle at 15% 50%, rgba(59,130,246,0.12), transparent 30%),
+                radial-gradient(circle at 50% 50%, rgba(139,92,246,0.14), transparent 34%),
+                radial-gradient(circle at 85% 50%, rgba(6,182,212,0.10), transparent 28%);
+            filter: blur(72px);
+            animation: page-orb-drift 18s ease-in-out infinite alternate;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.85;
+        }
+        .page-aura > * {
+            position: relative;
+            z-index: 1;
+        }
+
         /* Scroll Reveal Animations */
         .reveal {
             opacity: 0;
@@ -211,7 +260,8 @@
 
             <!-- Desktop Links -->
             <div class="hidden lg:flex items-center gap-6 xl:gap-8 font-medium text-sm text-gray-400">
-                <a href="#home" onclick="navigate('home')" class="hover:text-white transition-colors nav-link active">Platform</a>
+                <a href="#coming-soon" onclick="navigate('coming-soon')" class="text-purple-400 hover:text-purple-300 animate-pulse transition-colors nav-link">Coming Soon</a>
+                <a href="#home" onclick="navigate('home')" class="hover:text-white transition-colors nav-link active">Home</a>
                 <a href="#features" onclick="navigate('features')" class="hover:text-white transition-colors nav-link">Features</a>
                 <a href="#architecture" onclick="navigate('architecture')" class="hover:text-white transition-colors nav-link">Architecture</a>
                 <a href="#roi" onclick="navigate('roi')" class="hover:text-white transition-colors nav-link">Economics</a>
@@ -221,10 +271,6 @@
 
             <!-- Actions (Desktop) -->
             <div class="hidden lg:flex items-center gap-4">
-                <div class="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono">
-                    <div class="status-dot"></div>
-                    SERVER LIVE: APEX NODE-01
-                </div>
                 <button onclick="window.open('https://calendar.app.google/4pSzDqdvak76bMbM7', '_blank')" class="bg-primary text-white px-5 py-2.5 rounded-md font-medium text-sm hover:bg-primaryGlow transition-colors shadow-[0_0_20px_rgba(59,130,246,0.3)]">
                     Book Demo
                 </button>
@@ -238,7 +284,8 @@
 
         <!-- Smooth Mobile Menu Dropdown -->
         <div id="mobile-menu" class="fixed inset-x-0 top-20 bg-[#05050A]/95 backdrop-blur-xl border-b border-white/10 flex-col p-6 gap-6 shadow-2xl lg:hidden opacity-0 pointer-events-none -translate-y-4 transition-all duration-300 ease-in-out z-40 h-[calc(100vh-5rem)] overflow-y-auto">
-            <a href="#home" onclick="navigate('home')" class="mobile-nav-link text-white font-medium text-lg border-b border-white/5 pb-4">Platform</a>
+            <a href="#coming-soon" onclick="navigate('coming-soon')" class="mobile-nav-link text-purple-400 hover:text-purple-300 font-medium text-lg border-b border-white/5 pb-4 transition-colors animate-pulse">Coming Soon</a>
+            <a href="#home" onclick="navigate('home')" class="mobile-nav-link text-white font-medium text-lg border-b border-white/5 pb-4">Home</a>
             <a href="#features" onclick="navigate('features')" class="mobile-nav-link text-gray-400 hover:text-white font-medium text-lg border-b border-white/5 pb-4 transition-colors">Features</a>
             <a href="#architecture" onclick="navigate('architecture')" class="mobile-nav-link text-gray-400 hover:text-white font-medium text-lg border-b border-white/5 pb-4 transition-colors">Architecture</a>
             <a href="#roi" onclick="navigate('roi')" class="mobile-nav-link text-gray-400 hover:text-white font-medium text-lg border-b border-white/5 pb-4 transition-colors">Economics</a>
@@ -256,20 +303,23 @@
         <!-- ==========================================
              PAGE 1: HOME / LANDING 
         =========================================== -->
-        <section id="page-home" class="page-view active">
+        <section id="page-home" class="page-view page-aura active">
             
             <!-- Hero Section -->
             <div class="pt-16 pb-12 text-center w-full reveal">
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono mb-8 tracking-widest uppercase">
-                    The 24/7 AI Service Advisor
+                    Welcome to VETRA | Virtual Expert Triage & Retention Assistant
                 </div>
                 <h1 class="font-heading text-5xl md:text-7xl font-bold leading-tight mb-8 text-white tracking-tight">
-                    Your Website Should Be Booking Jobs, <br class="hidden md:block">
-                    <span class="animate-alive mt-2 md:mt-0"><span class="gradient-alive">Not Just Sitting There.</span></span>
+                    Capture Every Lead 24/7. Even When the Bays Are Closed. <br class="hidden md:block">
+                    <span class="animate-alive mt-3 md:mt-2 block text-2xl md:text-3xl"><span class="gradient-alive">Pays for itself in 1 to 2 shop hours. The 30-Day First-Bay-Filled Guarantee.</span></span>
                 </h1>
                 <p class="text-lg md:text-xl text-gray-400 mb-10 w-full font-light leading-relaxed">
-Meet your new 24/7 Virtual Service Advisor. We turn your website traffic into text-message leads by giving your customers instant, AI-driven estimate ranges while you sleep. The best part? It pays for itself with just 1-2 hours of shop labor a month.                </p>
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+Plug a fully automated client retention system directly into your website. Our AI safely provides "Soft Quotes" and maintenance schedules, capturing the exact vehicle details and phone numbers of customers who would have otherwise left without calling.
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <button class="w-full sm:w-auto px-8 py-4 bg-surface border border-white/10 hover:border-white/30 text-white rounded-lg font-medium text-lg transition-all">
+                        Open Widget
+                    </button>
                     <button onclick="navigate('roi')" class="w-full sm:w-auto px-8 py-4 bg-primary hover:bg-primaryGlow text-white rounded-lg font-semibold text-lg transition-all shadow-[0_0_30px_rgba(59,130,246,0.3)] hover:shadow-[0_0_40px_rgba(59,130,246,0.5)] transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
                         Calculate Lost Revenue <i data-lucide="calculator" class="w-5 h-5"></i>
                     </button>
@@ -344,83 +394,63 @@ Meet your new 24/7 Virtual Service Advisor. We turn your website traffic into te
                 </div>
             </div>
 
-            <!-- THE PROBLEM STATEMENT SECTION -->
+            <!-- HOW IT WORKS SECTION -->
             <div class="mb-24 reveal">
                 <div class="text-center mb-12">
-                    <h2 class="font-heading text-3xl md:text-4xl font-bold text-white mb-4">The Front Desk is Your Biggest Bottleneck.</h2>
-                    <p class="text-gray-400 w-full text-lg font-light">Traffic to your website means nothing if you aren't capturing it. Here is exactly how traditional shops are bleeding revenue daily.</p>
+                    <h2 class="font-heading text-3xl md:text-4xl font-bold text-white mb-4">How It Works: <span class="text-gradient">The 24/7 Lead Machine</span></h2>
+                    <p class="text-gray-400 w-full text-lg font-light">Apex turns late-night website traffic into qualified leads, booked diagnostics, and long-tail retention without adding work to your front desk.</p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="bg-black/40 border border-white/5 p-6 rounded-2xl group hover:border-red-500/30 transition-colors">
-                        <div class="w-10 h-10 rounded-full bg-red-500/10 flex items-center justify-center mb-4 border border-red-500/20 group-hover:bg-red-500/20 transition-colors">
-                            <i data-lucide="moon" class="w-5 h-5 text-red-400"></i>
-                        </div>
-                        <h4 class="text-white font-bold mb-2">The 9-to-5 Trap</h4>
-                        <p class="text-sm text-gray-400 leading-relaxed">Your shop closes at 6 PM, but cars break down at 9 PM. If a customer can't get an immediate answer on your site, they find someone who will.</p>
-                    </div>
-                    <div class="bg-black/40 border border-white/5 p-6 rounded-2xl group hover:border-orange-500/30 transition-colors">
-                        <div class="w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center mb-4 border border-orange-500/20 group-hover:bg-orange-500/20 transition-colors">
-                            <i data-lucide="phone-missed" class="w-5 h-5 text-orange-400"></i>
-                        </div>
-                        <h4 class="text-white font-bold mb-2">Under-the-Hood Misses</h4>
-                        <p class="text-sm text-gray-400 leading-relaxed">You're knee-deep in a diagnostic. The phone rings and goes to voicemail. That voicemail just cost you a $1,200 repair order.</p>
-                    </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="bg-black/40 border border-white/5 p-6 rounded-2xl group hover:border-blue-500/30 transition-colors">
                         <div class="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center mb-4 border border-blue-500/20 group-hover:bg-blue-500/20 transition-colors">
-                            <i data-lucide="message-square-dashed" class="w-5 h-5 text-blue-400"></i>
+                            <i data-lucide="moon-star" class="w-5 h-5 text-blue-400"></i>
                         </div>
-                        <h4 class="text-white font-bold mb-2">Call-Reluctant Drivers</h4>
-                        <p class="text-sm text-gray-400 leading-relaxed">An entire demographic of younger drivers actively avoids making phone calls. If they can't text for a quote, they bounce.</p>
+                        <h4 class="text-white text-lg font-bold mb-2">Step 1: The "Silent Shopper" & The After-Hours Breakdown</h4>
+                        <p class="text-[15px] text-gray-400 leading-relaxed">A stressed driver lands on your website. Maybe it's 7:00 PM on a Sunday and your shop is closed, or maybe it's a younger driver at 2:00 PM who simply refuses to call around and wait on hold. Instead of bouncing to a competitor with better digital booking, they click your Vetra Virtual Advisor. They type, "My car is making a grinding noise," and upload a photo of their dashboard—getting instant help without ever picking up the phone.</p>
+                    </div>
+                    <div class="bg-black/40 border border-white/5 p-6 rounded-2xl group hover:border-cyan-500/30 transition-colors">
+                        <div class="w-10 h-10 rounded-full bg-cyan-500/10 flex items-center justify-center mb-4 border border-cyan-500/20 group-hover:bg-cyan-500/20 transition-colors">
+                            <i data-lucide="badge-dollar-sign" class="w-5 h-5 text-cyan-400"></i>
+                        </div>
+                        <h4 class="text-white text-lg font-bold mb-2">Step 2: The Soft Quote</h4>
+                        <p class="text-[15px] text-gray-400 leading-relaxed">Our locally hosted AI instantly analyzes the issue and their specific vehicle. It provides a transparent estimated price range using your labor rates. To get this answer, the customer happily provides their name, phone number, and vehicle mileage.</p>
                     </div>
                     <div class="bg-black/40 border border-white/5 p-6 rounded-2xl group hover:border-emerald-500/30 transition-colors">
                         <div class="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center mb-4 border border-emerald-500/20 group-hover:bg-emerald-500/20 transition-colors">
-                            <i data-lucide="user-check" class="w-5 h-5 text-emerald-400"></i>
+                            <i data-lucide="messages-square" class="w-5 h-5 text-emerald-400"></i>
                         </div>
-                        <h4 class="text-white font-bold mb-2">Website Ghosting</h4>
-                        <p class="text-sm text-gray-400 leading-relaxed">Getting website hits means nothing if they just check your hours and leave. We force them to drop a name and symptom before disappearing.</p>
+                        <h4 class="text-white text-lg font-bold mb-2">Step 3: The Handoff</h4>
+                        <p class="text-[15px] text-gray-400 leading-relaxed">You wake up on Monday morning with an automated text waiting for you containing the customer's name, number, year/make/model, exact symptoms, and the AI's estimate. You simply call them and say, "I have your diagnostic ready, let's get you in the bay."</p>
+                    </div>
+                    <div class="bg-black/40 border border-white/5 p-6 rounded-2xl group hover:border-purple-500/30 transition-colors">
+                        <div class="w-10 h-10 rounded-full bg-purple-500/10 flex items-center justify-center mb-4 border border-purple-500/20 group-hover:bg-purple-500/20 transition-colors">
+                            <i data-lucide="repeat-2" class="w-5 h-5 text-purple-400"></i>
+                        </div>
+                        <h4 class="text-white text-lg font-bold mb-2">Step 4: The Automated Retention Loop</h4>
+                        <p class="text-[15px] text-gray-400 leading-relaxed">If that customer's mileage ends in a 5k interval, our system automatically texts them 3 months later with a detailed service plan for their upcoming interval and drops your direct booking link. They become a customer for life, and you didn't lift a finger.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- THE FUTURE / MARKET LOCKOUT BANNER -->
+            <!-- DO WE GOT YOUR ATTENTION CTA -->
             <div class="mb-24 reveal">
                 <div class="glow-card rounded-3xl border border-blue-500/30 p-8 md:p-12 relative overflow-hidden text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-8 bg-gradient-to-r from-blue-900/20 to-purple-900/20">
                     <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2000&auto=format&fit=crop')] opacity-5 bg-cover mix-blend-overlay"></div>
                     
                     <div class="relative z-10 md:w-2/3">
-                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/20 border border-red-500/30 text-red-400 text-[10px] font-mono mb-4 uppercase tracking-widest font-bold animate-pulse">
-                            Market Lockout Warning
-                        </div>
-                        <h3 class="font-heading text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">The future of automotive quoting is changing. <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Be the first to adapt.</span></h3>
+                        <h3 class="font-heading text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">Do We Got Your Attention?</h3>
                         <p class="text-gray-300 text-lg leading-relaxed">
-                            The first shop in your zip code to offer instant, AI-driven, 24/7 SMS quotes will completely monopolize the local market share. Secure your territory with our promotional pricing before the shop down the street beats you to it.
+                            We know what you're thinking—this actually works. And we know you're ready to see how it transforms your shop.
                         </p>
                     </div>
-                    <div class="relative z-10 md:w-1/3 flex justify-center md:justify-end w-full">
-                        <button onclick="navigate('roi')" class="w-full md:w-auto px-8 py-5 bg-white text-black rounded-xl font-bold text-lg hover:bg-gray-200 transition-all shadow-[0_0_40px_rgba(255,255,255,0.2)] flex flex-col items-center group">
-                            <span>Claim Your Territory</span>
-                            <span class="text-[10px] font-mono text-gray-500 mt-1 uppercase tracking-widest group-hover:text-blue-600 transition-colors">Lock in Promo Pricing</span>
+                    <div class="relative z-10 md:w-1/3 flex flex-col gap-3 justify-center md:justify-end w-full">
+                            <button onclick="navigate('roi')" class="w-full px-8 py-4 bg-surface border border-green-500/30 hover:border-green-400/50 text-green-300 rounded-xl font-bold text-lg transition-all shadow-[0_0_20px_rgba(34,197,94,0.3)] animate-pulse hover:animate-none hover:text-white hover:shadow-[0_0_30px_rgba(34,197,94,0.5)]">
+                            View Pricing
                         </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- DIRECT WIDGET CALL TO ACTION -->
-            <div class="mb-24 reveal mt-10">
-                <div class="glow-card rounded-3xl border border-blue-500/30 p-8 md:p-16 text-center relative overflow-hidden bg-gradient-to-br from-blue-900/20 to-purple-900/20 shadow-[0_0_50px_rgba(59,130,246,0.15)] w-full">
-                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2000&auto=format&fit=crop')] opacity-5 bg-cover bg-center mix-blend-overlay"></div>
-                    <div class="relative z-10">
-                        <div class="w-20 h-20 mx-auto bg-blue-500/10 rounded-full flex items-center justify-center mb-6 border border-blue-500/30 shadow-[0_0_30px_rgba(59,130,246,0.4)]">
-                            <i data-lucide="bot" class="w-10 h-10 text-blue-400"></i>
-                        </div>
-                        <h2 class="font-heading text-3xl md:text-5xl font-bold text-white mb-4">Test Drive The AI Now</h2>
-                        <p class="text-gray-400 text-lg md:text-xl w-full mb-8 leading-relaxed">
-                            Our Edge MoE Node-01 is currently live and active on this page. Look at the bottom right corner of your screen to interact with the proprietary Apex Virtual Advisor.
-                        </p>
-                        <div class="flex items-center justify-center gap-2 text-blue-400 font-mono text-sm uppercase tracking-widest font-bold">
-                            Widget Active <i data-lucide="arrow-down-right" class="w-6 h-6 animate-bounce ml-2"></i>
-                        </div>
+                        <button onclick="navigate('coming-soon')" class="w-full px-8 py-4 bg-surface border border-purple-500/30 hover:border-purple-400/50 text-purple-300 rounded-xl font-bold text-lg transition-all shadow-[0_0_20px_rgba(168,85,247,0.3)] animate-pulse hover:animate-none hover:text-white hover:shadow-[0_0_30px_rgba(168,85,247,0.5)]">
+                            Explore Coming Soon
+                        </button>
                     </div>
                 </div>
             </div>
@@ -430,7 +460,7 @@ Meet your new 24/7 Virtual Service Advisor. We turn your website traffic into te
         <!-- ==========================================
              PAGE 2: FEATURES
         =========================================== -->
-        <section id="page-features" class="page-view">
+        <section id="page-features" class="page-view page-aura">
             <div class="w-full text-center pt-12 pb-16 reveal">
                 <h1 class="font-heading text-4xl md:text-5xl font-bold text-white mb-6">Built For <span class="text-gradient">Service Writers.</span></h1>
                 <p class="text-lg text-gray-400 font-light">Apex AI is custom-engineered to qualify leads, gather diagnostic data, and quote accurately based on your shop's specific parameters.</p>
@@ -456,19 +486,97 @@ Meet your new 24/7 Virtual Service Advisor. We turn your website traffic into te
                     <h3 class="text-3xl font-heading font-bold text-white mb-4 group-hover:text-blue-400 transition-colors">Instant SMS Handoff</h3>
                     <p class="text-gray-400 leading-relaxed">The second the AI qualifies a hot lead, it sends a formatted text message straight to your pocket with the customer's car, symptom, and quote.</p>
                 </div>
+                <div class="glow-card rounded-2xl p-10 reveal group md:col-span-2" style="transition-delay: 200ms;">
+                    <div class="text-xs font-mono text-blue-400 tracking-widest uppercase mb-4">The Click Magnet Search Advantage</div>
+                    <h3 class="text-3xl font-heading font-bold text-white mb-5 group-hover:text-blue-400 transition-colors">Skyrocket Your Local Google Clicks</h3>
+                    <div class="space-y-5 text-gray-400 leading-relaxed">
+                        <p><span class="text-white font-semibold">The Problem:</span> Ranking on Google is useless if your listing looks exactly like the shop down the street. If your only call-to-action is "Call Us," modern drivers will scroll right past you.</p>
+                        <p><span class="text-white font-semibold">The Apex Solution:</span> Update your Google Ads and search descriptions to say: "Get an Instant Online Estimate" and "Upload a Photo of Your Issue." You instantly become the most attractive option on the search page.</p>
+                        <div>
+                            <p class="text-white font-semibold mb-3">The ROI for Your Shop:</p>
+                            <ul class="space-y-2">
+                                <li>Steal Competitor Traffic: Drivers actively avoiding phone calls will click your link over the competition every single time.</li>
+                                <li>Lower Ad Costs: Google rewards higher Click-Through Rates with cheaper ad costs. You get more traffic for less money.</li>
+                                <li>Instant Conversions: Once they click to get their estimate, our Vetra Advisor captures their name and number before they ever leave the page.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             PAGE 3: COMING SOON
+        =========================================== -->
+        <section id="page-coming-soon" class="page-view page-aura">
+            <div class="w-full text-center pt-12 pb-16 reveal">
+                <h1 class="font-heading text-4xl md:text-5xl font-bold text-white mb-6">Company <span class="text-purple-400">Roadmap</span></h1>
+                <p class="text-lg text-gray-400 font-light">A transparent build pipeline for investors and customers showing what we launched, what is in active build, and what ships next.</p>
+            </div>
+
+            <div class="glow-card border border-purple-500/20 bg-purple-500/5 rounded-3xl p-8 lg:p-12 mb-10 reveal relative overflow-hidden">
+                <div class="absolute -top-24 -right-20 w-64 h-64 rounded-full bg-purple-500/15 blur-3xl"></div>
+                <div class="relative z-10">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-300 text-xs font-mono mb-5 tracking-widest uppercase animate-pulse">
+                        <i data-lucide="rocket" class="w-3 h-3"></i> Coming Soon
+                    </div>
+                    <h2 class="font-heading text-3xl md:text-5xl font-bold text-white leading-tight mb-5">The Apex Search Network</h2>
+                    <p class="text-gray-300 text-lg leading-relaxed w-full max-w-4xl">Stop fighting for local Google Ads space. We are building the ultimate spontaneous booking engine, designed exclusively to fill your empty bays on demand.</p>
+                </div>
+            </div>
+
+            <div class="glow-card rounded-2xl p-8 lg:p-10 mb-10 reveal border border-white/5">
+                <div class="inline-flex items-center gap-2 text-purple-300 text-xs font-mono tracking-widest uppercase mb-6">
+                    <i data-lucide="workflow" class="w-3 h-3"></i> How It Works
+                </div>
+                <p class="text-gray-400 mb-8 leading-relaxed">We are launching a consumer-facing platform where local drivers can instantly search for repair estimates in their area. When a customer in your city types in their vehicle issue, the Apex Network goes to work:</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-black/30 border border-white/10 rounded-2xl p-6 reveal group">
+                        <div class="text-xs font-mono text-purple-300 tracking-widest uppercase mb-3">The Ping</div>
+                        <h4 class="text-xl font-heading font-bold text-white mb-3">Instant Lead Alert</h4>
+                        <p class="text-sm text-gray-400 leading-relaxed">Your shop dashboard instantly receives a ping with the customer's vehicle data and estimated repair request.</p>
+                    </div>
+                    <div class="bg-black/30 border border-white/10 rounded-2xl p-6 reveal group" style="transition-delay: 100ms;">
+                        <div class="text-xs font-mono text-purple-300 tracking-widest uppercase mb-3">The Fill</div>
+                        <h4 class="text-xl font-heading font-bold text-white mb-3">Capture Empty Bays</h4>
+                        <p class="text-sm text-gray-400 leading-relaxed">If you have an empty bay or a canceled appointment, you accept the ping and claim the booking.</p>
+                    </div>
+                    <div class="bg-black/30 border border-white/10 rounded-2xl p-6 reveal group" style="transition-delay: 200ms;">
+                        <div class="text-xs font-mono text-purple-300 tracking-widest uppercase mb-3">The Close</div>
+                        <h4 class="text-xl font-heading font-bold text-white mb-3">Commitment Up Front</h4>
+                        <p class="text-sm text-gray-400 leading-relaxed">The customer pays a small base holding fee through our platform to lock in their slot, then gets routed straight to your garage.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glow-card rounded-3xl p-8 lg:p-10 mb-12 reveal border border-amber-400/20 bg-gradient-to-br from-amber-500/5 via-transparent to-purple-500/5">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-400/30 text-amber-300 text-xs font-mono mb-6 tracking-widest uppercase">
+                    <i data-lucide="crown" class="w-3 h-3"></i> VIP Grandfather Clause
+                </div>
+                <p class="text-gray-300 mb-8 leading-relaxed">When the Apex Search Network goes live, it will be a premium tiered service. As an early widget adopter, you don't just get access, you get VIP status for life.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-black/30 border border-white/10 rounded-2xl p-6">
+                        <div class="text-xs font-mono text-gray-400 tracking-widest uppercase mb-3">Standard Tier</div>
+                        <p class="text-sm text-gray-300 leading-relaxed">Receives network pings with a <span class="text-white font-semibold">10-minute delay</span> and a standard local capture radius.</p>
+                    </div>
+                    <div class="bg-purple-500/10 border border-purple-400/30 rounded-2xl p-6 shadow-[0_0_30px_rgba(168,85,247,0.15)]">
+                        <div class="text-xs font-mono text-purple-300 tracking-widest uppercase mb-3">Your VIP Tier</div>
+                        <p class="text-sm text-gray-200 leading-relaxed">You bypass the line with <span class="text-white font-semibold">instant zero-delay pings</span>, plus your exclusive capture radius is permanently expanded by an additional <span class="text-white font-semibold">10 miles</span>. You get first rights to local leads before standard shops even see them.</p>
+                    </div>
+                </div>
             </div>
 
             <!-- Deep Dive: Vision Model -->
-            <div class="glow-card border border-white/5 rounded-3xl p-8 lg:p-12 mb-20 reveal mt-12">
+            <div class="glow-card border border-white/5 rounded-3xl p-8 lg:p-12 mb-20 reveal mt-4">
                 <div class="flex flex-col lg:flex-row items-center gap-12">
                     <div class="lg:w-1/2">
                         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-mono mb-6">
                             <i data-lucide="scan-face" class="w-3 h-3"></i> Vision-Language Integration
-                            <span class="bg-purple-500/20 text-purple-300 text-[9px] px-2 py-0.5 rounded border border-purple-500/30 animate-pulse font-bold tracking-widest uppercase ml-1">Coming Soon</span>
+                            <span class="bg-purple-500/20 text-purple-300 text-[9px] px-2 py-0.5 rounded border border-purple-500/30 font-bold tracking-widest uppercase ml-1">Released 03.18.26</span>
                         </div>
-                        <h3 class="font-heading text-4xl font-bold text-white mb-6 leading-tight">Customers don't know car parts.<br><span class="text-purple-400">Our AI does.</span></h3>
+                        <h3 class="font-heading text-4xl font-bold text-white mb-6 leading-tight">Customers don't know car parts.<br><span class="text-purple-400">VETRA does.</span></h3>
                         <p class="text-gray-400 mb-8 leading-relaxed text-lg font-light">
-                            When a customer tries to describe a "weird metal bar hanging down," they get frustrated and leave. Apex AI allows them to instantly upload a photo of the damage from their driveway. 
+                            When a customer tries to describe a "weird metal bar hanging down," they get frustrated and leave. VETRA allows them to instantly upload a photo of the damage from their driveway.
                         </p>
                         <ul class="space-y-5">
                             <li class="flex items-start gap-4">
@@ -491,7 +599,7 @@ Meet your new 24/7 Virtual Service Advisor. We turn your website traffic into te
                             </li>
                         </ul>
                     </div>
-                    
+
                     <!-- Vision Mockup UI -->
                     <div class="lg:w-1/2 w-full">
                         <div class="bg-black/50 border border-white/10 rounded-2xl overflow-hidden shadow-2xl relative">
@@ -532,9 +640,9 @@ Meet your new 24/7 Virtual Service Advisor. We turn your website traffic into te
         </section>
 
         <!-- ==========================================
-             PAGE 3: ARCHITECTURE
+             PAGE 4: ARCHITECTURE
         =========================================== -->
-        <section id="page-architecture" class="page-view">
+        <section id="page-architecture" class="page-view page-aura">
             <div class="w-full text-center pt-12 pb-16 reveal">
                 <h1 class="font-heading text-4xl md:text-5xl font-bold text-white mb-6">Proprietary <span class="text-gradient">Hardware.</span></h1>
                 <p class="text-lg text-gray-400 font-light">We built a proprietary, isolated inference engine that runs directly on Mac Studio architecture. Never rely on third-party SaaS APIs again.</p>
@@ -695,7 +803,7 @@ Meet your new 24/7 Virtual Service Advisor. We turn your website traffic into te
         <!-- ==========================================
              PAGE 4: ECONOMICS (PROMO ADDED)
         =========================================== -->
-        <section id="page-roi" class="page-view">
+        <section id="page-roi" class="page-view page-aura">
             <div class="w-full pt-12 pb-16 reveal">
                 <div class="text-center mb-12">
                     <h1 class="font-heading text-4xl md:text-5xl font-bold text-white mb-6">Stop Bleeding <span class="text-emerald-400">Revenue.</span></h1>
@@ -705,9 +813,9 @@ Meet your new 24/7 Virtual Service Advisor. We turn your website traffic into te
                 </div>
 
                 <div class="flex flex-wrap justify-center gap-4 mb-12">
-                    <button onclick="setROIPreset(1, this)" class="px-6 py-2 rounded-full border border-white/10 bg-surface hover:bg-white/5 text-sm font-medium text-gray-300 transition-colors focus:ring-2 focus:ring-emerald-500">1-2 Bay Shop</button>
+                    <button onclick="setROIPreset(1, this)" class="px-6 py-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-sm font-medium text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.2)] focus:ring-2 focus:ring-emerald-500">1-2 Bay Shop</button>
                     <button onclick="setROIPreset(3, this)" class="px-6 py-2 rounded-full border border-white/10 bg-surface hover:bg-white/5 text-sm font-medium text-gray-300 transition-colors focus:ring-2 focus:ring-emerald-500">3-4 Bay Shop</button>
-                    <button onclick="setROIPreset(5, this)" class="px-6 py-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-sm font-medium text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.2)] focus:ring-2 focus:ring-emerald-500">5+ Bay Facility</button>
+                    <button onclick="setROIPreset(5, this)" class="px-6 py-2 rounded-full border border-white/10 bg-surface hover:bg-white/5 text-sm font-medium text-gray-300 transition-colors focus:ring-2 focus:ring-emerald-500">5+ Bay Facility</button>
                 </div>
 
                 <div class="flex flex-col lg:flex-row gap-8">
@@ -849,7 +957,7 @@ Meet your new 24/7 Virtual Service Advisor. We turn your website traffic into te
         <!-- ==========================================
              PAGE 5: CASE STUDIES (TRENDS)
         =========================================== -->
-        <section id="page-trends" class="page-view">
+        <section id="page-trends" class="page-view page-aura">
             <div class="w-full pt-12 pb-16 reveal">
                 
                 <div class="text-center mb-12">
@@ -960,7 +1068,7 @@ Meet your new 24/7 Virtual Service Advisor. We turn your website traffic into te
         <!-- ==========================================
              PAGE 6: SECURITY
         =========================================== -->
-        <section id="page-security" class="page-view">
+        <section id="page-security" class="page-view page-aura">
             <div class="w-full text-center pt-12 pb-16 reveal">
                 <div class="w-16 h-16 mx-auto bg-emerald-500/10 rounded-full flex items-center justify-center border border-emerald-500/20 mb-6">
                     <i data-lucide="shield" class="w-8 h-8 text-emerald-400"></i>
@@ -1101,9 +1209,16 @@ Meet your new 24/7 Virtual Service Advisor. We turn your website traffic into te
 
             // Update Nav Styling
             document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(link => {
-                link.classList.remove('text-white', 'active', 'text-blue-400');
-                if(link.getAttribute('href') === `#${pageId}`) {
-                    link.classList.add(pageId === 'trends' ? 'text-blue-400' : 'text-white', 'active');
+                const isComingSoon = link.getAttribute('href') === '#coming-soon';
+                if (!isComingSoon) {
+                    link.classList.remove('text-white', 'active', 'text-blue-400', 'text-purple-400');
+                }
+                if(link.getAttribute('href') === `#${pageId}` && !isComingSoon) {
+                    const activeColor = pageId === 'trends' ? 'text-blue-400' : 'text-white';
+                    link.classList.add(activeColor, 'active');
+                } else if (isComingSoon) {
+                    // Always keep Coming Soon purple and pulsing
+                    link.classList.add('text-purple-400', 'animate-pulse', 'hover:text-purple-300', 'transition-colors');
                 }
             });
             
