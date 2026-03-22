@@ -317,7 +317,7 @@
                 <p class="text-lg md:text-xl text-gray-400 mb-10 w-full font-light leading-relaxed">
 Plug a fully automated client retention system directly into your website. Our AI safely provides "Soft Quotes" and maintenance schedules, capturing the exact vehicle details and phone numbers of customers who would have otherwise left without calling.
                     <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <button class="w-full sm:w-auto px-8 py-4 bg-surface border border-white/10 hover:border-white/30 text-white rounded-lg font-medium text-lg transition-all">
+                    <button onclick="openWidgetFromCTA()" class="w-full sm:w-auto px-8 py-4 bg-surface border border-white/10 hover:border-white/30 text-white rounded-lg font-medium text-lg transition-all">
                         Open Widget
                     </button>
                     <button onclick="navigate('roi')" class="w-full sm:w-auto px-8 py-4 bg-primary hover:bg-primaryGlow text-white rounded-lg font-semibold text-lg transition-all shadow-[0_0_30px_rgba(59,130,246,0.3)] hover:shadow-[0_0_40px_rgba(59,130,246,0.5)] transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
@@ -1179,10 +1179,59 @@ Plug a fully automated client retention system directly into your website. Our A
     <!-- WIDGET DROP ZONE: Paste your n8n script tags inside this wrapper -->
     <div id="apex-widget-wrapper">
         <script src="https://widget.apexconversiongroup.com/widget.js" data-shop-id="1019" defer></script>
+        <script>
+            (function mountApexWidgetFallback() {
+                let tries = 0;
+                const maxTries = 30;
+                const intervalMs = 150;
+
+                const tryMount = () => {
+                    if (document.getElementById('apex-widget-container')) return;
+                    if (window.ApexWidget && typeof window.ApexWidget.create === 'function') {
+                        const wrapper = document.getElementById('apex-widget-wrapper') || document.body;
+                        wrapper.appendChild(window.ApexWidget.create());
+                        return;
+                    }
+
+                    tries += 1;
+                    if (tries < maxTries) setTimeout(tryMount, intervalMs);
+                };
+
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', tryMount, { once: true });
+                } else {
+                    tryMount();
+                }
+            })();
+        </script>
     </div>
 
     <script>
         lucide.createIcons();
+
+        function openWidgetFromCTA() {
+            // Ensure widget is not hidden by page-level isolation.
+            document.body.classList.remove('hide-n8n-widget');
+
+            let tries = 0;
+            const maxTries = 20;
+
+            const tryOpen = () => {
+                if (window.ApexWidget && typeof window.ApexWidget.openChat === 'function') {
+                    window.ApexWidget.openChat();
+                    return;
+                }
+                if (window.ApexWidget && typeof window.ApexWidget.create === 'function' && !document.getElementById('apex-widget-container')) {
+                    const wrapper = document.getElementById('apex-widget-wrapper') || document.body;
+                    wrapper.appendChild(window.ApexWidget.create());
+                }
+
+                tries += 1;
+                if (tries < maxTries) setTimeout(tryOpen, 120);
+            };
+
+            tryOpen();
+        }
 
         // Mobile Menu Toggle (Smooth Animation)
         function toggleMobileMenu() {
