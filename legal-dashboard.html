@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VETRA Legal and Lead Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background:#06090f; color:#d1d5db; font-family: Inter, Arial, sans-serif; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border-bottom: 1px solid rgba(255,255,255,0.08); padding: 10px 8px; text-align: left; vertical-align: top; }
+    th { color: #fff; font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; }
+    td { font-size: 13px; }
+  </style>
+</head>
+<body>
+  <main class="max-w-7xl mx-auto px-6 py-10">
+    <a href="/" class="text-cyan-400 underline">Back to Site</a>
+    <h1 class="text-3xl font-bold text-white mt-3">Legal and Lead Dashboard</h1>
+    <p class="text-sm text-gray-400 mt-2">View captured events and signed contract packets. Reads use your admin key when configured.</p>
+
+    <section class="mt-6 border border-white/10 bg-black/30 rounded-2xl p-4">
+      <div class="grid md:grid-cols-4 gap-3">
+        <div class="md:col-span-2">
+          <label class="block text-xs text-gray-400 mb-1">API Base</label>
+          <input id="api-base" class="w-full px-3 py-2 bg-black/50 border border-white/10 rounded-lg" value="https://pay.apexconversiongroup.com">
+        </div>
+        <div>
+          <label class="block text-xs text-gray-400 mb-1">Admin Key</label>
+          <input id="admin-key" type="password" class="w-full px-3 py-2 bg-black/50 border border-white/10 rounded-lg" placeholder="Optional if backend enforces key">
+        </div>
+        <div>
+          <label class="block text-xs text-gray-400 mb-1">Limit</label>
+          <input id="limit" type="number" min="1" max="1000" value="200" class="w-full px-3 py-2 bg-black/50 border border-white/10 rounded-lg">
+        </div>
+      </div>
+      <div class="mt-4 flex flex-wrap gap-2">
+        <button id="refresh-btn" class="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg font-semibold">Refresh Data</button>
+        <button id="export-events-btn" class="px-4 py-2 border border-white/20 hover:bg-white/5 rounded-lg">Export Events CSV</button>
+        <button id="export-contracts-btn" class="px-4 py-2 border border-white/20 hover:bg-white/5 rounded-lg">Export Contracts CSV</button>
+      </div>
+      <p id="status" class="text-xs text-gray-400 mt-3">Ready.</p>
+    </section>
+
+    <section class="mt-8 grid lg:grid-cols-2 gap-6">
+      <div class="border border-white/10 bg-black/30 rounded-2xl p-4 overflow-auto">
+        <h2 class="text-xl font-semibold text-white mb-3">Events</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Timestamp</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Shop</th>
+              <th>Tier</th>
+            </tr>
+          </thead>
+          <tbody id="events-body"></tbody>
+        </table>
+      </div>
+      <div class="border border-white/10 bg-black/30 rounded-2xl p-4 overflow-auto">
+        <h2 class="text-xl font-semibold text-white mb-3">Contract Packets</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Timestamp</th>
+              <th>Signer</th>
+              <th>Email</th>
+              <th>DBA</th>
+              <th>Plan</th>
+            </tr>
+          </thead>
+          <tbody id="contracts-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="mt-8 border border-white/10 bg-black/30 rounded-2xl p-4">
+      <h2 class="text-xl font-semibold text-white mb-3">Packet Preview</h2>
+      <p class="text-xs text-gray-400 mb-2">Click a contract row to preview full packet text.</p>
+      <textarea id="packet-preview" class="w-full h-64 p-3 bg-black/50 border border-white/10 rounded-lg text-xs"></textarea>
+    </section>
+  </main>
+
+  <script>
+    const eventsBody = document.getElementById('events-body');
+    const contractsBody = document.getElementById('contracts-body');
+    const statusEl = document.getElementById('status');
+    const previewEl = document.getElementById('packet-preview');
+
+    let latestEvents = [];
+    let latestContracts = [];
+
+    function getApiBase() {
+      return document.getElementById('api-base').value.trim().replace(/\/$/, '');
+    }
+
+    function getAdminKey() {
+      return document.getElementById('admin-key').value.trim();
+    }
+
+    function getLimit() {
+      const n = Number(document.getElementById('limit').value || 200);
+      return Math.max(1, Math.min(1000, n));
+    }
+
+    function authHeaders() {
+      const key = getAdminKey();
+      if (!key) return {};
+      return { 'x-admin-key': key };
+    }
+
+    function esc(v) {
+      return String(v ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    async function loadData() {
+      const base = getApiBase();
+      const limit = getLimit();
+      statusEl.textContent = 'Loading...';
+
+      try {
+        const [eventsResp, contractsResp] = await Promise.all([
+          fetch(`${base}/api/event?limit=${limit}`, { headers: authHeaders() }),
+          fetch(`${base}/api/contract-packet?limit=${limit}`, { headers: authHeaders() })
+        ]);
+
+        if (!eventsResp.ok) throw new Error(`Events fetch failed (${eventsResp.status})`);
+        if (!contractsResp.ok) throw new Error(`Contracts fetch failed (${contractsResp.status})`);
+
+        const eventsJson = await eventsResp.json();
+        const contractsJson = await contractsResp.json();
+
+        latestEvents = (eventsJson.events || []).slice().reverse();
+        latestContracts = (contractsJson.packets || []).slice().reverse();
+
+        renderEvents();
+        renderContracts();
+
+        statusEl.textContent = `Loaded ${latestEvents.length} events and ${latestContracts.length} contracts.`;
+      } catch (err) {
+        statusEl.textContent = `Load failed: ${err.message}`;
+      }
+    }
+
+    function renderEvents() {
+      eventsBody.innerHTML = latestEvents.map((e) => {
+        const payload = e.payload || {};
+        return `<tr>
+          <td>${esc(e.ts || '')}</td>
+          <td>${esc(e.name || '')}</td>
+          <td>${esc(payload.ownerEmail || payload.email || '')}</td>
+          <td>${esc(payload.shopName || '')}</td>
+          <td>${esc(payload.tier || '')}</td>
+        </tr>`;
+      }).join('');
+    }
+
+    function renderContracts() {
+      contractsBody.innerHTML = latestContracts.map((c, i) => {
+        return `<tr data-idx="${i}" class="cursor-pointer hover:bg-white/5">
+          <td>${esc(c.ts || '')}</td>
+          <td>${esc(c.signerName || '')}</td>
+          <td>${esc(c.signerEmail || '')}</td>
+          <td>${esc(c.dbaName || '')}</td>
+          <td>${esc(c.selectedPlan || '')}</td>
+        </tr>`;
+      }).join('');
+
+      contractsBody.querySelectorAll('tr[data-idx]').forEach((row) => {
+        row.addEventListener('click', () => {
+          const idx = Number(row.getAttribute('data-idx'));
+          const packet = latestContracts[idx]?.packetText || '';
+          previewEl.value = packet;
+        });
+      });
+    }
+
+    function toCsv(rows, headers) {
+      const escCsv = (v) => `"${String(v ?? '').replace(/"/g, '""')}"`;
+      const headerLine = headers.map((h) => escCsv(h.key)).join(',');
+      const dataLines = rows.map((r) => headers.map((h) => escCsv(h.get(r))).join(','));
+      return [headerLine, ...dataLines].join('\n');
+    }
+
+    function downloadFile(fileName, content, type = 'text/plain') {
+      const blob = new Blob([content], { type });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = fileName;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+
+    document.getElementById('refresh-btn').addEventListener('click', loadData);
+
+    document.getElementById('export-events-btn').addEventListener('click', () => {
+      const csv = toCsv(latestEvents, [
+        { key: 'ts', get: (e) => e.ts },
+        { key: 'name', get: (e) => e.name },
+        { key: 'email', get: (e) => (e.payload || {}).ownerEmail || (e.payload || {}).email || '' },
+        { key: 'shopName', get: (e) => (e.payload || {}).shopName || '' },
+        { key: 'tier', get: (e) => (e.payload || {}).tier || '' },
+        { key: 'ip', get: (e) => e.ip || '' },
+        { key: 'userAgent', get: (e) => e.userAgent || '' }
+      ]);
+      downloadFile('vetra-events.csv', csv, 'text/csv');
+    });
+
+    document.getElementById('export-contracts-btn').addEventListener('click', () => {
+      const csv = toCsv(latestContracts, [
+        { key: 'ts', get: (c) => c.ts },
+        { key: 'signerEmail', get: (c) => c.signerEmail },
+        { key: 'signerName', get: (c) => c.signerName },
+        { key: 'dbaName', get: (c) => c.dbaName },
+        { key: 'selectedPlan', get: (c) => c.selectedPlan },
+        { key: 'packetText', get: (c) => c.packetText },
+        { key: 'ip', get: (c) => c.ip || '' },
+        { key: 'userAgent', get: (c) => c.userAgent || '' }
+      ]);
+      downloadFile('vetra-contracts.csv', csv, 'text/csv');
+    });
+
+    const storedApiBase = localStorage.getItem('vetra_admin_api_base');
+    const storedAdminKey = localStorage.getItem('vetra_admin_key');
+    if (storedApiBase) document.getElementById('api-base').value = storedApiBase;
+    if (storedAdminKey) document.getElementById('admin-key').value = storedAdminKey;
+
+    document.getElementById('api-base').addEventListener('change', () => {
+      localStorage.setItem('vetra_admin_api_base', getApiBase());
+    });
+
+    document.getElementById('admin-key').addEventListener('change', () => {
+      localStorage.setItem('vetra_admin_key', getAdminKey());
+    });
+
+    loadData();
+  </script>
+</body>
+</html>

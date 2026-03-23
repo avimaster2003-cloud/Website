@@ -10,6 +10,7 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 10000;
+const ADMIN_API_KEY = (process.env.ADMIN_API_KEY || '').trim();
 const DATA_DIR = path.join(__dirname, 'data');
 const EVENTS_FILE = path.join(DATA_DIR, 'events.jsonl');
 const CONTRACTS_FILE = path.join(DATA_DIR, 'contracts.jsonl');
@@ -79,6 +80,17 @@ function readLatestJsonl(filePath, limit = 100) {
   });
 }
 
+function requireAdminKey(req, res, next) {
+  if (!ADMIN_API_KEY) return next();
+
+  const supplied = (req.headers['x-admin-key'] || req.query.key || '').toString().trim();
+  if (!supplied || supplied !== ADMIN_API_KEY) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  return next();
+}
+
 app.post('/api/event', (req, res) => {
   try {
     const { name, payload } = req.body || {};
@@ -103,7 +115,7 @@ app.post('/api/event', (req, res) => {
   }
 });
 
-app.get('/api/event', (req, res) => {
+app.get('/api/event', requireAdminKey, (req, res) => {
   try {
     const limit = Number(req.query.limit || 100);
     const events = readLatestJsonl(EVENTS_FILE, limit);
@@ -141,7 +153,7 @@ app.post('/api/contract-packet', (req, res) => {
   }
 });
 
-app.get('/api/contract-packet', (req, res) => {
+app.get('/api/contract-packet', requireAdminKey, (req, res) => {
   try {
     const limit = Number(req.query.limit || 50);
     const packets = readLatestJsonl(CONTRACTS_FILE, limit);
