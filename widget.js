@@ -18,322 +18,55 @@
             return new URLSearchParams(window.location.search);
         }
     })();
-
-    const SCRIPT_BASE_URL = (function(){
-        try {
-            let s = document.currentScript;
-            if (!s) {
-                const scripts = document.getElementsByTagName('script');
-                s = scripts[scripts.length - 1];
-            }
-            const src = s && s.src ? s.src : window.location.href;
-            const resolved = new URL(src, window.location.href);
-            return new URL('./', resolved).toString();
-        } catch (e) {
-            return window.location.href;
-        }
-    })();
-
     window.ApexWidget = {
-        BUILD_VERSION: "3.18.v8",
         // Configuration (read overrides from script query params)
         SHOP_ID: SCRIPT_PARAMS.get('shopId') || "1019",
         PRIMARY_COLOR: SCRIPT_PARAMS.get('primaryColor') || SCRIPT_PARAMS.get('primary') || "#3B82F6",
         SECONDARY_COLOR: SCRIPT_PARAMS.get('secondaryColor') || SCRIPT_PARAMS.get('secondary') || "#1E293B",
         TEXT_COLOR: SCRIPT_PARAMS.get('textColor') || SCRIPT_PARAMS.get('text') || "#F1F5F9",
-        SESSION_ID: "user_" + Math.random().toString(36).substr(2, 9),
-        // Optional URL to fetch shop config (colors) by shop id.
-
-        N8N_WEBHOOK_URL: "https://api.apexconversiongroup.com/webhook/281ba64b-e245-4ea6-9003-74d79997eb34",
+        SESSION_ID: (function() {
+            try {
+                const existing = window.sessionStorage.getItem('apex_widget_session_id');
+                if (existing) return existing;
+                const created = 'user_' + Math.random().toString(36).substr(2, 9);
+                window.sessionStorage.setItem('apex_widget_session_id', created);
+                return created;
+            } catch (e) {
+                return 'user_' + Math.random().toString(36).substr(2, 9);
+            }
+        })(),
+        // Optional URL to fetch shop config (colors) by shop id. Can be provided
+        // via script query param `configUrl` or left null to skip remote fetch.
+        CONFIG_URL: SCRIPT_PARAMS.get('configUrl') || SCRIPT_PARAMS.get('config') || null,
+        N8N_WEBHOOK_URL: SCRIPT_PARAMS.get('webhookUrl') || SCRIPT_PARAMS.get('webhook') || "https://api.apexconversiongroup.com/webhook/APEX",
 
         // State
         chatIsOpen: false,
         isTyping: false,
+        messageCount: 0,
+        firstMessageAlertSent: false,
         loadingMessageIdx: 0,
         loadingInterval: null,
         modelCache: {},
-        viewportHandlersBound: false,
-        viewportRafId: null,
-        viewportChangeHandler: null,
-        lastKeyboardOffset: 0,
-        keyboardShortcutBound: false,
-        imageIsProcessing: false,
-        imageProcessingPromise: null,
-        imageUploadToken: 0,
 
-        // Consumer-only makes supported by hardcoded year/model data (2005-2025)
-        COMMON_MAKES: [
-            "Acura", "Cadillac", "Chrysler", "Dodge", "Ford", "Genesis", "Honda", "Hyundai", "Jaguar", "Lexus", "MINI", "Mitsubishi", "Ram", "Volkswagen", "Volvo"
-        ],
-
-        // Hardcoded model ranges by make to prevent invalid year/model combinations.
-        // Each model appears only for valid years in the 2005-2025 window.
-        HARD_CODED_MODEL_RANGES: {
-            "Acura": [
-                { model: "CSX", minYear: 2006, maxYear: 2011 },
-                { model: "ILX", minYear: 2013, maxYear: 2022 },
-                { model: "Integra", minYear: 2023, maxYear: 2025 },
-                { model: "MDX", minYear: 2005, maxYear: 2025 },
-                { model: "NSX", minYear: 2017, maxYear: 2022 },
-                { model: "RDX", minYear: 2007, maxYear: 2025 },
-                { model: "RL", minYear: 2005, maxYear: 2012 },
-                { model: "RLX", minYear: 2014, maxYear: 2020 },
-                { model: "RSX", minYear: 2005, maxYear: 2006 },
-                { model: "TL", minYear: 2005, maxYear: 2014 },
-                { model: "TLX", minYear: 2015, maxYear: 2025 },
-                { model: "TSX", minYear: 2005, maxYear: 2014 },
-                { model: "ZDX", minYear: 2010, maxYear: 2013 },
-                { model: "ZDX", minYear: 2024, maxYear: 2025 }
-            ],
-            "Cadillac": [
-                { model: "ATS", minYear: 2013, maxYear: 2019 },
-                { model: "ATS-V", minYear: 2016, maxYear: 2019 },
-                { model: "CT4", minYear: 2020, maxYear: 2025 },
-                { model: "CT4-V", minYear: 2020, maxYear: 2025 },
-                { model: "CT5", minYear: 2020, maxYear: 2025 },
-                { model: "CT5-V", minYear: 2020, maxYear: 2025 },
-                { model: "CT6", minYear: 2016, maxYear: 2020 },
-                { model: "CTS", minYear: 2005, maxYear: 2019 },
-                { model: "CTS-V", minYear: 2005, maxYear: 2019 },
-                { model: "DTS", minYear: 2006, maxYear: 2011 },
-                { model: "ELR", minYear: 2014, maxYear: 2016 },
-                { model: "Escalade", minYear: 2005, maxYear: 2025 },
-                { model: "Lyriq", minYear: 2023, maxYear: 2025 },
-                { model: "SRX", minYear: 2005, maxYear: 2016 },
-                { model: "STS", minYear: 2005, maxYear: 2011 },
-                { model: "XLR", minYear: 2005, maxYear: 2009 },
-                { model: "XT4", minYear: 2019, maxYear: 2025 },
-                { model: "XT5", minYear: 2017, maxYear: 2025 },
-                { model: "XT6", minYear: 2020, maxYear: 2025 }
-            ],
-            "Chrysler": [
-                { model: "200", minYear: 2011, maxYear: 2017 },
-                { model: "300", minYear: 2005, maxYear: 2025 },
-                { model: "Aspen", minYear: 2007, maxYear: 2009 },
-                { model: "Crossfire", minYear: 2005, maxYear: 2008 },
-                { model: "Pacifica", minYear: 2005, maxYear: 2008 },
-                { model: "Pacifica", minYear: 2017, maxYear: 2025 },
-                { model: "PT Cruiser", minYear: 2005, maxYear: 2010 },
-                { model: "Sebring", minYear: 2005, maxYear: 2010 },
-                { model: "Town & Country", minYear: 2005, maxYear: 2016 },
-                { model: "Voyager", minYear: 2020, maxYear: 2025 }
-            ],
-            "Dodge": [
-                { model: "Avenger", minYear: 2008, maxYear: 2014 },
-                { model: "Caliber", minYear: 2007, maxYear: 2012 },
-                { model: "Challenger", minYear: 2008, maxYear: 2025 },
-                { model: "Charger", minYear: 2005, maxYear: 2025 },
-                { model: "Dakota", minYear: 2005, maxYear: 2011 },
-                { model: "Dart", minYear: 2013, maxYear: 2016 },
-                { model: "Durango", minYear: 2005, maxYear: 2025 },
-                { model: "Grand Caravan", minYear: 2005, maxYear: 2020 },
-                { model: "Hornet", minYear: 2023, maxYear: 2025 },
-                { model: "Journey", minYear: 2009, maxYear: 2020 },
-                { model: "Magnum", minYear: 2005, maxYear: 2008 },
-                { model: "Nitro", minYear: 2007, maxYear: 2012 },
-                { model: "Viper", minYear: 2013, maxYear: 2017 }
-            ],
-            "Ford": [
-                { model: "Bronco", minYear: 2021, maxYear: 2025 },
-                { model: "Bronco Sport", minYear: 2021, maxYear: 2025 },
-                { model: "C-Max", minYear: 2013, maxYear: 2018 },
-                { model: "Crown Victoria", minYear: 2005, maxYear: 2011 },
-                { model: "E-Series", minYear: 2005, maxYear: 2014 },
-                { model: "EcoSport", minYear: 2018, maxYear: 2022 },
-                { model: "Edge", minYear: 2007, maxYear: 2024 },
-                { model: "Escape", minYear: 2005, maxYear: 2025 },
-                { model: "Excursion", minYear: 2005, maxYear: 2005 },
-                { model: "Expedition", minYear: 2005, maxYear: 2025 },
-                { model: "Explorer", minYear: 2005, maxYear: 2025 },
-                { model: "F-150", minYear: 2005, maxYear: 2025 },
-                { model: "F-250", minYear: 2005, maxYear: 2025 },
-                { model: "F-350", minYear: 2005, maxYear: 2025 },
-                { model: "F-450", minYear: 2005, maxYear: 2025 },
-                { model: "Fiesta", minYear: 2011, maxYear: 2019 },
-                { model: "Five Hundred", minYear: 2005, maxYear: 2007 },
-                { model: "Flex", minYear: 2009, maxYear: 2019 },
-                { model: "Focus", minYear: 2005, maxYear: 2018 },
-                { model: "Freestar", minYear: 2005, maxYear: 2007 },
-                { model: "Freestyle", minYear: 2005, maxYear: 2007 },
-                { model: "Fusion", minYear: 2006, maxYear: 2020 },
-                { model: "GT", minYear: 2005, maxYear: 2006 },
-                { model: "GT", minYear: 2017, maxYear: 2022 },
-                { model: "Maverick", minYear: 2022, maxYear: 2025 },
-                { model: "Mustang", minYear: 2005, maxYear: 2025 },
-                { model: "Mustang Mach-E", minYear: 2021, maxYear: 2025 },
-                { model: "Ranger", minYear: 2005, maxYear: 2012 },
-                { model: "Ranger", minYear: 2019, maxYear: 2025 },
-                { model: "Taurus", minYear: 2005, maxYear: 2019 },
-                { model: "Taurus X", minYear: 2008, maxYear: 2009 },
-                { model: "Thunderbird", minYear: 2005, maxYear: 2005 },
-                { model: "Transit", minYear: 2015, maxYear: 2025 },
-                { model: "Transit Connect", minYear: 2010, maxYear: 2023 }
-            ],
-            "Genesis": [
-                { model: "G70", minYear: 2019, maxYear: 2025 },
-                { model: "G80", minYear: 2017, maxYear: 2025 },
-                { model: "G90", minYear: 2017, maxYear: 2025 },
-                { model: "GV60", minYear: 2023, maxYear: 2025 },
-                { model: "GV70", minYear: 2022, maxYear: 2025 },
-                { model: "GV80", minYear: 2021, maxYear: 2025 }
-            ],
-            "Honda": [
-                { model: "Accord", minYear: 2005, maxYear: 2025 },
-                { model: "Civic", minYear: 2005, maxYear: 2025 },
-                { model: "Clarity", minYear: 2017, maxYear: 2021 },
-                { model: "Crosstour", minYear: 2010, maxYear: 2015 },
-                { model: "CR-V", minYear: 2005, maxYear: 2025 },
-                { model: "CR-Z", minYear: 2011, maxYear: 2016 },
-                { model: "Element", minYear: 2005, maxYear: 2011 },
-                { model: "Fit", minYear: 2007, maxYear: 2020 },
-                { model: "HR-V", minYear: 2016, maxYear: 2025 },
-                { model: "Insight", minYear: 2010, maxYear: 2014 },
-                { model: "Insight", minYear: 2019, maxYear: 2022 },
-                { model: "Odyssey", minYear: 2005, maxYear: 2025 },
-                { model: "Passport", minYear: 2019, maxYear: 2025 },
-                { model: "Pilot", minYear: 2005, maxYear: 2025 },
-                { model: "Prologue", minYear: 2024, maxYear: 2025 },
-                { model: "Ridgeline", minYear: 2006, maxYear: 2025 },
-                { model: "S2000", minYear: 2005, maxYear: 2009 }
-            ],
-            "Hyundai": [
-                { model: "Accent", minYear: 2005, maxYear: 2022 },
-                { model: "Azera", minYear: 2006, maxYear: 2017 },
-                { model: "Elantra", minYear: 2005, maxYear: 2025 },
-                { model: "Entourage", minYear: 2007, maxYear: 2009 },
-                { model: "Equus", minYear: 2011, maxYear: 2016 },
-                { model: "Genesis", minYear: 2009, maxYear: 2016 },
-                { model: "Ioniq", minYear: 2017, maxYear: 2022 },
-                { model: "Ioniq 5", minYear: 2022, maxYear: 2025 },
-                { model: "Ioniq 6", minYear: 2023, maxYear: 2025 },
-                { model: "Kona", minYear: 2018, maxYear: 2025 },
-                { model: "Kona Electric", minYear: 2019, maxYear: 2025 },
-                { model: "Nexo", minYear: 2019, maxYear: 2025 },
-                { model: "Palisade", minYear: 2020, maxYear: 2025 },
-                { model: "Santa Cruz", minYear: 2022, maxYear: 2025 },
-                { model: "Santa Fe", minYear: 2005, maxYear: 2025 },
-                { model: "Sonata", minYear: 2005, maxYear: 2025 },
-                { model: "Tiburon", minYear: 2005, maxYear: 2008 },
-                { model: "Tucson", minYear: 2005, maxYear: 2025 },
-                { model: "Veloster", minYear: 2012, maxYear: 2022 },
-                { model: "Venue", minYear: 2020, maxYear: 2025 },
-                { model: "Veracruz", minYear: 2007, maxYear: 2012 },
-                { model: "XG350", minYear: 2005, maxYear: 2005 }
-            ],
-            "Jaguar": [
-                { model: "E-PACE", minYear: 2018, maxYear: 2025 },
-                { model: "F-PACE", minYear: 2017, maxYear: 2025 },
-                { model: "F-TYPE", minYear: 2014, maxYear: 2024 },
-                { model: "I-PACE", minYear: 2019, maxYear: 2025 },
-                { model: "S-TYPE", minYear: 2005, maxYear: 2008 },
-                { model: "X-TYPE", minYear: 2005, maxYear: 2009 },
-                { model: "XE", minYear: 2017, maxYear: 2020 },
-                { model: "XF", minYear: 2009, maxYear: 2025 },
-                { model: "XJ", minYear: 2005, maxYear: 2019 },
-                { model: "XK", minYear: 2007, maxYear: 2015 }
-            ],
-            "Lexus": [
-                { model: "CT 200h", minYear: 2011, maxYear: 2017 },
-                { model: "ES", minYear: 2005, maxYear: 2025 },
-                { model: "GS", minYear: 2005, maxYear: 2020 },
-                { model: "GX", minYear: 2005, maxYear: 2025 },
-                { model: "HS 250h", minYear: 2010, maxYear: 2012 },
-                { model: "IS", minYear: 2005, maxYear: 2025 },
-                { model: "LC", minYear: 2018, maxYear: 2025 },
-                { model: "LFA", minYear: 2011, maxYear: 2012 },
-                { model: "LM", minYear: 2024, maxYear: 2025 },
-                { model: "LS", minYear: 2005, maxYear: 2025 },
-                { model: "LX", minYear: 2005, maxYear: 2025 },
-                { model: "NX", minYear: 2015, maxYear: 2025 },
-                { model: "RC", minYear: 2015, maxYear: 2025 },
-                { model: "RZ", minYear: 2023, maxYear: 2025 },
-                { model: "RX", minYear: 2005, maxYear: 2025 },
-                { model: "SC", minYear: 2005, maxYear: 2010 },
-                { model: "TX", minYear: 2024, maxYear: 2025 },
-                { model: "UX", minYear: 2019, maxYear: 2025 }
-            ],
-            "MINI": [
-                { model: "Clubman", minYear: 2008, maxYear: 2024 },
-                { model: "Convertible", minYear: 2005, maxYear: 2025 },
-                { model: "Cooper", minYear: 2005, maxYear: 2025 },
-                { model: "Cooper Countryman", minYear: 2011, maxYear: 2025 },
-                { model: "Cooper Coupe", minYear: 2012, maxYear: 2015 },
-                { model: "Cooper Hardtop", minYear: 2005, maxYear: 2025 },
-                { model: "Cooper Paceman", minYear: 2013, maxYear: 2016 },
-                { model: "Cooper Roadster", minYear: 2012, maxYear: 2015 },
-                { model: "Countryman", minYear: 2011, maxYear: 2025 },
-                { model: "Hardtop 2 Door", minYear: 2014, maxYear: 2025 },
-                { model: "Hardtop 4 Door", minYear: 2015, maxYear: 2025 }
-            ],
-            "Mitsubishi": [
-                { model: "3000GT", minYear: 2005, maxYear: 2005 },
-                { model: "Eclipse", minYear: 2005, maxYear: 2012 },
-                { model: "Eclipse Cross", minYear: 2018, maxYear: 2025 },
-                { model: "Endeavor", minYear: 2005, maxYear: 2011 },
-                { model: "Galant", minYear: 2005, maxYear: 2012 },
-                { model: "i-MiEV", minYear: 2012, maxYear: 2017 },
-                { model: "Lancer", minYear: 2005, maxYear: 2017 },
-                { model: "Mirage", minYear: 2014, maxYear: 2025 },
-                { model: "Mirage G4", minYear: 2017, maxYear: 2025 },
-                { model: "Montero", minYear: 2005, maxYear: 2006 },
-                { model: "Outlander", minYear: 2005, maxYear: 2025 },
-                { model: "Outlander PHEV", minYear: 2018, maxYear: 2025 },
-                { model: "Outlander Sport", minYear: 2011, maxYear: 2025 },
-                { model: "Raider", minYear: 2006, maxYear: 2009 }
-            ],
-            "Ram": [
-                { model: "1500", minYear: 2011, maxYear: 2025 },
-                { model: "1500 Classic", minYear: 2019, maxYear: 2025 },
-                { model: "2500", minYear: 2011, maxYear: 2025 },
-                { model: "3500", minYear: 2011, maxYear: 2025 },
-                { model: "4500", minYear: 2011, maxYear: 2025 },
-                { model: "ProMaster", minYear: 2014, maxYear: 2025 },
-                { model: "ProMaster City", minYear: 2015, maxYear: 2022 }
-            ],
-            "Volkswagen": [
-                { model: "Arteon", minYear: 2019, maxYear: 2024 },
-                { model: "Atlas", minYear: 2018, maxYear: 2025 },
-                { model: "Atlas Cross Sport", minYear: 2020, maxYear: 2025 },
-                { model: "Beetle", minYear: 2012, maxYear: 2019 },
-                { model: "CC", minYear: 2009, maxYear: 2017 },
-                { model: "e-Golf", minYear: 2015, maxYear: 2019 },
-                { model: "EOS", minYear: 2007, maxYear: 2016 },
-                { model: "Golf", minYear: 2005, maxYear: 2021 },
-                { model: "Golf Alltrack", minYear: 2017, maxYear: 2019 },
-                { model: "Golf GTI", minYear: 2005, maxYear: 2025 },
-                { model: "Golf R", minYear: 2012, maxYear: 2025 },
-                { model: "GTI", minYear: 2005, maxYear: 2025 },
-                { model: "ID.4", minYear: 2021, maxYear: 2025 },
-                { model: "Jetta", minYear: 2005, maxYear: 2025 },
-                { model: "Jetta GLI", minYear: 2005, maxYear: 2025 },
-                { model: "Passat", minYear: 2005, maxYear: 2022 },
-                { model: "Phaeton", minYear: 2005, maxYear: 2006 },
-                { model: "R32", minYear: 2008, maxYear: 2008 },
-                { model: "Rabbit", minYear: 2006, maxYear: 2009 },
-                { model: "Taos", minYear: 2022, maxYear: 2025 },
-                { model: "Tiguan", minYear: 2009, maxYear: 2025 },
-                { model: "Touareg", minYear: 2005, maxYear: 2017 }
-            ],
-            "Volvo": [
-                { model: "C30", minYear: 2008, maxYear: 2013 },
-                { model: "C40 Recharge", minYear: 2022, maxYear: 2025 },
-                { model: "C70", minYear: 2006, maxYear: 2013 },
-                { model: "S40", minYear: 2005, maxYear: 2011 },
-                { model: "S60", minYear: 2005, maxYear: 2025 },
-                { model: "S80", minYear: 2005, maxYear: 2016 },
-                { model: "S90", minYear: 2017, maxYear: 2025 },
-                { model: "V50", minYear: 2005, maxYear: 2011 },
-                { model: "V60", minYear: 2015, maxYear: 2025 },
-                { model: "V70", minYear: 2005, maxYear: 2010 },
-                { model: "V90", minYear: 2017, maxYear: 2025 },
-                { model: "XC40", minYear: 2019, maxYear: 2025 },
-                { model: "XC60", minYear: 2009, maxYear: 2025 },
-                { model: "XC70", minYear: 2005, maxYear: 2016 },
-                { model: "XC90", minYear: 2005, maxYear: 2025 },
-                { model: "EX30", minYear: 2025, maxYear: 2025 },
-                { model: "EX90", minYear: 2025, maxYear: 2025 }
-            ]
+        // Hard-cached models for popular brands to enable instant display
+        HARD_CACHED_MODELS: {
+            "Ford": ["F-150", "F-250", "F-350", "Escape", "Edge", "Explorer", "Expedition", "Fusion", "Mustang", "Focus", "Fiesta", "Transit"],
+            "Honda": ["Accord", "Civic", "CR-V", "Pilot", "Odyssey", "HR-V", "Insight", "Ridgeline", "Fit"],
+            "Toyota": ["Camry", "Corolla", "RAV4", "Highlander", "Sienna", "Tundra", "Tacoma", "4Runner", "Sequoia", "Prius", "Aqua"],
+            "Chevrolet": ["Silverado", "Malibu", "Equinox", "Traverse", "Tahoe", "Suburban", "Colorado", "Spark", "Bolt", "Blazer"],
+            "Dodge": ["Ram", "Charger", "Challenger", "Durango", "Journey", "Dart"],
+            "BMW": ["3 Series", "5 Series", "7 Series", "X1", "X3", "X5", "X7", "M440i", "M550i", "M760i", "i3", "i4", "iX", "i7", "Z4", "M2", "M3", "M4", "M5", "M8"],
+            "Mercedes-Benz": ["C-Class", "E-Class", "S-Class", "A-Class", "GLA", "GLB", "GLC", "GLE", "GLS", "AMG"],
+            "Audi": ["A3", "A4", "A6", "A8", "Q3", "Q5", "Q7", "Q8", "RS3", "RS4", "RS5", "RS6", "RS7"],
+            "Tesla": ["Model S", "Model 3", "Model X", "Model Y", "Cybertruck"],
+            "Jeep": ["Wrangler", "Cherokee", "Grand Cherokee", "Renegade", "Compass", "Gladiator"]
         },
+
+        // Common makes list
+        COMMON_MAKES: [
+            "Acura","Alfa Romeo","Aston Martin","Audi","Bentley","BMW","Buick","Cadillac","Chevrolet","Chrysler","Dodge","FIAT","Fisker","Ford","Genesis","Geo","GMC","Honda","Hummer","Hyundai","Infiniti","Isuzu","Jaguar","Jeep","Karma","Kia","Land Rover","Lexus","Lincoln","Lotus","Maserati","Mazda","Mercedes-Benz","Mercury","Merkur","MINI","Mitsubishi","Nissan","Oldsmobile","Peugeot","Plymouth","Pontiac","Porsche","Ram","Renault","Saab","Saturn","Scion","smart","Subaru","Suzuki","Tesla","Toyota","Triumph","Volkswagen","Volvo"
+        ],
 
         loadingMessages: [
             "Connecting to the estimator engine...",
@@ -348,7 +81,140 @@
             "Almost done — preparing your estimate..."
         ],
 
-        pendingModelRequestId: 0,
+        // Year-specific model filtering for makes with year-dependent availability
+        YEAR_SPECIFIC_MODELS: {
+            "Acura": {
+                "Integra Type S": { minYear: 2023 },
+                "MDX Type S": { minYear: 2022 }
+            },
+            "Audi": {
+                "Q4 e-tron": { minYear: 2022 },
+                "Q4 Sportback e-tron": { minYear: 2022 },
+                "e-tron GT": { minYear: 2021 }
+            },
+            "BMW": {
+                "M8": { minYear: 2019 },
+                "i4": { minYear: 2022 },
+                "iX": { minYear: 2022 },
+                "iX M60": { minYear: 2022 },
+                "iX xDrive50": { minYear: 2022 },
+                "i7": { minYear: 2023 }
+            },
+            "Cadillac": {
+                "Lyriq": { minYear: 2023 },
+                "Escalade IQ": { minYear: 2024 }
+            },
+            "Chevrolet": {
+                "Silverado EV": { minYear: 2024 },
+                "Blazer EV": { minYear: 2024 },
+                "Equinox EV": { minYear: 2024 },
+                "Bolt EV": { minYear: 2017, maxYear: 2023 },
+                "Bolt EUV": { minYear: 2022, maxYear: 2023 }
+            },
+            "Dodge": {
+                "Charger 6e": { minYear: 2024 },
+                "Durango": { minYear: 2000, maxYear: 2023 }
+            },
+            "Ford": {
+                "F-150 Lightning": { minYear: 2022 },
+                "Mustang Mach-E": { minYear: 2021 },
+                "E-Transit": { minYear: 2022 },
+                "Bronco": { minYear: 2021 },
+                "Bronco Sport": { minYear: 2021 }
+            },
+            "Genesis": {
+                "Electrified G70": { minYear: 2021 },
+                "Electrified G80": { minYear: 2021 },
+                "Electrified GV70": { minYear: 2021 },
+                "GV60": { minYear: 2023 },
+                "Electrified GV80": { minYear: 2022 }
+            },
+            "GMC": {
+                "Sierra EV": { minYear: 2024 },
+                "Hummer EV": { minYear: 2021 }
+            },
+            "Honda": {
+                "e": { minYear: 2020, maxYear: 2022 },
+                "Civic Type R": { minYear: 2023 },
+                "Prologue": { minYear: 2024 }
+            },
+            "Hyundai": {
+                "Ioniq": { minYear: 2021 },
+                "Ioniq 5": { minYear: 2021 },
+                "Ioniq 6": { minYear: 2023 },
+                "Kona Electric": { minYear: 2019 }
+            },
+            "Jeep": {
+                "Wrangler 4xe": { minYear: 2021 },
+                "Grand Cherokee 4xe": { minYear: 2021 },
+                "Wagoneer": { minYear: 2022 }
+            },
+            "Kia": {
+                "EV6": { minYear: 2021 },
+                "EV9": { minYear: 2023 },
+                "Niro EV": { minYear: 2019 },
+                "Sportage PHEV": { minYear: 2023 }
+            },
+            "Lexus": {
+                "RZ": { minYear: 2023 },
+                "LM": { minYear: 2024 }
+            },
+            "Lincoln": {
+                "Corsair Grand Touring": { minYear: 2020 },
+                "Aviator Grand Touring": { minYear: 2020 }
+            },
+            "Lucid": {
+                "Air": { minYear: 2021 }
+            },
+            "Mazda": {
+                "CX-50": { minYear: 2023 }
+            },
+            "Mercedes-Benz": {
+                "EQS": { minYear: 2021 },
+                "EQE": { minYear: 2022 },
+                "EQC": { minYear: 2019 },
+                "AMG G 63": { minYear: 2000 },
+                "EQG": { minYear: 2025 }
+            },
+            "Mitsubishi": {
+                "Outlander PHEV": { minYear: 2018 }
+            },
+            "Nissan": {
+                "Ariya": { minYear: 2023 },
+                "Leaf": { minYear: 2010 }
+            },
+            "Porsche": {
+                "Taycan": { minYear: 2020 }
+            },
+            "RAM": {
+                "1500 Revolution": { minYear: 2025 }
+            },
+            "Rivian": {
+                "R1T": { minYear: 2021 },
+                "R1S": { minYear: 2021 }
+            },
+            "Subaru": {
+                "BRZ": { minYear: 2013, maxYear: 2020 },
+                "BRZ": { minYear: 2022 },
+                "Solterra": { minYear: 2023 }
+            },
+            "Tesla": {
+                "Model S": { minYear: 2012 },
+                "Model 3": { minYear: 2017 },
+                "Model X": { minYear: 2015 },
+                "Model Y": { minYear: 2020 },
+                "Cybertruck": { minYear: 2023 }
+            },
+            "Toyota": {
+                "bZ4X": { minYear: 2023 },
+                "Corolla Cross": { minYear: 2020 }
+            },
+            "Volkswagen": {
+                "ID.4": { minYear: 2021 },
+                "ID.5": { minYear: 2021 },
+                "ID. Buzz": { minYear: 2024 }
+            }
+        },
 
         // DOM Elements (cached after creation)
         elements: {},
@@ -368,8 +234,6 @@
                 if (this.PRIMARY_COLOR) container.style.setProperty('--apex-blue', this.PRIMARY_COLOR);
                 if (this.SECONDARY_COLOR) container.style.setProperty('--apex-light-blue', this.SECONDARY_COLOR);
                 if (this.TEXT_COLOR) container.style.setProperty('--apex-text', this.TEXT_COLOR);
-                container.style.setProperty('--apex-runtime-vh', `${window.innerHeight}px`);
-                container.style.setProperty('--apex-keyboard-offset', '0px');
             } catch (e) {
                 // ignore if setting styles fails
             }
@@ -401,14 +265,11 @@
                 chatButton: container.querySelector('#apex-chat-button'),
                 chatWindow: container.querySelector('#apex-chat-window'),
                 messagesDiv: container.querySelector('#apex-chat-messages'),
-                prideTextDiv: container.querySelector('#apex-proactive-greeting'),
+                proactiveTextDiv: container.querySelector('#apex-proactive-greeting'),
                 
                 yearSelect: container.querySelector('#apex-year-select'),
                 makeSelect: container.querySelector('#apex-make-select'),
                 modelSelect: container.querySelector('#apex-model-select'),
-                mileageRange: container.querySelector('#apex-mileage-range'),
-                mileageValue: container.querySelector('#apex-mileage-value'),
-                buildVersionPill: container.querySelector('#apex-build-version-pill'),
                 
                 vehicleWrap: container.querySelector('#apex-vehicle-selects'),
                 contactName: container.querySelector('#apex-contact-name'),
@@ -417,10 +278,8 @@
                 
                 inputField: container.querySelector('#apex-chat-input'),
                 sendBtn: container.querySelector('#apex-send-btn'),
-                cameraBtn: container.querySelector('#apex-image-btn-camera'),
-                galleryBtn: container.querySelector('#apex-image-btn-gallery'),
-                cameraInput: container.querySelector('#apex-image-input-camera'),
-                galleryInput: container.querySelector('#apex-image-input-gallery'),
+                imageBtn: container.querySelector('#apex-image-btn'),
+                imageInput: container.querySelector('#apex-image-input'),
                 imagePreviewWrapper: container.querySelector('#apex-image-preview-wrapper'),
                 imagePreview: container.querySelector('#apex-image-preview'),
                 imageRemoveBtn: container.querySelector('#apex-image-remove-btn'),
@@ -431,7 +290,7 @@
 
         setupListeners() {
             console.log('[ApexWidget] Setting up event listeners with delegation');
-            const { backdrop, makeSelect, yearSelect, mileageRange, chatButton, inputField, sendBtn } = this.elements;
+            const { backdrop, makeSelect, chatButton, inputField, sendBtn } = this.elements;
             const self = this;
             
             if (backdrop) {
@@ -455,24 +314,6 @@
                 makeSelect.addEventListener('change', () => self.onMakeChange());
             }
 
-            if (yearSelect) {
-                yearSelect.addEventListener('change', () => self.onMakeChange());
-            }
-
-            if (mileageRange) {
-                mileageRange.addEventListener('input', () => self.updateMileageUI());
-                mileageRange.addEventListener('change', () => self.updateMileageUI());
-                mileageRange.addEventListener('pointerdown', () => {
-                    mileageRange.classList.add('is-dragging');
-                });
-                mileageRange.addEventListener('pointerup', () => {
-                    mileageRange.classList.remove('is-dragging');
-                });
-                mileageRange.addEventListener('pointercancel', () => {
-                    mileageRange.classList.remove('is-dragging');
-                });
-            }
-
             if (inputField) {
                 inputField.addEventListener('keypress', (e) => self.handleKeyPress(e));
             }
@@ -481,26 +322,16 @@
                 sendBtn.addEventListener('click', () => self.sendMessage());
             }
 
-            const cameraBtn = this.elements.cameraBtn;
-            const galleryBtn = this.elements.galleryBtn;
-            const cameraInput = this.elements.cameraInput;
-            const galleryInput = this.elements.galleryInput;
+            const imageBtn = this.elements.imageBtn;
+            const imageInput = this.elements.imageInput;
             const imageRemoveBtn = this.elements.imageRemoveBtn;
 
-            if (cameraBtn && cameraInput) {
-                cameraBtn.addEventListener('click', () => cameraInput.click());
+            if (imageBtn && imageInput) {
+                imageBtn.addEventListener('click', () => imageInput.click());
             }
 
-            if (galleryBtn && galleryInput) {
-                galleryBtn.addEventListener('click', () => galleryInput.click());
-            }
-
-            if (cameraInput) {
-                cameraInput.addEventListener('change', (e) => self.handleImageUpload(e));
-            }
-
-            if (galleryInput) {
-                galleryInput.addEventListener('change', (e) => self.handleImageUpload(e));
+            if (imageInput) {
+                imageInput.addEventListener('change', (e) => self.handleImageUpload(e));
             }
 
             if (imageRemoveBtn) {
@@ -509,126 +340,44 @@
         },
 
         init() {
-            console.log(`[ApexWidget] Build ${this.BUILD_VERSION} loaded`);
-            this.appendBotMessage("Hi! I'm Vetra your Virtual Service Advisor. I can help with repair estimates, diagnostics, or answer any questions about your vehicle. What can I help you with today?", false);
+            this.restoreSessionState();
+            this.appendBotMessage("Hi! I'm your Virtual Service Advisor. I can help with repair estimates, diagnostics, or answer any questions about your vehicle. What can I help you with today?", false);
             this.populateYears();
-            this.elements.makeSelect.disabled = true;
-            this.loadExtendedVehicleData()
-                .catch((error) => {
-                    console.warn('[ApexWidget] Extended vehicle data failed to load, using built-in fallback:', error);
-                })
-                .finally(() => {
-                    this.populateMakes();
-                    this.elements.makeSelect.disabled = false;
-                });
-            this.updateMileageUI();
-            if (this.elements.buildVersionPill) {
-                this.elements.buildVersionPill.textContent = `Build ${this.BUILD_VERSION}`;
-            }
-            this.setupViewportHandling();
-            this.setupGlobalShortcut();
+            this.populateMakes();
             // If embed only provided shopId, optionally fetch colors/config from backend
             this.loadRemoteConfigIfNeeded();
             
             // Schedule proactive greeting to disappear after 5 seconds of being visible
             const self = this;
             setTimeout(() => {
-                const greetingEl = self.elements.prideTextDiv;
+                const greetingEl = self.elements.proactiveTextDiv;
                 if (greetingEl) {
                     greetingEl.style.animation = 'apex-greeting-fade-out 400ms cubic-bezier(0.22, 0.9, 0.32, 1) forwards';
                 }
             }, 10000); // 5s delay + 5s visible = 10s total
         },
 
-        async loadExtendedVehicleData() {
-            const dataUrl = new URL('generated_hardcoded_ranges.json', SCRIPT_BASE_URL).toString();
-            const response = await fetch(dataUrl, { cache: 'force-cache' });
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}`);
+        getSessionStorageKey(key) {
+            return `apex_widget_${this.SHOP_ID}_${key}`;
+        },
+
+        restoreSessionState() {
+            try {
+                this.firstMessageAlertSent = window.sessionStorage.getItem(this.getSessionStorageKey('first_message_alert_sent')) === 'true';
+                this.messageCount = Number(window.sessionStorage.getItem(this.getSessionStorageKey('message_count')) || '0');
+            } catch (e) {
+                this.firstMessageAlertSent = false;
+                this.messageCount = 0;
             }
-
-            const data = await response.json();
-            const extraMakes = Array.isArray(data?.COMMON_MAKES) ? data.COMMON_MAKES : [];
-            const extraRanges = data?.HARD_CODED_MODEL_RANGES && typeof data.HARD_CODED_MODEL_RANGES === 'object'
-                ? data.HARD_CODED_MODEL_RANGES
-                : {};
-
-            this.COMMON_MAKES = [...new Set([...this.COMMON_MAKES, ...extraMakes])]
-                .filter(Boolean)
-                .sort((a, b) => a.localeCompare(b));
-
-            this.HARD_CODED_MODEL_RANGES = {
-                ...this.HARD_CODED_MODEL_RANGES,
-                ...extraRanges
-            };
         },
 
-        setupViewportHandling() {
-            if (this.viewportHandlersBound) return;
-
-            const handleViewportChange = () => {
-                if (this.viewportRafId) {
-                    cancelAnimationFrame(this.viewportRafId);
-                }
-                this.viewportRafId = requestAnimationFrame(() => {
-                    this.viewportRafId = null;
-                    this.updateViewportMetrics();
-                });
-            };
-
-            this.viewportChangeHandler = handleViewportChange;
-
-            window.addEventListener('resize', handleViewportChange, { passive: true });
-            window.addEventListener('orientationchange', handleViewportChange, { passive: true });
-
-            if (window.visualViewport) {
-                window.visualViewport.addEventListener('resize', handleViewportChange);
-                window.visualViewport.addEventListener('scroll', handleViewportChange);
+        persistSessionState() {
+            try {
+                window.sessionStorage.setItem(this.getSessionStorageKey('first_message_alert_sent'), String(this.firstMessageAlertSent));
+                window.sessionStorage.setItem(this.getSessionStorageKey('message_count'), String(this.messageCount));
+            } catch (e) {
+                // Ignore storage failures.
             }
-
-            this.viewportHandlersBound = true;
-            this.updateViewportMetrics();
-        },
-
-        setupGlobalShortcut() {
-            if (this.keyboardShortcutBound) return;
-
-            document.addEventListener('keydown', (event) => {
-                const target = event.target;
-                const tagName = target && target.tagName ? target.tagName.toLowerCase() : '';
-                const isEditable = !!(target && (target.isContentEditable || tagName === 'input' || tagName === 'textarea' || tagName === 'select'));
-
-                if ((event.metaKey || event.ctrlKey) && !event.shiftKey && !event.altKey && String(event.key).toLowerCase() === 'o') {
-                    if (isEditable) {
-                        return;
-                    }
-
-                    event.preventDefault();
-                    if (!this.chatIsOpen) {
-                        this.openChat();
-                    }
-
-                    if (this.elements.inputField && !window.matchMedia('(max-width: 768px)').matches) {
-                        this.elements.inputField.focus();
-                    }
-                }
-            });
-
-            this.keyboardShortcutBound = true;
-        },
-
-        updateViewportMetrics() {
-            const container = document.getElementById('apex-widget-container');
-            if (!container) return;
-
-            const runtimeVh = window.innerHeight;
-            const keyboardOffset = 0;
-
-            this.lastKeyboardOffset = 0;
-
-            container.style.setProperty('--apex-runtime-vh', `${runtimeVh}px`);
-            container.style.setProperty('--apex-keyboard-offset', `${keyboardOffset}px`);
-            this.updateMileageUI();
         },
 
         // Normalize color strings (ensure leading # and simple hex validation)
@@ -707,14 +456,13 @@
                             </svg>
                         </div>
                         <div id="apex-header-text">
-                            <div id="apex-header-title">Vetra Virtual Service Advisor</div>
+                            <div id="apex-header-title">APEX Virtual Service Advisor</div>
                             <div id="apex-header-subtitle">
                                 <span class="apex-status-indicator"></span>
                                 <span>Online</span>
                             </div>
                             <div id="apex-header-model">Model - VETRA</div>
                         </div>
-                        <div id="apex-build-version-pill" class="apex-build-version-pill"></div>
                         <span id="apex-close-btn" role="button" aria-label="Close chat">✕</span>
                     </div>
                     <div id="apex-chat-messages"></div>
@@ -734,37 +482,14 @@
                                 <option value="">Select Model</option>
                             </select>
                         </div>
-                        <div class="apex-form-row apex-mileage-row">
-                            <div class="apex-mileage-header">
-                                <span class="apex-mileage-label">Mileage</span>
-                                <span id="apex-mileage-value" class="apex-mileage-value">0 mi</span>
-                            </div>
-                            <input
-                                id="apex-mileage-range"
-                                class="apex-mileage-range"
-                                type="range"
-                                min="0"
-                                max="200000"
-                                step="5000"
-                                value="0"
-                                aria-label="Vehicle mileage"
-                            />
-                        </div>
                         <div class="apex-form-disclaimer">
                             By providing your number, you agree to receive lead updates via SMS. Msg & data rates may apply. Reply STOP to opt-out.
                         </div>
                     </div>
                     <div id="apex-chat-input-area">
                         <div id="apex-image-upload-wrapper">
-                            <input type="file" id="apex-image-input-camera" accept="image/*" capture="environment" style="display: none;">
-                            <input type="file" id="apex-image-input-gallery" accept="image/*" style="display: none;">
-                            <button id="apex-image-btn-camera" aria-label="Take photo" title="Take photo">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-                                    <circle cx="12" cy="13" r="4"></circle>
-                                </svg>
-                            </button>
-                            <button id="apex-image-btn-gallery" aria-label="Choose photo" title="Choose from gallery">
+                            <input type="file" id="apex-image-input" accept="image/*" style="display: none;">
+                            <button id="apex-image-btn" aria-label="Upload image" title="Attach image">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path>
                                 </svg>
@@ -787,19 +512,27 @@
             `;
         },
 
-        getHardcodedModelsForYear(make, year) {
-            const yearNum = parseInt(year, 10);
-            const ranges = this.HARD_CODED_MODEL_RANGES[make] || [];
-            if (!Number.isFinite(yearNum) || !ranges.length) {
-                return [];
+        // Filter models based on year availability for specific makes
+        filterModelsByYear(models, make, year) {
+            if (!this.YEAR_SPECIFIC_MODELS[make]) {
+                return models;
             }
 
-            const models = ranges
-                .filter(entry => yearNum >= entry.minYear && yearNum <= entry.maxYear)
-                .map(entry => entry.model)
-                .filter(name => this.isModelAllowedForMake(name, make));
+            const yearSpecificRules = this.YEAR_SPECIFIC_MODELS[make];
+            const yearNum = parseInt(year, 10);
 
-            return [...new Set(models)].sort((a, b) => a.localeCompare(b));
+            return models.filter(model => {
+                // If model has no year-specific rules, include it
+                if (!yearSpecificRules[model]) {
+                    return true;
+                }
+
+                const rule = yearSpecificRules[model];
+                const minYear = rule.minYear || 0;
+                const maxYear = rule.maxYear || 9999;
+
+                return yearNum >= minYear && yearNum <= maxYear;
+            });
         },
 
         isModelAllowedForMake(modelName, make) {
@@ -852,33 +585,57 @@
         onMakeChange() {
             const year = this.elements.yearSelect.value;
             const make = this.elements.makeSelect.value;
-            const requestId = ++this.pendingModelRequestId;
 
             this.elements.modelSelect.innerHTML = '<option value="">Loading...</option>';
             this.elements.modelSelect.disabled = true;
 
-            if (!year || !make) {
-                this.elements.modelSelect.innerHTML = '<option value="">Select Model</option>';
-                return;
-            }
+            if (!year || !make) return;
 
             const cacheKey = `${make}::${year}`;
-            if (!this.modelCache[cacheKey]) {
-                this.modelCache[cacheKey] = this.getHardcodedModelsForYear(make, year);
-            }
-
-            if (requestId !== this.pendingModelRequestId) {
+            
+            // Check runtime cache first
+            if (this.modelCache[cacheKey]) {
+                this.populateModels(this.modelCache[cacheKey]);
                 return;
             }
 
-            this.populateModels(this.modelCache[cacheKey]);
+            // Check hard cache and display immediately
+            if (this.HARD_CACHED_MODELS[make]) {
+                const hardCachedModels = this.HARD_CACHED_MODELS[make]
+                    .filter(name => this.isModelAllowedForMake(name, make));
+                const filteredByYear = this.filterModelsByYear(hardCachedModels, make, year);
+                this.populateModels(filteredByYear);
+            }
+
+            const apiUrl = `https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/${encodeURIComponent(make)}/modelyear/${encodeURIComponent(year)}?format=json`;
+
+            fetch(apiUrl)
+                .then(r => r.json())
+                .then(data => {
+                    const models = data.Results
+                        ? data.Results.map(r => r.Model_Name)
+                            .filter(Boolean)
+                            .filter(name => this.isModelAllowedForMake(name, make))
+                        : [];
+                    
+                    // Apply year-specific filtering for make
+                    const filteredModels = this.filterModelsByYear(models, make, year);
+                    
+                    const unique = [...new Set(filteredModels)].sort((a, b) => a.localeCompare(b));
+                    this.modelCache[cacheKey] = unique;
+                    this.populateModels(unique);
+                })
+                .catch(err => {
+                    console.error('Model fetch error:', err);
+                    this.elements.modelSelect.innerHTML = '<option value="">Error</option>';
+                });
         },
 
         populateYears() {
-            const current = 2025;
-            const start = 2005;
+            const current = new Date().getFullYear();
+            const start = 2000;
             this.elements.yearSelect.innerHTML = '<option value="">Year</option>';
-            for (let y = current; y >= start; y--) {
+            for (let y = current + 1; y >= start; y--) {
                 this.elements.yearSelect.innerHTML += `<option value="${y}">${y}</option>`;
             }
         },
@@ -915,11 +672,9 @@
             this.elements.chatButton.classList.add('morphing');
             this.elements.chatWindow.classList.add('open');
             this.elements.backdrop.classList.add('visible');
-            if (!window.matchMedia('(max-width: 768px)').matches) {
-                this.elements.inputField.focus();
-            }
-            this.elements.prideTextDiv.style.opacity = '0';
-            this.elements.prideTextDiv.style.pointerEvents = 'none';
+            this.elements.inputField.focus();
+            this.elements.proactiveTextDiv.style.opacity = '0';
+            this.elements.proactiveTextDiv.style.pointerEvents = 'none';
         },
 
         closeChat() {
@@ -927,42 +682,11 @@
             this.elements.chatButton.classList.remove('morphing');
             this.elements.chatWindow.classList.remove('open');
             this.elements.backdrop.classList.remove('visible');
-            this.elements.prideTextDiv.style.opacity = '0.95';
-            this.elements.prideTextDiv.style.pointerEvents = 'auto';
+            this.elements.proactiveTextDiv.style.opacity = '0.95';
+            this.elements.proactiveTextDiv.style.pointerEvents = 'auto';
         },
 
-        normalizeBookingUrl(url) {
-            if (typeof url !== 'string') return null;
-            const trimmed = url.trim();
-            if (!trimmed) return null;
-
-            try {
-                const parsed = new URL(trimmed, window.location.href);
-                if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
-                    return null;
-                }
-                return parsed.toString();
-            } catch (error) {
-                return null;
-            }
-        },
-
-        appendBookingButton(messageDiv, bookingUrl) {
-            const safeBookingUrl = this.normalizeBookingUrl(bookingUrl);
-            if (!messageDiv || !safeBookingUrl) return;
-
-            const bookingLink = document.createElement('a');
-            bookingLink.classList.add('apex-booking-link');
-            bookingLink.href = safeBookingUrl;
-            bookingLink.target = '_blank';
-            bookingLink.rel = 'noopener noreferrer';
-            bookingLink.setAttribute('aria-label', 'Book Drop-Off');
-            bookingLink.innerHTML = '<span class="apex-booking-icon" aria-hidden="true">📅</span><span>Book Drop-Off</span>';
-
-            messageDiv.appendChild(bookingLink);
-        },
-
-        appendBotMessage(text, typewriterEffect = true, bookingUrl = null) {
+        appendBotMessage(text, typewriterEffect = true) {
             const messageDiv = document.createElement('div');
             messageDiv.classList.add('apex-message', 'apex-bot-message');
             messageDiv.innerHTML = '<span class="typing-text"></span>';
@@ -972,32 +696,18 @@
                 this.isTyping = true;
                 this.typewriterText(messageDiv.querySelector('.typing-text'), text, () => {
                     this.isTyping = false;
-                    this.appendBookingButton(messageDiv, bookingUrl);
-                    this.elements.messagesDiv.scrollTop = this.elements.messagesDiv.scrollHeight;
                 });
             } else {
                 messageDiv.querySelector('.typing-text').textContent = text;
-                this.appendBookingButton(messageDiv, bookingUrl);
             }
 
             this.elements.messagesDiv.scrollTop = this.elements.messagesDiv.scrollHeight;
         },
 
-        appendUserMessage(text, imageDataUrl = null) {
+        appendUserMessage(text) {
             const messageDiv = document.createElement('div');
             messageDiv.classList.add('apex-message', 'apex-user-message');
-            if (imageDataUrl) {
-                const img = document.createElement('img');
-                img.src = imageDataUrl;
-                img.classList.add('apex-chat-image');
-                img.alt = 'Uploaded photo';
-                messageDiv.appendChild(img);
-            }
-            if (text) {
-                const textSpan = document.createElement('span');
-                textSpan.textContent = text;
-                messageDiv.appendChild(textSpan);
-            }
+            messageDiv.textContent = text;
             this.elements.messagesDiv.appendChild(messageDiv);
             this.elements.messagesDiv.scrollTop = this.elements.messagesDiv.scrollHeight;
         },
@@ -1067,70 +777,6 @@
             }
         },
 
-        setImageProcessing(isProcessing) {
-            this.imageIsProcessing = isProcessing;
-
-            if (this.elements && this.elements.sendBtn) {
-                this.elements.sendBtn.disabled = !!isProcessing;
-            }
-        },
-
-        waitForImageProcessing() {
-            if (!this.imageProcessingPromise) {
-                return Promise.resolve();
-            }
-
-            return this.imageProcessingPromise.catch((err) => {
-                console.warn('[ApexWidget] Image processing did not complete successfully before send', err);
-            });
-        },
-
-        compressImage(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    const img = new Image();
-                    img.onload = () => {
-                        try {
-                            const canvas = document.createElement('canvas');
-                            const MAX_WIDTH = 800;
-                            const targetWidth = Math.min(MAX_WIDTH, img.width || MAX_WIDTH);
-                            const scaleSize = targetWidth / (img.width || targetWidth);
-                            const targetHeight = Math.max(1, Math.round((img.height || targetWidth) * scaleSize));
-
-                            canvas.width = targetWidth;
-                            canvas.height = targetHeight;
-
-                            const ctx = canvas.getContext('2d');
-                            if (!ctx) {
-                                reject(new Error('Failed to get image canvas context'));
-                                return;
-                            }
-
-                            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-                            const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
-                            resolve(compressedBase64);
-                        } catch (error) {
-                            reject(error);
-                        }
-                    };
-
-                    img.onerror = () => {
-                        reject(new Error('Failed to decode uploaded image'));
-                    };
-
-                    img.src = event.target.result;
-                };
-
-                reader.onerror = () => {
-                    reject(reader.error || new Error('Failed to read image file'));
-                };
-
-                reader.readAsDataURL(file);
-            });
-        },
-
         handleImageUpload(e) {
             const file = e.target.files[0];
             if (!file) return;
@@ -1141,135 +787,37 @@
                 return;
             }
 
-            // Validate file size (allow larger originals; image is compressed before send)
-            if (file.size > 20 * 1024 * 1024) {
-                this.appendBotMessage('Image is too large. Please choose one under 20MB.', false);
+            // Validate file size (max 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                this.appendBotMessage('Image size must be less than 5MB.', false);
                 return;
             }
 
-            const uploadToken = ++this.imageUploadToken;
-            this.setImageProcessing(true);
-
-            this.imageProcessingPromise = this.compressImage(file)
-                .then((dataUrl) => {
-                    if (uploadToken !== this.imageUploadToken) {
-                        return;
-                    }
-
-                    this.elements.imageDataHolder.dataset.imageBase64 = dataUrl;
-                    this.elements.imageDataHolder.dataset.imageType = 'image/jpeg';
-
-                    this.elements.imagePreview.style.backgroundImage = `url('${dataUrl}')`;
-                    this.elements.imageUploadWrapper.style.display = 'none';
-                    this.elements.imagePreviewWrapper.style.display = 'flex';
-
-                    const parsed = this.parseImageDataUrl(dataUrl, 'image/jpeg');
-                    if (!parsed) {
-                        console.warn('[ApexWidget] Compressed image data URL appears malformed');
-                    } else {
-                        const originalBytes = Number(file.size || 0);
-                        const compressedBytes = Number(parsed.estimatedBytes || 0);
-                        const savedBytes = Math.max(0, originalBytes - compressedBytes);
-                        const reductionPercent = originalBytes > 0
-                            ? Number(((savedBytes / originalBytes) * 100).toFixed(1))
-                            : 0;
-
-                        console.log('[ApexWidget] Compressed image payload prepared:', {
-                            original_size_bytes: originalBytes,
-                            compressed_size_bytes: compressedBytes,
-                            saved_bytes: savedBytes,
-                            reduction_percent: reductionPercent,
-                            original_mime_type: file.type,
-                            mime_type: parsed.mimeType,
-                            base64_length: parsed.base64.length,
-                            estimated_bytes: parsed.estimatedBytes
-                        });
-                    }
-                })
-                .catch((err) => {
-                    if (uploadToken === this.imageUploadToken) {
-                        this.appendBotMessage('There was a problem processing that image. Please try again.', false);
-                        this.removeImage();
-                    }
-                    throw err;
-                })
-                .finally(() => {
-                    if (uploadToken === this.imageUploadToken) {
-                        this.setImageProcessing(false);
-                        this.imageProcessingPromise = null;
-                    }
-                });
-        },
-
-        parseImageDataUrl(dataUrl, fallbackMimeType = '') {
-            if (!dataUrl || typeof dataUrl !== 'string') return null;
-
-            const match = dataUrl.match(/^data:(image\/[a-zA-Z0-9.+-]+);base64,([A-Za-z0-9+/=\s]+)$/);
-            if (!match) return null;
-
-            const mimeType = (match[1] || fallbackMimeType || '').toLowerCase();
-            const base64 = (match[2] || '').replace(/\s+/g, '');
-            if (!base64) return null;
-
-            const estimatedBytes = Math.floor((base64.length * 3) / 4) - (base64.endsWith('==') ? 2 : (base64.endsWith('=') ? 1 : 0));
-
-            return {
-                dataUrl,
-                base64,
-                mimeType,
-                estimatedBytes
+            // Read file as base64
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const base64 = event.target.result;
+                this.elements.imageDataHolder.dataset.imageBase64 = base64;
+                this.elements.imageDataHolder.dataset.imageType = file.type;
+                
+                // Show preview
+                this.elements.imagePreview.style.backgroundImage = `url('${base64}')`;
+                this.elements.imageUploadWrapper.style.display = 'none';
+                this.elements.imagePreviewWrapper.style.display = 'flex';
             };
-        },
-
-        formatMileage(value) {
-            const parsed = Number.parseInt(value, 10);
-            if (!Number.isFinite(parsed)) return '0 mi';
-            return `${parsed.toLocaleString('en-US')} mi`;
-        },
-
-        updateMileageUI() {
-            const slider = this.elements.mileageRange;
-            const label = this.elements.mileageValue;
-            if (!slider) return;
-
-            const min = Number.parseInt(slider.min, 10) || 0;
-            const max = Number.parseInt(slider.max, 10) || 200000;
-            const value = Number.parseInt(slider.value, 10) || 0;
-            const ratio = max > min ? ((value - min) / (max - min)) : 0;
-            const progress = Math.max(0, Math.min(100, ratio * 100));
-            const sliderWidth = slider.getBoundingClientRect().width || 1;
-            const thumbWidth = 24;
-            const visualProgress = ratio <= 0
-                ? 0
-                : Math.max(
-                    0,
-                    Math.min(
-                        100,
-                        ((((sliderWidth - thumbWidth) * ratio) + (thumbWidth / 2)) / sliderWidth) * 100
-                    )
-                );
-
-            slider.style.setProperty('--apex-mileage-progress', `${progress}%`);
-            slider.style.setProperty('--apex-mileage-visual-progress', `${visualProgress}%`);
-            if (label) {
-                label.textContent = this.formatMileage(value);
-            }
+            reader.readAsDataURL(file);
         },
 
         removeImage() {
-            this.imageUploadToken += 1;
-            this.imageProcessingPromise = null;
-            this.setImageProcessing(false);
             this.elements.imageDataHolder.dataset.imageBase64 = '';
             this.elements.imageDataHolder.dataset.imageType = '';
             this.elements.imagePreview.style.backgroundImage = '';
-            if (this.elements.cameraInput) this.elements.cameraInput.value = '';
-            if (this.elements.galleryInput) this.elements.galleryInput.value = '';
+            this.elements.imageInput.value = '';
             this.elements.imageUploadWrapper.style.display = 'flex';
             this.elements.imagePreviewWrapper.style.display = 'none';
         },
 
-        async sendMessage() {
+        sendMessage() {
             const text = this.elements.inputField.value.trim();
             const name = this.elements.contactName.value.trim();
             const phone = this.elements.contactPhone.value.trim();
@@ -1300,27 +848,29 @@
             
             if (!text || this.isTyping) return;
 
-            await this.waitForImageProcessing();
-
             this.elements.inputField.value = '';
             this.elements.inputField.disabled = true;
             this.elements.sendBtn.disabled = true;
 
-            // Get image data if available (must be before appendUserMessage so thumbnail shows)
-            const imageBase64 = this.elements.imageDataHolder.dataset.imageBase64 || '';
-            const imageType = this.elements.imageDataHolder.dataset.imageType || '';
-            const parsedImage = imageBase64 ? this.parseImageDataUrl(imageBase64, imageType) : null;
-
-            this.appendUserMessage(text, imageBase64 || null);
+            this.appendUserMessage(text);
             this.appendTypingIndicator();
 
             this.elements.vehicleWrap.classList.add('select-hidden');
 
+            // Get image data if available
+            const imageBase64 = this.elements.imageDataHolder.dataset.imageBase64 || '';
+            const imageType = this.elements.imageDataHolder.dataset.imageType || '';
+            const isFirstMessage = !this.firstMessageAlertSent;
+            const nextMessageNumber = this.messageCount + 1;
+
             const payload = {
                 message: text,
+                send_sms_alert: isFirstMessage,
+                is_first_message: isFirstMessage,
+                message_number: nextMessageNumber,
+                response_mode: isFirstMessage ? 'sms_and_webhook' : 'webhook_only',
                 shop_id: this.SHOP_ID,
                 session_id: this.SESSION_ID,
-                vehicle_mileage: Number.parseInt(this.elements.mileageRange?.value || '0', 10) || 0,
                 vehicle: {
                     year: this.elements.yearSelect.value || null,
                     make: this.elements.makeSelect.value || null,
@@ -1330,23 +880,15 @@
                     name: name,
                     phone: phone
                 },
-                image64: parsedImage ? parsedImage.base64 : null,
-                image_mime_type: parsedImage ? parsedImage.mimeType : null,
-                image_data_url: parsedImage ? parsedImage.dataUrl : null,
-                image_estimated_bytes: parsedImage ? parsedImage.estimatedBytes : null,
-                image: parsedImage ? {
-                    data: parsedImage.dataUrl,
-                    type: parsedImage.mimeType,
-                    data_url: parsedImage.dataUrl,
-                    base64: parsedImage.base64,
-                    mime_type: parsedImage.mimeType,
-                    estimated_bytes: parsedImage.estimatedBytes
+                image: imageBase64 ? {
+                    data: imageBase64,
+                    type: imageType
                 } : null
             };
 
-            if (imageBase64 && !parsedImage) {
-                console.warn('[ApexWidget] Image was selected but payload format is invalid; sending without image');
-            }
+            this.firstMessageAlertSent = true;
+            this.messageCount = nextMessageNumber;
+            this.persistSessionState();
 
             const self = this;
             console.log('[ApexWidget] Sending payload to n8n:', payload);
@@ -1368,12 +910,11 @@
 
                 // Only display if there's a proper message field
                 const message = data.output || data.message || data.text;
-                const bookingUrl = self.normalizeBookingUrl(data.booking_url || data.bookingUrl || null);
                 if (message && typeof message === 'string') {
-                    self.appendBotMessage(message, true, bookingUrl);
+                    self.appendBotMessage(message, true);
                 } else {
                     // If no proper message, show generic success
-                    self.appendBotMessage("Thanks! We've received your request and will get back to you shortly.", true, bookingUrl);
+                    self.appendBotMessage("Thanks! We've received your request and will get back to you shortly.", true);
                     console.warn('[ApexWidget] Unexpected response format:', data);
                 }
 
@@ -1430,8 +971,8 @@
 
                 #apex-chat-button {
                     position: fixed;
-                    bottom: calc(24px + env(safe-area-inset-bottom, 0px));
-                    right: calc(24px + env(safe-area-inset-right, 0px));
+                    bottom: 24px;
+                    right: 24px;
                     width: 64px;
                     height: 64px;
                     background: linear-gradient(135deg, var(--apex-blue) 0%, #2563EB 100%);
@@ -1461,8 +1002,8 @@
 
                 #apex-proactive-greeting {
                     position: fixed;
-                    bottom: calc(100px + env(safe-area-inset-bottom, 0px));
-                    right: calc(24px + env(safe-area-inset-right, 0px));
+                    bottom: 100px;
+                    right: 24px;
                     max-width: 280px;
                     padding: 14px 18px;
                     background: var(--apex-card);
@@ -1493,11 +1034,10 @@
 
                 #apex-chat-window {
                     position: fixed;
-                    bottom: calc(100px + env(safe-area-inset-bottom, 0px));
-                    right: calc(24px + env(safe-area-inset-right, 0px));
-                    width: min(400px, calc(100vw - 32px - env(safe-area-inset-right, 0px)));
-                    height: min(760px, calc(100vh - 120px - env(safe-area-inset-bottom, 0px)));
-                    height: min(760px, calc(100dvh - 120px - env(safe-area-inset-bottom, 0px)));
+                    bottom: 100px;
+                    right: 24px;
+                    width: 400px;
+                    height: 650px;
                     background: var(--apex-dark);
                     border-radius: 16px;
                     display: flex;
@@ -1640,22 +1180,6 @@
                     opacity: 0.8;
                 }
 
-                .apex-build-version-pill {
-                    align-self: flex-start;
-                    margin-top: 2px;
-                    padding: 4px 8px;
-                    border-radius: 999px;
-                    border: 1px solid rgba(255, 255, 255, 0.32);
-                    background: linear-gradient(135deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.1) 100%);
-                    color: rgba(255, 255, 255, 0.96);
-                    font-size: 10px;
-                    font-weight: 700;
-                    letter-spacing: 0.45px;
-                    text-transform: uppercase;
-                    white-space: nowrap;
-                    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24), 0 4px 12px rgba(15, 23, 42, 0.28);
-                }
-
                 #apex-close-btn:hover { transform: rotate(90deg); opacity: 1; }
 
                 #apex-chat-messages {
@@ -1690,53 +1214,6 @@
 
                 .apex-bot-message { background: var(--apex-card); color: var(--apex-text); align-self: flex-start; border-bottom-left-radius: 4px; border: 1px solid var(--apex-border); }
                 .apex-user-message { background: linear-gradient(135deg, var(--apex-blue) 0%, #2563EB 100%); color: white; align-self: flex-end; border-bottom-right-radius: 4px; box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3); }
-                .apex-user-message .apex-chat-image { display: block; max-width: 100%; max-height: 180px; width: auto; border-radius: 8px; margin-bottom: 6px; object-fit: contain; }
-                .apex-user-message span { display: block; }
-
-                .apex-bot-message .typing-text {
-                    display: block;
-                    white-space: pre-wrap;
-                }
-
-                .apex-booking-link {
-                    margin-top: 10px;
-                    width: 100%;
-                    display: inline-flex;
-                    align-items: center;
-                    justify-content: center;
-                    gap: 8px;
-                    padding: 11px 14px;
-                    border-radius: 12px;
-                    border: 1px solid rgba(147, 197, 253, 0.45);
-                    background: linear-gradient(135deg, #2563eb 0%, #3b82f6 50%, #60a5fa 100%);
-                    color: #ffffff;
-                    font-size: 13px;
-                    font-weight: 700;
-                    letter-spacing: 0.2px;
-                    text-decoration: none;
-                    box-shadow: 0 8px 18px rgba(37, 99, 235, 0.32);
-                    transition: transform 150ms ease, box-shadow 150ms ease, filter 150ms ease;
-                }
-
-                .apex-booking-link:hover {
-                    transform: translateY(-1px);
-                    box-shadow: 0 10px 24px rgba(37, 99, 235, 0.4);
-                    filter: brightness(1.03);
-                }
-
-                .apex-booking-link:active {
-                    transform: translateY(0);
-                }
-
-                .apex-booking-link:focus-visible {
-                    outline: 2px solid #bfdbfe;
-                    outline-offset: 2px;
-                }
-
-                .apex-booking-icon {
-                    font-size: 14px;
-                    line-height: 1;
-                }
 
                 .apex-typing-bubble {
                     max-width: 85%;
@@ -1773,7 +1250,7 @@
                     flex-shrink: 0;
                 }
 
-                .apex-typing-text-wrapper { min-width: 0; display: flex; align-items: center; transition: opacity 450ms ease; }
+                .apex-typing-text-wrapper { min-width: 260px; display: flex; align-items: center; transition: opacity 450ms ease; }
                 .apex-typing-text-wrapper.text-fade-out { opacity: 0.3; }
                 .apex-typing-text { font-size: 14px; color: var(--apex-text); font-weight: 400; }
 
@@ -1830,8 +1307,7 @@
                     gap: 8px;
                 }
 
-                #apex-image-btn-camera,
-                #apex-image-btn-gallery {
+                #apex-image-btn {
                     background: var(--apex-card);
                     color: var(--apex-text-muted);
                     border: 1px solid var(--apex-border);
@@ -1847,12 +1323,9 @@
                     font-family: inherit;
                 }
 
-                #apex-image-btn-camera svg,
-                #apex-image-btn-gallery svg { width: 20px; height: 20px; }
-                #apex-image-btn-camera:hover,
-                #apex-image-btn-gallery:hover { transform: scale(1.05); border-color: var(--apex-blue); color: var(--apex-blue); }
-                #apex-image-btn-camera:active,
-                #apex-image-btn-gallery:active { transform: scale(0.95); }
+                #apex-image-btn svg { width: 20px; height: 20px; }
+                #apex-image-btn:hover { transform: scale(1.05); border-color: var(--apex-blue); color: var(--apex-blue); }
+                #apex-image-btn:active { transform: scale(0.95); }
 
                 #apex-image-preview-wrapper {
                     display: flex;
@@ -1917,116 +1390,6 @@
                     width: 100%;
                 }
 
-                .apex-mileage-row {
-                    flex-direction: column;
-                    gap: 9px;
-                    padding: 8px 10px;
-                    border: 1px solid rgba(148, 163, 184, 0.22);
-                    border-radius: 12px;
-                    background: radial-gradient(circle at 18% 0%, rgba(96, 165, 250, 0.1) 0%, rgba(15, 23, 42, 0.18) 48%, rgba(15, 23, 42, 0.08) 100%);
-                    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 10px 20px rgba(2, 6, 23, 0.2);
-                }
-
-                .apex-mileage-header {
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                    gap: 8px;
-                    font-size: 12px;
-                    color: var(--apex-text-muted);
-                    letter-spacing: 0.2px;
-                }
-
-                .apex-mileage-label {
-                    color: var(--apex-text-muted);
-                    font-weight: 500;
-                }
-
-                .apex-mileage-value {
-                    color: var(--apex-text);
-                    font-weight: 600;
-                    font-variant-numeric: tabular-nums;
-                    text-shadow: 0 0 12px rgba(96, 165, 250, 0.25);
-                }
-
-                .apex-mileage-range {
-                    appearance: none;
-                    -webkit-appearance: none;
-                    width: 100%;
-                    height: 12px;
-                    border-radius: 999px;
-                    border: 1px solid rgba(148, 163, 184, 0.35);
-                    background:
-                        linear-gradient(90deg, #2563eb 0%, #3b82f6 45%, #60a5fa 100%) 0 0 / var(--apex-mileage-visual-progress, 0%) 100% no-repeat,
-                        linear-gradient(90deg, rgba(148, 163, 184, 0.3) 0%, rgba(148, 163, 184, 0.16) 100%) 0 0 / 100% 100% no-repeat;
-                    transition: background 120ms linear, border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
-                    cursor: pointer;
-                    outline: none;
-                    box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.45), 0 1px 0 rgba(255, 255, 255, 0.06);
-                }
-
-                .apex-mileage-range:hover {
-                    border-color: var(--apex-blue);
-                    transform: translateY(-0.5px);
-                }
-
-                .apex-mileage-range:focus {
-                    box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.45), 0 0 0 3px rgba(59, 130, 246, 0.18), 0 0 18px rgba(59, 130, 246, 0.22);
-                }
-
-                .apex-mileage-range::-webkit-slider-runnable-track {
-                    height: 12px;
-                    background: transparent;
-                    border-radius: 999px;
-                }
-
-                .apex-mileage-range::-webkit-slider-thumb {
-                    -webkit-appearance: none;
-                    appearance: none;
-                    width: 24px;
-                    height: 24px;
-                    border-radius: 50%;
-                    border: 2px solid rgba(255, 255, 255, 0.88);
-                    background: radial-gradient(circle at 28% 25%, #ffffff 0%, #dbeafe 20%, #60a5fa 44%, #2563eb 100%);
-                    box-shadow: 0 6px 14px rgba(37, 99, 235, 0.5), 0 0 0 2px rgba(59, 130, 246, 0.25);
-                    margin-top: -7px;
-                    transition: transform 120ms ease, box-shadow 120ms ease;
-                }
-
-                .apex-mileage-range:active::-webkit-slider-thumb {
-                    transform: scale(1.1);
-                    box-shadow: 0 8px 18px rgba(37, 99, 235, 0.58), 0 0 0 4px rgba(59, 130, 246, 0.28);
-                }
-
-                .apex-mileage-range.is-dragging {
-                    border-color: #60a5fa;
-                    box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.45), 0 0 0 3px rgba(59, 130, 246, 0.2), 0 0 20px rgba(59, 130, 246, 0.3);
-                }
-
-                .apex-mileage-range::-moz-range-track {
-                    height: 12px;
-                    border-radius: 999px;
-                    background: linear-gradient(90deg, rgba(148, 163, 184, 0.3) 0%, rgba(148, 163, 184, 0.16) 100%);
-                    border: none;
-                }
-
-                .apex-mileage-range::-moz-range-progress {
-                    height: 12px;
-                    border-radius: 999px;
-                    background: linear-gradient(90deg, #2563eb 0%, #3b82f6 45%, #60a5fa 100%);
-                }
-
-                .apex-mileage-range::-moz-range-thumb {
-                    width: 24px;
-                    height: 24px;
-                    border-radius: 50%;
-                    border: 2px solid rgba(255, 255, 255, 0.88);
-                    background: radial-gradient(circle at 28% 25%, #ffffff 0%, #dbeafe 20%, #60a5fa 44%, #2563eb 100%);
-                    box-shadow: 0 6px 14px rgba(37, 99, 235, 0.5), 0 0 0 2px rgba(59, 130, 246, 0.25);
-                    transition: transform 120ms ease, box-shadow 120ms ease;
-                    cursor: pointer;
-                }
-
                 .apex-form-disclaimer {
                     font-size: 11px;
                     color: rgba(148, 163, 184, 0.6);
@@ -2088,123 +1451,24 @@
                     100% { opacity: 1; transform: translateY(0); }
                 }
 
-                @media (max-width: 768px) {
-                    #apex-chat-button {
-                        width: 56px;
-                        height: 56px;
-                        right: calc(12px + env(safe-area-inset-right, 0px));
-                        bottom: calc(12px + env(safe-area-inset-bottom, 0px));
-                    }
-
-                    #apex-proactive-greeting {
-                        right: calc(8px + env(safe-area-inset-right, 0px));
-                        bottom: calc(88px + env(safe-area-inset-bottom, 0px));
-                        max-width: min(280px, calc(100vw - 24px));
-                    }
-
+                @media (max-width: 480px) {
                     #apex-chat-window {
-                        right: calc(8px + env(safe-area-inset-right, 0px));
-                        bottom: calc(76px + env(safe-area-inset-bottom, 0px));
-                        width: calc(100vw - 16px - env(safe-area-inset-right, 0px));
-                        height: min(86vh, calc(var(--apex-runtime-vh, 100dvh) - 88px));
-                        height: min(86dvh, calc(var(--apex-runtime-vh, 100dvh) - 88px));
-                        border-radius: 14px;
+                        width: calc(100vw - 32px);
+                        height: calc(100vh - 120px);
+                        right: 16px;
+                        bottom: 90px;
                     }
-
+                    
                     .apex-form-row-split {
                         flex-direction: column;
                     }
+                }
 
+                @media (max-width: 768px) {
                     .apex-input,
                     .apex-select,
                     #apex-chat-input {
                         font-size: 16px;
-                    }
-
-                    .apex-mileage-header {
-                        font-size: 13px;
-                    }
-                }
-
-                @media (max-width: 430px) {
-                    #apex-chat-window {
-                        top: calc(env(safe-area-inset-top, 0px) + 8px);
-                        left: 8px;
-                        right: 8px;
-                        bottom: calc(8px + env(safe-area-inset-bottom, 0px));
-                        width: auto;
-                        height: auto;
-                        border-radius: 18px;
-                        border: 1px solid var(--apex-border);
-                        transform-origin: bottom center;
-                    }
-
-                    #apex-proactive-greeting {
-                        display: none;
-                    }
-
-                    #apex-chat-header {
-                        gap: 10px;
-                        padding: 14px;
-                        padding-top: calc(14px + env(safe-area-inset-top, 0px));
-                    }
-
-                    #apex-avatar {
-                        width: 32px;
-                        height: 32px;
-                    }
-
-                    #apex-header-title {
-                        font-size: 15px;
-                    }
-
-                    #apex-header-subtitle,
-                    #apex-header-model {
-                        font-size: 11px;
-                    }
-
-                        gap: 8px;
-                        max-height: min(32vh, 220px);
-                        overflow-y: auto;
-                    }
-
-                    .apex-form-disclaimer {
-                        font-size: 10px;
-                        margin-top: 4px;
-                    }
-
-                    .apex-input,
-                    .apex-select {
-                        padding: 10px 12px;
-                        font-size: 16px;
-                    }
-
-                    .apex-mileage-row {
-                        gap: 6px;
-                    }
-
-                    #apex-chat-input-area {
-                        padding: 10px;
-                        gap: 8px;
-                        padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
-                    }
-
-                    #apex-image-btn-camera,
-                    #apex-image-btn-gallery,
-                    #apex-send-btn {
-                        width: 40px;
-                        height: 40px;
-                        border-radius: 10px;
-                    }
-
-                    #apex-image-preview {
-                        width: 40px;
-                        height: 40px;
-                    }
-
-                    .apex-message,
-                    .apex-typing-bubble {
-                        max-width: 92%;
                     }
                 }
             `;
