@@ -30,8 +30,22 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- Apex Widget -->
-    <link rel="stylesheet" href="https://widget.apexconversiongroup.com/widget.css">
+    <!-- Apex Widget (auto cache-busted on every page load) -->
+    <script>
+        (function loadApexWidgetCss() {
+            const bust = String(Date.now());
+            const cssId = 'apex-widget-css';
+            const existing = document.getElementById(cssId);
+            if (existing) existing.remove();
+
+            const link = document.createElement('link');
+            link.id = cssId;
+            link.rel = 'stylesheet';
+            link.href = `https://widget.apexconversiongroup.com/widget.css?v=${bust}`;
+            link.setAttribute('data-apex-widget-css', 'true');
+            document.head.appendChild(link);
+        })();
+    </script>
 
     <!-- Tailwind Config for Custom Colors -->
     <script>
@@ -1543,7 +1557,21 @@ Plug our vision-model service advisor widget directly into your website. It deli
 
     <!-- WIDGET DROP ZONE: Paste your n8n script tags inside this wrapper -->
     <div id="apex-widget-wrapper">
-        <script src="https://widget.apexconversiongroup.com/widget.js" data-shop-id="1019" defer></script>
+        <script>
+            (function loadApexWidgetJs() {
+                const bust = String(Date.now());
+                const wrapper = document.getElementById('apex-widget-wrapper') || document.body;
+                const existing = wrapper.querySelector('script[data-apex-widget-js="true"]');
+                if (existing) existing.remove();
+
+                const script = document.createElement('script');
+                script.src = `https://widget.apexconversiongroup.com/widget.js?v=${bust}`;
+                script.defer = true;
+                script.setAttribute('data-shop-id', '1019');
+                script.setAttribute('data-apex-widget-js', 'true');
+                wrapper.appendChild(script);
+            })();
+        </script>
         <script>
             (function mountApexWidgetFallback() {
                 let tries = 0;
