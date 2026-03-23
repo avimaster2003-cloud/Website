@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: apex-stripe-backend
+    env: node
+    rootDir: stripe-backend
+    buildCommand: npm install
+    startCommand: npm start
+    autoDeploy: true
+    envVars:
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: FRONTEND_URL
+        value: https://www.apexconversiongroup.com
+      - key: FRONTEND_URLS
+        value: https://www.apexconversiongroup.com,https://apexconversiongroup.com
+      - key: STRIPE_PRICE_ID_3M_MONTHLY
+        value: price_1TE55SROIh3dM2m7rZkAIC9r
+      - key: STRIPE_PRICE_ID_12M_MONTHLY
+        value: price_1TE55VROIh3dM2m7uesBBzRC

@@ -1721,6 +1721,7 @@ Plug a fully automated client retention system directly into your website. Our A
         // STRIPE CHECKOUT LOGIC
         // ==========================================
         let selectedTier = null;
+        const SUBSCRIPTION_API_BASE = window.APEX_SUBSCRIPTION_API_BASE || 'https://REPLACE-WITH-RENDER-URL';
 
         const tierDetails = {
             'no_contract': {
@@ -1733,7 +1734,8 @@ Plug a fully automated client retention system directly into your website. Our A
                 name: '3 Month Commitment',
                 price: '$249/month (ACH first)',
                 amount: 24900,
-                paymentLink: 'https://buy.stripe.com/28E7sN54l6FU2lXcog9MY07'
+                paymentLink: null,
+                usesBackend: true
             },
             'three_month_upfront': {
                 name: '3 Month Upfront',
@@ -1745,7 +1747,8 @@ Plug a fully automated client retention system directly into your website. Our A
                 name: '12 Month Commitment',
                 price: '$199/month (ACH first)',
                 amount: 19900,
-                paymentLink: 'https://buy.stripe.com/8x2fZjfIZgguf8JfAs9MY09'
+                paymentLink: null,
+                usesBackend: true
             },
             'twelve_month_upfront': {
                 name: '12 Month Upfront',
@@ -1799,13 +1802,40 @@ Plug a fully automated client retention system directly into your website. Our A
             btn.textContent = 'Processing...';
 
             try {
-                const redirectUrl = new URL(tierDetails[selectedTier].paymentLink);
-                if (email) {
-                    redirectUrl.searchParams.set('prefilled_email', email);
+                const selected = tierDetails[selectedTier];
+
+                if (selected.usesBackend) {
+                    if (SUBSCRIPTION_API_BASE.includes('REPLACE-WITH-RENDER-URL')) {
+                        throw new Error('Subscription backend URL not configured yet.');
+                    }
+
+                    const response = await fetch(`${SUBSCRIPTION_API_BASE}/api/create-monthly-checkout-session`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            tier: selectedTier,
+                            email,
+                            shopName
+                        })
+                    });
+
+                    if (!response.ok) {
+                        const text = await response.text();
+                        throw new Error(`Subscription checkout failed (${response.status}): ${text}`);
+                    }
+
+                    const data = await response.json();
+                    if (!data || !data.url) {
+                        throw new Error('Missing checkout URL from server.');
+                    }
+
+                    window.location.href = data.url;
+                    return;
                 }
-                if (shopName) {
-                    redirectUrl.searchParams.set('client_reference_id', shopName);
-                }
+
+                const redirectUrl = new URL(selected.paymentLink);
+                if (email) redirectUrl.searchParams.set('prefilled_email', email);
+                if (shopName) redirectUrl.searchParams.set('client_reference_id', shopName);
                 window.location.href = redirectUrl.toString();
             } catch (error) {
                 console.error('Checkout error:', error);
