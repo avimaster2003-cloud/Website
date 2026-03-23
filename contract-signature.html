@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VETRA Contract Signature Packet</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background:#06090f; color:#d1d5db; font-family: Inter, Arial, sans-serif; }
+    h1,h2,h3 { color:#fff; }
+    label { color:#d1d5db; }
+  </style>
+</head>
+<body>
+  <main class="max-w-5xl mx-auto px-6 py-12">
+    <a href="/" class="text-blue-400 underline">Back to Site</a>
+    <h1 class="text-4xl font-bold mt-4 mb-2">VETRA Contract Signature Packet</h1>
+    <p class="text-sm text-gray-400 mb-8">Complete this once. It generates your signed copy and opens a pre-addressed legal submission email.</p>
+
+    <div class="grid md:grid-cols-2 gap-4 mb-8">
+      <a href="/msa-order-form.html" class="p-4 border border-blue-500/30 bg-blue-500/10 rounded-lg hover:bg-blue-500/15 transition-colors">Read: Order Form and Subscription Agreement</a>
+      <a href="/platform-conditions.html" class="p-4 border border-purple-500/30 bg-purple-500/10 rounded-lg hover:bg-purple-500/15 transition-colors">Read: Platform Conditions and Compliance Addendum</a>
+    </div>
+
+    <form id="contract-form" class="space-y-6 border border-white/10 rounded-2xl p-6 bg-black/30">
+      <h2 class="text-2xl font-semibold">Signer and Business Details</h2>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div><label class="block mb-2">Legal Business Name</label><input id="legal_name" required class="w-full p-3 rounded-lg bg-black/50 border border-white/10"></div>
+        <div><label class="block mb-2">DBA / Shop Name</label><input id="dba_name" required class="w-full p-3 rounded-lg bg-black/50 border border-white/10"></div>
+        <div><label class="block mb-2">Authorized Signer Name</label><input id="signer_name" required class="w-full p-3 rounded-lg bg-black/50 border border-white/10"></div>
+        <div><label class="block mb-2">Signer Title</label><input id="signer_title" required class="w-full p-3 rounded-lg bg-black/50 border border-white/10"></div>
+        <div><label class="block mb-2">Signer Email</label><input id="signer_email" type="email" required class="w-full p-3 rounded-lg bg-black/50 border border-white/10"></div>
+        <div><label class="block mb-2">Signer Phone</label><input id="signer_phone" required class="w-full p-3 rounded-lg bg-black/50 border border-white/10"></div>
+      </div>
+
+      <h2 class="text-2xl font-semibold">Plan and Billing Election</h2>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div>
+          <label class="block mb-2">Selected Plan</label>
+          <select id="selected_plan" required class="w-full p-3 rounded-lg bg-black/50 border border-white/10">
+            <option value="">Select</option>
+            <option>No Contract - $299/mo</option>
+            <option>3-Month Monthly - $249/mo</option>
+            <option>3-Month Upfront - $675</option>
+            <option>12-Month Monthly - $199/mo</option>
+            <option>12-Month Upfront - $1,800</option>
+          </select>
+        </div>
+        <div><label class="block mb-2">Effective Date</label><input id="effective_date" type="date" required class="w-full p-3 rounded-lg bg-black/50 border border-white/10"></div>
+      </div>
+
+      <h2 class="text-2xl font-semibold">Initial Required Clauses</h2>
+      <p class="text-sm text-gray-400">Enter initials for each clause (example: AP).</p>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div><label class="block mb-2">Pricing and Billing Terms Initials</label><input id="init_pricing" required class="w-full p-3 rounded-lg bg-black/50 border border-white/10"></div>
+        <div><label class="block mb-2">Cancellation and Commitment Terms Initials</label><input id="init_cancel" required class="w-full p-3 rounded-lg bg-black/50 border border-white/10"></div>
+        <div><label class="block mb-2">SMS / TCPA Responsibility Initials</label><input id="init_tcpa" required class="w-full p-3 rounded-lg bg-black/50 border border-white/10"></div>
+        <div><label class="block mb-2">Soft Quote and Liability Disclaimer Initials</label><input id="init_liability" required class="w-full p-3 rounded-lg bg-black/50 border border-white/10"></div>
+      </div>
+
+      <div class="space-y-3 pt-2">
+        <label class="flex gap-2 items-start"><input type="checkbox" id="ack_docs" required class="mt-1"><span>I confirm I reviewed both documents linked above.</span></label>
+        <label class="flex gap-2 items-start"><input type="checkbox" id="ack_esign" required class="mt-1"><span>I agree this constitutes an electronic signature and binding acceptance of contract terms.</span></label>
+      </div>
+
+      <div>
+        <label class="block mb-2">Typed Signature (Full Legal Name)</label>
+        <input id="typed_signature" required class="w-full p-3 rounded-lg bg-black/50 border border-white/10">
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-3">
+        <button type="submit" class="px-6 py-3 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-semibold">Generate and Send to Legal</button>
+        <button type="button" id="copy-btn" class="px-6 py-3 rounded-lg border border-white/20 hover:bg-white/5">Copy Packet Text</button>
+      </div>
+      <p class="text-xs text-gray-500">Submission target: legal@apexconversiongroup.com</p>
+    </form>
+
+    <textarea id="packet-output" class="w-full h-72 mt-8 p-4 rounded-lg bg-black/60 border border-white/10 text-sm"></textarea>
+  </main>
+
+  <script>
+    const form = document.getElementById('contract-form');
+    const output = document.getElementById('packet-output');
+    const copyBtn = document.getElementById('copy-btn');
+
+    function v(id) { return document.getElementById(id).value.trim(); }
+
+    function buildPacket() {
+      const now = new Date();
+      const packetId = 'VETRA-' + now.getFullYear() + String(now.getMonth()+1).padStart(2,'0') + String(now.getDate()).padStart(2,'0') + '-' + now.getTime().toString().slice(-6);
+      return [
+        'VETRA CONTRACT SIGNATURE PACKET',
+        'Packet ID: ' + packetId,
+        'Submitted At (UTC): ' + new Date().toISOString(),
+        '',
+        'BUSINESS DETAILS',
+        'Legal Name: ' + v('legal_name'),
+        'DBA: ' + v('dba_name'),
+        'Signer Name: ' + v('signer_name'),
+        'Signer Title: ' + v('signer_title'),
+        'Signer Email: ' + v('signer_email'),
+        'Signer Phone: ' + v('signer_phone'),
+        '',
+        'PLAN ELECTION',
+        'Selected Plan: ' + v('selected_plan'),
+        'Effective Date: ' + v('effective_date'),
+        '',
+        'INITIALS',
+        'Pricing/Billing: ' + v('init_pricing'),
+        'Cancellation/Commitment: ' + v('init_cancel'),
+        'SMS/TCPA Responsibility: ' + v('init_tcpa'),
+        'Liability/Soft Quote Disclaimer: ' + v('init_liability'),
+        '',
+        'ACKNOWLEDGEMENTS',
+        'Reviewed both documents: ' + (document.getElementById('ack_docs').checked ? 'YES' : 'NO'),
+        'Electronic signature accepted: ' + (document.getElementById('ack_esign').checked ? 'YES' : 'NO'),
+        '',
+        'TYPED SIGNATURE',
+        v('typed_signature'),
+        '',
+        'DOCUMENTS',
+        '1) /msa-order-form.html',
+        '2) /platform-conditions.html',
+        '',
+        'This packet was generated by apexconversiongroup.com for legal archive routing.'
+      ].join('\n');
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const packet = buildPacket();
+      output.value = packet;
+
+      const signer = v('signer_name').replace(/[^a-zA-Z0-9]+/g, '-').toLowerCase() || 'signed-packet';
+      const blob = new Blob([packet], { type: 'text/plain' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = signer + '-vetra-contract-packet.txt';
+      link.click();
+      URL.revokeObjectURL(link.href);
+
+      const subject = encodeURIComponent('Signed VETRA Contract Packet - ' + v('dba_name'));
+      const body = encodeURIComponent(packet);
+      window.location.href = 'mailto:legal@apexconversiongroup.com?subject=' + subject + '&body=' + body;
+    });
+
+    copyBtn.addEventListener('click', async () => {
+      if (!output.value.trim()) output.value = buildPacket();
+      try {
+        await navigator.clipboard.writeText(output.value);
+        copyBtn.textContent = 'Copied';
+        setTimeout(() => copyBtn.textContent = 'Copy Packet Text', 1200);
+      } catch (_) {
+        copyBtn.textContent = 'Copy Failed';
+        setTimeout(() => copyBtn.textContent = 'Copy Packet Text', 1200);
+      }
+    });
+  </script>
+</body>
+</html>
