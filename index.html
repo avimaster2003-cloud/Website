@@ -1659,6 +1659,7 @@ Plug a fully automated client retention system directly into your website. Our A
         let selectedTier = null;
         const STRIPE_PUBLIC_KEY = 'pk_live_51TE42SROIh3dM2m7hti4mNohgo7SemJArBJ3MVZ733Lj8z0RUqbhXHgjYehFgiZWYbTPxtbSIYyGEK9xGKxGzS0f00sxCg3nnS';
         const stripe = Stripe(STRIPE_PUBLIC_KEY);
+        const CHECKOUT_API_URL = window.APEX_CHECKOUT_API_URL || '/api/create-checkout-session';
 
         const tierDetails = {
             'monthly': { name: 'No Contract', price: '$299/month', amount: 29900, priceId: null },
@@ -1707,7 +1708,7 @@ Plug a fully automated client retention system directly into your website. Our A
 
             try {
                 // Call your backend to create a Checkout Session
-                const response = await fetch('/api/create-checkout-session', {
+                const response = await fetch(CHECKOUT_API_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -1719,7 +1720,8 @@ Plug a fully automated client retention system directly into your website. Our A
                 });
 
                 if (!response.ok) {
-                    throw new Error(`Server error: ${response.status}`);
+                    const errText = await response.text();
+                    throw new Error(`Server error ${response.status}: ${errText}`);
                 }
 
                 const session = await response.json();
@@ -1734,7 +1736,11 @@ Plug a fully automated client retention system directly into your website. Our A
                 }
             } catch (error) {
                 console.error('Checkout error:', error);
-                alert('Payment processing error. Please try again.');
+                if (String(error.message || '').includes('Failed to fetch')) {
+                    alert('Payment server is unreachable. Start/deploy the backend and set window.APEX_CHECKOUT_API_URL to its /api/create-checkout-session endpoint.');
+                } else {
+                    alert(`Payment processing error: ${error.message}`);
+                }
                 btn.disabled = false;
                 btn.textContent = 'Proceed to Payment';
             }
