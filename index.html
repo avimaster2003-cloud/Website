@@ -1721,7 +1721,7 @@ Plug a fully automated client retention system directly into your website. Our A
         // STRIPE CHECKOUT LOGIC
         // ==========================================
         let selectedTier = null;
-        const SUBSCRIPTION_API_BASE = window.APEX_SUBSCRIPTION_API_BASE || 'https://REPLACE-WITH-RENDER-URL';
+        const SUBSCRIPTION_API_BASE = window.APEX_SUBSCRIPTION_API_BASE || 'https://pay.apexconversiongroup.com';
 
         const tierDetails = {
             'no_contract': {
@@ -1805,10 +1805,6 @@ Plug a fully automated client retention system directly into your website. Our A
                 const selected = tierDetails[selectedTier];
 
                 if (selected.usesBackend) {
-                    if (SUBSCRIPTION_API_BASE.includes('REPLACE-WITH-RENDER-URL')) {
-                        throw new Error('Subscription backend URL not configured yet.');
-                    }
-
                     const response = await fetch(`${SUBSCRIPTION_API_BASE}/api/create-monthly-checkout-session`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
