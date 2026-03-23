@@ -11,6 +11,8 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 10000;
 const ADMIN_API_KEY = (process.env.ADMIN_API_KEY || '').trim();
+const CONTRACT_WEBHOOK_URL = (process.env.CONTRACT_WEBHOOK_URL || '').trim();
+const CONTRACT_WEBHOOK_SECRET = (process.env.CONTRACT_WEBHOOK_SECRET || '').trim();
 const DATA_DIR = path.join(__dirname, 'data');
 const EVENTS_FILE = path.join(DATA_DIR, 'events.jsonl');
 const CONTRACTS_FILE = path.join(DATA_DIR, 'contracts.jsonl');
@@ -91,6 +93,49 @@ function requireAdminKey(req, res, next) {
   return next();
 }
 
+async function forwardContractPacket(record) {
+  if (!CONTRACT_WEBHOOK_URL) {
+    return {
+      attempted: false,
+      delivered: false,
+      statusCode: null,
+      responsePreview: 'No CONTRACT_WEBHOOK_URL configured'
+    };
+  }
+
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 10000);
+
+    const resp = await fetch(CONTRACT_WEBHOOK_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(CONTRACT_WEBHOOK_SECRET ? { 'x-contract-webhook-secret': CONTRACT_WEBHOOK_SECRET } : {})
+      },
+      body: JSON.stringify(record),
+      signal: controller.signal
+    });
+
+    clearTimeout(timeout);
+    const text = await resp.text();
+
+    return {
+      attempted: true,
+      delivered: resp.ok,
+      statusCode: resp.status,
+      responsePreview: (text || '').slice(0, 300)
+    };
+  } catch (error) {
+    return {
+      attempted: true,
+      delivered: false,
+      statusCode: null,
+      responsePreview: `Webhook error: ${error.message}`
+    };
+  }
+}
+
 app.post('/api/event', (req, res) => {
   try {
     const { name, payload } = req.body || {};
@@ -126,7 +171,7 @@ app.get('/api/event', requireAdminKey, (req, res) => {
   }
 });
 
-app.post('/api/contract-packet', (req, res) => {
+app.post('/api/contract-packet', async (req, res) => {
   try {
     const { packetText, signerEmail, signerName, dbaName, selectedPlan } = req.body || {};
 
@@ -134,7 +179,7 @@ app.post('/api/contract-packet', (req, res) => {
       return res.status(400).json({ error: 'packetText and signerEmail are required' });
     }
 
-    const record = {
+    const recordBase = {
       ts: new Date().toISOString(),
       signerEmail,
       signerName: signerName || '',
@@ -145,8 +190,17 @@ app.post('/api/contract-packet', (req, res) => {
       userAgent: req.headers['user-agent'] || ''
     };
 
+    const delivery = await forwardContractPacket(recordBase);
+    const record = {
+      ...recordBase,
+      webhookAttempted: delivery.attempted,
+      webhookDelivered: delivery.delivered,
+      webhookStatusCode: delivery.statusCode,
+      webhookResponsePreview: delivery.responsePreview
+    };
+
     appendJsonl(CONTRACTS_FILE, record);
-    return res.json({ ok: true });
+    return res.json({ ok: true, webhookDelivered: delivery.delivered, webhookStatusCode: delivery.statusCode });
   } catch (error) {
     console.error('contract packet ingest error', error);
     return res.status(500).json({ error: 'Failed to ingest contract packet' });
