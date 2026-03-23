@@ -1659,7 +1659,7 @@ Plug a fully automated client retention system directly into your website. Our A
         let selectedTier = null;
         const STRIPE_PUBLIC_KEY = 'pk_live_51TE42SROIh3dM2m7hti4mNohgo7SemJArBJ3MVZ733Lj8z0RUqbhXHgjYehFgiZWYbTPxtbSIYyGEK9xGKxGzS0f00sxCg3nnS';
         const stripe = Stripe(STRIPE_PUBLIC_KEY);
-        const CHECKOUT_API_URL = window.APEX_CHECKOUT_API_URL || '/api/create-checkout-session';
+        const CHECKOUT_API_URL = window.APEX_CHECKOUT_API_URL || 'http://127.0.0.1:3000/api/create-checkout-session';
 
         const tierDetails = {
             'monthly': { name: 'No Contract', price: '$299/month', amount: 29900, priceId: null },
