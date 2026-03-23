@@ -11,8 +11,10 @@ Upfront plans stay as direct Stripe Payment Links in the website frontend.
 ## Local run
 1. Copy `.env.example` to `.env`
 2. Set live/test Stripe keys
-3. Run `npm install`
-4. Run `npm start`
+3. Set `CONTRACT_WEBHOOK_URL` to your automation webhook if you want contract packets auto-forwarded
+4. Optionally set `CONTRACT_WEBHOOK_SECRET` and `ADMIN_API_KEY`
+5. Run `npm install`
+6. Run `npm start`
 
 ## Webhook
 Set endpoint in Stripe Dashboard:
@@ -21,6 +23,13 @@ Set endpoint in Stripe Dashboard:
 Required events:
 - `invoice.payment_succeeded`
 - `checkout.session.completed`
+
+## Contract automation webhook
+Backend contract packet submissions can be forwarded to:
+- `CONTRACT_WEBHOOK_URL`
+
+Optional auth header sent by backend when configured:
+- `x-contract-webhook-secret: <CONTRACT_WEBHOOK_SECRET>`
 
 ## Frontend wiring
 Set this in website HTML before checkout logic:

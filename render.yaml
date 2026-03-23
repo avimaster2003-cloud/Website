@@ -15,6 +15,12 @@ services:
         value: https://www.apexconversiongroup.com
       - key: FRONTEND_URLS
         value: https://www.apexconversiongroup.com,https://apexconversiongroup.com
+      - key: ADMIN_API_KEY
+        sync: false
+      - key: CONTRACT_WEBHOOK_URL
+        value: https://api.apexconversiongroup.com/webhook/vetra-contract-intake
+      - key: CONTRACT_WEBHOOK_SECRET
+        sync: false
       - key: STRIPE_PRICE_ID_3M_MONTHLY
         value: price_1TE55SROIh3dM2m7rZkAIC9r
       - key: STRIPE_PRICE_ID_12M_MONTHLY
