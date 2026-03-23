@@ -1407,11 +1407,15 @@ Plug our vision-model service advisor widget directly into your website. It deli
                 <!-- Lead Capture Gate -->
                 <div class="max-w-2xl mx-auto glow-card rounded-2xl p-8 border border-white/10 mb-6" id="lead-gate-container">
                     <h2 class="text-2xl font-bold text-white mb-2">Get Started in 15 Seconds</h2>
-                    <p class="text-sm text-gray-400 mb-6">Step 1 of 2: Tell us where to send setup details and your fastest contact number.</p>
+                    <p class="text-sm text-gray-400 mb-6">Step 1 of 2: Tell us where to send setup details plus your fastest contact number.</p>
                     <form id="lead-gate-form" class="space-y-4">
                         <div>
                             <label class="block text-gray-300 font-medium mb-2">Owner Name</label>
                             <input type="text" id="owner_name" required class="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:border-blue-500/50 focus:outline-none transition-colors" placeholder="Jane Smith">
+                        </div>
+                        <div>
+                            <label class="block text-gray-300 font-medium mb-2">Owner Email</label>
+                            <input type="email" id="owner_email" required class="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:border-blue-500/50 focus:outline-none transition-colors" placeholder="you@company.com">
                         </div>
                         <div>
                             <label class="block text-gray-300 font-medium mb-2">Mobile Number</label>
@@ -1498,7 +1502,7 @@ Plug our vision-model service advisor widget directly into your website. It deli
                     <h3 class="text-white font-semibold">Book a Live Demo</h3>
                     <button onclick="closeScheduler()" class="text-gray-400 hover:text-white transition-colors">Close</button>
                 </div>
-                <iframe src="https://calendly.com/apelec12/30min?hide_event_type_details=1&hide_gdpr_banner=1" class="w-full h-[calc(80vh-53px)] bg-white" title="Book a Live Demo"></iframe>
+                <iframe id="scheduler-iframe" src="https://calendly.com/apelec12/30min?hide_event_type_details=1&hide_gdpr_banner=1" class="w-full h-[calc(80vh-53px)] bg-white" title="Book a Live Demo"></iframe>
             </div>
         </div>
     </div>
@@ -1536,7 +1540,25 @@ Plug our vision-model service advisor widget directly into your website. It deli
     <script>
         lucide.createIcons();
 
+        const CALENDLY_BASE_URL = 'https://calendly.com/apelec12/30min?hide_event_type_details=1&hide_gdpr_banner=1';
+
         function openScheduler() {
+            const nameFromForm = document.getElementById('owner_name')?.value?.trim();
+            const emailFromLeadForm = document.getElementById('owner_email')?.value?.trim();
+            const emailFromCheckout = document.getElementById('email')?.value?.trim();
+            const storedName = localStorage.getItem('vetra_lead_name') || '';
+            const storedEmail = localStorage.getItem('vetra_lead_email') || '';
+
+            const prefillName = nameFromForm || storedName;
+            const prefillEmail = emailFromLeadForm || emailFromCheckout || storedEmail;
+
+            const calendlyUrl = new URL(CALENDLY_BASE_URL);
+            if (prefillName) calendlyUrl.searchParams.set('name', prefillName);
+            if (prefillEmail) calendlyUrl.searchParams.set('email', prefillEmail);
+
+            const iframe = document.getElementById('scheduler-iframe');
+            if (iframe) iframe.src = calendlyUrl.toString();
+
             const modal = document.getElementById('scheduler-modal');
             if (modal) modal.classList.remove('hidden');
         }
@@ -1963,15 +1985,20 @@ Plug our vision-model service advisor widget directly into your website. It deli
         document.getElementById('lead-gate-form')?.addEventListener('submit', (e) => {
             e.preventDefault();
             const ownerName = document.getElementById('owner_name').value.trim();
+            const ownerEmail = document.getElementById('owner_email').value.trim();
             const ownerPhone = document.getElementById('owner_phone').value.trim();
-            if (!ownerName || !ownerPhone) return;
+            if (!ownerName || !ownerEmail || !ownerPhone) return;
 
             localStorage.setItem('vetra_lead_name', ownerName);
+            localStorage.setItem('vetra_lead_email', ownerEmail);
             localStorage.setItem('vetra_lead_phone', ownerPhone);
 
             const checkoutContainer = document.getElementById('checkout-form-container');
             checkoutContainer.classList.remove('hidden');
             document.getElementById('lead-gate-container').classList.add('hidden');
+
+            const checkoutEmail = document.getElementById('email');
+            if (checkoutEmail && !checkoutEmail.value) checkoutEmail.value = ownerEmail;
 
             const shopInput = document.getElementById('shop_name');
             if (shopInput && !shopInput.value) shopInput.focus();
