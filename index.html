@@ -16,9 +16,6 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- Stripe.js -->
-    <script src="https://js.stripe.com/v3/"></script>
-    
     <!-- Apex Widget -->
     <link rel="stylesheet" href="https://widget.apexconversiongroup.com/widget.css">
 
@@ -1657,17 +1654,26 @@ Plug a fully automated client retention system directly into your website. Our A
         // STRIPE CHECKOUT LOGIC
         // ==========================================
         let selectedTier = null;
-        const STRIPE_PUBLIC_KEY = 'pk_live_51TE42SROIh3dM2m7hti4mNohgo7SemJArBJ3MVZ733Lj8z0RUqbhXHgjYehFgiZWYbTPxtbSIYyGEK9xGKxGzS0f00sxCg3nnS';
-        const stripe = Stripe(STRIPE_PUBLIC_KEY);
-        const isLocalHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-        const CHECKOUT_API_URL = window.APEX_CHECKOUT_API_URL || (isLocalHost
-            ? 'http://127.0.0.1:3000/api/create-checkout-session'
-            : 'https://REPLACE_WITH_BACKEND_URL/api/create-checkout-session');
 
         const tierDetails = {
-            'monthly': { name: 'No Contract', price: '$299/month', amount: 29900, priceId: null },
-            'quarterly': { name: '3 Month Commitment', price: '$249/month', amount: 24900, priceId: null },
-            'annual': { name: '12 Month Commitment', price: '$199/month', amount: 19900, priceId: null }
+            'monthly': {
+                name: 'No Contract',
+                price: '$299/month',
+                amount: 29900,
+                paymentLink: 'https://buy.stripe.com/14AaEZbsJ3tI5y9gEw9MY00'
+            },
+            'quarterly': {
+                name: '3 Month Commitment',
+                price: '$249/month',
+                amount: 24900,
+                paymentLink: 'https://buy.stripe.com/7sYaEZ68paWae4F73W9MY01'
+            },
+            'annual': {
+                name: '12 Month Commitment',
+                price: '$199/month',
+                amount: 19900,
+                paymentLink: 'https://buy.stripe.com/bJe5kF54l5BQd0Bdsk9MY02'
+            }
         };
 
         function selectTier(element, tier) {
@@ -1697,11 +1703,6 @@ Plug a fully automated client retention system directly into your website. Our A
         document.getElementById('checkout-form')?.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            if (!isLocalHost && CHECKOUT_API_URL.includes('REPLACE_WITH_BACKEND_URL')) {
-                alert('Checkout is not configured yet. Set window.APEX_CHECKOUT_API_URL to your deployed backend endpoint.');
-                return;
-            }
-
             if (!selectedTier) {
                 alert('Please select a plan');
                 return;
@@ -1715,40 +1716,17 @@ Plug a fully automated client retention system directly into your website. Our A
             btn.textContent = 'Processing...';
 
             try {
-                // Call your backend to create a Checkout Session
-                const response = await fetch(CHECKOUT_API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        tier: selectedTier,
-                        email: email,
-                        shopName: shopName,
-                        amount: tierDetails[selectedTier].amount
-                    })
-                });
-
-                if (!response.ok) {
-                    const errText = await response.text();
-                    throw new Error(`Server error ${response.status}: ${errText}`);
+                const redirectUrl = new URL(tierDetails[selectedTier].paymentLink);
+                if (email) {
+                    redirectUrl.searchParams.set('prefilled_email', email);
                 }
-
-                const session = await response.json();
-
-                // Redirect to Stripe Checkout
-                const result = await stripe.redirectToCheckout({ sessionId: session.sessionId });
-
-                if (result.error) {
-                    alert(result.error.message);
-                    btn.disabled = false;
-                    btn.textContent = 'Proceed to Payment';
+                if (shopName) {
+                    redirectUrl.searchParams.set('client_reference_id', shopName);
                 }
+                window.location.href = redirectUrl.toString();
             } catch (error) {
                 console.error('Checkout error:', error);
-                if (String(error.message || '').includes('Failed to fetch')) {
-                    alert('Payment server is unreachable. Start/deploy the backend and set window.APEX_CHECKOUT_API_URL to its /api/create-checkout-session endpoint.');
-                } else {
-                    alert(`Payment processing error: ${error.message}`);
-                }
+                alert(`Payment processing error: ${error.message}`);
                 btn.disabled = false;
                 btn.textContent = 'Proceed to Payment';
             }
