@@ -15,6 +15,9 @@
     
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Stripe.js -->
+    <script src="https://js.stripe.com/v3/"></script>
     
     <!-- Apex Widget -->
     <link rel="stylesheet" href="https://widget.apexconversiongroup.com/widget.css">
@@ -946,9 +949,12 @@ Plug a fully automated client retention system directly into your website. Our A
                     </div>
                 </div>
                 
-                <div class="text-center mt-12">
-                     <button onclick="window.open('https://calendar.app.google/4pSzDqdvak76bMbM7', '_blank')" class="px-8 py-4 bg-primary text-white rounded-lg font-bold text-lg hover:bg-primaryGlow transition-colors shadow-[0_0_30px_rgba(59,130,246,0.3)]">
-                        Secure Your Territory Today
+                <div class="text-center mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
+                     <button onclick="navigate('checkout')" class="px-8 py-4 bg-primary text-white rounded-lg font-bold text-lg hover:bg-primaryGlow transition-colors shadow-[0_0_30px_rgba(59,130,246,0.3)]">
+                        Subscribe Now
+                    </button>
+                     <button onclick="window.open('https://calendar.app.google/4pSzDqdvak76bMbM7', '_blank')" class="px-8 py-4 bg-surface border border-white/10 hover:border-white/30 text-white rounded-lg font-medium text-lg transition-all">
+                        Schedule Demo
                     </button>
                 </div>
             </div>
@@ -1161,6 +1167,154 @@ Plug a fully automated client retention system directly into your website. Our A
                 </button>
             </div>
 
+        </section>
+
+        <!-- ==========================================
+             PAGE 7: CHECKOUT (STRIPE)
+        =========================================== -->
+        <section id="page-checkout" class="page-view page-aura">
+            <div class="w-full pt-12 pb-16 reveal">
+                <div class="text-center mb-16">
+                    <h1 class="font-heading text-4xl md:text-5xl font-bold text-white mb-6">Choose Your <span class="text-gradient">Commitment</span></h1>
+                    <p class="text-lg text-gray-400 font-light">Lock in your rate. All plans include full AI infrastructure, SMS handoff, and local processing.</p>
+                </div>
+
+                <!-- Pricing Tier Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                    <!-- No Contract -->
+                    <div id="tier-monthly" class="glow-card rounded-2xl p-8 border border-white/10 hover:border-blue-500/30 transition-all cursor-pointer group relative" onclick="selectTier(this, 'monthly')">
+                        <div class="absolute top-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <div class="bg-blue-500/20 text-blue-300 text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">FLEXIBLE</div>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">No Contract</h3>
+                        <p class="text-gray-400 text-sm mb-6">Cancel anytime</p>
+                        <div class="mb-6">
+                            <div class="text-5xl font-heading font-bold text-white">$299<span class="text-lg text-gray-400 font-normal">/mo</span></div>
+                            <p class="text-gray-500 text-xs mt-2">Billed monthly</p>
+                        </div>
+                        <button class="w-full py-3 bg-blue-500/20 text-blue-400 rounded-lg font-bold hover:bg-blue-500/30 transition-colors mb-6">Select Plan</button>
+                        <ul class="space-y-3 text-gray-300 text-sm">
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check" class="w-4 h-4 text-blue-400 mt-0.5 shrink-0"></i>
+                                <span>Full AI infrastructure</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check" class="w-4 h-4 text-blue-400 mt-0.5 shrink-0"></i>
+                                <span>SMS handoff & booking</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check" class="w-4 h-4 text-blue-400 mt-0.5 shrink-0"></i>
+                                <span>Local hardware processing</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check" class="w-4 h-4 text-blue-400 mt-0.5 shrink-0"></i>
+                                <span>Monthly billing</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- 3 Month Commitment -->
+                    <div id="tier-quarterly" class="glow-card rounded-2xl p-8 border border-emerald-500/20 hover:border-emerald-400/30 transition-all cursor-pointer group relative ring-2 ring-emerald-500/20" onclick="selectTier(this, 'quarterly')">
+                        <div class="absolute top-0 right-0">
+                            <div class="bg-emerald-500/20 text-emerald-300 text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">POPULAR</div>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">3 Month Commitment</h3>
+                        <p class="text-gray-400 text-sm mb-6">Renews quarterly</p>
+                        <div class="mb-6">
+                            <div class="text-5xl font-heading font-bold text-emerald-400">$249<span class="text-lg text-gray-400 font-normal">/mo</span></div>
+                            <p class="text-gray-500 text-xs mt-2">$747 billed quarterly</p>
+                        </div>
+                        <button class="w-full py-3 bg-emerald-500/20 text-emerald-400 rounded-lg font-bold hover:bg-emerald-500/30 transition-colors mb-6">Select Plan</button>
+                        <ul class="space-y-3 text-gray-300 text-sm">
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i>
+                                <span>Everything in No Contract</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i>
+                                <span><strong>Save $150/quarter</strong></span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i>
+                                <span>Priority support queue</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i>
+                                <span>Quarterly renewal</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- 12 Month Commitment -->
+                    <div id="tier-annual" class="glow-card rounded-2xl p-8 border border-purple-500/20 hover:border-purple-400/30 transition-all cursor-pointer group relative" onclick="selectTier(this, 'annual')">
+                        <div class="absolute top-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <div class="bg-purple-500/20 text-purple-300 text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">BEST VALUE</div>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">12 Month Commitment</h3>
+                        <p class="text-gray-400 text-sm mb-6">Renews annually</p>
+                        <div class="mb-6">
+                            <div class="text-5xl font-heading font-bold text-purple-400">$199<span class="text-lg text-gray-400 font-normal">/mo</span></div>
+                            <p class="text-gray-500 text-xs mt-2">$2,388 billed annually</p>
+                        </div>
+                        <button class="w-full py-3 bg-purple-500/20 text-purple-400 rounded-lg font-bold hover:bg-purple-500/30 transition-colors mb-6">Select Plan</button>
+                        <ul class="space-y-3 text-gray-300 text-sm">
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check" class="w-4 h-4 text-purple-400 mt-0.5 shrink-0"></i>
+                                <span>Everything in 3 Month</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check" class="w-4 h-4 text-purple-400 mt-0.5 shrink-0"></i>
+                                <span><strong>Save $1,200/year</strong></span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check" class="w-4 h-4 text-purple-400 mt-0.5 shrink-0"></i>
+                                <span>Dedicated account manager</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check" class="w-4 h-4 text-purple-400 mt-0.5 shrink-0"></i>
+                                <span>Annual renewal</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Checkout Form -->
+                <div class="max-w-2xl mx-auto glow-card rounded-2xl p-8 border border-white/10" id="checkout-form-container">
+                    <h2 class="text-2xl font-bold text-white mb-6">Complete Your Subscription</h2>
+                    <form id="checkout-form" class="space-y-6">
+                        <div>
+                            <label class="block text-gray-300 font-medium mb-2">Email Address</label>
+                            <input type="email" id="email" name="email" required class="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:border-blue-500/50 focus:outline-none transition-colors" placeholder="you@company.com">
+                        </div>
+
+                        <div>
+                            <label class="block text-gray-300 font-medium mb-2">Shop Name</label>
+                            <input type="text" id="shop_name" name="shop_name" required class="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:border-blue-500/50 focus:outline-none transition-colors" placeholder="Your auto shop name">
+                        </div>
+
+                        <div>
+                            <label class="block text-gray-300 font-medium mb-2">Selected Plan</label>
+                            <div id="selected-plan-display" class="w-full px-4 py-3 bg-blue-500/10 border border-blue-500/30 rounded-lg text-blue-300 font-medium">
+                                Select a tier above to continue
+                            </div>
+                        </div>
+
+                        <button type="submit" id="submit-btn" disabled class="w-full py-3 bg-primary text-white rounded-lg font-bold hover:bg-primaryGlow transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                            Proceed to Payment
+                        </button>
+                        <p class="text-xs text-gray-500 text-center">Secure checkout powered by Stripe. Your information is encrypted and never stored.</p>
+                    </form>
+                </div>
+
+                <!-- Alternative: CapEx Option -->
+                <div class="max-w-2xl mx-auto mt-12 p-8 border border-amber-500/20 bg-amber-500/5 rounded-2xl text-center">
+                    <h3 class="text-lg font-bold text-amber-300 mb-2">CapEx (Pay Upfront)?</h3>
+                    <p class="text-gray-400 mb-4">For one-time upfront payments via ACH, we process through Wave.</p>
+                    <button onclick="window.open('https://calendar.app.google/4pSzDqdvak76bMbM7', '_blank')" class="px-6 py-2 bg-amber-500/20 text-amber-300 rounded-lg font-medium hover:bg-amber-500/30 transition-colors">
+                        Schedule CapEx Consultation
+                    </button>
+                </div>
+            </div>
         </section>
 
     </main>
@@ -1498,6 +1652,93 @@ Plug a fully automated client retention system directly into your website. Our A
         // Initialize
         updateTrend('nashville', document.getElementById('btn-nashville'));
         calculateROI();
+
+        // ==========================================
+        // STRIPE CHECKOUT LOGIC
+        // ==========================================
+        let selectedTier = null;
+        const STRIPE_PUBLIC_KEY = 'pk_live_51TE42SROIh3dM2m7hti4mNohgo7SemJArBJ3MVZ733Lj8z0RUqbhXHgjYehFgiZWYbTPxtbSIYyGEK9xGKxGzS0f00sxCg3nnS';
+        const stripe = Stripe(STRIPE_PUBLIC_KEY);
+
+        const tierDetails = {
+            'monthly': { name: 'No Contract', price: '$299/month', amount: 29900, priceId: null },
+            'quarterly': { name: '3 Month Commitment', price: '$249/month', amount: 24900, priceId: null },
+            'annual': { name: '12 Month Commitment', price: '$199/month', amount: 19900, priceId: null }
+        };
+
+        function selectTier(element, tier) {
+            // Remove previous selection
+            document.querySelectorAll('[id^="tier-"]').forEach(el => {
+                el.classList.remove('ring-2', 'ring-blue-500/50', 'ring-emerald-500/50', 'ring-purple-500/50');
+            });
+
+            // Add selection ring
+            element.classList.add('ring-2', 'ring-offset-2', 'ring-offset-[#05050A]');
+            if (tier === 'monthly') element.classList.add('ring-blue-500/50');
+            if (tier === 'quarterly') element.classList.add('ring-emerald-500/50');
+            if (tier === 'annual') element.classList.add('ring-purple-500/50');
+
+            selectedTier = tier;
+            const display = document.getElementById('selected-plan-display');
+            display.textContent = `✓ ${tierDetails[tier].name} - ${tierDetails[tier].price}`;
+            display.className = 'w-full px-4 py-3 rounded-lg font-medium border';
+            
+            if (tier === 'monthly') display.className += ' bg-blue-500/10 border-blue-500/30 text-blue-300';
+            if (tier === 'quarterly') display.className += ' bg-emerald-500/10 border-emerald-500/30 text-emerald-300';
+            if (tier === 'annual') display.className += ' bg-purple-500/10 border-purple-500/30 text-purple-300';
+
+            document.getElementById('submit-btn').disabled = false;
+        }
+
+        document.getElementById('checkout-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            if (!selectedTier) {
+                alert('Please select a plan');
+                return;
+            }
+
+            const email = document.getElementById('email').value;
+            const shopName = document.getElementById('shop_name').value;
+            const btn = document.getElementById('submit-btn');
+
+            btn.disabled = true;
+            btn.textContent = 'Processing...';
+
+            try {
+                // Call your backend to create a Checkout Session
+                const response = await fetch('/api/create-checkout-session', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        tier: selectedTier,
+                        email: email,
+                        shopName: shopName,
+                        amount: tierDetails[selectedTier].amount
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`);
+                }
+
+                const session = await response.json();
+
+                // Redirect to Stripe Checkout
+                const result = await stripe.redirectToCheckout({ sessionId: session.sessionId });
+
+                if (result.error) {
+                    alert(result.error.message);
+                    btn.disabled = false;
+                    btn.textContent = 'Proceed to Payment';
+                }
+            } catch (error) {
+                console.error('Checkout error:', error);
+                alert('Payment processing error. Please try again.');
+                btn.disabled = false;
+                btn.textContent = 'Proceed to Payment';
+            }
+        });
         
         // Mouse Glow Effect
         document.addEventListener('mousemove', e => {
