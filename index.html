@@ -1899,6 +1899,18 @@ Plug our vision-model service advisor widget directly into your website. It deli
         let pendingCheckoutData = null;
         const SUBSCRIPTION_API_BASE = window.APEX_SUBSCRIPTION_API_BASE || 'https://pay.apexconversiongroup.com';
 
+        async function trackEvent(name, payload = {}) {
+            try {
+                await fetch(`${SUBSCRIPTION_API_BASE}/api/event`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, payload })
+                });
+            } catch (_) {
+                // Do not block UX if tracking fails.
+            }
+        }
+
         const tierDetails = {
             'no_contract': {
                 name: 'No Contract',
@@ -1941,6 +1953,10 @@ Plug our vision-model service advisor widget directly into your website. It deli
         function openContractReviewModal() {
             const modal = document.getElementById('contract-review-modal');
             if (modal) modal.classList.remove('hidden');
+
+            trackEvent('contract_modal_opened', {
+                tier: selectedTier || null
+            });
         }
 
         function closeContractReviewModal() {
@@ -2035,6 +2051,11 @@ Plug our vision-model service advisor widget directly into your website. It deli
             if (!pendingCheckoutData) return;
 
             const { email, shopName } = pendingCheckoutData;
+            trackEvent('contract_modal_continue_to_stripe', {
+                tier: selectedTier || null,
+                email,
+                shopName
+            });
             pendingCheckoutData = null;
             await startCheckout(email, shopName);
         }
@@ -2067,6 +2088,12 @@ Plug our vision-model service advisor widget directly into your website. It deli
             localStorage.setItem('vetra_lead_name', ownerName);
             localStorage.setItem('vetra_lead_email', ownerEmail);
             localStorage.setItem('vetra_lead_phone', ownerPhone);
+
+            trackEvent('lead_gate_submitted', {
+                ownerName,
+                ownerEmail,
+                ownerPhone
+            });
 
             const checkoutContainer = document.getElementById('checkout-form-container');
             checkoutContainer.classList.remove('hidden');

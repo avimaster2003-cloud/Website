@@ -82,6 +82,7 @@
     const form = document.getElementById('contract-form');
     const output = document.getElementById('packet-output');
     const copyBtn = document.getElementById('copy-btn');
+    const SUBSCRIPTION_API_BASE = window.APEX_SUBSCRIPTION_API_BASE || 'https://pay.apexconversiongroup.com';
 
     function v(id) { return document.getElementById(id).value.trim(); }
 
@@ -130,6 +131,20 @@
       e.preventDefault();
       const packet = buildPacket();
       output.value = packet;
+
+      fetch(`${SUBSCRIPTION_API_BASE}/api/contract-packet`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          packetText: packet,
+          signerEmail: v('signer_email'),
+          signerName: v('signer_name'),
+          dbaName: v('dba_name'),
+          selectedPlan: v('selected_plan')
+        })
+      }).catch(() => {
+        // Keep contract flow working even if backend capture fails.
+      });
 
       const signer = v('signer_name').replace(/[^a-zA-Z0-9]+/g, '-').toLowerCase() || 'signed-packet';
       const blob = new Blob([packet], { type: 'text/plain' });

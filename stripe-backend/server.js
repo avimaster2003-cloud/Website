@@ -3,11 +3,20 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const Stripe = require('stripe');
+const fs = require('fs');
+const path = require('path');
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 10000;
+const DATA_DIR = path.join(__dirname, 'data');
+const EVENTS_FILE = path.join(DATA_DIR, 'events.jsonl');
+const CONTRACTS_FILE = path.join(DATA_DIR, 'contracts.jsonl');
+
+if (!fs.existsSync(DATA_DIR)) {
+  fs.mkdirSync(DATA_DIR, { recursive: true });
+}
 
 if (!process.env.STRIPE_SECRET_KEY) {
   throw new Error('Missing STRIPE_SECRET_KEY');
@@ -51,6 +60,96 @@ const MONTHLY_PLANS = {
 
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', service: 'apex-stripe-render-backend' });
+});
+
+function appendJsonl(filePath, record) {
+  fs.appendFileSync(filePath, `${JSON.stringify(record)}\n`, 'utf8');
+}
+
+function readLatestJsonl(filePath, limit = 100) {
+  if (!fs.existsSync(filePath)) return [];
+  const lines = fs.readFileSync(filePath, 'utf8').trim().split('\n').filter(Boolean);
+  const sliced = lines.slice(-Math.max(1, Math.min(Number(limit) || 100, 1000)));
+  return sliced.map((line) => {
+    try {
+      return JSON.parse(line);
+    } catch {
+      return { parseError: true, raw: line };
+    }
+  });
+}
+
+app.post('/api/event', (req, res) => {
+  try {
+    const { name, payload } = req.body || {};
+
+    if (!name || typeof name !== 'string') {
+      return res.status(400).json({ error: 'Event name is required' });
+    }
+
+    const record = {
+      ts: new Date().toISOString(),
+      name,
+      payload: payload || {},
+      ip: req.headers['cf-connecting-ip'] || req.ip,
+      userAgent: req.headers['user-agent'] || ''
+    };
+
+    appendJsonl(EVENTS_FILE, record);
+    return res.json({ ok: true });
+  } catch (error) {
+    console.error('event ingest error', error);
+    return res.status(500).json({ error: 'Failed to ingest event' });
+  }
+});
+
+app.get('/api/event', (req, res) => {
+  try {
+    const limit = Number(req.query.limit || 100);
+    const events = readLatestJsonl(EVENTS_FILE, limit);
+    return res.json({ count: events.length, events });
+  } catch (error) {
+    console.error('event fetch error', error);
+    return res.status(500).json({ error: 'Failed to fetch events' });
+  }
+});
+
+app.post('/api/contract-packet', (req, res) => {
+  try {
+    const { packetText, signerEmail, signerName, dbaName, selectedPlan } = req.body || {};
+
+    if (!packetText || !signerEmail) {
+      return res.status(400).json({ error: 'packetText and signerEmail are required' });
+    }
+
+    const record = {
+      ts: new Date().toISOString(),
+      signerEmail,
+      signerName: signerName || '',
+      dbaName: dbaName || '',
+      selectedPlan: selectedPlan || '',
+      packetText,
+      ip: req.headers['cf-connecting-ip'] || req.ip,
+      userAgent: req.headers['user-agent'] || ''
+    };
+
+    appendJsonl(CONTRACTS_FILE, record);
+    return res.json({ ok: true });
+  } catch (error) {
+    console.error('contract packet ingest error', error);
+    return res.status(500).json({ error: 'Failed to ingest contract packet' });
+  }
+});
+
+app.get('/api/contract-packet', (req, res) => {
+  try {
+    const limit = Number(req.query.limit || 50);
+    const packets = readLatestJsonl(CONTRACTS_FILE, limit);
+    return res.json({ count: packets.length, packets });
+  } catch (error) {
+    console.error('contract packet fetch error', error);
+    return res.status(500).json({ error: 'Failed to fetch contract packets' });
+  }
 });
 
 app.post('/api/create-monthly-checkout-session', async (req, res) => {
