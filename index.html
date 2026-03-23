@@ -1201,7 +1201,10 @@ Plug our vision-model service advisor widget directly into your website. It deli
                 <!-- Pricing Tier Cards -->
                 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-12">
                     <!-- No Contract (ACH First) -->
-                    <div id="tier-no-contract" class="glow-card rounded-2xl p-8 border border-white/10 hover:border-blue-500/30 transition-all cursor-pointer group relative" onclick="selectTier(this, 'no_contract')">
+                    <div id="tier-no-contract" class="glow-card rounded-2xl p-8 border border-white/10 hover:border-blue-500/30 transition-all cursor-pointer group relative ring-1 ring-emerald-500/30" onclick="selectTier(this, 'no_contract')">
+                        <div class="absolute top-0 left-0">
+                            <div class="bg-emerald-500/20 text-emerald-300 text-xs font-bold px-3 py-1 rounded-br-lg rounded-tl-lg">RISK-FREE 30 DAY GUARANTEE</div>
+                        </div>
                         <div class="absolute top-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity">
                             <div class="bg-blue-500/20 text-blue-300 text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">ACH FIRST</div>
                         </div>
@@ -1228,6 +1231,10 @@ Plug our vision-model service advisor widget directly into your website. It deli
                             <li class="flex items-start gap-3">
                                 <i data-lucide="check" class="w-4 h-4 text-blue-400 mt-0.5 shrink-0"></i>
                                 <span>ACH first (card also available)</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i>
+                                <span>30-day money-back guarantee</span>
                             </li>
                         </ul>
                     </div>
