@@ -1489,6 +1489,20 @@ Plug our vision-model service advisor widget directly into your website. It deli
         </div>
     </div>
 
+    <!-- Calendly Scheduler Modal -->
+    <div id="scheduler-modal" class="fixed inset-0 z-[100] hidden">
+        <div class="absolute inset-0 bg-black/80" onclick="closeScheduler()"></div>
+        <div class="absolute inset-0 p-4 md:p-8 flex items-center justify-center">
+            <div class="w-full max-w-4xl h-[80vh] bg-[#0B0F18] border border-white/10 rounded-2xl overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.5)]">
+                <div class="flex items-center justify-between px-4 py-3 border-b border-white/10">
+                    <h3 class="text-white font-semibold">Book a Live Demo</h3>
+                    <button onclick="closeScheduler()" class="text-gray-400 hover:text-white transition-colors">Close</button>
+                </div>
+                <iframe src="https://calendly.com/apelec12/30min?hide_event_type_details=1&hide_gdpr_banner=1" class="w-full h-[calc(80vh-53px)] bg-white" title="Book a Live Demo"></iframe>
+            </div>
+        </div>
+    </div>
+
     <!-- WIDGET DROP ZONE: Paste your n8n script tags inside this wrapper -->
     <div id="apex-widget-wrapper">
         <script src="https://widget.apexconversiongroup.com/widget.js" data-shop-id="1019" defer></script>
@@ -1523,7 +1537,13 @@ Plug our vision-model service advisor widget directly into your website. It deli
         lucide.createIcons();
 
         function openScheduler() {
-            window.open('https://calendar.app.google/4pSzDqdvak76bMbM7', '_blank');
+            const modal = document.getElementById('scheduler-modal');
+            if (modal) modal.classList.remove('hidden');
+        }
+
+        function closeScheduler() {
+            const modal = document.getElementById('scheduler-modal');
+            if (modal) modal.classList.add('hidden');
         }
 
         function openWidgetFromCTA() {
