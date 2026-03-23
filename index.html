@@ -1181,10 +1181,10 @@ Plug a fully automated client retention system directly into your website. Our A
 
                 <!-- Pricing Tier Cards -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                    <!-- No Contract -->
+                    <!-- No Contract (ACH First) -->
                     <div id="tier-monthly" class="glow-card rounded-2xl p-8 border border-white/10 hover:border-blue-500/30 transition-all cursor-pointer group relative" onclick="selectTier(this, 'monthly')">
                         <div class="absolute top-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <div class="bg-blue-500/20 text-blue-300 text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">FLEXIBLE</div>
+                            <div class="bg-blue-500/20 text-blue-300 text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">ACH FIRST</div>
                         </div>
                         <h3 class="text-2xl font-bold text-white mb-2">No Contract</h3>
                         <p class="text-gray-400 text-sm mb-6">Cancel anytime</p>
@@ -1208,21 +1208,21 @@ Plug a fully automated client retention system directly into your website. Our A
                             </li>
                             <li class="flex items-start gap-3">
                                 <i data-lucide="check" class="w-4 h-4 text-blue-400 mt-0.5 shrink-0"></i>
-                                <span>Monthly billing</span>
+                                <span>ACH first (card also available)</span>
                             </li>
                         </ul>
                     </div>
 
-                    <!-- 3 Month Commitment -->
+                    <!-- 3 Month Upfront (ACH Only) -->
                     <div id="tier-quarterly" class="glow-card rounded-2xl p-8 border border-emerald-500/20 hover:border-emerald-400/30 transition-all cursor-pointer group relative ring-2 ring-emerald-500/20" onclick="selectTier(this, 'quarterly')">
                         <div class="absolute top-0 right-0">
-                            <div class="bg-emerald-500/20 text-emerald-300 text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">POPULAR</div>
+                            <div class="bg-emerald-500/20 text-emerald-300 text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">ACH ONLY</div>
                         </div>
-                        <h3 class="text-2xl font-bold text-white mb-2">3 Month Commitment</h3>
-                        <p class="text-gray-400 text-sm mb-6">Renews quarterly</p>
+                        <h3 class="text-2xl font-bold text-white mb-2">3 Month Upfront</h3>
+                        <p class="text-gray-400 text-sm mb-6">One ACH payment upfront</p>
                         <div class="mb-6">
-                            <div class="text-5xl font-heading font-bold text-emerald-400">$249<span class="text-lg text-gray-400 font-normal">/mo</span></div>
-                            <p class="text-gray-500 text-xs mt-2">$747 billed quarterly</p>
+                            <div class="text-5xl font-heading font-bold text-emerald-400">$675</div>
+                            <p class="text-gray-500 text-xs mt-2">Equivalent to $225/mo for 3 months</p>
                         </div>
                         <button class="w-full py-3 bg-emerald-500/20 text-emerald-400 rounded-lg font-bold hover:bg-emerald-500/30 transition-colors mb-6">Select Plan</button>
                         <ul class="space-y-3 text-gray-300 text-sm">
@@ -1232,7 +1232,7 @@ Plug a fully automated client retention system directly into your website. Our A
                             </li>
                             <li class="flex items-start gap-3">
                                 <i data-lucide="check" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i>
-                                <span><strong>Save $150/quarter</strong></span>
+                                <span><strong>ACH only checkout</strong></span>
                             </li>
                             <li class="flex items-start gap-3">
                                 <i data-lucide="check" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i>
@@ -1240,21 +1240,21 @@ Plug a fully automated client retention system directly into your website. Our A
                             </li>
                             <li class="flex items-start gap-3">
                                 <i data-lucide="check" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i>
-                                <span>Quarterly renewal</span>
+                                <span>3-month commitment paid upfront</span>
                             </li>
                         </ul>
                     </div>
 
-                    <!-- 12 Month Commitment -->
+                    <!-- 12 Month Upfront (ACH Only) -->
                     <div id="tier-annual" class="glow-card rounded-2xl p-8 border border-purple-500/20 hover:border-purple-400/30 transition-all cursor-pointer group relative" onclick="selectTier(this, 'annual')">
                         <div class="absolute top-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <div class="bg-purple-500/20 text-purple-300 text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">BEST VALUE</div>
+                            <div class="bg-purple-500/20 text-purple-300 text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">ACH ONLY</div>
                         </div>
-                        <h3 class="text-2xl font-bold text-white mb-2">12 Month Commitment</h3>
-                        <p class="text-gray-400 text-sm mb-6">Renews annually</p>
+                        <h3 class="text-2xl font-bold text-white mb-2">12 Month Upfront</h3>
+                        <p class="text-gray-400 text-sm mb-6">One ACH payment upfront</p>
                         <div class="mb-6">
-                            <div class="text-5xl font-heading font-bold text-purple-400">$199<span class="text-lg text-gray-400 font-normal">/mo</span></div>
-                            <p class="text-gray-500 text-xs mt-2">$2,388 billed annually</p>
+                            <div class="text-5xl font-heading font-bold text-purple-400">$1,800</div>
+                            <p class="text-gray-500 text-xs mt-2">Equivalent to $150/mo for 12 months</p>
                         </div>
                         <button class="w-full py-3 bg-purple-500/20 text-purple-400 rounded-lg font-bold hover:bg-purple-500/30 transition-colors mb-6">Select Plan</button>
                         <ul class="space-y-3 text-gray-300 text-sm">
@@ -1264,7 +1264,7 @@ Plug a fully automated client retention system directly into your website. Our A
                             </li>
                             <li class="flex items-start gap-3">
                                 <i data-lucide="check" class="w-4 h-4 text-purple-400 mt-0.5 shrink-0"></i>
-                                <span><strong>Save $1,200/year</strong></span>
+                                <span><strong>ACH only checkout</strong></span>
                             </li>
                             <li class="flex items-start gap-3">
                                 <i data-lucide="check" class="w-4 h-4 text-purple-400 mt-0.5 shrink-0"></i>
@@ -1272,7 +1272,7 @@ Plug a fully automated client retention system directly into your website. Our A
                             </li>
                             <li class="flex items-start gap-3">
                                 <i data-lucide="check" class="w-4 h-4 text-purple-400 mt-0.5 shrink-0"></i>
-                                <span>Annual renewal</span>
+                                <span>12-month commitment paid upfront</span>
                             </li>
                         </ul>
                     </div>
@@ -1280,7 +1280,7 @@ Plug a fully automated client retention system directly into your website. Our A
 
                 <!-- Checkout Form -->
                 <div class="max-w-2xl mx-auto glow-card rounded-2xl p-8 border border-white/10" id="checkout-form-container">
-                    <h2 class="text-2xl font-bold text-white mb-6">Complete Your Subscription</h2>
+                    <h2 class="text-2xl font-bold text-white mb-6">Complete Your Checkout</h2>
                     <form id="checkout-form" class="space-y-6">
                         <div>
                             <label class="block text-gray-300 font-medium mb-2">Email Address</label>
@@ -1302,16 +1302,16 @@ Plug a fully automated client retention system directly into your website. Our A
                         <button type="submit" id="submit-btn" disabled class="w-full py-3 bg-primary text-white rounded-lg font-bold hover:bg-primaryGlow transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
                             Proceed to Payment
                         </button>
-                        <p class="text-xs text-gray-500 text-center">Secure checkout powered by Stripe. Your information is encrypted and never stored.</p>
+                        <p class="text-xs text-gray-500 text-center">Secure Stripe checkout. ACH first on monthly plan, ACH only on upfront plans.</p>
                     </form>
                 </div>
 
                 <!-- Alternative: CapEx Option -->
                 <div class="max-w-2xl mx-auto mt-12 p-8 border border-amber-500/20 bg-amber-500/5 rounded-2xl text-center">
-                    <h3 class="text-lg font-bold text-amber-300 mb-2">CapEx (Pay Upfront)?</h3>
-                    <p class="text-gray-400 mb-4">For one-time upfront payments via ACH, we process through Wave.</p>
+                    <h3 class="text-lg font-bold text-amber-300 mb-2">Need Invoice Terms?</h3>
+                    <p class="text-gray-400 mb-4">If you need custom terms, we can still send an ACH invoice manually.</p>
                     <button onclick="window.open('https://calendar.app.google/4pSzDqdvak76bMbM7', '_blank')" class="px-6 py-2 bg-amber-500/20 text-amber-300 rounded-lg font-medium hover:bg-amber-500/30 transition-colors">
-                        Schedule CapEx Consultation
+                        Request ACH Invoice
                     </button>
                 </div>
             </div>
@@ -1663,19 +1663,19 @@ Plug a fully automated client retention system directly into your website. Our A
                 name: 'No Contract',
                 price: '$299/month',
                 amount: 29900,
-                paymentLink: 'https://buy.stripe.com/14AaEZbsJ3tI5y9gEw9MY00'
+                paymentLink: 'https://buy.stripe.com/aFadRbgN36FU4u5cog9MY03'
             },
             'quarterly': {
-                name: '3 Month Commitment',
-                price: '$249/month',
-                amount: 24900,
-                paymentLink: 'https://buy.stripe.com/7sYaEZ68paWae4F73W9MY01'
+                name: '3 Month Upfront',
+                price: '$675 upfront (ACH only)',
+                amount: 67500,
+                paymentLink: 'https://buy.stripe.com/bJefZj0O5fcq7Gh4VO9MY04'
             },
             'annual': {
-                name: '12 Month Commitment',
-                price: '$199/month',
-                amount: 19900,
-                paymentLink: 'https://buy.stripe.com/bJe5kF54l5BQd0Bdsk9MY02'
+                name: '12 Month Upfront',
+                price: '$1,800 upfront (ACH only)',
+                amount: 180000,
+                paymentLink: 'https://buy.stripe.com/3cIdRb0O5e8m0dP73W9MY05'
             }
         };
 
