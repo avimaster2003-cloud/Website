@@ -6,7 +6,6 @@ const Stripe = require('stripe');
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
-const nodemailer = require('nodemailer');
 
 dotenv.config();
 
@@ -15,14 +14,6 @@ const PORT = process.env.PORT || 10000;
 const ADMIN_API_KEY = (process.env.ADMIN_API_KEY || '').trim();
 const CONTRACT_WEBHOOK_URL = (process.env.CONTRACT_WEBHOOK_URL || '').trim();
 const CONTRACT_WEBHOOK_SECRET = (process.env.CONTRACT_WEBHOOK_SECRET || '').trim();
-const LEGAL_EMAIL_TO = (process.env.LEGAL_EMAIL_TO || 'legal@usevetra.com').trim();
-const LEGAL_EMAIL_CC = (process.env.LEGAL_EMAIL_CC || '').trim();
-const CONTRACT_EMAIL_FROM = (process.env.CONTRACT_EMAIL_FROM || '').trim();
-const SMTP_HOST = (process.env.SMTP_HOST || '').trim();
-const SMTP_PORT = Number(process.env.SMTP_PORT || 587);
-const SMTP_SECURE = String(process.env.SMTP_SECURE || 'false').trim().toLowerCase() === 'true';
-const SMTP_USER = (process.env.SMTP_USER || '').trim();
-const SMTP_PASS = (process.env.SMTP_PASS || '').trim();
 const DATA_DIR = path.join(__dirname, 'data');
 const EVENTS_FILE = path.join(DATA_DIR, 'events.jsonl');
 const CONTRACTS_FILE = path.join(DATA_DIR, 'contracts.jsonl');
@@ -163,89 +154,7 @@ function writeContractArchiveText(record) {
   return { filePath, filename };
 }
 
-async function sendContractPacketEmail(record) {
-  if (!LEGAL_EMAIL_TO) {
-    return {
-      attempted: false,
-      delivered: false,
-      provider: 'smtp',
-      responsePreview: 'No LEGAL_EMAIL_TO configured'
-    };
-  }
 
-  if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS || !CONTRACT_EMAIL_FROM) {
-    return {
-      attempted: false,
-      delivered: false,
-      provider: 'smtp',
-      responsePreview: 'SMTP config missing (SMTP_HOST/PORT/USER/PASS or CONTRACT_EMAIL_FROM)'
-    };
-  }
-
-  try {
-    const transporter = nodemailer.createTransport({
-      host: SMTP_HOST,
-      port: SMTP_PORT,
-      secure: SMTP_SECURE,
-      auth: {
-        user: SMTP_USER,
-        pass: SMTP_PASS
-      }
-    });
-
-    const ccRecipients = LEGAL_EMAIL_CC
-      .split(',')
-      .map((v) => v.trim())
-      .filter(Boolean);
-
-    const subject = `Signed VETRA Contract Packet | ${record.dbaName || 'Unknown Shop'} | ${record.packetId}`;
-    const header = [
-      `Packet ID: ${record.packetId}`,
-      `Timestamp (UTC): ${record.ts}`,
-      `Signer Email: ${record.signerEmail}`,
-      `Signer Name: ${record.signerName || ''}`,
-      `DBA/Shop: ${record.dbaName || ''}`,
-      `Selected Plan: ${record.selectedPlan || ''}`,
-      `Packet SHA256: ${record.packetSha256}`,
-      `Source: ${record.source || 'unknown'}`,
-      `IP: ${record.ip || ''}`,
-      `User-Agent: ${record.userAgent || ''}`,
-      ''
-    ].join('\n');
-
-    const info = await transporter.sendMail({
-      from: CONTRACT_EMAIL_FROM,
-      to: LEGAL_EMAIL_TO,
-      cc: ccRecipients.length ? ccRecipients : undefined,
-      replyTo: record.signerEmail,
-      subject,
-      text: `${header}\n${record.packetText}`,
-      attachments: [
-        {
-          filename: `${record.packetId}-contract-packet.txt`,
-          content: record.packetText,
-          contentType: 'text/plain'
-        }
-      ]
-    });
-
-    return {
-      attempted: true,
-      delivered: true,
-      provider: 'smtp',
-      statusCode: null,
-      responsePreview: (info && (info.messageId || info.response)) ? String(info.messageId || info.response).slice(0, 300) : 'sent'
-    };
-  } catch (error) {
-    return {
-      attempted: true,
-      delivered: false,
-      provider: 'smtp',
-      statusCode: null,
-      responsePreview: `SMTP error: ${error.message}`
-    };
-  }
-}
 
 app.post('/api/event', (req, res) => {
   try {
@@ -311,7 +220,6 @@ app.post('/api/contract-packet', async (req, res) => {
 
     const archive = writeContractArchiveText(recordBase);
     const delivery = await forwardContractPacket(recordBase);
-    const emailDelivery = await sendContractPacketEmail(recordBase);
     const record = {
       ...recordBase,
       archiveFilename: archive.filename,
@@ -319,12 +227,7 @@ app.post('/api/contract-packet', async (req, res) => {
       webhookAttempted: delivery.attempted,
       webhookDelivered: delivery.delivered,
       webhookStatusCode: delivery.statusCode,
-      webhookResponsePreview: delivery.responsePreview,
-      emailAttempted: emailDelivery.attempted,
-      emailDelivered: emailDelivery.delivered,
-      emailProvider: emailDelivery.provider,
-      emailStatusCode: emailDelivery.statusCode || null,
-      emailResponsePreview: emailDelivery.responsePreview
+      webhookResponsePreview: delivery.responsePreview
     };
 
     appendJsonl(CONTRACTS_FILE, record);
@@ -334,10 +237,7 @@ app.post('/api/contract-packet', async (req, res) => {
       packetSha256,
       archiveFilename: archive.filename,
       webhookDelivered: delivery.delivered,
-      webhookStatusCode: delivery.statusCode,
-      emailDelivered: emailDelivery.delivered,
-      emailProvider: emailDelivery.provider,
-      emailResponsePreview: emailDelivery.responsePreview
+      webhookStatusCode: delivery.statusCode
     });
   } catch (error) {
     console.error('contract packet ingest error', error);
