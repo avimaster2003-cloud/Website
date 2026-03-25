@@ -1,118 +1,109 @@
 # n8n Contract Workflow
 
-Use this when contract packets are forwarded from the website backend.
+When a customer signs the contract on the website, the backend sends the signed packet data to n8n via webhook.
 
-## Backend webhook target
-Set this backend env var:
+## Setup in Backend
 
-```env
-CONTRACT_WEBHOOK_URL=https://api.apexconversiongroup.com/webhook/vetra-contract-intake
-```
-
-Optional backend auth header:
+Set these env vars on your production server (104.236.245.168):
 
 ```env
-CONTRACT_WEBHOOK_SECRET=change_me
+CONTRACT_WEBHOOK_URL=https://api.usevetra.com/webhook/vetra-contract-intake
+CONTRACT_WEBHOOK_SECRET=your-secret-key-here
 ```
 
-The backend will send this header to n8n if configured:
-
-```text
-x-contract-webhook-secret: <your secret>
+The backend will POST contract data to that webhook URL with this header:
+```
+x-contract-webhook-secret: your-secret-key-here
 ```
 
-## n8n nodes
+## n8n Workflow Steps
 
-1. `Webhook`
-- Method: `POST`
-- Path: `vetra-contract-intake`
-- Response mode: `Using Respond to Webhook Node`
+### 1. Webhook Trigger
+- **Name:** Webhook
+- **Method:** POST
+- **Path:** `/webhook/vetra-contract-intake`
+- **Response mode:** Using Respond to Webhook Node
+- **Authentication:** None (optional—you'll manually verify with IF node below)
 
-2. `IF`
-- Purpose: verify `x-contract-webhook-secret`
-- Left value:
-  ```text
-  {{ $json.headers["x-contract-webhook-secret"] || "" }}
+### 2. Security Check
+- **Name:** IF
+- **Condition:** Verify the secret header to ensure only your backend is posting
+- **Left value:** `{{ $json.headers["x-contract-webhook-secret"] || "" }}`
+- **Operator:** equals
+- **Right value:** `your-secret-key-here` (must match backend env var)
+- **If True:** continue
+- **If False:** respond with error
+
+### 3. Extract & Transform
+- **Name:** Set
+- **Keep fields from payload:**
+  - `ts` (timestamp of signing)
+  - `packetId` (unique contract ID)
+  - `signerEmail`
+  - `signerName`
+  - `dbaName` (shop/business name)
+  - `selectedPlan` (e.g., "12-Month Monthly - $199/mo")
+  - `packetText` (full contract text as signed)
+  - `packetSha256` (integrity hash)
+  - `ip`
+  - `userAgent`
+
+### 4. Save Contract to Google Drive (or your docs system)
+- **Name:** Google Drive
+- **Operation:** Upload File
+- **File Name Expression:**
   ```
-- Condition: `equals`
-- Right value: your chosen secret
-
-3. `Set`
-- Keep only the fields you care about:
-  - `ts` -> `{{ $json.body.ts }}`
-  - `signerEmail` -> `{{ $json.body.signerEmail }}`
-  - `signerName` -> `{{ $json.body.signerName }}`
-  - `dbaName` -> `{{ $json.body.dbaName }}`
-  - `selectedPlan` -> `{{ $json.body.selectedPlan }}`
-  - `packetText` -> `{{ $json.body.packetText }}`
-  - `ip` -> `{{ $json.body.ip }}`
-  - `userAgent` -> `{{ $json.body.userAgent }}`
-
-4. `Google Drive` or `Google Docs`
-
-Option A: easiest archive
-- `Google Drive` node
-- Operation: upload file
-- File name:
-  ```text
-  {{ "contract-" + ($json.dbaName || "unknown").replace(/\s+/g, "-") + "-" + ($json.ts || Date.now()) + ".txt" }}
+  {{ "VETRA-" + $json.packetId + "-" + ($json.signerName || "unsigned").replace(/[^a-zA-Z0-9]/g, "-") + ".txt" }}
   ```
-- File content: `{{ $json.packetText }}`
+- **File Content:** `{{ $json.packetText }}`
+- **Folder ID:** [select your contracts folder]
 
-Option B: cleaner deliverable
-- `Google Docs` template or document creation flow
-- Replace placeholders with signer fields and packet text
-- Export to PDF after creation
+### 5. Log to Google Sheets (Optional)
+- **Name:** Google Sheets
+- **Operation:** Append Row
+- **Sheet:** Create a "Contracts" sheet with columns:
+  - Timestamp | Signer Email | Signer Name | Shop Name | Plan | Packet ID | File Link | IP | Date Signed
+- **Append values from payload**
 
-5. `Google Sheets`
-- Append one row to contract log sheet with:
-  - `Timestamp`
-  - `Signer Email`
-  - `Signer Name`
-  - `DBA`
-  - `Plan`
-  - `Saved File Link`
-  - `IP`
-  - `User Agent`
+### 6. Notify (Optional)
+- **Name:** Gmail / Slack / Email
+- **To:** Your email or Slack channel
+- **Subject:** `New Contract Signed - {{ $json.dbaName }}`
+- **Body:** Include signer, shop, plan, and link to saved file
 
-6. `Gmail` or `Microsoft Outlook`
-- To: `legal@apexconversiongroup.com`
-- Subject:
-  ```text
-  New Signed VETRA Contract - {{ $json.dbaName }}
-  ```
-- Body: include signer details, plan, timestamp, and file link
-
-7. `Respond to Webhook`
-- Status code: `200`
-- Response body:
+### 7. Send Success Response
+- **Name:** Respond to Webhook
+- **Status Code:** `200`
+- **Response Body:**
   ```json
-  {"ok":true}
+  {"ok": true}
   ```
 
-## Incoming payload shape
-The backend forwards JSON like this:
+## Incoming Webhook Payload
 
 ```json
 {
-  "ts": "2026-03-23T00:00:00.000Z",
-  "signerEmail": "owner@example.com",
-  "signerName": "Jane Smith",
+  "packetId": "VETRA-1711270800000-12345",
+  "ts": "2026-03-23T14:00:00.000Z",
+  "signerEmail": "owner@shopname.com",
+  "signerName": "John Smith",
+  "legalName": "Smith Auto Repair LLC",
   "dbaName": "Smith Auto",
   "selectedPlan": "12-Month Monthly - $199/mo",
-  "packetText": "VETRA CONTRACT SIGNATURE PACKET...",
-  "ip": "203.0.113.1",
-  "userAgent": "Mozilla/5.0 ..."
+  "source": "website-checkout",
+  "packetSha256": "abc123def...",
+  "packetText": "VETRA CONTRACT SIGNATURE PACKET\n...",
+  "ip": "203.0.113.5",
+  "userAgent": "Mozilla/5.0..."
 }
 ```
 
-## Recommended minimal first version
-If you want fastest setup, start with only these nodes:
-1. `Webhook`
-2. `IF`
-3. `Google Drive`
-4. `Google Sheets`
-5. `Gmail`
-6. `Respond to Webhook`
+## Minimal Viable Setup
 
-That is enough to store, log, and notify on every signed contract.
+If you want fastest deployment:
+1. Webhook (trigger)
+2. IF (verify secret)
+3. Google Drive (save file)
+4. Respond to Webhook (success response)
+
+That's it. This gives you contract archival with zero email dependencies.
