@@ -35,7 +35,7 @@
     })();
 
     window.ApexWidget = {
-        BUILD_VERSION: "3.25.V1",
+        BUILD_VERSION: "3.25.V2.T",
         // Configuration (read overrides from script query params)
         SHOP_ID: SCRIPT_PARAMS.get('shopId') || "1019",
         PRIMARY_COLOR: SCRIPT_PARAMS.get('primaryColor') || SCRIPT_PARAMS.get('primary') || "#3B82F6",
@@ -499,6 +499,16 @@
                 });
             }
 
+            if (this.elements.contactPhone) {
+                this.elements.contactPhone.addEventListener('input', (e) => {
+                    const digits = e.target.value.replace(/\D/g, '').slice(0, 10);
+                    let fmt = digits;
+                    if (digits.length > 6) fmt = digits.slice(0, 3) + '-' + digits.slice(3, 6) + '-' + digits.slice(6);
+                    else if (digits.length > 3) fmt = digits.slice(0, 3) + '-' + digits.slice(3);
+                    e.target.value = fmt;
+                });
+            }
+
             const cameraBtn = this.elements.cameraBtn;
             const galleryBtn = this.elements.galleryBtn;
             const cameraInput = this.elements.cameraInput;
@@ -739,7 +749,7 @@
                             <input id="apex-contact-name" type="text" class="apex-input" placeholder="Your name *" required />
                         </div>
                         <div class="apex-form-row">
-                            <input id="apex-contact-phone" type="tel" class="apex-input" placeholder="Phone number *" required />
+                            <input id="apex-contact-phone" type="tel" class="apex-input" placeholder="Phone number *" maxlength="12" autocomplete="tel" required />
                         </div>
                         <div class="apex-form-row">
                             <select id="apex-year-select" class="apex-select" aria-label="Year"></select>
@@ -1459,14 +1469,15 @@
             const hasConsent = !!(this.elements.contactConsent && this.elements.contactConsent.checked);
             
             // Validate required fields
-            if (!name || !phone) {
+            const phoneDigits = phone.replace(/\D/g, '');
+            if (!name || !phone || phoneDigits.length !== 10) {
                 if (!name) {
                     this.elements.contactName.style.borderColor = '#EF4444';
                     this.elements.contactName.placeholder = 'Name is required *';
                 }
-                if (!phone) {
+                if (!phone || phoneDigits.length !== 10) {
                     this.elements.contactPhone.style.borderColor = '#EF4444';
-                    this.elements.contactPhone.placeholder = 'Phone number is required *';
+                    this.elements.contactPhone.placeholder = phoneDigits.length > 0 ? 'Need 10 digits (e.g. 555-867-5309)' : 'Phone number is required *';
                 }
                 // Reset border colors after a delay
                 setTimeout(() => {
@@ -1474,7 +1485,7 @@
                         this.elements.contactName.style.borderColor = '';
                         this.elements.contactName.placeholder = 'Your name *';
                     }
-                    if (!phone) {
+                    if (!phone || phoneDigits.length !== 10) {
                         this.elements.contactPhone.style.borderColor = '';
                         this.elements.contactPhone.placeholder = 'Phone number *';
                     }
