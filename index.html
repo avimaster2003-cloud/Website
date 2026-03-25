@@ -1706,16 +1706,7 @@ Plug our vision-model service advisor widget directly into your website. It deli
     <div id="apex-widget-wrapper">
         <script>
             (function loadApexWidgetJs() {
-                const widgetVersion = '3.25.V2.T';
-                const params = new URLSearchParams(window.location.search);
-                const widgetTestParam = params.get('widgetTest');
-
-                // Test mode: use ?widgetTest=1 for immediate widget refreshes on every page load.
-                if (widgetTestParam === '1') localStorage.setItem('vetra_widget_test_mode', '1');
-                if (widgetTestParam === '0') localStorage.removeItem('vetra_widget_test_mode');
-                const widgetTestMode = localStorage.getItem('vetra_widget_test_mode') === '1';
-
-                const cacheKey = widgetTestMode ? `dev-${Date.now()}` : widgetVersion;
+                const cacheKey = `dev-${Date.now()}`;
                 const wrapper = document.getElementById('apex-widget-wrapper') || document.body;
                 const existing = wrapper.querySelector('script[data-apex-widget-js="true"]');
                 if (existing) existing.remove();
