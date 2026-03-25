@@ -72,7 +72,7 @@
         <button type="submit" class="px-6 py-3 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-semibold">Generate and Send to Legal</button>
         <button type="button" id="copy-btn" class="px-6 py-3 rounded-lg border border-white/20 hover:bg-white/5">Copy Packet Text</button>
       </div>
-      <p class="text-xs text-gray-500">Submission target: legal@apexconversiongroup.com</p>
+      <p class="text-xs text-gray-500">Submission target: legal@usevetra.com</p>
     </form>
 
     <textarea id="packet-output" class="w-full h-72 mt-8 p-4 rounded-lg bg-black/60 border border-white/10 text-sm"></textarea>
@@ -156,7 +156,7 @@
 
       const subject = encodeURIComponent('Signed VETRA Contract Packet - ' + v('dba_name'));
       const body = encodeURIComponent(packet);
-      window.location.href = 'mailto:legal@apexconversiongroup.com?subject=' + subject + '&body=' + body;
+      window.location.href = 'mailto:legal@usevetra.com?subject=' + subject + '&body=' + body;
     });
 
     copyBtn.addEventListener('click', async () => {

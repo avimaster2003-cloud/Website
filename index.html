@@ -1538,15 +1538,14 @@ Plug our vision-model service advisor widget directly into your website. It deli
                         </div>
 
                         <div id="contract-ack-container" class="p-4 rounded-lg border border-cyan-500/30 bg-cyan-500/10">
-                            <p class="text-sm text-cyan-200 mb-3">Before payment, you will see a contract review popup with direct links to the signature packet and legal docs.</p>
-                            <p class="text-xs text-cyan-100 mb-3">
-                                <a href="/contract-signature.html" class="underline hover:text-white">Open Contract Signature Packet</a>
+                            <p class="text-sm text-cyan-200 mb-3 font-semibold">&#9888;&#65039; Contract signing is required before checkout.</p>
+                            <p class="text-sm text-cyan-100 mb-3">When you click &ldquo;Proceed to Payment&rdquo; you will be shown a contract form. You must initial four key clauses, check three acknowledgments, and type your full legal name before the payment button unlocks.</p>
+                            <p class="text-xs text-cyan-100">
+                                Preview documents now:
+                                <a href="/msa-order-form.html" target="_blank" rel="noopener" class="underline hover:text-white ml-1">Order Form</a>
                                 <span class="mx-1">|</span>
-                                <a href="/msa-order-form.html" class="underline hover:text-white">Order Form</a>
-                                <span class="mx-1">|</span>
-                                <a href="/platform-conditions.html" class="underline hover:text-white">Platform Conditions</a>
+                                <a href="/platform-conditions.html" target="_blank" rel="noopener" class="underline hover:text-white">Platform Conditions</a>
                             </p>
-                            <p class="text-xs text-cyan-100">Testing mode: no additional contract fields are required before payment.</p>
                         </div>
 
                         <button type="submit" id="submit-btn" disabled class="w-full py-3 bg-primary text-white rounded-lg font-bold hover:bg-primaryGlow transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
@@ -1611,22 +1610,94 @@ Plug our vision-model service advisor widget directly into your website. It deli
         </div>
     </div>
 
-    <!-- Contract Review Modal -->
+    <!-- Contract Signing Modal -->
     <div id="contract-review-modal" class="fixed inset-0 z-[110] hidden">
-        <div class="absolute inset-0 bg-black/80" onclick="closeContractReviewModal()"></div>
-        <div class="absolute inset-0 p-4 md:p-8 flex items-center justify-center">
-            <div class="w-full max-w-2xl bg-[#0B0F18] border border-cyan-500/30 rounded-2xl p-6 shadow-[0_0_40px_rgba(0,0,0,0.5)]">
-                <h3 class="text-white font-semibold text-xl mb-2">Review Contracts Before Payment</h3>
-                <p class="text-sm text-cyan-100 mb-4">You are one click away from Stripe checkout. Review or sign documents now, then continue to payment.</p>
-                <div class="text-sm mb-6 space-y-2">
-                    <a href="/contract-signature.html" class="block text-cyan-300 underline hover:text-white">Contract Signature Packet</a>
-                    <a href="/msa-order-form.html" class="block text-cyan-300 underline hover:text-white">Order Form and Subscription Agreement</a>
-                    <a href="/platform-conditions.html" class="block text-cyan-300 underline hover:text-white">Platform Conditions and Compliance Addendum</a>
+        <div class="absolute inset-0 bg-black/85 backdrop-blur-sm"></div>
+        <div class="absolute inset-0 p-4 md:p-8 flex items-start justify-center overflow-y-auto">
+            <div class="relative w-full max-w-2xl bg-[#0B0F18] border border-cyan-500/30 rounded-2xl p-6 shadow-[0_0_50px_rgba(6,182,212,0.12)] my-6">
+                <!-- Header -->
+                <h3 class="text-white font-bold text-xl mb-1">Sign Your Service Agreement</h3>
+                <p class="text-sm text-gray-400 mb-4">Review and sign before we send you to checkout. All fields are required.</p>
+
+                <!-- Plan indicator -->
+                <div id="contract-plan-display" class="px-3 py-2 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-300 text-sm font-semibold mb-5"></div>
+
+                <!-- Document links -->
+                <div class="mb-5 p-4 rounded-lg bg-white/4 border border-white/10">
+                    <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-3">Read Before Signing</p>
+                    <div class="space-y-2">
+                        <a href="/msa-order-form.html" target="_blank" rel="noopener" class="flex items-center gap-2 text-cyan-300 hover:text-white text-sm underline">Order Form and Subscription Agreement &nbsp;↗</a>
+                        <a href="/platform-conditions.html" target="_blank" rel="noopener" class="flex items-center gap-2 text-cyan-300 hover:text-white text-sm underline">Platform Conditions and Compliance Addendum &nbsp;↗</a>
+                    </div>
                 </div>
-                <div class="flex flex-col sm:flex-row gap-3 justify-end">
-                    <button type="button" onclick="closeContractReviewModal()" class="px-4 py-2 rounded-lg border border-white/20 text-white hover:bg-white/5">Not Now</button>
-                    <button type="button" onclick="continueToPayment()" class="px-4 py-2 rounded-lg bg-primary text-white font-semibold hover:bg-primaryGlow">Continue to Stripe</button>
-                </div>
+
+                <!-- Signing form -->
+                <form id="contract-signing-form" class="space-y-5">
+
+                    <!-- Business + signer -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs text-gray-300 font-medium mb-1">Legal Business Name</label>
+                            <input id="cs_legal_name" required placeholder="LLC or Corp name on file" class="w-full px-3 py-2.5 rounded-lg bg-black/50 border border-white/10 text-white text-sm placeholder-gray-600 focus:border-cyan-500/50 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-gray-300 font-medium mb-1">Authorized Signer Name</label>
+                            <input id="cs_signer_name" required placeholder="Person authorizing this agreement" class="w-full px-3 py-2.5 rounded-lg bg-black/50 border border-white/10 text-white text-sm placeholder-gray-600 focus:border-cyan-500/50 focus:outline-none">
+                        </div>
+                    </div>
+
+                    <!-- Initials -->
+                    <div>
+                        <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-3">Initial Each Clause (e.g. AP)</p>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs text-gray-400 mb-1">Pricing and Billing Terms</label>
+                                <input id="cs_init_pricing" required maxlength="5" placeholder="—" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-white text-sm text-center font-mono uppercase placeholder-gray-700 focus:border-cyan-500/50 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-gray-400 mb-1">Cancellation and Commitment</label>
+                                <input id="cs_init_cancel" required maxlength="5" placeholder="—" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-white text-sm text-center font-mono uppercase placeholder-gray-700 focus:border-cyan-500/50 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-gray-400 mb-1">SMS / TCPA Responsibility</label>
+                                <input id="cs_init_tcpa" required maxlength="5" placeholder="—" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-white text-sm text-center font-mono uppercase placeholder-gray-700 focus:border-cyan-500/50 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-gray-400 mb-1">Soft Quote Liability Disclaimer</label>
+                                <input id="cs_init_liability" required maxlength="5" placeholder="—" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-white text-sm text-center font-mono uppercase placeholder-gray-700 focus:border-cyan-500/50 focus:outline-none">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Checkboxes -->
+                    <div class="space-y-3 p-4 rounded-lg bg-white/3 border border-white/8">
+                        <label class="flex gap-3 items-start cursor-pointer">
+                            <input type="checkbox" id="cs_ack_msa" required class="mt-0.5 w-4 h-4 shrink-0 accent-cyan-500">
+                            <span class="text-sm text-gray-300">I have read and agree to the <a href="/msa-order-form.html" target="_blank" rel="noopener" class="text-cyan-400 underline hover:text-white">Order Form and Subscription Agreement</a>.</span>
+                        </label>
+                        <label class="flex gap-3 items-start cursor-pointer">
+                            <input type="checkbox" id="cs_ack_platform" required class="mt-0.5 w-4 h-4 shrink-0 accent-cyan-500">
+                            <span class="text-sm text-gray-300">I have read and agree to the <a href="/platform-conditions.html" target="_blank" rel="noopener" class="text-cyan-400 underline hover:text-white">Platform Conditions and Compliance Addendum</a>.</span>
+                        </label>
+                        <label class="flex gap-3 items-start cursor-pointer">
+                            <input type="checkbox" id="cs_ack_esig" required class="mt-0.5 w-4 h-4 shrink-0 accent-cyan-500">
+                            <span class="text-sm text-gray-300">I agree this typed name constitutes a legally binding electronic signature on behalf of the business above.</span>
+                        </label>
+                    </div>
+
+                    <!-- Typed signature -->
+                    <div>
+                        <label class="block text-xs text-gray-300 font-medium mb-1">Typed Full Legal Name (Signature)</label>
+                        <input id="cs_typed_signature" required placeholder="Your full legal name exactly as it appears on ID" class="w-full px-3 py-2.5 rounded-lg bg-black/50 border border-white/10 text-white text-sm italic placeholder-gray-600 focus:border-cyan-500/50 focus:outline-none">
+                        <p class="text-xs text-gray-600 mt-1">Signed at: <span id="cs-timestamp" class="font-mono"></span></p>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-3 pt-1">
+                        <button type="button" onclick="closeContractReviewModal()" class="sm:w-28 py-3 rounded-lg border border-white/15 text-gray-400 hover:text-white hover:bg-white/5 text-sm transition-colors">Back</button>
+                        <button type="submit" class="flex-1 py-3 rounded-lg bg-primary text-white font-bold hover:bg-primaryGlow text-sm transition-colors">I Agree &amp; Continue to Payment →</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -2063,14 +2134,37 @@ Plug our vision-model service advisor widget directly into your website. It deli
             const modal = document.getElementById('contract-review-modal');
             if (modal) modal.classList.remove('hidden');
 
-            trackEvent('contract_modal_opened', {
-                tier: selectedTier || null
-            });
+            // Pre-fill plan label
+            const planDisplay = document.getElementById('contract-plan-display');
+            if (planDisplay && selectedTier) {
+                const t = tierDetails[selectedTier];
+                planDisplay.textContent = `Selected Plan: ${t.name} — ${t.price}`;
+            }
+
+            // Pre-fill signer name from lead capture
+            const leadName = localStorage.getItem('vetra_lead_name');
+            const signerInput = document.getElementById('cs_signer_name');
+            if (signerInput && !signerInput.value && leadName) signerInput.value = leadName;
+
+            // Pre-fill legal business name from shop name field
+            const shopVal = document.getElementById('shop_name')?.value;
+            const legalInput = document.getElementById('cs_legal_name');
+            if (legalInput && !legalInput.value && shopVal) legalInput.value = shopVal;
+
+            // Stamp the timestamp
+            const tsEl = document.getElementById('cs-timestamp');
+            if (tsEl) tsEl.textContent = new Date().toUTCString();
+
+            trackEvent('contract_modal_opened', { tier: selectedTier || null });
         }
 
         function closeContractReviewModal() {
             const modal = document.getElementById('contract-review-modal');
             if (modal) modal.classList.add('hidden');
+
+            // Reset contract form so it's clean next time
+            const signingForm = document.getElementById('contract-signing-form');
+            if (signingForm) signingForm.reset();
 
             const btn = document.getElementById('submit-btn');
             if (btn && btn.textContent === 'Reviewing Contract...') {
@@ -2171,19 +2265,31 @@ Plug our vision-model service advisor widget directly into your website. It deli
             }
         }
 
-        async function continueToPayment() {
-            closeContractReviewModal();
+        // Contract signing form — required before payment goes through
+        document.getElementById('contract-signing-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
             if (!pendingCheckoutData) return;
 
+            const contractData = {
+                plan: selectedTier,
+                legal_name: document.getElementById('cs_legal_name').value.trim(),
+                signer_name: document.getElementById('cs_signer_name').value.trim(),
+                initials_pricing: document.getElementById('cs_init_pricing').value.trim().toUpperCase(),
+                initials_cancel: document.getElementById('cs_init_cancel').value.trim().toUpperCase(),
+                initials_tcpa: document.getElementById('cs_init_tcpa').value.trim().toUpperCase(),
+                initials_liability: document.getElementById('cs_init_liability').value.trim().toUpperCase(),
+                typed_signature: document.getElementById('cs_typed_signature').value.trim(),
+                signed_at: document.getElementById('cs-timestamp').textContent
+            };
+
+            // Log signed contract event
+            trackEvent('contract_signed', { ...contractData, email: pendingCheckoutData.email, shopName: pendingCheckoutData.shopName });
+
             const { email, shopName } = pendingCheckoutData;
-            trackEvent('contract_modal_continue_to_stripe', {
-                tier: selectedTier || null,
-                email,
-                shopName
-            });
             pendingCheckoutData = null;
+            closeContractReviewModal();
             await startCheckout(email, shopName);
-        }
+        });
 
         document.getElementById('checkout-form')?.addEventListener('submit', async (e) => {
             e.preventDefault();
