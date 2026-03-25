@@ -728,7 +728,7 @@
                                 <span class="apex-status-indicator"></span>
                                 <span>Online</span>
                             </div>
-                            <div id="apex-header-model">Model - VETRA PRO</div>
+                            <div id="apex-header-model">VETRA PRO</div>
                         </div>
                         <div id="apex-build-version-pill" class="apex-build-version-pill"></div>
                         <span id="apex-close-btn" role="button" aria-label="Close chat">✕</span>
