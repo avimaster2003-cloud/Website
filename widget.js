@@ -35,7 +35,7 @@
     })();
 
     window.ApexWidget = {
-        BUILD_VERSION: "3.25.V1T",
+        BUILD_VERSION: "3.25.V1",
         // Configuration (read overrides from script query params)
         SHOP_ID: SCRIPT_PARAMS.get('shopId') || "1019",
         PRIMARY_COLOR: SCRIPT_PARAMS.get('primaryColor') || SCRIPT_PARAMS.get('primary') || "#3B82F6",
@@ -1013,24 +1013,18 @@
         appendBotMessage(text, typewriterEffect = true, bookingUrl = null) {
             const messageDiv = document.createElement('div');
             messageDiv.classList.add('apex-message', 'apex-bot-message');
-            messageDiv.innerHTML = '<div class="typing-text"></div>';
+            messageDiv.innerHTML = '<span class="typing-text"></span>';
             this.elements.messagesDiv.appendChild(messageDiv);
-            const textContainer = messageDiv.querySelector('.typing-text');
-
-            const finishRender = () => {
-                this.isTyping = false;
-                this.appendBookingButton(messageDiv, bookingUrl);
-                this.elements.messagesDiv.scrollTop = this.elements.messagesDiv.scrollHeight;
-            };
 
             if (typewriterEffect) {
                 this.isTyping = true;
-                const renderedAsCards = this.renderStructuredResponse(textContainer, text, finishRender);
-                if (!renderedAsCards) {
-                    this.typewriterText(textContainer, text, finishRender);
-                }
+                this.typewriterText(messageDiv.querySelector('.typing-text'), text, () => {
+                    this.isTyping = false;
+                    this.appendBookingButton(messageDiv, bookingUrl);
+                    this.elements.messagesDiv.scrollTop = this.elements.messagesDiv.scrollHeight;
+                });
             } else {
-                textContainer.textContent = text;
+                messageDiv.querySelector('.typing-text').textContent = text;
                 this.appendBookingButton(messageDiv, bookingUrl);
             }
 
@@ -1096,78 +1090,6 @@
             if (typingBubble) {
                 typingBubble.remove();
             }
-        },
-
-        extractResponseSections(text) {
-            const normalized = String(text || '').replace(/\r\n/g, '\n').trim();
-            if (!normalized) return [];
-
-            const paragraphSections = normalized
-                .split(/\n{2,}/)
-                .map((part) => part.trim())
-                .filter(Boolean);
-            if (paragraphSections.length >= 2) return paragraphSections.slice(0, 5);
-
-            const lines = normalized
-                .split('\n')
-                .map((line) => line.trim())
-                .filter(Boolean);
-            const bulletSections = lines
-                .filter((line) => /^[-*•]\s+/.test(line))
-                .map((line) => line.replace(/^[-*•]\s+/, '').trim());
-            if (bulletSections.length >= 2) return bulletSections.slice(0, 5);
-
-            return [];
-        },
-
-        renderStructuredResponse(container, text, onComplete) {
-            const sections = this.extractResponseSections(text);
-            if (sections.length < 2) return false;
-
-            container.innerHTML = '';
-            const stack = document.createElement('div');
-            stack.className = 'apex-response-stack';
-            container.appendChild(stack);
-
-            let sectionIndex = 0;
-            const messagesDiv = this.elements.messagesDiv;
-
-            const revealNextSection = () => {
-                if (sectionIndex < sections.length) {
-                    const sectionText = sections[sectionIndex];
-                    const card = document.createElement('div');
-                    card.className = 'apex-response-card';
-
-                    const headingMatch = sectionText.match(/^([A-Za-z][A-Za-z0-9 &/()'-]{2,36}):\s*(.+)$/s);
-                    if (headingMatch) {
-                        const title = document.createElement('div');
-                        title.className = 'apex-response-card-title';
-                        title.textContent = headingMatch[1];
-
-                        const body = document.createElement('div');
-                        body.className = 'apex-response-card-body';
-                        body.textContent = headingMatch[2].trim();
-
-                        card.appendChild(title);
-                        card.appendChild(body);
-                    } else {
-                        const body = document.createElement('div');
-                        body.className = 'apex-response-card-body';
-                        body.textContent = sectionText;
-                        card.appendChild(body);
-                    }
-
-                    stack.appendChild(card);
-                    sectionIndex++;
-                    messagesDiv.scrollTop = messagesDiv.scrollHeight;
-                    setTimeout(revealNextSection, 125);
-                } else if (onComplete) {
-                    onComplete();
-                }
-            };
-
-            revealNextSection();
-            return true;
         },
 
         typewriterText(element, text, onComplete) {
@@ -1983,40 +1905,6 @@
                 .apex-bot-message .typing-text {
                     display: block;
                     white-space: pre-wrap;
-                }
-
-                .apex-response-stack {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 8px;
-                }
-
-                .apex-response-card {
-                    padding: 10px 12px;
-                    border-radius: 12px;
-                    border: 1px solid rgba(96, 165, 250, 0.34);
-                    background: linear-gradient(145deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.92));
-                    box-shadow: 0 6px 14px rgba(2, 6, 23, 0.28);
-                    animation: apex-cardRise 220ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-                }
-
-                .apex-response-card-title {
-                    margin-bottom: 4px;
-                    font-size: 10px;
-                    font-weight: 700;
-                    letter-spacing: 0.08em;
-                    text-transform: uppercase;
-                    color: #93c5fd;
-                }
-
-                .apex-response-card-body {
-                    white-space: pre-wrap;
-                    color: var(--apex-text);
-                }
-
-                @keyframes apex-cardRise {
-                    0% { opacity: 0; transform: translateY(8px) scale(0.985); }
-                    100% { opacity: 1; transform: translateY(0) scale(1); }
                 }
 
                 .apex-booking-link {
