@@ -35,7 +35,7 @@
     })();
 
     window.ApexWidget = {
-        BUILD_VERSION: "3.18.v8",
+        BUILD_VERSION: "3.22.v6L8",
         // Configuration (read overrides from script query params)
         SHOP_ID: SCRIPT_PARAMS.get('shopId') || "1019",
         PRIMARY_COLOR: SCRIPT_PARAMS.get('primaryColor') || SCRIPT_PARAMS.get('primary') || "#3B82F6",
@@ -44,11 +44,14 @@
         SESSION_ID: "user_" + Math.random().toString(36).substr(2, 9),
         // Optional URL to fetch shop config (colors) by shop id.
 
-        N8N_WEBHOOK_URL: "https://api.apexconversiongroup.com/webhook/281ba64b-e245-4ea6-9003-74d79997eb34",
+        IMAGE_TRANSPORT: (SCRIPT_PARAMS.get('imageTransport') || 'json').toLowerCase(),
+
+        N8N_WEBHOOK_URL: "https://api.usevetra.com/webhook/281ba64b-e245-4ea6-9003-74d79997eb34",
 
         // State
         chatIsOpen: false,
         isTyping: false,
+        messageCount: 0,
         loadingMessageIdx: 0,
         loadingInterval: null,
         modelCache: {},
@@ -413,9 +416,12 @@
                 vehicleWrap: container.querySelector('#apex-vehicle-selects'),
                 contactName: container.querySelector('#apex-contact-name'),
                 contactPhone: container.querySelector('#apex-contact-phone'),
+                contactConsent: container.querySelector('#apex-contact-consent'),
+                contactConsentError: container.querySelector('#apex-contact-consent-error'),
                 closeBtn: container.querySelector('#apex-close-btn'),
                 
                 inputField: container.querySelector('#apex-chat-input'),
+                testFillBtn: container.querySelector('#apex-test-fill-btn'),
                 sendBtn: container.querySelector('#apex-send-btn'),
                 cameraBtn: container.querySelector('#apex-image-btn-camera'),
                 galleryBtn: container.querySelector('#apex-image-btn-gallery'),
@@ -479,6 +485,18 @@
 
             if (sendBtn) {
                 sendBtn.addEventListener('click', () => self.sendMessage());
+            }
+
+            if (this.elements.testFillBtn) {
+                this.elements.testFillBtn.addEventListener('click', () => self.applyTestData());
+            }
+
+            if (this.elements.contactConsent) {
+                this.elements.contactConsent.addEventListener('change', () => {
+                    if (self.elements.contactConsent.checked && self.elements.contactConsentError) {
+                        self.elements.contactConsentError.style.display = 'none';
+                    }
+                });
             }
 
             const cameraBtn = this.elements.cameraBtn;
@@ -750,8 +768,18 @@
                                 aria-label="Vehicle mileage"
                             />
                         </div>
-                        <div class="apex-form-disclaimer">
-                            By providing your number, you agree to receive lead updates via SMS. Msg & data rates may apply. Reply STOP to opt-out.
+                        <div class="apex-consent-wrap">
+                            <label class="apex-consent-label" for="apex-contact-consent">
+                                <input id="apex-contact-consent" type="checkbox" class="apex-consent-checkbox" />
+                                <span>
+                                    I agree to receive SMS about this quote and service follow-ups (including reminder messages). Msg & data rates may apply. Reply STOP to opt-out. See <a href="https://usevetra.com/terms.html" target="_blank" rel="noopener noreferrer">Terms</a> and <a href="https://usevetra.com/privacy.html" target="_blank" rel="noopener noreferrer">Privacy</a>.
+                                </span>
+                            </label>
+                            <div id="apex-contact-consent-error" class="apex-consent-error">Please check the SMS consent box to continue.</div>
+                        </div>
+                        <div id="apex-form-scroll-hint" aria-hidden="true">
+                            <svg width="20" height="14" viewBox="0 0 24 14" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 2 12 12 22 2"/></svg>
+                            <svg width="20" height="14" viewBox="0 0 24 14" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 2 12 12 22 2"/></svg>
                         </div>
                     </div>
                     <div id="apex-chat-input-area">
@@ -783,6 +811,7 @@
                         </button>
                     </div>
                     <div id="apex-image-data-holder" style="display: none;"></div>
+                    <button id="apex-test-fill-btn" aria-label="Fill test data" title="Fill test data">T</button>
                 </div>
             `;
         },
@@ -920,6 +949,21 @@
             }
             this.elements.prideTextDiv.style.opacity = '0';
             this.elements.prideTextDiv.style.pointerEvents = 'none';
+            // Lock body scroll on mobile so swiping inside widget doesn't scroll the page
+            if (window.matchMedia('(max-width: 768px)').matches) {
+                document.body.style.overflow = 'hidden';
+                document.body.style.position = 'fixed';
+                document.body.style.width = '100%';
+            }
+            // Show scroll-down hint in form for 3s on mobile
+            if (window.matchMedia('(max-width: 768px)').matches) {
+                const hint = document.getElementById('apex-form-scroll-hint');
+                if (hint) {
+                    hint.classList.add('visible');
+                    clearTimeout(this._hintTimer);
+                    this._hintTimer = setTimeout(() => hint.classList.remove('visible'), 3000);
+                }
+            }
         },
 
         closeChat() {
@@ -929,6 +973,10 @@
             this.elements.backdrop.classList.remove('visible');
             this.elements.prideTextDiv.style.opacity = '0.95';
             this.elements.prideTextDiv.style.pointerEvents = 'auto';
+            // Restore body scroll
+            document.body.style.overflow = '';
+            document.body.style.position = '';
+            document.body.style.width = '';
         },
 
         normalizeBookingUrl(url) {
@@ -1047,11 +1095,13 @@
         typewriterText(element, text, onComplete) {
             let index = 0;
             element.textContent = '';
+            const messagesDiv = this.elements.messagesDiv;
 
             const type = () => {
                 if (index < text.length) {
                     element.textContent += text[index];
                     index++;
+                    messagesDiv.scrollTop = messagesDiv.scrollHeight;
                     setTimeout(type, 10.5);
                 } else {
                     if (onComplete) onComplete();
@@ -1093,7 +1143,7 @@
                     img.onload = () => {
                         try {
                             const canvas = document.createElement('canvas');
-                            const MAX_WIDTH = 800;
+                            const MAX_WIDTH = 640;
                             const targetWidth = Math.min(MAX_WIDTH, img.width || MAX_WIDTH);
                             const scaleSize = targetWidth / (img.width || targetWidth);
                             const targetHeight = Math.max(1, Math.round((img.height || targetWidth) * scaleSize));
@@ -1109,7 +1159,7 @@
 
                             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-                            const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
+                            const compressedBase64 = canvas.toDataURL('image/jpeg', 0.65);
                             resolve(compressedBase64);
                         } catch (error) {
                             reject(error);
@@ -1167,8 +1217,19 @@
                     if (!parsed) {
                         console.warn('[ApexWidget] Compressed image data URL appears malformed');
                     } else {
+                        const MAX_SENT_BYTES = 500 * 1024; // 500 KB hard cap on compressed output
                         const originalBytes = Number(file.size || 0);
                         const compressedBytes = Number(parsed.estimatedBytes || 0);
+
+                        if (compressedBytes > MAX_SENT_BYTES) {
+                            this.appendBotMessage(
+                                `That image is still too large after compression (${Math.round(compressedBytes / 1024)} KB). Please use a smaller or lower-resolution photo.`,
+                                false
+                            );
+                            this.removeImage();
+                            return;
+                        }
+
                         const savedBytes = Math.max(0, originalBytes - compressedBytes);
                         const reductionPercent = originalBytes > 0
                             ? Number(((savedBytes / originalBytes) * 100).toFixed(1))
@@ -1221,6 +1282,66 @@
             };
         },
 
+        getImageFileExtension(mimeType) {
+            if (!mimeType || typeof mimeType !== 'string') return 'jpg';
+
+            if (mimeType.includes('png')) return 'png';
+            if (mimeType.includes('webp')) return 'webp';
+            if (mimeType.includes('gif')) return 'gif';
+            return 'jpg';
+        },
+
+        base64ToBlob(base64, mimeType) {
+            if (!base64 || typeof base64 !== 'string') return null;
+
+            try {
+                const clean = base64.replace(/\s+/g, '');
+                const binary = atob(clean);
+                const length = binary.length;
+                const bytes = new Uint8Array(length);
+
+                for (let i = 0; i < length; i++) {
+                    bytes[i] = binary.charCodeAt(i);
+                }
+
+                return new Blob([bytes], { type: mimeType || 'image/jpeg' });
+            } catch (error) {
+                console.warn('[ApexWidget] Failed to convert base64 image to blob', error);
+                return null;
+            }
+        },
+
+        buildMultipartPayload(payload, parsedImage) {
+            const formData = new FormData();
+
+            // Keep the original JSON contract available to backend parsers.
+            formData.append('payload_json', JSON.stringify(payload));
+
+            // Also include common fields directly for simpler n8n mapping.
+            formData.append('message', payload.message || '');
+            formData.append('message_inquiry', String(payload.message_inquiry || ''));
+            formData.append('shop_id', String(payload.shop_id || ''));
+            formData.append('session_id', payload.session_id || '');
+            formData.append('vehicle_mileage', String(payload.vehicle_mileage || 0));
+            formData.append('vehicle_json', JSON.stringify(payload.vehicle || {}));
+            formData.append('contact_json', JSON.stringify(payload.contact || {}));
+            formData.append('image_present', String(!!parsedImage));
+
+            if (parsedImage && parsedImage.base64) {
+                const imageBlob = this.base64ToBlob(parsedImage.base64, parsedImage.mimeType);
+                const ext = this.getImageFileExtension(parsedImage.mimeType);
+
+                if (imageBlob && imageBlob.size > 0) {
+                    formData.append('image_file', imageBlob, `upload.${ext}`);
+                }
+
+                formData.append('image_mime_type', parsedImage.mimeType || 'image/jpeg');
+                formData.append('image_estimated_bytes', String(parsedImage.estimatedBytes || 0));
+            }
+
+            return formData;
+        },
+
         formatMileage(value) {
             const parsed = Number.parseInt(value, 10);
             if (!Number.isFinite(parsed)) return '0 mi';
@@ -1269,10 +1390,70 @@
             this.elements.imagePreviewWrapper.style.display = 'none';
         },
 
+        applyTestData() {
+            const nowYear = new Date().getFullYear();
+            const fallbackYear = String(Math.min(Math.max(2005, nowYear), 2025));
+            const preferredMake = 'Honda';
+            const preferredModel = 'Civic';
+
+            if (this.elements.contactName) this.elements.contactName.value = 'Test Customer';
+            if (this.elements.contactPhone) this.elements.contactPhone.value = '5551234567';
+
+            if (this.elements.contactConsent) {
+                this.elements.contactConsent.checked = true;
+            }
+            if (this.elements.contactConsentError) {
+                this.elements.contactConsentError.style.display = 'none';
+            }
+
+            if (this.elements.mileageRange) {
+                this.elements.mileageRange.value = '75000';
+                this.updateMileageUI();
+            }
+
+            if (this.elements.yearSelect) {
+                this.elements.yearSelect.value = fallbackYear;
+            }
+
+            if (this.elements.makeSelect) {
+                this.elements.makeSelect.value = preferredMake;
+                this.onMakeChange();
+            }
+
+            const selectModel = () => {
+                const modelSelect = this.elements.modelSelect;
+                if (!modelSelect || !modelSelect.options || !modelSelect.options.length) return;
+
+                const preferredOption = Array.from(modelSelect.options).find(
+                    (opt) => (opt.value || '').toLowerCase() === preferredModel.toLowerCase()
+                );
+
+                if (preferredOption) {
+                    modelSelect.value = preferredOption.value;
+                    return;
+                }
+
+                const firstReal = Array.from(modelSelect.options).find((opt) => !!opt.value);
+                if (firstReal) modelSelect.value = firstReal.value;
+            };
+
+            setTimeout(selectModel, 80);
+            setTimeout(selectModel, 280);
+
+            if (this.elements.inputField && !this.elements.inputField.value.trim()) {
+                this.elements.inputField.value = 'My car is making a clicking noise when turning and the check engine light is on.';
+            }
+
+            if (this.elements.inputField) {
+                this.elements.inputField.focus();
+            }
+        },
+
         async sendMessage() {
             const text = this.elements.inputField.value.trim();
             const name = this.elements.contactName.value.trim();
             const phone = this.elements.contactPhone.value.trim();
+            const hasConsent = !!(this.elements.contactConsent && this.elements.contactConsent.checked);
             
             // Validate required fields
             if (!name || !phone) {
@@ -1300,6 +1481,13 @@
             
             if (!text || this.isTyping) return;
 
+            if (!hasConsent) {
+                if (this.elements.contactConsentError) {
+                    this.elements.contactConsentError.style.display = 'block';
+                }
+                return;
+            }
+
             await this.waitForImageProcessing();
 
             this.elements.inputField.value = '';
@@ -1316,8 +1504,12 @@
 
             this.elements.vehicleWrap.classList.add('select-hidden');
 
+            this.messageCount = (this.messageCount || 0) + 1;
+            const messageInquiry = this.messageCount;
+
             const payload = {
                 message: text,
+                message_inquiry: messageInquiry,
                 shop_id: this.SHOP_ID,
                 session_id: this.SESSION_ID,
                 vehicle_mileage: Number.parseInt(this.elements.mileageRange?.value || '0', 10) || 0,
@@ -1328,20 +1520,14 @@
                 },
                 contact: {
                     name: name,
-                    phone: phone
+                    phone: phone,
+                    sms_consent: true
                 },
-                image64: parsedImage ? parsedImage.base64 : null,
+                image_present: !!parsedImage,
+                image_base64: parsedImage ? parsedImage.base64 : null,
                 image_mime_type: parsedImage ? parsedImage.mimeType : null,
                 image_data_url: parsedImage ? parsedImage.dataUrl : null,
-                image_estimated_bytes: parsedImage ? parsedImage.estimatedBytes : null,
-                image: parsedImage ? {
-                    data: parsedImage.dataUrl,
-                    type: parsedImage.mimeType,
-                    data_url: parsedImage.dataUrl,
-                    base64: parsedImage.base64,
-                    mime_type: parsedImage.mimeType,
-                    estimated_bytes: parsedImage.estimatedBytes
-                } : null
+                image_estimated_bytes: parsedImage ? parsedImage.estimatedBytes : null
             };
 
             if (imageBase64 && !parsedImage) {
@@ -1349,14 +1535,28 @@
             }
 
             const self = this;
+            const useMultipartForImage = !!parsedImage && (
+                this.IMAGE_TRANSPORT === 'binary' ||
+                this.IMAGE_TRANSPORT === 'multipart' ||
+                this.IMAGE_TRANSPORT === 'file'
+            );
+
+            const requestOptions = useMultipartForImage
+                ? {
+                    method: 'POST',
+                    body: this.buildMultipartPayload(payload, parsedImage)
+                }
+                : {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                };
+
             console.log('[ApexWidget] Sending payload to n8n:', payload);
             console.log('[ApexWidget] Webhook URL:', this.N8N_WEBHOOK_URL);
+            console.log('[ApexWidget] Image transport mode:', useMultipartForImage ? 'multipart-binary' : 'json-base64');
             
-            fetch(this.N8N_WEBHOOK_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            })
+            fetch(this.N8N_WEBHOOK_URL, requestOptions)
             .then(response => {
                 console.log('[ApexWidget] Response status:', response.status);
                 if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -1503,6 +1703,7 @@
                     display: flex;
                     flex-direction: column;
                     overflow: hidden;
+                    overscroll-behavior: contain;
                     z-index: 9999;
                     border: 1px solid var(--apex-border);
                     transform: translate(155px, 155px) scale(0.3) translateZ(0);
@@ -1667,6 +1868,9 @@
                     gap: 12px;
                     background: var(--apex-dark);
                     min-height: 0;
+                    overscroll-behavior: contain;
+                    -webkit-overflow-scrolling: touch;
+                    touch-action: pan-y;
                 }
 
                 #apex-chat-messages::-webkit-scrollbar { width: 4px; }
@@ -1790,6 +1994,7 @@
 
                 #apex-chat-input {
                     flex: 1;
+                    min-width: 0;
                     padding: 12px 16px;
                     border: 1px solid var(--apex-border);
                     border-radius: 12px;
@@ -1824,6 +2029,39 @@
                 #apex-send-btn svg { width: 20px; height: 20px; }
                 #apex-send-btn:hover:not(:disabled) { transform: scale(1.05); box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4); }
                 #apex-send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+                #apex-test-fill-btn {
+                    position: absolute;
+                    bottom: 6px;
+                    left: 6px;
+                    z-index: 10;
+                    background: rgba(37, 99, 235, 0.18);
+                    color: #bfdbfe;
+                    border: 1px solid rgba(147, 197, 253, 0.35);
+                    border-radius: 8px;
+                    width: 24px;
+                    height: 18px;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 10px;
+                    font-weight: 700;
+                    letter-spacing: 0.3px;
+                    opacity: 0.55;
+                    transition: opacity 150ms ease, transform 150ms ease;
+                    padding: 0;
+                    line-height: 1;
+                }
+
+                #apex-test-fill-btn:hover {
+                    opacity: 1;
+                    transform: scale(1.08);
+                }
+
+                #apex-test-fill-btn:active {
+                    transform: scale(0.95);
+                }
 
                 #apex-image-upload-wrapper {
                     display: flex;
@@ -1900,6 +2138,40 @@
                     flex-shrink: 0;
                     border-bottom: 1px solid var(--apex-border);
                     background: var(--apex-dark);
+                    overflow-y: auto;
+                    -webkit-overflow-scrolling: touch;
+                    overscroll-behavior: contain;
+                    position: relative;
+                }
+
+                #apex-form-scroll-hint {
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 1px;
+                    padding: 10px 0 8px;
+                    pointer-events: none;
+                    background: linear-gradient(to bottom, transparent 0%, var(--apex-dark) 55%);
+                    opacity: 0;
+                    visibility: hidden;
+                    transition: opacity 0.5s ease;
+                    z-index: 5;
+                    color: var(--apex-blue);
+                }
+
+                #apex-form-scroll-hint.visible {
+                    opacity: 1;
+                    visibility: visible;
+                    animation: apex-hint-bounce 0.9s ease-in-out infinite;
+                }
+
+                @keyframes apex-hint-bounce {
+                    0%, 100% { transform: translateY(0); }
+                    50% { transform: translateY(5px); }
                 }
 
                 .apex-form-section.select-hidden { 
@@ -2038,6 +2310,50 @@
                     opacity: 0.7;
                 }
 
+                .apex-consent-wrap {
+                    margin-top: 2px;
+                    padding: 8px 10px;
+                    border: 1px solid rgba(148, 163, 184, 0.24);
+                    border-radius: 10px;
+                    background: rgba(15, 23, 42, 0.45);
+                }
+
+                .apex-consent-label {
+                    display: flex;
+                    align-items: flex-start;
+                    gap: 8px;
+                    font-size: 11px;
+                    line-height: 1.45;
+                    color: rgba(226, 232, 240, 0.92);
+                    cursor: pointer;
+                }
+
+                .apex-consent-label a {
+                    color: #93c5fd;
+                    text-decoration: underline;
+                    text-underline-offset: 2px;
+                }
+
+                .apex-consent-label a:hover {
+                    color: #dbeafe;
+                }
+
+                .apex-consent-checkbox {
+                    margin-top: 2px;
+                    width: 14px;
+                    height: 14px;
+                    accent-color: var(--apex-blue);
+                    flex-shrink: 0;
+                }
+
+                .apex-consent-error {
+                    display: none;
+                    margin-top: 6px;
+                    font-size: 11px;
+                    line-height: 1.35;
+                    color: #fca5a5;
+                }
+
                 .apex-input,
                 .apex-select {
                     appearance: none;
@@ -2124,6 +2440,10 @@
                     .apex-mileage-header {
                         font-size: 13px;
                     }
+
+                    #apex-chat-input-area {
+                        padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+                    }
                 }
 
                 @media (max-width: 430px) {
@@ -2163,9 +2483,11 @@
                         font-size: 11px;
                     }
 
+                    .apex-form-section {
                         gap: 8px;
-                        max-height: min(32vh, 220px);
+                        max-height: 236px;
                         overflow-y: auto;
+                        flex-shrink: 0;
                     }
 
                     .apex-form-disclaimer {
@@ -2186,7 +2508,13 @@
                     #apex-chat-input-area {
                         padding: 10px;
                         gap: 8px;
-                        padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+                        align-items: center;
+                        padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+                    }
+
+                    #apex-chat-input {
+                        padding: 9px 10px;
+                        font-size: 15px;
                     }
 
                     #apex-image-btn-camera,
