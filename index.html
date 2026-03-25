@@ -1509,7 +1509,7 @@ Plug our vision-model service advisor widget directly into your website. It deli
                         </div>
                         <div>
                             <label class="block text-gray-300 font-medium mb-2">Mobile Number</label>
-                            <input type="tel" id="owner_phone" required class="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:border-blue-500/50 focus:outline-none transition-colors" placeholder="(555) 123-4567">
+                            <input type="tel" id="owner_phone" required maxlength="12" autocomplete="tel" class="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:border-blue-500/50 focus:outline-none transition-colors" placeholder="555-867-5309">
                         </div>
                         <button type="submit" class="w-full py-3 bg-primary text-white rounded-lg font-bold hover:bg-primaryGlow transition-colors">Continue to Secure Checkout</button>
                         <p class="text-xs text-gray-500 text-center">We only use this to coordinate onboarding and implementation.</p>
@@ -2377,12 +2377,27 @@ Plug our vision-model service advisor widget directly into your website. It deli
             openContractReviewModal();
         });
 
+        // Phone auto-format: digits only → NXX-NXX-XXXX
+        document.getElementById('owner_phone')?.addEventListener('input', (e) => {
+            const digits = e.target.value.replace(/\D/g, '').slice(0, 10);
+            let formatted = digits;
+            if (digits.length > 6) formatted = digits.slice(0, 3) + '-' + digits.slice(3, 6) + '-' + digits.slice(6);
+            else if (digits.length > 3) formatted = digits.slice(0, 3) + '-' + digits.slice(3);
+            e.target.value = formatted;
+        });
+
         document.getElementById('lead-gate-form')?.addEventListener('submit', (e) => {
             e.preventDefault();
             const ownerName = document.getElementById('owner_name').value.trim();
             const ownerEmail = document.getElementById('owner_email').value.trim();
             const ownerPhone = document.getElementById('owner_phone').value.trim();
             if (!ownerName || !ownerEmail || !ownerPhone) return;
+            if (ownerPhone.replace(/\D/g, '').length !== 10) {
+                document.getElementById('owner_phone').setCustomValidity('Please enter a valid 10-digit US phone number.');
+                document.getElementById('owner_phone').reportValidity();
+                return;
+            }
+            document.getElementById('owner_phone').setCustomValidity('');
 
             localStorage.setItem('vetra_lead_name', ownerName);
             localStorage.setItem('vetra_lead_email', ownerEmail);
