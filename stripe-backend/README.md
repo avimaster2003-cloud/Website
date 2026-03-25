@@ -31,6 +31,21 @@ Backend contract packet submissions can be forwarded to:
 Optional auth header sent by backend when configured:
 - `x-contract-webhook-secret: <CONTRACT_WEBHOOK_SECRET>`
 
+## Automated legal email delivery
+Contract packets can also be automatically emailed by the backend on every `/api/contract-packet` call.
+
+Set these env vars:
+- `LEGAL_EMAIL_TO` (default: `legal@usevetra.com`)
+- `LEGAL_EMAIL_CC` (optional comma-separated)
+- `CONTRACT_EMAIL_FROM` (required for SMTP send)
+- `SMTP_HOST`
+- `SMTP_PORT` (default `587`)
+- `SMTP_SECURE` (`true` or `false`)
+- `SMTP_USER`
+- `SMTP_PASS`
+
+Each packet is also archived server-side under `data/contract-archive/` and indexed in `data/contracts.jsonl` with delivery statuses.
+
 ## Frontend wiring
 Set this in website HTML before checkout logic:
 
