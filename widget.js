@@ -1093,21 +1093,26 @@
         },
 
         typewriterText(element, text, onComplete) {
-            let index = 0;
+            // Chunked reveal feels faster and more premium than per-character typing.
             element.textContent = '';
             const messagesDiv = this.elements.messagesDiv;
+            const tokens = String(text || '').match(/\S+\s*/g) || [];
+            const chunkSize = tokens.length > 36 ? 5 : 4;
+            let tokenIndex = 0;
 
-            const type = () => {
-                if (index < text.length) {
-                    element.textContent += text[index];
-                    index++;
+            const revealNextChunk = () => {
+                if (tokenIndex < tokens.length) {
+                    const chunk = tokens.slice(tokenIndex, tokenIndex + chunkSize).join('');
+                    element.textContent += chunk;
+                    tokenIndex += chunkSize;
                     messagesDiv.scrollTop = messagesDiv.scrollHeight;
-                    setTimeout(type, 10.5);
+                    const delay = tokenIndex < tokens.length ? 92 : 36;
+                    setTimeout(revealNextChunk, delay);
                 } else {
                     if (onComplete) onComplete();
                 }
             };
-            type();
+            revealNextChunk();
         },
 
         handleKeyPress(e) {
