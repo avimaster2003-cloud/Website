@@ -265,6 +265,20 @@
             z-index: -9999 !important;
         }
 
+        @keyframes tier-selected-pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.35), 0 0 20px rgba(59, 130, 246, 0.2);
+            }
+            50% {
+                box-shadow: 0 0 0 5px rgba(59, 130, 246, 0.12), 0 0 30px rgba(59, 130, 246, 0.35);
+            }
+        }
+
+        .pricing-tier-card.tier-selected {
+            animation: tier-selected-pulse 1.35s ease-in-out infinite;
+            border-color: rgba(96, 165, 250, 0.85) !important;
+        }
+
         @media (max-width: 767px) {
             .checkout-proof-metrics,
             .checkout-risk-strip {
@@ -2081,6 +2095,7 @@ Plug our vision-model service advisor widget directly into your website. It deli
             // Remove previous selection
             document.querySelectorAll('[id^="tier-"]').forEach(el => {
                 el.classList.remove('ring-2', 'ring-blue-500/50', 'ring-cyan-500/50', 'ring-emerald-500/50', 'ring-indigo-500/50', 'ring-purple-500/50');
+                el.classList.remove('tier-selected');
             });
 
             // Add selection ring
@@ -2090,6 +2105,7 @@ Plug our vision-model service advisor widget directly into your website. It deli
             if (tier === 'three_month_upfront') element.classList.add('ring-emerald-500/50');
             if (tier === 'twelve_month_monthly') element.classList.add('ring-indigo-500/50');
             if (tier === 'twelve_month_upfront') element.classList.add('ring-purple-500/50');
+            element.classList.add('tier-selected');
 
             selectedTier = tier;
             const display = document.getElementById('selected-plan-display');
