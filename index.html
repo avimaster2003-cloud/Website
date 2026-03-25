@@ -264,6 +264,62 @@
             visibility: hidden !important;
             z-index: -9999 !important;
         }
+
+        @media (max-width: 767px) {
+            .checkout-proof-metrics,
+            .checkout-risk-strip {
+                display: none;
+            }
+
+            .checkout-mobile-guide {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                margin: 0 0 14px;
+                padding: 10px 12px;
+                border: 1px solid rgba(59, 130, 246, 0.25);
+                border-radius: 12px;
+                background: linear-gradient(135deg, rgba(59, 130, 246, 0.16), rgba(6, 182, 212, 0.08));
+                color: #bfdbfe;
+                font-size: 12px;
+                letter-spacing: 0.2px;
+            }
+
+            #checkout-tier-grid {
+                display: flex;
+                overflow-x: auto;
+                overscroll-behavior-x: contain;
+                scroll-snap-type: x mandatory;
+                gap: 14px;
+                padding: 2px 2px 10px;
+                margin-bottom: 22px;
+                scrollbar-width: none;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            #checkout-tier-grid::-webkit-scrollbar {
+                display: none;
+            }
+
+            #checkout-tier-grid .pricing-tier-card {
+                min-width: 86%;
+                scroll-snap-align: start;
+                padding: 20px;
+            }
+
+            #checkout-tier-grid .pricing-tier-card .tier-feature-list li:nth-child(n+4) {
+                display: none;
+            }
+
+            #checkout-tier-grid .pricing-tier-card .tier-feature-list {
+                font-size: 13px;
+            }
+
+            .checkout-mobile-spacer {
+                height: 76px;
+            }
+        }
     </style>
 </head>
 <body class="font-sans antialiased bg-bg text-gray-300 min-h-screen flex flex-col relative selection:bg-primary/30 selection:text-white">
@@ -1214,7 +1270,7 @@ Plug our vision-model service advisor widget directly into your website. It deli
                 </div>
 
                 <!-- Proof Metrics -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+                <div class="checkout-proof-metrics grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
                     <div class="glow-card rounded-xl p-5 border border-blue-500/20">
                         <div class="text-xs text-blue-400 font-mono uppercase tracking-widest mb-2">Avg Monthly AI Leads</div>
                         <div class="text-3xl font-heading font-bold text-white">45+</div>
@@ -1233,7 +1289,7 @@ Plug our vision-model service advisor widget directly into your website. It deli
                 </div>
 
                 <!-- Risk Reversal Strip -->
-                <div class="glow-card rounded-2xl border border-emerald-500/30 bg-emerald-500/5 p-5 mb-10">
+                <div class="checkout-risk-strip glow-card rounded-2xl border border-emerald-500/30 bg-emerald-500/5 p-5 mb-10">
                     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 text-sm">
                         <div class="flex items-center gap-2 text-emerald-300 font-semibold">
                             <i data-lucide="shield-check" class="w-4 h-4"></i>
@@ -1251,9 +1307,14 @@ Plug our vision-model service advisor widget directly into your website. It deli
                 </div>
 
                 <!-- Pricing Tier Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-12">
+                <div class="checkout-mobile-guide md:hidden">
+                    <i data-lucide="move-horizontal" class="w-4 h-4"></i>
+                    Swipe plans, tap one, then continue to checkout.
+                </div>
+
+                <div id="checkout-tier-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-12">
                     <!-- No Contract (ACH First) -->
-                    <div id="tier-no-contract" class="glow-card rounded-2xl p-8 border border-white/10 hover:border-blue-500/30 transition-all cursor-pointer group relative ring-1 ring-emerald-500/30" onclick="selectTier(this, 'no_contract')">
+                    <div id="tier-no-contract" class="pricing-tier-card glow-card rounded-2xl p-8 border border-white/10 hover:border-blue-500/30 transition-all cursor-pointer group relative ring-1 ring-emerald-500/30" onclick="selectTier(this, 'no_contract')">
                         <div class="absolute top-0 left-0">
                             <div class="bg-emerald-500/20 text-emerald-300 text-xs font-bold px-3 py-1 rounded-br-lg rounded-tl-lg">RISK-FREE 30 DAY GUARANTEE</div>
                         </div>
@@ -1267,7 +1328,7 @@ Plug our vision-model service advisor widget directly into your website. It deli
                             <p class="text-gray-500 text-xs mt-2">Billed monthly</p>
                         </div>
                         <button class="w-full py-3 bg-blue-500/20 text-blue-400 rounded-lg font-bold hover:bg-blue-500/30 transition-colors mb-6">Select Plan</button>
-                        <ul class="space-y-3 text-gray-300 text-sm">
+                        <ul class="tier-feature-list space-y-3 text-gray-300 text-sm">
                             <li class="flex items-start gap-3">
                                 <i data-lucide="check" class="w-4 h-4 text-blue-400 mt-0.5 shrink-0"></i>
                                 <span>Full AI infrastructure</span>
@@ -1292,7 +1353,7 @@ Plug our vision-model service advisor widget directly into your website. It deli
                     </div>
 
                     <!-- 3 Month Monthly (ACH First) -->
-                    <div id="tier-3m-monthly" class="glow-card rounded-2xl p-8 border border-cyan-500/20 hover:border-cyan-400/30 transition-all cursor-pointer group relative" onclick="selectTier(this, 'three_month_monthly')">
+                    <div id="tier-3m-monthly" class="pricing-tier-card glow-card rounded-2xl p-8 border border-cyan-500/20 hover:border-cyan-400/30 transition-all cursor-pointer group relative" onclick="selectTier(this, 'three_month_monthly')">
                         <div class="absolute top-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity">
                             <div class="bg-cyan-500/20 text-cyan-300 text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">ACH FIRST</div>
                         </div>
@@ -1303,7 +1364,7 @@ Plug our vision-model service advisor widget directly into your website. It deli
                             <p class="text-gray-500 text-xs mt-2">Total over term: $747</p>
                         </div>
                         <button class="w-full py-3 bg-cyan-500/20 text-cyan-400 rounded-lg font-bold hover:bg-cyan-500/30 transition-colors mb-6">Select Plan</button>
-                        <ul class="space-y-3 text-gray-300 text-sm">
+                        <ul class="tier-feature-list space-y-3 text-gray-300 text-sm">
                             <li class="flex items-start gap-3">
                                 <i data-lucide="check" class="w-4 h-4 text-cyan-400 mt-0.5 shrink-0"></i>
                                 <span>Everything in No Contract</span>
@@ -1324,7 +1385,7 @@ Plug our vision-model service advisor widget directly into your website. It deli
                     </div>
 
                     <!-- 3 Month Upfront (ACH Only) -->
-                    <div id="tier-3m-upfront" class="glow-card rounded-2xl p-8 border border-emerald-500/20 hover:border-emerald-400/30 transition-all cursor-pointer group relative ring-2 ring-emerald-500/20" onclick="selectTier(this, 'three_month_upfront')">
+                    <div id="tier-3m-upfront" class="pricing-tier-card glow-card rounded-2xl p-8 border border-emerald-500/20 hover:border-emerald-400/30 transition-all cursor-pointer group relative ring-2 ring-emerald-500/20" onclick="selectTier(this, 'three_month_upfront')">
                         <div class="absolute top-0 right-0">
                             <div class="bg-emerald-500/20 text-emerald-300 text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">ACH ONLY</div>
                         </div>
@@ -1335,7 +1396,7 @@ Plug our vision-model service advisor widget directly into your website. It deli
                             <p class="text-gray-500 text-xs mt-2">Equivalent to $225/mo for 3 months</p>
                         </div>
                         <button class="w-full py-3 bg-emerald-500/20 text-emerald-400 rounded-lg font-bold hover:bg-emerald-500/30 transition-colors mb-6">Select Plan</button>
-                        <ul class="space-y-3 text-gray-300 text-sm">
+                        <ul class="tier-feature-list space-y-3 text-gray-300 text-sm">
                             <li class="flex items-start gap-3">
                                 <i data-lucide="check" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i>
                                 <span>Everything in No Contract</span>
@@ -1356,7 +1417,7 @@ Plug our vision-model service advisor widget directly into your website. It deli
                     </div>
 
                     <!-- 12 Month Monthly (ACH First) -->
-                    <div id="tier-12m-monthly" class="glow-card rounded-2xl p-8 border border-indigo-500/20 hover:border-indigo-400/30 transition-all cursor-pointer group relative" onclick="selectTier(this, 'twelve_month_monthly')">
+                    <div id="tier-12m-monthly" class="pricing-tier-card glow-card rounded-2xl p-8 border border-indigo-500/20 hover:border-indigo-400/30 transition-all cursor-pointer group relative" onclick="selectTier(this, 'twelve_month_monthly')">
                         <div class="absolute top-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity">
                             <div class="bg-indigo-500/20 text-indigo-300 text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">ACH FIRST</div>
                         </div>
@@ -1367,7 +1428,7 @@ Plug our vision-model service advisor widget directly into your website. It deli
                             <p class="text-gray-500 text-xs mt-2">Total over term: $2,388</p>
                         </div>
                         <button class="w-full py-3 bg-indigo-500/20 text-indigo-400 rounded-lg font-bold hover:bg-indigo-500/30 transition-colors mb-6">Select Plan</button>
-                        <ul class="space-y-3 text-gray-300 text-sm">
+                        <ul class="tier-feature-list space-y-3 text-gray-300 text-sm">
                             <li class="flex items-start gap-3">
                                 <i data-lucide="check" class="w-4 h-4 text-indigo-400 mt-0.5 shrink-0"></i>
                                 <span>Everything in 3 Month</span>
@@ -1388,7 +1449,7 @@ Plug our vision-model service advisor widget directly into your website. It deli
                     </div>
 
                     <!-- 12 Month Upfront (ACH Only) -->
-                    <div id="tier-12m-upfront" class="glow-card rounded-2xl p-8 border border-purple-500/20 hover:border-purple-400/30 transition-all cursor-pointer group relative" onclick="selectTier(this, 'twelve_month_upfront')">
+                    <div id="tier-12m-upfront" class="pricing-tier-card glow-card rounded-2xl p-8 border border-purple-500/20 hover:border-purple-400/30 transition-all cursor-pointer group relative" onclick="selectTier(this, 'twelve_month_upfront')">
                         <div class="absolute top-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity">
                             <div class="bg-purple-500/20 text-purple-300 text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">ACH ONLY</div>
                         </div>
@@ -1399,7 +1460,7 @@ Plug our vision-model service advisor widget directly into your website. It deli
                             <p class="text-gray-500 text-xs mt-2">Equivalent to $150/mo for 12 months</p>
                         </div>
                         <button class="w-full py-3 bg-purple-500/20 text-purple-400 rounded-lg font-bold hover:bg-purple-500/30 transition-colors mb-6">Select Plan</button>
-                        <ul class="space-y-3 text-gray-300 text-sm">
+                        <ul class="tier-feature-list space-y-3 text-gray-300 text-sm">
                             <li class="flex items-start gap-3">
                                 <i data-lucide="check" class="w-4 h-4 text-purple-400 mt-0.5 shrink-0"></i>
                                 <span>Everything in 3 Month</span>
@@ -1419,6 +1480,17 @@ Plug our vision-model service advisor widget directly into your website. It deli
                         </ul>
                     </div>
                 </div>
+
+                <div id="mobile-plan-quickbar" class="hidden md:hidden fixed left-3 right-3 bottom-[72px] z-[70] rounded-xl border border-blue-500/40 bg-[#090E1A]/95 backdrop-blur-xl px-3 py-3 shadow-[0_0_20px_rgba(59,130,246,0.25)]">
+                    <div class="flex items-center justify-between gap-3">
+                        <div id="mobile-plan-label" class="text-xs text-blue-200 font-medium truncate">Select a plan to continue</div>
+                        <button type="button" onclick="scrollToCheckoutLead()" class="shrink-0 px-3 py-2 rounded-lg bg-blue-500/25 text-blue-200 text-xs font-bold border border-blue-400/40 hover:bg-blue-500/35 transition-colors">
+                            Continue
+                        </button>
+                    </div>
+                </div>
+
+                <div class="checkout-mobile-spacer md:hidden"></div>
 
                 <!-- Lead Capture Gate -->
                 <div class="max-w-2xl mx-auto glow-card rounded-2xl p-8 border border-white/10 mb-6" id="lead-gate-container">
@@ -1705,6 +1777,11 @@ Plug our vision-model service advisor widget directly into your website. It deli
                 document.body.classList.remove('hide-n8n-widget');
             } else {
                 document.body.classList.add('hide-n8n-widget');
+            }
+
+            const mobilePlanQuickbar = document.getElementById('mobile-plan-quickbar');
+            if (mobilePlanQuickbar && pageId !== 'checkout') {
+                mobilePlanQuickbar.classList.add('hidden');
             }
         }
 
@@ -2029,6 +2106,20 @@ Plug our vision-model service advisor widget directly into your website. It deli
             if (requiresContractPacket(tier)) ackContainer.classList.remove('hidden');
 
             document.getElementById('submit-btn').disabled = false;
+
+            const mobilePlanQuickbar = document.getElementById('mobile-plan-quickbar');
+            const mobilePlanLabel = document.getElementById('mobile-plan-label');
+            if (mobilePlanQuickbar && mobilePlanLabel) {
+                mobilePlanLabel.textContent = `${tierDetails[tier].name} - ${tierDetails[tier].price}`;
+                mobilePlanQuickbar.classList.remove('hidden');
+            }
+        }
+
+        function scrollToCheckoutLead() {
+            const leadGate = document.getElementById('lead-gate-container');
+            if (leadGate) {
+                leadGate.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
         }
 
         async function startCheckout(email, shopName) {
