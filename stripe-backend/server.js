@@ -211,7 +211,7 @@ app.post('/api/contract-packet', async (req, res) => {
       dbaName: dbaName || '',
       selectedPlan: selectedPlan || '',
       source: source || 'unknown',
-      legalTarget: legalTarget || LEGAL_EMAIL_TO,
+      legalTarget: legalTarget || '',
       packetSha256,
       packetText,
       ip: req.headers['cf-connecting-ip'] || req.ip,
