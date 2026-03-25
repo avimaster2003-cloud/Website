@@ -720,9 +720,7 @@
                 <div id="apex-chat-window">
                     <div id="apex-chat-header">
                         <div id="apex-avatar">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
-                            </svg>
+                            <img src="https://usevetra.com/assets/apex-logo-transparent.png" alt="Vetra logo" class="apex-avatar-logo" />
                         </div>
                         <div id="apex-header-text">
                             <div id="apex-header-title">Vetra Virtual Service Advisor</div>
@@ -730,7 +728,7 @@
                                 <span class="apex-status-indicator"></span>
                                 <span>Online</span>
                             </div>
-                            <div id="apex-header-model">Model - VETRA</div>
+                            <div id="apex-header-model">Model - VETRA PRO</div>
                         </div>
                         <div id="apex-build-version-pill" class="apex-build-version-pill"></div>
                         <span id="apex-close-btn" role="button" aria-label="Close chat">✕</span>
@@ -1778,7 +1776,12 @@
                     z-index: 1;
                 }
 
-                #apex-avatar svg { width: 20px; height: 20px; stroke: white; }
+                .apex-avatar-logo {
+                    width: 26px;
+                    height: 26px;
+                    object-fit: contain;
+                    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.28));
+                }
 
                 #apex-header-text { display: flex; flex-direction: column; gap: 3px; flex: 1; }
                 #apex-header-title { font-weight: 600; font-size: 16px; letter-spacing: -0.3px; color: white; }
@@ -1791,10 +1794,18 @@
                     gap: 6px;
                 }
                 #apex-header-model { 
-                    font-size: 12px; 
-                    color: rgba(255, 255, 255, 0.7); 
-                    font-weight: 400;
-                    letter-spacing: 0.5px;
+                    font-size: 11px;
+                    color: #bfdbfe;
+                    font-weight: 600;
+                    letter-spacing: 1.1px;
+                    text-transform: uppercase;
+                    text-shadow: 0 0 10px rgba(147, 197, 253, 0.55);
+                    animation: apex-model-glow 2.8s ease-in-out infinite;
+                }
+
+                @keyframes apex-model-glow {
+                    0%, 100% { opacity: 0.85; text-shadow: 0 0 8px rgba(147, 197, 253, 0.35); }
+                    50% { opacity: 1; text-shadow: 0 0 14px rgba(147, 197, 253, 0.72); }
                 }
 
                 .apex-status-indicator {
