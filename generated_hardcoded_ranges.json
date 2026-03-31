@@ -1,0 +1,7890 @@
+{
+  "COMMON_MAKES": [
+    "Acura",
+    "Alfa Romeo",
+    "Aston Martin",
+    "Audi",
+    "Bentley",
+    "BMW",
+    "Buick",
+    "Cadillac",
+    "Chevrolet",
+    "Chrysler",
+    "Dodge",
+    "FIAT",
+    "Ford",
+    "Genesis",
+    "GMC",
+    "Honda",
+    "Hummer",
+    "Hyundai",
+    "Infiniti",
+    "Jaguar",
+    "Jeep",
+    "Kia",
+    "Land Rover",
+    "Lexus",
+    "Lincoln",
+    "Lotus",
+    "Maserati",
+    "Mazda",
+    "Mercedes-Benz",
+    "Mercury",
+    "MINI",
+    "Mitsubishi",
+    "Nissan",
+    "Plymouth",
+    "Pontiac",
+    "Porsche",
+    "Ram",
+    "Saab",
+    "Saturn",
+    "Scion",
+    "Subaru",
+    "Tesla",
+    "Toyota",
+    "Volkswagen",
+    "Volvo"
+  ],
+  "HARD_CODED_MODEL_RANGES": {
+    "Acura": [
+      {
+        "model": "ADX",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "ILX",
+        "minYear": 2013,
+        "maxYear": 2025
+      },
+      {
+        "model": "Integra",
+        "minYear": 2023,
+        "maxYear": 2025
+      },
+      {
+        "model": "MDX",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "NSX",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "NSX",
+        "minYear": 2016,
+        "maxYear": 2022
+      },
+      {
+        "model": "RDX",
+        "minYear": 2007,
+        "maxYear": 2025
+      },
+      {
+        "model": "RL",
+        "minYear": 2005,
+        "maxYear": 2012
+      },
+      {
+        "model": "RLX",
+        "minYear": 2014,
+        "maxYear": 2025
+      },
+      {
+        "model": "RSX",
+        "minYear": 2005,
+        "maxYear": 2006
+      },
+      {
+        "model": "TL",
+        "minYear": 2005,
+        "maxYear": 2014
+      },
+      {
+        "model": "TLX",
+        "minYear": 2015,
+        "maxYear": 2025
+      },
+      {
+        "model": "TSX",
+        "minYear": 2005,
+        "maxYear": 2014
+      },
+      {
+        "model": "ZDX",
+        "minYear": 2010,
+        "maxYear": 2013
+      },
+      {
+        "model": "ZDX",
+        "minYear": 2024,
+        "maxYear": 2025
+      }
+    ],
+    "Alfa Romeo": [
+      {
+        "model": "4C",
+        "minYear": 2014,
+        "maxYear": 2020
+      },
+      {
+        "model": "8C Competizione Spider",
+        "minYear": 2005,
+        "maxYear": 2013
+      },
+      {
+        "model": "Giulia (952)",
+        "minYear": 2016,
+        "maxYear": 2025
+      },
+      {
+        "model": "Stelvio",
+        "minYear": 2018,
+        "maxYear": 2025
+      },
+      {
+        "model": "Tonale",
+        "minYear": 2024,
+        "maxYear": 2025
+      }
+    ],
+    "Aston Martin": [
+      {
+        "model": "DB11",
+        "minYear": 2017,
+        "maxYear": 2024
+      },
+      {
+        "model": "DB12",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "DB9",
+        "minYear": 2005,
+        "maxYear": 2016
+      },
+      {
+        "model": "DBS",
+        "minYear": 2009,
+        "maxYear": 2012
+      },
+      {
+        "model": "DBS",
+        "minYear": 2019,
+        "maxYear": 2024
+      },
+      {
+        "model": "DBX",
+        "minYear": 2021,
+        "maxYear": 2025
+      },
+      {
+        "model": "Rapide",
+        "minYear": 2010,
+        "maxYear": 2012
+      },
+      {
+        "model": "Rapide",
+        "minYear": 2014,
+        "maxYear": 2019
+      },
+      {
+        "model": "V12 Vantage",
+        "minYear": 2011,
+        "maxYear": 2013
+      },
+      {
+        "model": "V12 Vantage",
+        "minYear": 2015,
+        "maxYear": 2018
+      },
+      {
+        "model": "V8 Vantage",
+        "minYear": 2009,
+        "maxYear": 2018
+      },
+      {
+        "model": "Valiant",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "Valour",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "Vanquish",
+        "minYear": 2005,
+        "maxYear": 2007
+      },
+      {
+        "model": "Vanquish",
+        "minYear": 2014,
+        "maxYear": 2018
+      },
+      {
+        "model": "Vanquish",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "Vanquish Zagato",
+        "minYear": 2018,
+        "maxYear": 2019
+      },
+      {
+        "model": "Vantage",
+        "minYear": 2006,
+        "maxYear": 2008
+      },
+      {
+        "model": "Vantage",
+        "minYear": 2019,
+        "maxYear": 2025
+      },
+      {
+        "model": "Virage",
+        "minYear": 2012,
+        "maxYear": 2012
+      }
+    ],
+    "Audi": [
+      {
+        "model": "A3",
+        "minYear": 2006,
+        "maxYear": 2013
+      },
+      {
+        "model": "A3",
+        "minYear": 2015,
+        "maxYear": 2020
+      },
+      {
+        "model": "A3",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "A4",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "A4 allroad",
+        "minYear": 2013,
+        "maxYear": 2025
+      },
+      {
+        "model": "A5",
+        "minYear": 2008,
+        "maxYear": 2025
+      },
+      {
+        "model": "A6",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "A6 allroad",
+        "minYear": 2020,
+        "maxYear": 2025
+      },
+      {
+        "model": "A7",
+        "minYear": 2012,
+        "maxYear": 2025
+      },
+      {
+        "model": "A7 e",
+        "minYear": 2021,
+        "maxYear": 2022
+      },
+      {
+        "model": "A8",
+        "minYear": 2005,
+        "maxYear": 2020
+      },
+      {
+        "model": "A8 e",
+        "minYear": 2020,
+        "maxYear": 2020
+      },
+      {
+        "model": "A8 L",
+        "minYear": 2021,
+        "maxYear": 2025
+      },
+      {
+        "model": "A8 L e",
+        "minYear": 2021,
+        "maxYear": 2021
+      },
+      {
+        "model": "allroad",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "e-tron",
+        "minYear": 2019,
+        "maxYear": 2019
+      },
+      {
+        "model": "e-tron",
+        "minYear": 2021,
+        "maxYear": 2023
+      },
+      {
+        "model": "e-tron GT",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "e-tron Sportback",
+        "minYear": 2020,
+        "maxYear": 2022
+      },
+      {
+        "model": "Q3",
+        "minYear": 2015,
+        "maxYear": 2025
+      },
+      {
+        "model": "Q4",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "Q5",
+        "minYear": 2009,
+        "maxYear": 2025
+      },
+      {
+        "model": "Q5 e",
+        "minYear": 2020,
+        "maxYear": 2021
+      },
+      {
+        "model": "Q5 e",
+        "minYear": 2023,
+        "maxYear": 2025
+      },
+      {
+        "model": "Q6",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "Q7",
+        "minYear": 2007,
+        "maxYear": 2015
+      },
+      {
+        "model": "Q7",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "Q8",
+        "minYear": 2019,
+        "maxYear": 2025
+      },
+      {
+        "model": "R8",
+        "minYear": 2008,
+        "maxYear": 2012
+      },
+      {
+        "model": "R8",
+        "minYear": 2014,
+        "maxYear": 2018
+      },
+      {
+        "model": "R8",
+        "minYear": 2020,
+        "maxYear": 2023
+      },
+      {
+        "model": "RS 3",
+        "minYear": 2017,
+        "maxYear": 2020
+      },
+      {
+        "model": "RS 3",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "RS 4",
+        "minYear": 2007,
+        "maxYear": 2008
+      },
+      {
+        "model": "RS 5",
+        "minYear": 2013,
+        "maxYear": 2015
+      },
+      {
+        "model": "RS 5",
+        "minYear": 2018,
+        "maxYear": 2019
+      },
+      {
+        "model": "RS 5",
+        "minYear": 2021,
+        "maxYear": 2025
+      },
+      {
+        "model": "RS 6 Avant",
+        "minYear": 2021,
+        "maxYear": 2025
+      },
+      {
+        "model": "RS 7",
+        "minYear": 2014,
+        "maxYear": 2018
+      },
+      {
+        "model": "RS 7",
+        "minYear": 2021,
+        "maxYear": 2025
+      },
+      {
+        "model": "RS e-tron GT",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "RS Q8",
+        "minYear": 2020,
+        "maxYear": 2025
+      },
+      {
+        "model": "S e-tron GT",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "S3",
+        "minYear": 2015,
+        "maxYear": 2020
+      },
+      {
+        "model": "S3",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "S4",
+        "minYear": 2005,
+        "maxYear": 2016
+      },
+      {
+        "model": "S4",
+        "minYear": 2018,
+        "maxYear": 2025
+      },
+      {
+        "model": "S5",
+        "minYear": 2008,
+        "maxYear": 2025
+      },
+      {
+        "model": "S6",
+        "minYear": 2007,
+        "maxYear": 2011
+      },
+      {
+        "model": "S6",
+        "minYear": 2013,
+        "maxYear": 2018
+      },
+      {
+        "model": "S6",
+        "minYear": 2020,
+        "maxYear": 2025
+      },
+      {
+        "model": "S7",
+        "minYear": 2013,
+        "maxYear": 2018
+      },
+      {
+        "model": "S7",
+        "minYear": 2020,
+        "maxYear": 2025
+      },
+      {
+        "model": "S8",
+        "minYear": 2007,
+        "maxYear": 2009
+      },
+      {
+        "model": "S8",
+        "minYear": 2013,
+        "maxYear": 2018
+      },
+      {
+        "model": "S8",
+        "minYear": 2020,
+        "maxYear": 2025
+      },
+      {
+        "model": "SQ5",
+        "minYear": 2014,
+        "maxYear": 2025
+      },
+      {
+        "model": "SQ6",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "SQ7",
+        "minYear": 2020,
+        "maxYear": 2025
+      },
+      {
+        "model": "SQ8",
+        "minYear": 2020,
+        "maxYear": 2025
+      },
+      {
+        "model": "TT",
+        "minYear": 2005,
+        "maxYear": 2006
+      },
+      {
+        "model": "TT",
+        "minYear": 2008,
+        "maxYear": 2023
+      },
+      {
+        "model": "TT RS",
+        "minYear": 2013,
+        "maxYear": 2014
+      },
+      {
+        "model": "TT RS",
+        "minYear": 2018,
+        "maxYear": 2022
+      },
+      {
+        "model": "TTS",
+        "minYear": 2009,
+        "maxYear": 2023
+      }
+    ],
+    "Bentley": [
+      {
+        "model": "A Smith GT Bentley",
+        "minYear": 2016,
+        "maxYear": 2025
+      },
+      {
+        "model": "ARMOURED ARNAGE",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "Arnage",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "Azure",
+        "minYear": 2005,
+        "maxYear": 2010
+      },
+      {
+        "model": "Bentayga",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "Brooklands",
+        "minYear": 2009,
+        "maxYear": 2010
+      },
+      {
+        "model": "Continental",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Flying Spur",
+        "minYear": 2014,
+        "maxYear": 2025
+      },
+      {
+        "model": "Mulsanne",
+        "minYear": 2011,
+        "maxYear": 2020
+      },
+      {
+        "model": "Roll Royce Silver Seraph",
+        "minYear": 2009,
+        "maxYear": 2009
+      },
+      {
+        "model": "Rolls-Royce Park Ward",
+        "minYear": 2009,
+        "maxYear": 2009
+      }
+    ],
+    "BMW": [
+      {
+        "model": "128i",
+        "minYear": 2008,
+        "maxYear": 2014
+      },
+      {
+        "model": "135i",
+        "minYear": 2008,
+        "maxYear": 2014
+      },
+      {
+        "model": "1M",
+        "minYear": 2011,
+        "maxYear": 2011
+      },
+      {
+        "model": "228i",
+        "minYear": 2014,
+        "maxYear": 2018
+      },
+      {
+        "model": "228i",
+        "minYear": 2020,
+        "maxYear": 2025
+      },
+      {
+        "model": "230i",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "320i",
+        "minYear": 2013,
+        "maxYear": 2018
+      },
+      {
+        "model": "325Ci",
+        "minYear": 2005,
+        "maxYear": 2006
+      },
+      {
+        "model": "325i",
+        "minYear": 2005,
+        "maxYear": 2006
+      },
+      {
+        "model": "325xi",
+        "minYear": 2005,
+        "maxYear": 2006
+      },
+      {
+        "model": "328d",
+        "minYear": 2014,
+        "maxYear": 2018
+      },
+      {
+        "model": "328i",
+        "minYear": 2007,
+        "maxYear": 2016
+      },
+      {
+        "model": "328xi",
+        "minYear": 2007,
+        "maxYear": 2008
+      },
+      {
+        "model": "330Ci",
+        "minYear": 2005,
+        "maxYear": 2006
+      },
+      {
+        "model": "330e",
+        "minYear": 2016,
+        "maxYear": 2018
+      },
+      {
+        "model": "330e",
+        "minYear": 2021,
+        "maxYear": 2024
+      },
+      {
+        "model": "330i",
+        "minYear": 2005,
+        "maxYear": 2006
+      },
+      {
+        "model": "330i",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "330xi",
+        "minYear": 2005,
+        "maxYear": 2006
+      },
+      {
+        "model": "335",
+        "minYear": 2014,
+        "maxYear": 2014
+      },
+      {
+        "model": "335d",
+        "minYear": 2009,
+        "maxYear": 2011
+      },
+      {
+        "model": "335i",
+        "minYear": 2007,
+        "maxYear": 2017
+      },
+      {
+        "model": "335is",
+        "minYear": 2011,
+        "maxYear": 2015
+      },
+      {
+        "model": "335xi",
+        "minYear": 2007,
+        "maxYear": 2008
+      },
+      {
+        "model": "340i",
+        "minYear": 2016,
+        "maxYear": 2019
+      },
+      {
+        "model": "340i",
+        "minYear": 2023,
+        "maxYear": 2024
+      },
+      {
+        "model": "428i",
+        "minYear": 2014,
+        "maxYear": 2016
+      },
+      {
+        "model": "430i",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "435i",
+        "minYear": 2014,
+        "maxYear": 2016
+      },
+      {
+        "model": "440i",
+        "minYear": 2017,
+        "maxYear": 2020
+      },
+      {
+        "model": "440i",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "525i",
+        "minYear": 2005,
+        "maxYear": 2007
+      },
+      {
+        "model": "525xi",
+        "minYear": 2006,
+        "maxYear": 2007
+      },
+      {
+        "model": "528i",
+        "minYear": 2008,
+        "maxYear": 2016
+      },
+      {
+        "model": "528xi",
+        "minYear": 2008,
+        "maxYear": 2008
+      },
+      {
+        "model": "528xi",
+        "minYear": 2012,
+        "maxYear": 2013
+      },
+      {
+        "model": "530e",
+        "minYear": 2018,
+        "maxYear": 2023
+      },
+      {
+        "model": "530i",
+        "minYear": 2005,
+        "maxYear": 2007
+      },
+      {
+        "model": "530i",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "530xi",
+        "minYear": 2006,
+        "maxYear": 2007
+      },
+      {
+        "model": "535d",
+        "minYear": 2014,
+        "maxYear": 2016
+      },
+      {
+        "model": "535i",
+        "minYear": 2008,
+        "maxYear": 2017
+      },
+      {
+        "model": "535xi",
+        "minYear": 2008,
+        "maxYear": 2008
+      },
+      {
+        "model": "540d",
+        "minYear": 2018,
+        "maxYear": 2019
+      },
+      {
+        "model": "540i",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "545i",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "550e",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "550i",
+        "minYear": 2006,
+        "maxYear": 2017
+      },
+      {
+        "model": "640i",
+        "minYear": 2012,
+        "maxYear": 2019
+      },
+      {
+        "model": "640xi",
+        "minYear": 2018,
+        "maxYear": 2019
+      },
+      {
+        "model": "645Ci",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "650i",
+        "minYear": 2006,
+        "maxYear": 2010
+      },
+      {
+        "model": "650i",
+        "minYear": 2012,
+        "maxYear": 2019
+      },
+      {
+        "model": "650i, Alpina B6",
+        "minYear": 2015,
+        "maxYear": 2016
+      },
+      {
+        "model": "650i, B6",
+        "minYear": 2017,
+        "maxYear": 2019
+      },
+      {
+        "model": "650xi",
+        "minYear": 2012,
+        "maxYear": 2015
+      },
+      {
+        "model": "740e",
+        "minYear": 2017,
+        "maxYear": 2019
+      },
+      {
+        "model": "740i",
+        "minYear": 2011,
+        "maxYear": 2021
+      },
+      {
+        "model": "740i",
+        "minYear": 2023,
+        "maxYear": 2025
+      },
+      {
+        "model": "740Li",
+        "minYear": 2011,
+        "maxYear": 2015
+      },
+      {
+        "model": "740Li",
+        "minYear": 2022,
+        "maxYear": 2022
+      },
+      {
+        "model": "745e",
+        "minYear": 2020,
+        "maxYear": 2021
+      },
+      {
+        "model": "745i",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "745Le",
+        "minYear": 2022,
+        "maxYear": 2022
+      },
+      {
+        "model": "745Li",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "750e",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "750i",
+        "minYear": 2006,
+        "maxYear": 2016
+      },
+      {
+        "model": "750i",
+        "minYear": 2018,
+        "maxYear": 2022
+      },
+      {
+        "model": "750i, Alpina B7",
+        "minYear": 2012,
+        "maxYear": 2015
+      },
+      {
+        "model": "750i, B7",
+        "minYear": 2017,
+        "maxYear": 2019
+      },
+      {
+        "model": "750Li",
+        "minYear": 2006,
+        "maxYear": 2015
+      },
+      {
+        "model": "750Li",
+        "minYear": 2022,
+        "maxYear": 2022
+      },
+      {
+        "model": "750Li, Alpina B7",
+        "minYear": 2012,
+        "maxYear": 2015
+      },
+      {
+        "model": "750Lxi",
+        "minYear": 2010,
+        "maxYear": 2011
+      },
+      {
+        "model": "750Lxi",
+        "minYear": 2013,
+        "maxYear": 2015
+      },
+      {
+        "model": "750Lxi, Alpina B7",
+        "minYear": 2012,
+        "maxYear": 2012
+      },
+      {
+        "model": "750xi",
+        "minYear": 2010,
+        "maxYear": 2011
+      },
+      {
+        "model": "750xi",
+        "minYear": 2013,
+        "maxYear": 2015
+      },
+      {
+        "model": "750xi, Alpina B7",
+        "minYear": 2012,
+        "maxYear": 2012
+      },
+      {
+        "model": "760i",
+        "minYear": 2005,
+        "maxYear": 2006
+      },
+      {
+        "model": "760i",
+        "minYear": 2023,
+        "maxYear": 2025
+      },
+      {
+        "model": "760Li",
+        "minYear": 2005,
+        "maxYear": 2008
+      },
+      {
+        "model": "760Li",
+        "minYear": 2010,
+        "maxYear": 2015
+      },
+      {
+        "model": "840i",
+        "minYear": 2020,
+        "maxYear": 2025
+      },
+      {
+        "model": "850i",
+        "minYear": 2019,
+        "maxYear": 2019
+      },
+      {
+        "model": "ActiveE",
+        "minYear": 2012,
+        "maxYear": 2012
+      },
+      {
+        "model": "ActiveHybrid 3",
+        "minYear": 2014,
+        "maxYear": 2015
+      },
+      {
+        "model": "ActiveHybrid 5",
+        "minYear": 2012,
+        "maxYear": 2016
+      },
+      {
+        "model": "ActiveHybrid 5",
+        "minYear": 2018,
+        "maxYear": 2018
+      },
+      {
+        "model": "ActiveHybrid 7",
+        "minYear": 2014,
+        "maxYear": 2015
+      },
+      {
+        "model": "Alpina B8",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "B7",
+        "minYear": 2019,
+        "maxYear": 2022
+      },
+      {
+        "model": "C 400 GT",
+        "minYear": 2019,
+        "maxYear": 2025
+      },
+      {
+        "model": "C 400 X",
+        "minYear": 2019,
+        "maxYear": 2024
+      },
+      {
+        "model": "C 600",
+        "minYear": 2005,
+        "maxYear": 2014
+      },
+      {
+        "model": "C 600",
+        "minYear": 2016,
+        "maxYear": 2016
+      },
+      {
+        "model": "C 650",
+        "minYear": 2017,
+        "maxYear": 2021
+      },
+      {
+        "model": "C 650 GT",
+        "minYear": 2005,
+        "maxYear": 2021
+      },
+      {
+        "model": "C Evolution",
+        "minYear": 2017,
+        "maxYear": 2021
+      },
+      {
+        "model": "CE 02",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "CE 04",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "F 650 CS",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "F 650 GS",
+        "minYear": 2005,
+        "maxYear": 2012
+      },
+      {
+        "model": "F 700 GS",
+        "minYear": 2005,
+        "maxYear": 2021
+      },
+      {
+        "model": "F 750 GS",
+        "minYear": 2019,
+        "maxYear": 2023
+      },
+      {
+        "model": "F 800 GS",
+        "minYear": 2005,
+        "maxYear": 2021
+      },
+      {
+        "model": "F 800 GS",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "F 800 GT",
+        "minYear": 2005,
+        "maxYear": 2021
+      },
+      {
+        "model": "F 800 R",
+        "minYear": 2005,
+        "maxYear": 2021
+      },
+      {
+        "model": "F 800 S",
+        "minYear": 2005,
+        "maxYear": 2012
+      },
+      {
+        "model": "F 800 ST",
+        "minYear": 2005,
+        "maxYear": 2012
+      },
+      {
+        "model": "F 850 GS",
+        "minYear": 2019,
+        "maxYear": 2023
+      },
+      {
+        "model": "F 900",
+        "minYear": 2020,
+        "maxYear": 2023
+      },
+      {
+        "model": "F 900 GS",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "F 900 GS Adventure",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "F 900 GS-P",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "F 900 R",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "F 900 XR",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "G 310 GS",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "G 310 R",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "G 450 X",
+        "minYear": 2005,
+        "maxYear": 2011
+      },
+      {
+        "model": "G 650",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "G 650 GS",
+        "minYear": 2005,
+        "maxYear": 2021
+      },
+      {
+        "model": "HP2",
+        "minYear": 2005,
+        "maxYear": 2011
+      },
+      {
+        "model": "HP4",
+        "minYear": 2005,
+        "maxYear": 2014
+      },
+      {
+        "model": "i3",
+        "minYear": 2014,
+        "maxYear": 2021
+      },
+      {
+        "model": "i4",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "i5",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "i7",
+        "minYear": 2023,
+        "maxYear": 2025
+      },
+      {
+        "model": "i8",
+        "minYear": 2014,
+        "maxYear": 2017
+      },
+      {
+        "model": "i8",
+        "minYear": 2019,
+        "maxYear": 2020
+      },
+      {
+        "model": "iX",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "K 1200 GT",
+        "minYear": 2005,
+        "maxYear": 2008
+      },
+      {
+        "model": "K 1200 LT",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "K 1200 R",
+        "minYear": 2005,
+        "maxYear": 2008
+      },
+      {
+        "model": "K 1200 S",
+        "minYear": 2005,
+        "maxYear": 2008
+      },
+      {
+        "model": "K 1300 GT",
+        "minYear": 2005,
+        "maxYear": 2012
+      },
+      {
+        "model": "K 1300 R",
+        "minYear": 2005,
+        "maxYear": 2012
+      },
+      {
+        "model": "K 1300 S",
+        "minYear": 2005,
+        "maxYear": 2021
+      },
+      {
+        "model": "K 1600 B",
+        "minYear": 2018,
+        "maxYear": 2025
+      },
+      {
+        "model": "K 1600 GT",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "K 1600 GTL",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "M 1000",
+        "minYear": 2021,
+        "maxYear": 2023
+      },
+      {
+        "model": "M 1000 R",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "M 1000 RR",
+        "minYear": 2024,
+        "maxYear": 2024
+      },
+      {
+        "model": "M 1000 XR",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "M2",
+        "minYear": 2016,
+        "maxYear": 2025
+      },
+      {
+        "model": "M235",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "M235i",
+        "minYear": 2014,
+        "maxYear": 2016
+      },
+      {
+        "model": "M235i",
+        "minYear": 2020,
+        "maxYear": 2024
+      },
+      {
+        "model": "M240i",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "M3",
+        "minYear": 2005,
+        "maxYear": 2006
+      },
+      {
+        "model": "M3",
+        "minYear": 2008,
+        "maxYear": 2013
+      },
+      {
+        "model": "M3",
+        "minYear": 2015,
+        "maxYear": 2018
+      },
+      {
+        "model": "M3",
+        "minYear": 2021,
+        "maxYear": 2025
+      },
+      {
+        "model": "M340i",
+        "minYear": 2020,
+        "maxYear": 2025
+      },
+      {
+        "model": "M3Ci",
+        "minYear": 2005,
+        "maxYear": 2006
+      },
+      {
+        "model": "M4",
+        "minYear": 2015,
+        "maxYear": 2025
+      },
+      {
+        "model": "M440i",
+        "minYear": 2021,
+        "maxYear": 2025
+      },
+      {
+        "model": "M5",
+        "minYear": 2006,
+        "maxYear": 2010
+      },
+      {
+        "model": "M5",
+        "minYear": 2013,
+        "maxYear": 2023
+      },
+      {
+        "model": "M5",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "M550i",
+        "minYear": 2018,
+        "maxYear": 2023
+      },
+      {
+        "model": "M6",
+        "minYear": 2006,
+        "maxYear": 2010
+      },
+      {
+        "model": "M6",
+        "minYear": 2012,
+        "maxYear": 2019
+      },
+      {
+        "model": "M760i",
+        "minYear": 2017,
+        "maxYear": 2021
+      },
+      {
+        "model": "M760Li",
+        "minYear": 2022,
+        "maxYear": 2022
+      },
+      {
+        "model": "M8",
+        "minYear": 2020,
+        "maxYear": 2025
+      },
+      {
+        "model": "M850i",
+        "minYear": 2020,
+        "maxYear": 2025
+      },
+      {
+        "model": "R 1100 S",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "R 1150 GS",
+        "minYear": 2005,
+        "maxYear": 2006
+      },
+      {
+        "model": "R 1150 R",
+        "minYear": 2005,
+        "maxYear": 2007
+      },
+      {
+        "model": "R 1150 RS",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "R 1150 RT",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "R 12",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "R 12 nineT",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "R 1200 C",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "R 1200 GS",
+        "minYear": 2005,
+        "maxYear": 2021
+      },
+      {
+        "model": "R 1200 R",
+        "minYear": 2005,
+        "maxYear": 2021
+      },
+      {
+        "model": "R 1200 RS",
+        "minYear": 2016,
+        "maxYear": 2021
+      },
+      {
+        "model": "R 1200 RT",
+        "minYear": 2005,
+        "maxYear": 2021
+      },
+      {
+        "model": "R 1200 S",
+        "minYear": 2005,
+        "maxYear": 2008
+      },
+      {
+        "model": "R 1200 ST",
+        "minYear": 2005,
+        "maxYear": 2007
+      },
+      {
+        "model": "R 1250 GS",
+        "minYear": 2019,
+        "maxYear": 2023
+      },
+      {
+        "model": "R 1250 GS Adventure",
+        "minYear": 2024,
+        "maxYear": 2024
+      },
+      {
+        "model": "R 1250 R",
+        "minYear": 2019,
+        "maxYear": 2024
+      },
+      {
+        "model": "R 1250 RS",
+        "minYear": 2019,
+        "maxYear": 2024
+      },
+      {
+        "model": "R 1250 RT",
+        "minYear": 2019,
+        "maxYear": 2024
+      },
+      {
+        "model": "R 1300 GS",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "R 1300 GS Adventure",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "R 18",
+        "minYear": 2021,
+        "maxYear": 2025
+      },
+      {
+        "model": "R 18 B",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "R 18 Classic",
+        "minYear": 2021,
+        "maxYear": 2025
+      },
+      {
+        "model": "R 18 Roctane",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "R 18 Transcontinental",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "R 850 R",
+        "minYear": 2005,
+        "maxYear": 2007
+      },
+      {
+        "model": "R 900 RT",
+        "minYear": 2005,
+        "maxYear": 2012
+      },
+      {
+        "model": "R nineT",
+        "minYear": 2005,
+        "maxYear": 2023
+      },
+      {
+        "model": "S 1000 R",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "S 1000 RR",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "S 1000 XR",
+        "minYear": 2016,
+        "maxYear": 2025
+      },
+      {
+        "model": "X1",
+        "minYear": 2012,
+        "maxYear": 2025
+      },
+      {
+        "model": "X2",
+        "minYear": 2018,
+        "maxYear": 2025
+      },
+      {
+        "model": "X3",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "X4",
+        "minYear": 2015,
+        "maxYear": 2025
+      },
+      {
+        "model": "X5",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "X6",
+        "minYear": 2008,
+        "maxYear": 2025
+      },
+      {
+        "model": "X7",
+        "minYear": 2019,
+        "maxYear": 2025
+      },
+      {
+        "model": "XM",
+        "minYear": 2023,
+        "maxYear": 2025
+      },
+      {
+        "model": "Z4",
+        "minYear": 2005,
+        "maxYear": 2016
+      },
+      {
+        "model": "Z4",
+        "minYear": 2019,
+        "maxYear": 2025
+      }
+    ],
+    "Buick": [
+      {
+        "model": "Allure",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "Cascada",
+        "minYear": 2016,
+        "maxYear": 2019
+      },
+      {
+        "model": "Century",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "Enclave",
+        "minYear": 2007,
+        "maxYear": 2025
+      },
+      {
+        "model": "Encore",
+        "minYear": 2013,
+        "maxYear": 2025
+      },
+      {
+        "model": "Encore GX",
+        "minYear": 2020,
+        "maxYear": 2025
+      },
+      {
+        "model": "Envision",
+        "minYear": 2016,
+        "maxYear": 2025
+      },
+      {
+        "model": "Envista",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "LaCrosse",
+        "minYear": 2005,
+        "maxYear": 2019
+      },
+      {
+        "model": "LeSabre",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "Lucerne",
+        "minYear": 2006,
+        "maxYear": 2011
+      },
+      {
+        "model": "Park Avenue",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "Rainier",
+        "minYear": 2005,
+        "maxYear": 2007
+      },
+      {
+        "model": "Regal",
+        "minYear": 2011,
+        "maxYear": 2020
+      },
+      {
+        "model": "Regal TourX",
+        "minYear": 2018,
+        "maxYear": 2020
+      },
+      {
+        "model": "Rendezvous",
+        "minYear": 2005,
+        "maxYear": 2007
+      },
+      {
+        "model": "Terraza",
+        "minYear": 2005,
+        "maxYear": 2007
+      },
+      {
+        "model": "Verano",
+        "minYear": 2012,
+        "maxYear": 2017
+      }
+    ],
+    "Cadillac": [
+      {
+        "model": "ATS",
+        "minYear": 2013,
+        "maxYear": 2019
+      },
+      {
+        "model": "Celestiq",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "CT4",
+        "minYear": 2020,
+        "maxYear": 2025
+      },
+      {
+        "model": "CT5",
+        "minYear": 2020,
+        "maxYear": 2025
+      },
+      {
+        "model": "CT6",
+        "minYear": 2016,
+        "maxYear": 2020
+      },
+      {
+        "model": "CTS",
+        "minYear": 2005,
+        "maxYear": 2019
+      },
+      {
+        "model": "Deville",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "DTS",
+        "minYear": 2006,
+        "maxYear": 2011
+      },
+      {
+        "model": "ELR",
+        "minYear": 2014,
+        "maxYear": 2025
+      },
+      {
+        "model": "Escalade",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Escalade ESV",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "Escalade IQ",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "Lyriq",
+        "minYear": 2023,
+        "maxYear": 2025
+      },
+      {
+        "model": "Optiq",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "SRX",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "STS",
+        "minYear": 2005,
+        "maxYear": 2011
+      },
+      {
+        "model": "XLR",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "XT4",
+        "minYear": 2019,
+        "maxYear": 2025
+      },
+      {
+        "model": "XT5",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "XT6",
+        "minYear": 2020,
+        "maxYear": 2025
+      },
+      {
+        "model": "XTS",
+        "minYear": 2013,
+        "maxYear": 2019
+      }
+    ],
+    "Chevrolet": [
+      {
+        "model": "3500",
+        "minYear": 2016,
+        "maxYear": 2016
+      },
+      {
+        "model": "3500",
+        "minYear": 2020,
+        "maxYear": 2020
+      },
+      {
+        "model": "3500",
+        "minYear": 2022,
+        "maxYear": 2023
+      },
+      {
+        "model": "3500/4500",
+        "minYear": 2017,
+        "maxYear": 2019
+      },
+      {
+        "model": "3500/4500",
+        "minYear": 2021,
+        "maxYear": 2021
+      },
+      {
+        "model": "3500/4500",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "3500HD",
+        "minYear": 2016,
+        "maxYear": 2019
+      },
+      {
+        "model": "3500HG",
+        "minYear": 2024,
+        "maxYear": 2024
+      },
+      {
+        "model": "4500",
+        "minYear": 2016,
+        "maxYear": 2016
+      },
+      {
+        "model": "4500",
+        "minYear": 2020,
+        "maxYear": 2020
+      },
+      {
+        "model": "4500",
+        "minYear": 2022,
+        "maxYear": 2023
+      },
+      {
+        "model": "4500HD",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "4500HG",
+        "minYear": 2024,
+        "maxYear": 2024
+      },
+      {
+        "model": "4500XD",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "5500HD",
+        "minYear": 2016,
+        "maxYear": 2024
+      },
+      {
+        "model": "5500HG",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "5500XD",
+        "minYear": 2016,
+        "maxYear": 2025
+      },
+      {
+        "model": "5500XG",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "6500XD",
+        "minYear": 2017,
+        "maxYear": 2018
+      },
+      {
+        "model": "6500XD",
+        "minYear": 2020,
+        "maxYear": 2025
+      },
+      {
+        "model": "7500XD",
+        "minYear": 2020,
+        "maxYear": 2025
+      },
+      {
+        "model": "Astro Van",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "Avalanche",
+        "minYear": 2005,
+        "maxYear": 2013
+      },
+      {
+        "model": "Aveo",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Blazer",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "Blazer",
+        "minYear": 2019,
+        "maxYear": 2025
+      },
+      {
+        "model": "Bolt EUV",
+        "minYear": 2022,
+        "maxYear": 2023
+      },
+      {
+        "model": "Bolt EV",
+        "minYear": 2017,
+        "maxYear": 2023
+      },
+      {
+        "model": "BrightDrop",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "C/K Pickup",
+        "minYear": 2005,
+        "maxYear": 2006
+      },
+      {
+        "model": "C4",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "C5",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "C6",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "C7",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "C8",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "Camaro",
+        "minYear": 2010,
+        "maxYear": 2025
+      },
+      {
+        "model": "Caprice Police Vehicle",
+        "minYear": 2011,
+        "maxYear": 2025
+      },
+      {
+        "model": "Captiva Sport",
+        "minYear": 2010,
+        "maxYear": 2025
+      },
+      {
+        "model": "Cavalier",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "City Express",
+        "minYear": 2015,
+        "maxYear": 2018
+      },
+      {
+        "model": "Cobalt",
+        "minYear": 2005,
+        "maxYear": 2010
+      },
+      {
+        "model": "Colorado",
+        "minYear": 2005,
+        "maxYear": 2012
+      },
+      {
+        "model": "Colorado",
+        "minYear": 2015,
+        "maxYear": 2025
+      },
+      {
+        "model": "Cruze",
+        "minYear": 2010,
+        "maxYear": 2025
+      },
+      {
+        "model": "Cruze Limited",
+        "minYear": 2016,
+        "maxYear": 2016
+      },
+      {
+        "model": "Epica",
+        "minYear": 2005,
+        "maxYear": 2006
+      },
+      {
+        "model": "Equinox",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Express",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "FTR / 6500XD",
+        "minYear": 2019,
+        "maxYear": 2019
+      },
+      {
+        "model": "Geo Prizm",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "HHR",
+        "minYear": 2006,
+        "maxYear": 2011
+      },
+      {
+        "model": "Impala",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Impala Limited",
+        "minYear": 2014,
+        "maxYear": 2016
+      },
+      {
+        "model": "Kalos",
+        "minYear": 2008,
+        "maxYear": 2008
+      },
+      {
+        "model": "Malibu",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Malibu Classic",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "Malibu Limited",
+        "minYear": 2016,
+        "maxYear": 2016
+      },
+      {
+        "model": "Matiz",
+        "minYear": 2005,
+        "maxYear": 2006
+      },
+      {
+        "model": "Matiz",
+        "minYear": 2008,
+        "maxYear": 2008
+      },
+      {
+        "model": "Matiz",
+        "minYear": 2012,
+        "maxYear": 2012
+      },
+      {
+        "model": "Monte Carlo",
+        "minYear": 2005,
+        "maxYear": 2007
+      },
+      {
+        "model": "Onix",
+        "minYear": 2021,
+        "maxYear": 2025
+      },
+      {
+        "model": "Optra",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "Orlando",
+        "minYear": 2009,
+        "maxYear": 2025
+      },
+      {
+        "model": "S-10 Pickup",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "Silverado",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Silverado HD",
+        "minYear": 2019,
+        "maxYear": 2025
+      },
+      {
+        "model": "Silverado LD",
+        "minYear": 2019,
+        "maxYear": 2025
+      },
+      {
+        "model": "Silverado LTD",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "Sonic",
+        "minYear": 2012,
+        "maxYear": 2025
+      },
+      {
+        "model": "Spark",
+        "minYear": 2008,
+        "maxYear": 2008
+      },
+      {
+        "model": "Spark",
+        "minYear": 2011,
+        "maxYear": 2025
+      },
+      {
+        "model": "SS",
+        "minYear": 2014,
+        "maxYear": 2025
+      },
+      {
+        "model": "SSR",
+        "minYear": 2005,
+        "maxYear": 2006
+      },
+      {
+        "model": "Suburban",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Suburban HD",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "T-Series",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "Tahoe",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Tracker",
+        "minYear": 2016,
+        "maxYear": 2020
+      },
+      {
+        "model": "Trailblazer",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "Trailblazer",
+        "minYear": 2021,
+        "maxYear": 2025
+      },
+      {
+        "model": "Traverse",
+        "minYear": 2009,
+        "maxYear": 2025
+      },
+      {
+        "model": "Traverse Limited",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "Trax",
+        "minYear": 2013,
+        "maxYear": 2025
+      },
+      {
+        "model": "U100",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "Uplander",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "Venture",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "Volt",
+        "minYear": 2011,
+        "maxYear": 2025
+      },
+      {
+        "model": "W3",
+        "minYear": 2005,
+        "maxYear": 2007
+      },
+      {
+        "model": "W3500/W4500",
+        "minYear": 2009,
+        "maxYear": 2010
+      },
+      {
+        "model": "W4",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "W5",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "W5500/W5500 HD",
+        "minYear": 2009,
+        "maxYear": 2010
+      },
+      {
+        "model": "W7",
+        "minYear": 2005,
+        "maxYear": 2025
+      }
+    ],
+    "Chrysler": [
+      {
+        "model": "200",
+        "minYear": 2011,
+        "maxYear": 2017
+      },
+      {
+        "model": "300",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "300C",
+        "minYear": 2005,
+        "maxYear": 2011
+      },
+      {
+        "model": "Aspen",
+        "minYear": 2007,
+        "maxYear": 2009
+      },
+      {
+        "model": "Cirrus",
+        "minYear": 2006,
+        "maxYear": 2006
+      },
+      {
+        "model": "Crossfire",
+        "minYear": 2005,
+        "maxYear": 2008
+      },
+      {
+        "model": "Grand Caravan",
+        "minYear": 2021,
+        "maxYear": 2025
+      },
+      {
+        "model": "Pacifica",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "Pacifica",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "PT Cruiser",
+        "minYear": 2005,
+        "maxYear": 2010
+      },
+      {
+        "model": "Sebring",
+        "minYear": 2005,
+        "maxYear": 2010
+      },
+      {
+        "model": "Town and Country",
+        "minYear": 2005,
+        "maxYear": 2016
+      },
+      {
+        "model": "Voyager",
+        "minYear": 2008,
+        "maxYear": 2009
+      },
+      {
+        "model": "Voyager",
+        "minYear": 2020,
+        "maxYear": 2025
+      }
+    ],
+    "Dodge": [
+      {
+        "model": "480 Series",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "580 Series",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Avenger",
+        "minYear": 2007,
+        "maxYear": 2014
+      },
+      {
+        "model": "Caliber",
+        "minYear": 2006,
+        "maxYear": 2012
+      },
+      {
+        "model": "Caravan/Grand Caravan",
+        "minYear": 2005,
+        "maxYear": 2008
+      },
+      {
+        "model": "Challenger",
+        "minYear": 2008,
+        "maxYear": 2025
+      },
+      {
+        "model": "Charger",
+        "minYear": 2006,
+        "maxYear": 2025
+      },
+      {
+        "model": "Dakota",
+        "minYear": 2005,
+        "maxYear": 2012
+      },
+      {
+        "model": "Dart",
+        "minYear": 2013,
+        "maxYear": 2016
+      },
+      {
+        "model": "Durango",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "Durango",
+        "minYear": 2011,
+        "maxYear": 2025
+      },
+      {
+        "model": "Grand Caravan",
+        "minYear": 2009,
+        "maxYear": 2023
+      },
+      {
+        "model": "Hornet",
+        "minYear": 2023,
+        "maxYear": 2025
+      },
+      {
+        "model": "Journey",
+        "minYear": 2009,
+        "maxYear": 2023
+      },
+      {
+        "model": "Magnum",
+        "minYear": 2005,
+        "maxYear": 2008
+      },
+      {
+        "model": "Neon",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "Nitro",
+        "minYear": 2007,
+        "maxYear": 2012
+      },
+      {
+        "model": "Ram",
+        "minYear": 2005,
+        "maxYear": 2012
+      },
+      {
+        "model": "Sprinter",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Stratus",
+        "minYear": 2005,
+        "maxYear": 2006
+      },
+      {
+        "model": "Viper",
+        "minYear": 2005,
+        "maxYear": 2006
+      },
+      {
+        "model": "Viper",
+        "minYear": 2008,
+        "maxYear": 2010
+      },
+      {
+        "model": "Viper",
+        "minYear": 2013,
+        "maxYear": 2017
+      }
+    ],
+    "FIAT": [
+      {
+        "model": "124 Spider",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "500",
+        "minYear": 2012,
+        "maxYear": 2019
+      },
+      {
+        "model": "500e",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "500L",
+        "minYear": 2014,
+        "maxYear": 2020
+      },
+      {
+        "model": "500X",
+        "minYear": 2016,
+        "maxYear": 2025
+      },
+      {
+        "model": "Ducato",
+        "minYear": 2019,
+        "maxYear": 2023
+      },
+      {
+        "model": "Freemont",
+        "minYear": 2011,
+        "maxYear": 2016
+      }
+    ],
+    "Ford": [
+      {
+        "model": "'34",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Affordable Aluminum",
+        "minYear": 2008,
+        "maxYear": 2025
+      },
+      {
+        "model": "Bradford #1",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "Bradford Built",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Bronco",
+        "minYear": 2021,
+        "maxYear": 2025
+      },
+      {
+        "model": "Bronco Sport",
+        "minYear": 2021,
+        "maxYear": 2025
+      },
+      {
+        "model": "C-Max",
+        "minYear": 2013,
+        "maxYear": 2018
+      },
+      {
+        "model": "Classic Sedan",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "Cordova Sedan",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "CRANFORD RADIATOR INC.",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Crown Victoria",
+        "minYear": 2005,
+        "maxYear": 2011
+      },
+      {
+        "model": "E-150",
+        "minYear": 2005,
+        "maxYear": 2014
+      },
+      {
+        "model": "E-250",
+        "minYear": 2005,
+        "maxYear": 2014
+      },
+      {
+        "model": "E-350",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "E-450",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "E-550",
+        "minYear": 2015,
+        "maxYear": 2015
+      },
+      {
+        "model": "Ecosport",
+        "minYear": 2018,
+        "maxYear": 2025
+      },
+      {
+        "model": "Edge",
+        "minYear": 2007,
+        "maxYear": 2025
+      },
+      {
+        "model": "Escape",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Excursion",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "Expedition",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Expedition EL",
+        "minYear": 2017,
+        "maxYear": 2017
+      },
+      {
+        "model": "Expedition MAX",
+        "minYear": 2007,
+        "maxYear": 2009
+      },
+      {
+        "model": "Expedition MAX",
+        "minYear": 2015,
+        "maxYear": 2016
+      },
+      {
+        "model": "Expedition MAX",
+        "minYear": 2018,
+        "maxYear": 2025
+      },
+      {
+        "model": "Explorer",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Explorer Sport Trac",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "Explorer Sport Trac",
+        "minYear": 2007,
+        "maxYear": 2010
+      },
+      {
+        "model": "F-150",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "F-250",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "F-350",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "F-450",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "F-550",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "F-600",
+        "minYear": 2020,
+        "maxYear": 2025
+      },
+      {
+        "model": "F-650",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "F-750",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Fiesta",
+        "minYear": 2011,
+        "maxYear": 2025
+      },
+      {
+        "model": "Five Hundred",
+        "minYear": 2005,
+        "maxYear": 2007
+      },
+      {
+        "model": "Flex",
+        "minYear": 2009,
+        "maxYear": 2025
+      },
+      {
+        "model": "Focus",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Freestar",
+        "minYear": 2005,
+        "maxYear": 2007
+      },
+      {
+        "model": "Freestyle",
+        "minYear": 2005,
+        "maxYear": 2007
+      },
+      {
+        "model": "Fusion",
+        "minYear": 2006,
+        "maxYear": 2020
+      },
+      {
+        "model": "GT",
+        "minYear": 2005,
+        "maxYear": 2006
+      },
+      {
+        "model": "GT",
+        "minYear": 2017,
+        "maxYear": 2022
+      },
+      {
+        "model": "GT MKII",
+        "minYear": 2023,
+        "maxYear": 2025
+      },
+      {
+        "model": "Low Cab Forward",
+        "minYear": 2006,
+        "maxYear": 2009
+      },
+      {
+        "model": "Lyford Overland",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "Malibu Sedan",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "Maverick",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "Milford Pipe & Supply",
+        "minYear": 2010,
+        "maxYear": 2025
+      },
+      {
+        "model": "Milford Welding & Manufacturing Inc.",
+        "minYear": 2006,
+        "maxYear": 2010
+      },
+      {
+        "model": "Mustang",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Mustang GTD",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "Mustang Mach-E",
+        "minYear": 2021,
+        "maxYear": 2025
+      },
+      {
+        "model": "Ranger",
+        "minYear": 2005,
+        "maxYear": 2011
+      },
+      {
+        "model": "Ranger",
+        "minYear": 2019,
+        "maxYear": 2025
+      },
+      {
+        "model": "Swinford Mfg",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Taurus",
+        "minYear": 2005,
+        "maxYear": 2019
+      },
+      {
+        "model": "Taurus X",
+        "minYear": 2008,
+        "maxYear": 2009
+      },
+      {
+        "model": "Thunderbird",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "Transit",
+        "minYear": 2015,
+        "maxYear": 2025
+      },
+      {
+        "model": "Transit Connect",
+        "minYear": 2010,
+        "maxYear": 2025
+      },
+      {
+        "model": "Travel Park",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Waterford Tank and Fabrication, LTD",
+        "minYear": 2008,
+        "maxYear": 2011
+      }
+    ],
+    "Genesis": [
+      {
+        "model": "Envy",
+        "minYear": 2013,
+        "maxYear": 2025
+      },
+      {
+        "model": "G70",
+        "minYear": 2019,
+        "maxYear": 2025
+      },
+      {
+        "model": "G80",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "G90",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "Genesis",
+        "minYear": 2013,
+        "maxYear": 2025
+      },
+      {
+        "model": "Genesis Supreme",
+        "minYear": 2013,
+        "maxYear": 2025
+      },
+      {
+        "model": "GV60",
+        "minYear": 2023,
+        "maxYear": 2025
+      },
+      {
+        "model": "GV70",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "GV80",
+        "minYear": 2021,
+        "maxYear": 2025
+      },
+      {
+        "model": "Supreme",
+        "minYear": 2013,
+        "maxYear": 2025
+      },
+      {
+        "model": "Tahoe",
+        "minYear": 2013,
+        "maxYear": 2025
+      },
+      {
+        "model": "Vortex",
+        "minYear": 2013,
+        "maxYear": 2025
+      }
+    ],
+    "GMC": [
+      {
+        "model": "Acadia",
+        "minYear": 2007,
+        "maxYear": 2025
+      },
+      {
+        "model": "C4",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "C5",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "C6",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "C7",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "C8",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "Canyon",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Cruise Origin AV",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "Envoy",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "Hummer EV Pickup",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "Hummer EV SUV",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "Jimmy Utility",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "Safari",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "Savana",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Sierra",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Sierra HD",
+        "minYear": 2019,
+        "maxYear": 2019
+      },
+      {
+        "model": "Sierra HD",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "Sierra Limited",
+        "minYear": 2019,
+        "maxYear": 2025
+      },
+      {
+        "model": "T-Series",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "Terrain",
+        "minYear": 2009,
+        "maxYear": 2025
+      },
+      {
+        "model": "W3",
+        "minYear": 2005,
+        "maxYear": 2007
+      },
+      {
+        "model": "W3500/W4500",
+        "minYear": 2009,
+        "maxYear": 2010
+      },
+      {
+        "model": "W4",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "W5",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "W5500/W5500 HD",
+        "minYear": 2009,
+        "maxYear": 2010
+      },
+      {
+        "model": "W7",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "Yukon",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Yukon XL",
+        "minYear": 2005,
+        "maxYear": 2011
+      },
+      {
+        "model": "Yukon XL",
+        "minYear": 2015,
+        "maxYear": 2025
+      }
+    ],
+    "Honda": [
+      {
+        "model": "599",
+        "minYear": 2006,
+        "maxYear": 2006
+      },
+      {
+        "model": "919",
+        "minYear": 2005,
+        "maxYear": 2008
+      },
+      {
+        "model": "Accord",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Accord Crosstour",
+        "minYear": 2010,
+        "maxYear": 2011
+      },
+      {
+        "model": "ADV150",
+        "minYear": 2021,
+        "maxYear": 2023
+      },
+      {
+        "model": "ADV160",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "Africa Twin",
+        "minYear": 2016,
+        "maxYear": 2025
+      },
+      {
+        "model": "Africa Twin Adventure Sports",
+        "minYear": 2018,
+        "maxYear": 2025
+      },
+      {
+        "model": "Big Red",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "Big Red",
+        "minYear": 2008,
+        "maxYear": 2013
+      },
+      {
+        "model": "Big Ruckus",
+        "minYear": 2005,
+        "maxYear": 2006
+      },
+      {
+        "model": "Big Ruckus",
+        "minYear": 2008,
+        "maxYear": 2008
+      },
+      {
+        "model": "CB1000",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "CB1000R",
+        "minYear": 2011,
+        "maxYear": 2014
+      },
+      {
+        "model": "CB1000R",
+        "minYear": 2016,
+        "maxYear": 2016
+      },
+      {
+        "model": "CB1000R",
+        "minYear": 2018,
+        "maxYear": 2023
+      },
+      {
+        "model": "CB1100",
+        "minYear": 2013,
+        "maxYear": 2018
+      },
+      {
+        "model": "CB125",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "CB300",
+        "minYear": 2023,
+        "maxYear": 2023
+      },
+      {
+        "model": "CB300F",
+        "minYear": 2015,
+        "maxYear": 2018
+      },
+      {
+        "model": "CB300F",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "CB300R",
+        "minYear": 2019,
+        "maxYear": 2025
+      },
+      {
+        "model": "CB500",
+        "minYear": 2022,
+        "maxYear": 2024
+      },
+      {
+        "model": "CB500F",
+        "minYear": 2013,
+        "maxYear": 2025
+      },
+      {
+        "model": "CB500X",
+        "minYear": 2013,
+        "maxYear": 2024
+      },
+      {
+        "model": "CB50R",
+        "minYear": 2008,
+        "maxYear": 2008
+      },
+      {
+        "model": "CB599",
+        "minYear": 2008,
+        "maxYear": 2008
+      },
+      {
+        "model": "CB650F",
+        "minYear": 2018,
+        "maxYear": 2018
+      },
+      {
+        "model": "CB650R",
+        "minYear": 2019,
+        "maxYear": 2025
+      },
+      {
+        "model": "CB750",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "CBF1000",
+        "minYear": 2006,
+        "maxYear": 2012
+      },
+      {
+        "model": "CBF300",
+        "minYear": 2023,
+        "maxYear": 2023
+      },
+      {
+        "model": "CBF300N",
+        "minYear": 2019,
+        "maxYear": 2019
+      },
+      {
+        "model": "CBF600",
+        "minYear": 2010,
+        "maxYear": 2011
+      },
+      {
+        "model": "CG150",
+        "minYear": 2008,
+        "maxYear": 2008
+      },
+      {
+        "model": "Civic",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Civic Si",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "Civic Type R",
+        "minYear": 2017,
+        "maxYear": 2021
+      },
+      {
+        "model": "Civic Type R",
+        "minYear": 2023,
+        "maxYear": 2025
+      },
+      {
+        "model": "Clarity",
+        "minYear": 2017,
+        "maxYear": 2021
+      },
+      {
+        "model": "Cota",
+        "minYear": 2022,
+        "maxYear": 2024
+      },
+      {
+        "model": "CR-V",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "CR-Z",
+        "minYear": 2011,
+        "maxYear": 2016
+      },
+      {
+        "model": "CR125R",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "CR250R",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "CR500R",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "CR80R",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "CR85R",
+        "minYear": 2005,
+        "maxYear": 2008
+      },
+      {
+        "model": "Crosstour",
+        "minYear": 2012,
+        "maxYear": 2015
+      },
+      {
+        "model": "CTX1300",
+        "minYear": 2014,
+        "maxYear": 2015
+      },
+      {
+        "model": "CTX700",
+        "minYear": 2014,
+        "maxYear": 2018
+      },
+      {
+        "model": "DAX125",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "DN-01",
+        "minYear": 2007,
+        "maxYear": 2009
+      },
+      {
+        "model": "Element",
+        "minYear": 2005,
+        "maxYear": 2011
+      },
+      {
+        "model": "Elite",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Elite 110",
+        "minYear": 2010,
+        "maxYear": 2010
+      },
+      {
+        "model": "FCX Clarity",
+        "minYear": 2005,
+        "maxYear": 2014
+      },
+      {
+        "model": "Fireblade",
+        "minYear": 2006,
+        "maxYear": 2008
+      },
+      {
+        "model": "Fireblade",
+        "minYear": 2014,
+        "maxYear": 2014
+      },
+      {
+        "model": "Fireblade",
+        "minYear": 2021,
+        "maxYear": 2023
+      },
+      {
+        "model": "Fireblade",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "Fit",
+        "minYear": 2007,
+        "maxYear": 2020
+      },
+      {
+        "model": "Foreman",
+        "minYear": 2006,
+        "maxYear": 2007
+      },
+      {
+        "model": "Foreman",
+        "minYear": 2009,
+        "maxYear": 2025
+      },
+      {
+        "model": "Foreman Rubicon",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "Foreman Rubicon",
+        "minYear": 2010,
+        "maxYear": 2011
+      },
+      {
+        "model": "Foreman Rubicon",
+        "minYear": 2019,
+        "maxYear": 2024
+      },
+      {
+        "model": "Forza",
+        "minYear": 2014,
+        "maxYear": 2021
+      },
+      {
+        "model": "Forza",
+        "minYear": 2023,
+        "maxYear": 2024
+      },
+      {
+        "model": "Fury",
+        "minYear": 2010,
+        "maxYear": 2023
+      },
+      {
+        "model": "Fury",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "Giorno",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "Giorno",
+        "minYear": 2008,
+        "maxYear": 2021
+      },
+      {
+        "model": "Giorno",
+        "minYear": 2023,
+        "maxYear": 2025
+      },
+      {
+        "model": "Gold Wing",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Gold Wing Tour",
+        "minYear": 2018,
+        "maxYear": 2025
+      },
+      {
+        "model": "Grom",
+        "minYear": 2014,
+        "maxYear": 2025
+      },
+      {
+        "model": "Hawk GT",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Helix",
+        "minYear": 2005,
+        "maxYear": 2008
+      },
+      {
+        "model": "HR-V",
+        "minYear": 2016,
+        "maxYear": 2025
+      },
+      {
+        "model": "Insight",
+        "minYear": 2005,
+        "maxYear": 2014
+      },
+      {
+        "model": "Insight",
+        "minYear": 2019,
+        "maxYear": 2022
+      },
+      {
+        "model": "Interceptor",
+        "minYear": 2005,
+        "maxYear": 2006
+      },
+      {
+        "model": "Interceptor",
+        "minYear": 2008,
+        "maxYear": 2008
+      },
+      {
+        "model": "Interceptor",
+        "minYear": 2016,
+        "maxYear": 2024
+      },
+      {
+        "model": "Interstate",
+        "minYear": 2015,
+        "maxYear": 2016
+      },
+      {
+        "model": "Jazz",
+        "minYear": 2006,
+        "maxYear": 2009
+      },
+      {
+        "model": "Metropolitan",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "Metropolitan",
+        "minYear": 2013,
+        "maxYear": 2025
+      },
+      {
+        "model": "Metropolitan II",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "Monkey",
+        "minYear": 2019,
+        "maxYear": 2025
+      },
+      {
+        "model": "Montesa Cota",
+        "minYear": 2014,
+        "maxYear": 2021
+      },
+      {
+        "model": "Montesa Cota",
+        "minYear": 2024,
+        "maxYear": 2024
+      },
+      {
+        "model": "MRT260/COTA 4RT260",
+        "minYear": 2022,
+        "maxYear": 2022
+      },
+      {
+        "model": "Navi",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "NC700JD (NM4)",
+        "minYear": 2022,
+        "maxYear": 2022
+      },
+      {
+        "model": "NC700S",
+        "minYear": 2012,
+        "maxYear": 2012
+      },
+      {
+        "model": "NC700X",
+        "minYear": 2012,
+        "maxYear": 2024
+      },
+      {
+        "model": "NC700XD (NC700X DCT)",
+        "minYear": 2022,
+        "maxYear": 2022
+      },
+      {
+        "model": "NC700XDL (NC700X DCT)",
+        "minYear": 2022,
+        "maxYear": 2022
+      },
+      {
+        "model": "NC700XL (NC700X)",
+        "minYear": 2022,
+        "maxYear": 2022
+      },
+      {
+        "model": "NC750S",
+        "minYear": 2014,
+        "maxYear": 2014
+      },
+      {
+        "model": "NC750X",
+        "minYear": 2014,
+        "maxYear": 2025
+      },
+      {
+        "model": "NCH50 (GIORNO)",
+        "minYear": 2022,
+        "maxYear": 2022
+      },
+      {
+        "model": "NCH50 (METROPOLITAN)",
+        "minYear": 2022,
+        "maxYear": 2022
+      },
+      {
+        "model": "Nighthawk",
+        "minYear": 2005,
+        "maxYear": 2008
+      },
+      {
+        "model": "NM4",
+        "minYear": 2015,
+        "maxYear": 2021
+      },
+      {
+        "model": "NM4",
+        "minYear": 2023,
+        "maxYear": 2024
+      },
+      {
+        "model": "NPS50 (Ruckus)",
+        "minYear": 2022,
+        "maxYear": 2022
+      },
+      {
+        "model": "NS50F",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "NSR50MIN",
+        "minYear": 2008,
+        "maxYear": 2008
+      },
+      {
+        "model": "NSS300 (FORZA)",
+        "minYear": 2022,
+        "maxYear": 2022
+      },
+      {
+        "model": "NSS300A (FORZA)",
+        "minYear": 2022,
+        "maxYear": 2022
+      },
+      {
+        "model": "NT1100",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "NT650J",
+        "minYear": 2008,
+        "maxYear": 2008
+      },
+      {
+        "model": "NT700V",
+        "minYear": 2007,
+        "maxYear": 2011
+      },
+      {
+        "model": "NX125",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "NX250",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "NX500",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "Odyssey",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Pacific Coast",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Passport",
+        "minYear": 2019,
+        "maxYear": 2025
+      },
+      {
+        "model": "PCX",
+        "minYear": 2013,
+        "maxYear": 2013
+      },
+      {
+        "model": "PCX",
+        "minYear": 2015,
+        "maxYear": 2023
+      },
+      {
+        "model": "PCX125",
+        "minYear": 2011,
+        "maxYear": 2011
+      },
+      {
+        "model": "PCX150",
+        "minYear": 2022,
+        "maxYear": 2024
+      },
+      {
+        "model": "Pilot",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Prologue",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "Rancher",
+        "minYear": 2006,
+        "maxYear": 2006
+      },
+      {
+        "model": "Rancher",
+        "minYear": 2008,
+        "maxYear": 2025
+      },
+      {
+        "model": "RC213V",
+        "minYear": 2016,
+        "maxYear": 2016
+      },
+      {
+        "model": "RC30",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "RC51",
+        "minYear": 2005,
+        "maxYear": 2008
+      },
+      {
+        "model": "Rebel",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "Rebel",
+        "minYear": 2012,
+        "maxYear": 2017
+      },
+      {
+        "model": "Rebel",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "Rebel 1100",
+        "minYear": 2021,
+        "maxYear": 2025
+      },
+      {
+        "model": "Rebel 300",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "Rebel 500",
+        "minYear": 2017,
+        "maxYear": 2024
+      },
+      {
+        "model": "Recon",
+        "minYear": 2019,
+        "maxYear": 2025
+      },
+      {
+        "model": "Reflex",
+        "minYear": 2005,
+        "maxYear": 2008
+      },
+      {
+        "model": "Reflex Sport",
+        "minYear": 2005,
+        "maxYear": 2008
+      },
+      {
+        "model": "Ridgeline",
+        "minYear": 2006,
+        "maxYear": 2025
+      },
+      {
+        "model": "Rincon",
+        "minYear": 2006,
+        "maxYear": 2021
+      },
+      {
+        "model": "Rincon",
+        "minYear": 2023,
+        "maxYear": 2024
+      },
+      {
+        "model": "Rubicon",
+        "minYear": 2006,
+        "maxYear": 2014
+      },
+      {
+        "model": "Rubicon",
+        "minYear": 2016,
+        "maxYear": 2025
+      },
+      {
+        "model": "Ruckus",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "S2000",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "SCL500",
+        "minYear": 2023,
+        "maxYear": 2025
+      },
+      {
+        "model": "SH150i",
+        "minYear": 2010,
+        "maxYear": 2010
+      },
+      {
+        "model": "Shadow",
+        "minYear": 2007,
+        "maxYear": 2007
+      },
+      {
+        "model": "Shadow",
+        "minYear": 2010,
+        "maxYear": 2013
+      },
+      {
+        "model": "Shadow Ace",
+        "minYear": 2006,
+        "maxYear": 2008
+      },
+      {
+        "model": "Shadow Aero",
+        "minYear": 2005,
+        "maxYear": 2016
+      },
+      {
+        "model": "Shadow Aero",
+        "minYear": 2018,
+        "maxYear": 2024
+      },
+      {
+        "model": "Shadow Phantom",
+        "minYear": 2010,
+        "maxYear": 2025
+      },
+      {
+        "model": "Shadow Sabre",
+        "minYear": 2005,
+        "maxYear": 2008
+      },
+      {
+        "model": "Shadow Spirit",
+        "minYear": 2005,
+        "maxYear": 2014
+      },
+      {
+        "model": "Shadow VLX",
+        "minYear": 2005,
+        "maxYear": 2008
+      },
+      {
+        "model": "Silver Wing",
+        "minYear": 2005,
+        "maxYear": 2013
+      },
+      {
+        "model": "Sport Tourer",
+        "minYear": 2006,
+        "maxYear": 2006
+      },
+      {
+        "model": "Sportrax",
+        "minYear": 2005,
+        "maxYear": 2008
+      },
+      {
+        "model": "ST1300",
+        "minYear": 2005,
+        "maxYear": 2023
+      },
+      {
+        "model": "ST1300PA",
+        "minYear": 2022,
+        "maxYear": 2024
+      },
+      {
+        "model": "Stateline",
+        "minYear": 2010,
+        "maxYear": 2016
+      },
+      {
+        "model": "Super Cub",
+        "minYear": 2019,
+        "maxYear": 2024
+      },
+      {
+        "model": "Talon 1000",
+        "minYear": 2019,
+        "maxYear": 2024
+      },
+      {
+        "model": "Tourist Trophy",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Trail125",
+        "minYear": 2021,
+        "maxYear": 2025
+      },
+      {
+        "model": "Transalp",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "TRX250",
+        "minYear": 2024,
+        "maxYear": 2024
+      },
+      {
+        "model": "TRX250X",
+        "minYear": 2007,
+        "maxYear": 2008
+      },
+      {
+        "model": "TRX250X",
+        "minYear": 2011,
+        "maxYear": 2014
+      },
+      {
+        "model": "TRX250X",
+        "minYear": 2016,
+        "maxYear": 2023
+      },
+      {
+        "model": "TRX300EX",
+        "minYear": 2006,
+        "maxYear": 2006
+      },
+      {
+        "model": "TRX300X",
+        "minYear": 2009,
+        "maxYear": 2009
+      },
+      {
+        "model": "TRX400EX",
+        "minYear": 2005,
+        "maxYear": 2006
+      },
+      {
+        "model": "TRX400X",
+        "minYear": 2008,
+        "maxYear": 2009
+      },
+      {
+        "model": "TRX400X",
+        "minYear": 2012,
+        "maxYear": 2014
+      },
+      {
+        "model": "TRX420",
+        "minYear": 2020,
+        "maxYear": 2020
+      },
+      {
+        "model": "TRX450ER",
+        "minYear": 2006,
+        "maxYear": 2007
+      },
+      {
+        "model": "TRX450R",
+        "minYear": 2005,
+        "maxYear": 2014
+      },
+      {
+        "model": "TRX500",
+        "minYear": 2008,
+        "maxYear": 2008
+      },
+      {
+        "model": "TRX500 (Foreman)",
+        "minYear": 2022,
+        "maxYear": 2022
+      },
+      {
+        "model": "TRX500 (Rubicon)",
+        "minYear": 2022,
+        "maxYear": 2023
+      },
+      {
+        "model": "TRX680 (Rincon)",
+        "minYear": 2008,
+        "maxYear": 2008
+      },
+      {
+        "model": "TRX700EX",
+        "minYear": 2007,
+        "maxYear": 2008
+      },
+      {
+        "model": "TRX700XX",
+        "minYear": 2007,
+        "maxYear": 2009
+      },
+      {
+        "model": "TRX90X",
+        "minYear": 2006,
+        "maxYear": 2009
+      },
+      {
+        "model": "TRX90X",
+        "minYear": 2011,
+        "maxYear": 2025
+      },
+      {
+        "model": "Valkyrie Rune",
+        "minYear": 2005,
+        "maxYear": 2008
+      },
+      {
+        "model": "Varadero",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "Varadero",
+        "minYear": 2008,
+        "maxYear": 2009
+      },
+      {
+        "model": "VFR1200F (Interceptor 1200)",
+        "minYear": 2010,
+        "maxYear": 2014
+      },
+      {
+        "model": "VFR1200X (Crosstourer)",
+        "minYear": 2016,
+        "maxYear": 2017
+      },
+      {
+        "model": "VFR750F",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "VFR800 (Interceptor 800)",
+        "minYear": 2007,
+        "maxYear": 2007
+      },
+      {
+        "model": "VFR800 (Interceptor 800)",
+        "minYear": 2009,
+        "maxYear": 2015
+      },
+      {
+        "model": "VT1100 (Shadow Sabre)",
+        "minYear": 2006,
+        "maxYear": 2006
+      },
+      {
+        "model": "VT1100C",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "VT1300 (Fury)",
+        "minYear": 2024,
+        "maxYear": 2024
+      },
+      {
+        "model": "VT1300 (Interstate)",
+        "minYear": 2010,
+        "maxYear": 2014
+      },
+      {
+        "model": "VT1300 (Sabre)",
+        "minYear": 2010,
+        "maxYear": 2014
+      },
+      {
+        "model": "VT750",
+        "minYear": 2009,
+        "maxYear": 2009
+      },
+      {
+        "model": "VT800C",
+        "minYear": 2008,
+        "maxYear": 2008
+      },
+      {
+        "model": "VTR1000F (Super Hawk)",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "VTR250 (Interceptor 250)",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "VTX1300",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "VTX1800",
+        "minYear": 2005,
+        "maxYear": 2008
+      },
+      {
+        "model": "XL200R",
+        "minYear": 2005,
+        "maxYear": 2008
+      },
+      {
+        "model": "XL600V",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "XR150L",
+        "minYear": 2023,
+        "maxYear": 2025
+      },
+      {
+        "model": "XR200R",
+        "minYear": 2006,
+        "maxYear": 2006
+      },
+      {
+        "model": "XR200R",
+        "minYear": 2008,
+        "maxYear": 2008
+      },
+      {
+        "model": "XR250R",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "XR600R",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "XR650L",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "XR650LL",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "XR650R",
+        "minYear": 2005,
+        "maxYear": 2008
+      },
+      {
+        "model": "XR80R",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Z50R",
+        "minYear": 2005,
+        "maxYear": 2025
+      }
+    ],
+    "Hummer": [
+      {
+        "model": "H1",
+        "minYear": 2005,
+        "maxYear": 2006
+      },
+      {
+        "model": "H2",
+        "minYear": 2005,
+        "maxYear": 2011
+      },
+      {
+        "model": "H3",
+        "minYear": 2006,
+        "maxYear": 2011
+      },
+      {
+        "model": "H3T",
+        "minYear": 2009,
+        "maxYear": 2009
+      }
+    ],
+    "Hyundai": [
+      {
+        "model": "Accent",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Azera",
+        "minYear": 2006,
+        "maxYear": 2018
+      },
+      {
+        "model": "Elantra",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Elantra GT",
+        "minYear": 2017,
+        "maxYear": 2020
+      },
+      {
+        "model": "Elantra N",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "Elantra Touring",
+        "minYear": 2010,
+        "maxYear": 2010
+      },
+      {
+        "model": "Entourage",
+        "minYear": 2006,
+        "maxYear": 2014
+      },
+      {
+        "model": "Equus",
+        "minYear": 2011,
+        "maxYear": 2016
+      },
+      {
+        "model": "Genesis",
+        "minYear": 2009,
+        "maxYear": 2016
+      },
+      {
+        "model": "Genesis Coupe",
+        "minYear": 2010,
+        "maxYear": 2016
+      },
+      {
+        "model": "Ioniq",
+        "minYear": 2017,
+        "maxYear": 2022
+      },
+      {
+        "model": "Ioniq 5",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "Ioniq 5 N",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "Ioniq 6",
+        "minYear": 2023,
+        "maxYear": 2025
+      },
+      {
+        "model": "Kona",
+        "minYear": 2018,
+        "maxYear": 2025
+      },
+      {
+        "model": "Kona N",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "Nexo",
+        "minYear": 2019,
+        "maxYear": 2025
+      },
+      {
+        "model": "Palisade",
+        "minYear": 2020,
+        "maxYear": 2025
+      },
+      {
+        "model": "Santa Cruz",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "Santa Fe",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Santa Fe Sport",
+        "minYear": 2013,
+        "maxYear": 2018
+      },
+      {
+        "model": "Santa Fe XL",
+        "minYear": 2019,
+        "maxYear": 2025
+      },
+      {
+        "model": "Sonata",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Tiburon",
+        "minYear": 2005,
+        "maxYear": 2008
+      },
+      {
+        "model": "Tucson",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Veloster",
+        "minYear": 2012,
+        "maxYear": 2021
+      },
+      {
+        "model": "Veloster N",
+        "minYear": 2019,
+        "maxYear": 2022
+      },
+      {
+        "model": "Venue",
+        "minYear": 2020,
+        "maxYear": 2025
+      },
+      {
+        "model": "Veracruz",
+        "minYear": 2007,
+        "maxYear": 2013
+      },
+      {
+        "model": "Xcient",
+        "minYear": 2023,
+        "maxYear": 2025
+      },
+      {
+        "model": "XG350",
+        "minYear": 2005,
+        "maxYear": 2005
+      }
+    ],
+    "Infiniti": [
+      {
+        "model": "EX35",
+        "minYear": 2008,
+        "maxYear": 2013
+      },
+      {
+        "model": "FX35",
+        "minYear": 2005,
+        "maxYear": 2010
+      },
+      {
+        "model": "FX35",
+        "minYear": 2012,
+        "maxYear": 2012
+      },
+      {
+        "model": "FX37",
+        "minYear": 2013,
+        "maxYear": 2013
+      },
+      {
+        "model": "FX45",
+        "minYear": 2005,
+        "maxYear": 2008
+      },
+      {
+        "model": "FX50",
+        "minYear": 2009,
+        "maxYear": 2013
+      },
+      {
+        "model": "G25",
+        "minYear": 2011,
+        "maxYear": 2012
+      },
+      {
+        "model": "G35",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "G37",
+        "minYear": 2008,
+        "maxYear": 2013
+      },
+      {
+        "model": "JX35",
+        "minYear": 2013,
+        "maxYear": 2013
+      },
+      {
+        "model": "M35",
+        "minYear": 2006,
+        "maxYear": 2010
+      },
+      {
+        "model": "M35h",
+        "minYear": 2012,
+        "maxYear": 2013
+      },
+      {
+        "model": "M37",
+        "minYear": 2011,
+        "maxYear": 2013
+      },
+      {
+        "model": "M45",
+        "minYear": 2006,
+        "maxYear": 2010
+      },
+      {
+        "model": "M56",
+        "minYear": 2011,
+        "maxYear": 2013
+      },
+      {
+        "model": "Q40",
+        "minYear": 2015,
+        "maxYear": 2016
+      },
+      {
+        "model": "Q45",
+        "minYear": 2005,
+        "maxYear": 2007
+      },
+      {
+        "model": "Q50",
+        "minYear": 2014,
+        "maxYear": 2025
+      },
+      {
+        "model": "Q60",
+        "minYear": 2014,
+        "maxYear": 2015
+      },
+      {
+        "model": "Q60",
+        "minYear": 2017,
+        "maxYear": 2022
+      },
+      {
+        "model": "Q70",
+        "minYear": 2014,
+        "maxYear": 2022
+      },
+      {
+        "model": "Q70L",
+        "minYear": 2015,
+        "maxYear": 2022
+      },
+      {
+        "model": "QX30",
+        "minYear": 2017,
+        "maxYear": 2019
+      },
+      {
+        "model": "QX50",
+        "minYear": 2014,
+        "maxYear": 2017
+      },
+      {
+        "model": "QX50",
+        "minYear": 2019,
+        "maxYear": 2025
+      },
+      {
+        "model": "QX55",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "QX56",
+        "minYear": 2005,
+        "maxYear": 2013
+      },
+      {
+        "model": "QX60",
+        "minYear": 2014,
+        "maxYear": 2025
+      },
+      {
+        "model": "QX70",
+        "minYear": 2014,
+        "maxYear": 2018
+      },
+      {
+        "model": "QX80",
+        "minYear": 2014,
+        "maxYear": 2025
+      }
+    ],
+    "Jaguar": [
+      {
+        "model": "Black Jaguar",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "E-PACE",
+        "minYear": 2018,
+        "maxYear": 2025
+      },
+      {
+        "model": "F-PACE",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "F-TYPE",
+        "minYear": 2014,
+        "maxYear": 2025
+      },
+      {
+        "model": "I-PACE",
+        "minYear": 2019,
+        "maxYear": 2025
+      },
+      {
+        "model": "S-Type",
+        "minYear": 2005,
+        "maxYear": 2008
+      },
+      {
+        "model": "X-Type",
+        "minYear": 2005,
+        "maxYear": 2008
+      },
+      {
+        "model": "XE",
+        "minYear": 2017,
+        "maxYear": 2021
+      },
+      {
+        "model": "XF",
+        "minYear": 2009,
+        "maxYear": 2025
+      },
+      {
+        "model": "XJ",
+        "minYear": 2005,
+        "maxYear": 2019
+      },
+      {
+        "model": "XJR",
+        "minYear": 2005,
+        "maxYear": 2007
+      },
+      {
+        "model": "XK",
+        "minYear": 2005,
+        "maxYear": 2015
+      }
+    ],
+    "Jeep": [
+      {
+        "model": "Cherokee",
+        "minYear": 2005,
+        "maxYear": 2011
+      },
+      {
+        "model": "Cherokee",
+        "minYear": 2014,
+        "maxYear": 2023
+      },
+      {
+        "model": "Commander",
+        "minYear": 2006,
+        "maxYear": 2010
+      },
+      {
+        "model": "Compass",
+        "minYear": 2006,
+        "maxYear": 2025
+      },
+      {
+        "model": "Gladiator",
+        "minYear": 2020,
+        "maxYear": 2025
+      },
+      {
+        "model": "Grand Cherokee",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Grand Cherokee L",
+        "minYear": 2021,
+        "maxYear": 2025
+      },
+      {
+        "model": "Grand Wagoneer",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "Grand Wagoneer L",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "Liberty",
+        "minYear": 2005,
+        "maxYear": 2013
+      },
+      {
+        "model": "Patriot",
+        "minYear": 2007,
+        "maxYear": 2018
+      },
+      {
+        "model": "Renegade",
+        "minYear": 2015,
+        "maxYear": 2025
+      },
+      {
+        "model": "Wagoneer",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "Wagoneer L",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "Wagoneer S",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "Wrangler",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Wrangler JK",
+        "minYear": 2018,
+        "maxYear": 2018
+      }
+    ],
+    "Kia": [
+      {
+        "model": "Amanti",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "Borrego",
+        "minYear": 2009,
+        "maxYear": 2011
+      },
+      {
+        "model": "Cadenza",
+        "minYear": 2014,
+        "maxYear": 2020
+      },
+      {
+        "model": "Carnival",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "EV6",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "EV9",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "Forte",
+        "minYear": 2010,
+        "maxYear": 2025
+      },
+      {
+        "model": "Forte Koup",
+        "minYear": 2016,
+        "maxYear": 2017
+      },
+      {
+        "model": "K4",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "K5",
+        "minYear": 2021,
+        "maxYear": 2025
+      },
+      {
+        "model": "K900",
+        "minYear": 2015,
+        "maxYear": 2020
+      },
+      {
+        "model": "Miami",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Niro",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "Optima",
+        "minYear": 2005,
+        "maxYear": 2020
+      },
+      {
+        "model": "Rio",
+        "minYear": 2005,
+        "maxYear": 2023
+      },
+      {
+        "model": "Rondo",
+        "minYear": 2007,
+        "maxYear": 2016
+      },
+      {
+        "model": "Sedona",
+        "minYear": 2005,
+        "maxYear": 2021
+      },
+      {
+        "model": "Seltos",
+        "minYear": 2021,
+        "maxYear": 2025
+      },
+      {
+        "model": "Sorento",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "Sorento",
+        "minYear": 2011,
+        "maxYear": 2025
+      },
+      {
+        "model": "Soul",
+        "minYear": 2010,
+        "maxYear": 2025
+      },
+      {
+        "model": "Spectra",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "Sportage",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Stinger",
+        "minYear": 2018,
+        "maxYear": 2023
+      },
+      {
+        "model": "Tekiar",
+        "minYear": 2023,
+        "maxYear": 2025
+      },
+      {
+        "model": "Telluride",
+        "minYear": 2020,
+        "maxYear": 2025
+      }
+    ],
+    "Land Rover": [
+      {
+        "model": "110\" WB",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "90\" WB",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "Defender",
+        "minYear": 2020,
+        "maxYear": 2025
+      },
+      {
+        "model": "Discovery",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "Discovery Sport",
+        "minYear": 2015,
+        "maxYear": 2025
+      },
+      {
+        "model": "Freelander",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "LR2",
+        "minYear": 2008,
+        "maxYear": 2015
+      },
+      {
+        "model": "LR3",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "LR4",
+        "minYear": 2010,
+        "maxYear": 2016
+      },
+      {
+        "model": "New Range Rover",
+        "minYear": 2022,
+        "maxYear": 2022
+      },
+      {
+        "model": "Range Rover",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Range Rover Evoque",
+        "minYear": 2012,
+        "maxYear": 2025
+      },
+      {
+        "model": "Range Rover Sport",
+        "minYear": 2006,
+        "maxYear": 2025
+      },
+      {
+        "model": "Range Rover Velar",
+        "minYear": 2018,
+        "maxYear": 2025
+      }
+    ],
+    "Lexus": [
+      {
+        "model": "CT",
+        "minYear": 2011,
+        "maxYear": 2017
+      },
+      {
+        "model": "ES",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "GS",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "GX",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "HS",
+        "minYear": 2010,
+        "maxYear": 2012
+      },
+      {
+        "model": "IS",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "LC",
+        "minYear": 2018,
+        "maxYear": 2025
+      },
+      {
+        "model": "LFA",
+        "minYear": 2012,
+        "maxYear": 2013
+      },
+      {
+        "model": "LS",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "LX",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "NX",
+        "minYear": 2015,
+        "maxYear": 2025
+      },
+      {
+        "model": "RC",
+        "minYear": 2015,
+        "maxYear": 2025
+      },
+      {
+        "model": "RX",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "RZ",
+        "minYear": 2023,
+        "maxYear": 2025
+      },
+      {
+        "model": "SC",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "TX",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "UX",
+        "minYear": 2019,
+        "maxYear": 2025
+      }
+    ],
+    "Lincoln": [
+      {
+        "model": "Aviator",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "Aviator",
+        "minYear": 2020,
+        "maxYear": 2025
+      },
+      {
+        "model": "Continental",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "Corsair",
+        "minYear": 2020,
+        "maxYear": 2025
+      },
+      {
+        "model": "LS",
+        "minYear": 2005,
+        "maxYear": 2006
+      },
+      {
+        "model": "Mark LT",
+        "minYear": 2006,
+        "maxYear": 2008
+      },
+      {
+        "model": "MKC",
+        "minYear": 2015,
+        "maxYear": 2019
+      },
+      {
+        "model": "MKS",
+        "minYear": 2009,
+        "maxYear": 2016
+      },
+      {
+        "model": "MKT",
+        "minYear": 2010,
+        "maxYear": 2019
+      },
+      {
+        "model": "MKX",
+        "minYear": 2007,
+        "maxYear": 2018
+      },
+      {
+        "model": "MKZ",
+        "minYear": 2007,
+        "maxYear": 2020
+      },
+      {
+        "model": "Nautilus",
+        "minYear": 2019,
+        "maxYear": 2025
+      },
+      {
+        "model": "Navigator",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Navigator L",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "Town Car",
+        "minYear": 2005,
+        "maxYear": 2011
+      },
+      {
+        "model": "Zephyr",
+        "minYear": 2006,
+        "maxYear": 2006
+      }
+    ],
+    "Lotus": [
+      {
+        "model": "2-Eleven",
+        "minYear": 2008,
+        "maxYear": 2009
+      },
+      {
+        "model": "2-Eleven",
+        "minYear": 2011,
+        "maxYear": 2012
+      },
+      {
+        "model": "340R",
+        "minYear": 2007,
+        "maxYear": 2008
+      },
+      {
+        "model": "Eagle",
+        "minYear": 2008,
+        "maxYear": 2009
+      },
+      {
+        "model": "Eclat",
+        "minYear": 2007,
+        "maxYear": 2008
+      },
+      {
+        "model": "Elan",
+        "minYear": 2007,
+        "maxYear": 2009
+      },
+      {
+        "model": "ELETRE",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "Eleven",
+        "minYear": 2007,
+        "maxYear": 2007
+      },
+      {
+        "model": "Eleven",
+        "minYear": 2010,
+        "maxYear": 2010
+      },
+      {
+        "model": "Elise",
+        "minYear": 2005,
+        "maxYear": 2012
+      },
+      {
+        "model": "Elite",
+        "minYear": 2007,
+        "maxYear": 2008
+      },
+      {
+        "model": "Emira",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "Esprit",
+        "minYear": 2007,
+        "maxYear": 2009
+      },
+      {
+        "model": "Europa",
+        "minYear": 2007,
+        "maxYear": 2009
+      },
+      {
+        "model": "Evora",
+        "minYear": 2010,
+        "maxYear": 2025
+      },
+      {
+        "model": "Exige",
+        "minYear": 2008,
+        "maxYear": 2008
+      },
+      {
+        "model": "Exige",
+        "minYear": 2010,
+        "maxYear": 2012
+      },
+      {
+        "model": "MEL",
+        "minYear": 2007,
+        "maxYear": 2009
+      },
+      {
+        "model": "Monaco",
+        "minYear": 2007,
+        "maxYear": 2008
+      },
+      {
+        "model": "Monza",
+        "minYear": 2007,
+        "maxYear": 2008
+      },
+      {
+        "model": "Spa",
+        "minYear": 2007,
+        "maxYear": 2008
+      }
+    ],
+    "Maserati": [
+      {
+        "model": "Coupe",
+        "minYear": 2006,
+        "maxYear": 2006
+      },
+      {
+        "model": "Ghibli",
+        "minYear": 2014,
+        "maxYear": 2025
+      },
+      {
+        "model": "Grancabrio",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "Granturismo",
+        "minYear": 2008,
+        "maxYear": 2025
+      },
+      {
+        "model": "Grecale",
+        "minYear": 2023,
+        "maxYear": 2025
+      },
+      {
+        "model": "Levante",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "MC20",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "Quattroporte",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Spyder",
+        "minYear": 2006,
+        "maxYear": 2006
+      }
+    ],
+    "Mazda": [
+      {
+        "model": "B-Series",
+        "minYear": 2005,
+        "maxYear": 2010
+      },
+      {
+        "model": "CX-3",
+        "minYear": 2016,
+        "maxYear": 2022
+      },
+      {
+        "model": "CX-30",
+        "minYear": 2020,
+        "maxYear": 2025
+      },
+      {
+        "model": "CX-5",
+        "minYear": 2013,
+        "maxYear": 2025
+      },
+      {
+        "model": "CX-50",
+        "minYear": 2023,
+        "maxYear": 2025
+      },
+      {
+        "model": "CX-7",
+        "minYear": 2007,
+        "maxYear": 2012
+      },
+      {
+        "model": "CX-70",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "CX-9",
+        "minYear": 2007,
+        "maxYear": 2025
+      },
+      {
+        "model": "CX-90",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "Mazda2",
+        "minYear": 2011,
+        "maxYear": 2021
+      },
+      {
+        "model": "Mazda3",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Mazda5",
+        "minYear": 2006,
+        "maxYear": 2015
+      },
+      {
+        "model": "Mazda6",
+        "minYear": 2005,
+        "maxYear": 2021
+      },
+      {
+        "model": "MPV",
+        "minYear": 2005,
+        "maxYear": 2006
+      },
+      {
+        "model": "MX-30",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "MX-5",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "RX-8",
+        "minYear": 2005,
+        "maxYear": 2012
+      },
+      {
+        "model": "Tribute",
+        "minYear": 2005,
+        "maxYear": 2006
+      },
+      {
+        "model": "Tribute",
+        "minYear": 2008,
+        "maxYear": 2011
+      }
+    ],
+    "Mercedes-Benz": [
+      {
+        "model": "A-Class",
+        "minYear": 2019,
+        "maxYear": 2022
+      },
+      {
+        "model": "AMG GT",
+        "minYear": 2016,
+        "maxYear": 2025
+      },
+      {
+        "model": "B-Class",
+        "minYear": 2011,
+        "maxYear": 2012
+      },
+      {
+        "model": "B-Class",
+        "minYear": 2014,
+        "maxYear": 2022
+      },
+      {
+        "model": "C-Class",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "CL-Class",
+        "minYear": 2005,
+        "maxYear": 2014
+      },
+      {
+        "model": "CLA-Class",
+        "minYear": 2014,
+        "maxYear": 2025
+      },
+      {
+        "model": "CLE",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "CLK-Class",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "CLS-Class",
+        "minYear": 2005,
+        "maxYear": 2023
+      },
+      {
+        "model": "E-Class",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "EQB-Class",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "EQE-Class Sedan",
+        "minYear": 2023,
+        "maxYear": 2025
+      },
+      {
+        "model": "EQE-Class SUV",
+        "minYear": 2023,
+        "maxYear": 2025
+      },
+      {
+        "model": "EQS-Class Sedan",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "EQS-Class SUV",
+        "minYear": 2023,
+        "maxYear": 2025
+      },
+      {
+        "model": "eSprinter",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "G-Class",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "GL-Class",
+        "minYear": 2006,
+        "maxYear": 2016
+      },
+      {
+        "model": "GLA-Class",
+        "minYear": 2015,
+        "maxYear": 2025
+      },
+      {
+        "model": "GLB-Class",
+        "minYear": 2020,
+        "maxYear": 2025
+      },
+      {
+        "model": "GLC-Class",
+        "minYear": 2016,
+        "maxYear": 2025
+      },
+      {
+        "model": "GLE-Class",
+        "minYear": 2016,
+        "maxYear": 2025
+      },
+      {
+        "model": "GLK-Class",
+        "minYear": 2010,
+        "maxYear": 2020
+      },
+      {
+        "model": "GLS-Class",
+        "minYear": 2016,
+        "maxYear": 2025
+      },
+      {
+        "model": "L1013",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "L1113",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "L1116",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "L1117",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "L1316",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "L1317",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "L1319",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "L1418",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "L1419",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "LP1219",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "LP1419",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "LPS1525",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "M-Class",
+        "minYear": 2005,
+        "maxYear": 2011
+      },
+      {
+        "model": "M-Class",
+        "minYear": 2016,
+        "maxYear": 2019
+      },
+      {
+        "model": "Metris",
+        "minYear": 2016,
+        "maxYear": 2025
+      },
+      {
+        "model": "ML-Class",
+        "minYear": 2012,
+        "maxYear": 2015
+      },
+      {
+        "model": "R-Class",
+        "minYear": 2006,
+        "maxYear": 2013
+      },
+      {
+        "model": "S-Class",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "SL-Class",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "SL-Class",
+        "minYear": 2011,
+        "maxYear": 2025
+      },
+      {
+        "model": "SLC-Class",
+        "minYear": 2017,
+        "maxYear": 2020
+      },
+      {
+        "model": "SLK-Class",
+        "minYear": 2005,
+        "maxYear": 2016
+      },
+      {
+        "model": "SLR McLaren",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "SLS-Class",
+        "minYear": 2011,
+        "maxYear": 2022
+      },
+      {
+        "model": "Sprinter",
+        "minYear": 2010,
+        "maxYear": 2025
+      }
+    ],
+    "Mercury": [
+      {
+        "model": "Grand Marquis",
+        "minYear": 2005,
+        "maxYear": 2011
+      },
+      {
+        "model": "Mariner",
+        "minYear": 2005,
+        "maxYear": 2011
+      },
+      {
+        "model": "Milan",
+        "minYear": 2006,
+        "maxYear": 2011
+      },
+      {
+        "model": "Montego",
+        "minYear": 2005,
+        "maxYear": 2007
+      },
+      {
+        "model": "Monterey",
+        "minYear": 2005,
+        "maxYear": 2007
+      },
+      {
+        "model": "Mountaineer",
+        "minYear": 2005,
+        "maxYear": 2010
+      },
+      {
+        "model": "Sable",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "Sable",
+        "minYear": 2008,
+        "maxYear": 2009
+      }
+    ],
+    "MINI": [
+      {
+        "model": "Brockway Mini Homes",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "Carolina Trikes & Minis",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Clubman",
+        "minYear": 2008,
+        "maxYear": 2014
+      },
+      {
+        "model": "Clubman",
+        "minYear": 2016,
+        "maxYear": 2024
+      },
+      {
+        "model": "Cooper",
+        "minYear": 2005,
+        "maxYear": 2010
+      },
+      {
+        "model": "Cooper Convertible",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Cooper Coupe",
+        "minYear": 2012,
+        "maxYear": 2015
+      },
+      {
+        "model": "Cooper Roadster",
+        "minYear": 2012,
+        "maxYear": 2015
+      },
+      {
+        "model": "Countryman",
+        "minYear": 2011,
+        "maxYear": 2025
+      },
+      {
+        "model": "Delta Waseca Mini",
+        "minYear": 2009,
+        "maxYear": 2025
+      },
+      {
+        "model": "Dominight LLC",
+        "minYear": 2015,
+        "maxYear": 2025
+      },
+      {
+        "model": "FL",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Hardtop",
+        "minYear": 2009,
+        "maxYear": 2025
+      },
+      {
+        "model": "KW",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Los Lobos Mini Choppers, LLC",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Mack",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Miller",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "MINI MONSOON",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "MiniKamp",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "MiniMixx",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Minitears Company",
+        "minYear": 2010,
+        "maxYear": 2025
+      },
+      {
+        "model": "Mobile Frac Storage Tank",
+        "minYear": 2007,
+        "maxYear": 2025
+      },
+      {
+        "model": "Mobile Mini Inc.",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Paceman",
+        "minYear": 2013,
+        "maxYear": 2019
+      },
+      {
+        "model": "Pete",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Pony",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "R.V. Mini Mart, Inc.",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Santa Barbara",
+        "minYear": 2005,
+        "maxYear": 2025
+      }
+    ],
+    "Mitsubishi": [
+      {
+        "model": "Diamante",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Eclipse",
+        "minYear": 2005,
+        "maxYear": 2012
+      },
+      {
+        "model": "Eclipse Cross",
+        "minYear": 2018,
+        "maxYear": 2025
+      },
+      {
+        "model": "Endeavor",
+        "minYear": 2005,
+        "maxYear": 2011
+      },
+      {
+        "model": "FE140 (FECZTS)",
+        "minYear": 2019,
+        "maxYear": 2025
+      },
+      {
+        "model": "FE160 (FEC7TS)",
+        "minYear": 2019,
+        "maxYear": 2025
+      },
+      {
+        "model": "FE160 (FEC7TW)",
+        "minYear": 2019,
+        "maxYear": 2025
+      },
+      {
+        "model": "FE180 (FEC9TS)",
+        "minYear": 2019,
+        "maxYear": 2025
+      },
+      {
+        "model": "FE639",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "FE640",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "FE640DW",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "FE649",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "FE83D",
+        "minYear": 2006,
+        "maxYear": 2025
+      },
+      {
+        "model": "FE84D",
+        "minYear": 2006,
+        "maxYear": 2025
+      },
+      {
+        "model": "FE84DW",
+        "minYear": 2006,
+        "maxYear": 2025
+      },
+      {
+        "model": "FE85D",
+        "minYear": 2006,
+        "maxYear": 2025
+      },
+      {
+        "model": "FEC52S",
+        "minYear": 2011,
+        "maxYear": 2023
+      },
+      {
+        "model": "FEC72S",
+        "minYear": 2010,
+        "maxYear": 2023
+      },
+      {
+        "model": "FEC72W",
+        "minYear": 2011,
+        "maxYear": 2023
+      },
+      {
+        "model": "FEC7US / eCanter",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "FEC92S",
+        "minYear": 2011,
+        "maxYear": 2023
+      },
+      {
+        "model": "FECX2S",
+        "minYear": 2015,
+        "maxYear": 2023
+      },
+      {
+        "model": "FG639",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "FG649",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "FG84D",
+        "minYear": 2006,
+        "maxYear": 2025
+      },
+      {
+        "model": "FGB72S",
+        "minYear": 2011,
+        "maxYear": 2023
+      },
+      {
+        "model": "FH210",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "FH211",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "FK617",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "FK61F",
+        "minYear": 2006,
+        "maxYear": 2025
+      },
+      {
+        "model": "FK62F",
+        "minYear": 2007,
+        "maxYear": 2025
+      },
+      {
+        "model": "FK65F",
+        "minYear": 2007,
+        "maxYear": 2025
+      },
+      {
+        "model": "FM617",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "FM61F",
+        "minYear": 2006,
+        "maxYear": 2025
+      },
+      {
+        "model": "FM64F",
+        "minYear": 2006,
+        "maxYear": 2025
+      },
+      {
+        "model": "FM657",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "FM65F",
+        "minYear": 2006,
+        "maxYear": 2025
+      },
+      {
+        "model": "Galant",
+        "minYear": 2005,
+        "maxYear": 2012
+      },
+      {
+        "model": "i-MiEV",
+        "minYear": 2012,
+        "maxYear": 2018
+      },
+      {
+        "model": "Lancer",
+        "minYear": 2005,
+        "maxYear": 2017
+      },
+      {
+        "model": "Lancer Evolution",
+        "minYear": 2005,
+        "maxYear": 2006
+      },
+      {
+        "model": "Lancer Evolution",
+        "minYear": 2008,
+        "maxYear": 2015
+      },
+      {
+        "model": "Lancer SportBack",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "Lancer SportBack",
+        "minYear": 2009,
+        "maxYear": 2017
+      },
+      {
+        "model": "Mirage",
+        "minYear": 2014,
+        "maxYear": 2025
+      },
+      {
+        "model": "Mirage G4",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "Montero",
+        "minYear": 2005,
+        "maxYear": 2006
+      },
+      {
+        "model": "Outlander",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Outlander Sport",
+        "minYear": 2011,
+        "maxYear": 2025
+      },
+      {
+        "model": "Raider",
+        "minYear": 2005,
+        "maxYear": 2010
+      },
+      {
+        "model": "Sterling 360",
+        "minYear": 2005,
+        "maxYear": 2007
+      }
+    ],
+    "Nissan": [
+      {
+        "model": "350Z",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "370Z",
+        "minYear": 2009,
+        "maxYear": 2022
+      },
+      {
+        "model": "Altima",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Ariya Hatchback",
+        "minYear": 2023,
+        "maxYear": 2024
+      },
+      {
+        "model": "Ariya MPV",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "Armada",
+        "minYear": 2005,
+        "maxYear": 2015
+      },
+      {
+        "model": "Armada",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "Cube",
+        "minYear": 2009,
+        "maxYear": 2014
+      },
+      {
+        "model": "Frontier",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "GT-R",
+        "minYear": 2009,
+        "maxYear": 2025
+      },
+      {
+        "model": "Juke",
+        "minYear": 2011,
+        "maxYear": 2018
+      },
+      {
+        "model": "Kicks",
+        "minYear": 2018,
+        "maxYear": 2024
+      },
+      {
+        "model": "Kicks MPV",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "Kicks Play",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "Leaf",
+        "minYear": 2011,
+        "maxYear": 2025
+      },
+      {
+        "model": "Maxima",
+        "minYear": 2005,
+        "maxYear": 2014
+      },
+      {
+        "model": "Maxima",
+        "minYear": 2016,
+        "maxYear": 2023
+      },
+      {
+        "model": "Murano",
+        "minYear": 2005,
+        "maxYear": 2007
+      },
+      {
+        "model": "Murano",
+        "minYear": 2009,
+        "maxYear": 2025
+      },
+      {
+        "model": "Nissan Z",
+        "minYear": 2023,
+        "maxYear": 2025
+      },
+      {
+        "model": "NV",
+        "minYear": 2011,
+        "maxYear": 2025
+      },
+      {
+        "model": "NV200",
+        "minYear": 2013,
+        "maxYear": 2025
+      },
+      {
+        "model": "Pathfinder",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Quest",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "Quest",
+        "minYear": 2011,
+        "maxYear": 2017
+      },
+      {
+        "model": "Rogue",
+        "minYear": 2008,
+        "maxYear": 2025
+      },
+      {
+        "model": "Rogue Select",
+        "minYear": 2014,
+        "maxYear": 2014
+      },
+      {
+        "model": "Rogue Sport",
+        "minYear": 2017,
+        "maxYear": 2022
+      },
+      {
+        "model": "Sentra",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Titan",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Versa",
+        "minYear": 2007,
+        "maxYear": 2025
+      },
+      {
+        "model": "Versa Note",
+        "minYear": 2014,
+        "maxYear": 2020
+      },
+      {
+        "model": "X-Trail",
+        "minYear": 2005,
+        "maxYear": 2006
+      },
+      {
+        "model": "Xterra",
+        "minYear": 2005,
+        "maxYear": 2015
+      }
+    ],
+    "Plymouth": [
+      {
+        "model": "Grand Voyager",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Neon",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Prowler",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Voyager",
+        "minYear": 2005,
+        "maxYear": 2025
+      }
+    ],
+    "Pontiac": [
+      {
+        "model": "Aztek",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "Bonneville",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "G3",
+        "minYear": 2008,
+        "maxYear": 2010
+      },
+      {
+        "model": "G5",
+        "minYear": 2007,
+        "maxYear": 2010
+      },
+      {
+        "model": "G6",
+        "minYear": 2005,
+        "maxYear": 2010
+      },
+      {
+        "model": "G8",
+        "minYear": 2008,
+        "maxYear": 2010
+      },
+      {
+        "model": "Grand AM",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "Grand Prix",
+        "minYear": 2005,
+        "maxYear": 2008
+      },
+      {
+        "model": "GTO",
+        "minYear": 2005,
+        "maxYear": 2006
+      },
+      {
+        "model": "Matiz",
+        "minYear": 2007,
+        "maxYear": 2007
+      },
+      {
+        "model": "Matiz",
+        "minYear": 2010,
+        "maxYear": 2010
+      },
+      {
+        "model": "Montana SV6",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "Pursuit",
+        "minYear": 2005,
+        "maxYear": 2006
+      },
+      {
+        "model": "Solstice",
+        "minYear": 2006,
+        "maxYear": 2010
+      },
+      {
+        "model": "Sunfire",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "Torrent",
+        "minYear": 2006,
+        "maxYear": 2009
+      },
+      {
+        "model": "Vibe",
+        "minYear": 2005,
+        "maxYear": 2010
+      },
+      {
+        "model": "Wave",
+        "minYear": 2005,
+        "maxYear": 2008
+      }
+    ],
+    "Porsche": [
+      {
+        "model": "718 Boxster",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "718 Cayman",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "718 Spyder",
+        "minYear": 2020,
+        "maxYear": 2020
+      },
+      {
+        "model": "718 Spyder",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "911",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "918",
+        "minYear": 2015,
+        "maxYear": 2015
+      },
+      {
+        "model": "Boxster",
+        "minYear": 2005,
+        "maxYear": 2016
+      },
+      {
+        "model": "Cayenne",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Cayman",
+        "minYear": 2006,
+        "maxYear": 2016
+      },
+      {
+        "model": "Macan",
+        "minYear": 2015,
+        "maxYear": 2025
+      },
+      {
+        "model": "Panamera",
+        "minYear": 2010,
+        "maxYear": 2025
+      },
+      {
+        "model": "Taycan",
+        "minYear": 2020,
+        "maxYear": 2025
+      }
+    ],
+    "Ram": [
+      {
+        "model": "1000",
+        "minYear": 2015,
+        "maxYear": 2025
+      },
+      {
+        "model": "1225U",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "1500",
+        "minYear": 2013,
+        "maxYear": 2025
+      },
+      {
+        "model": "166U",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "2000",
+        "minYear": 2015,
+        "maxYear": 2025
+      },
+      {
+        "model": "203",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "206U",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "214",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "2235",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "234",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "2500",
+        "minYear": 2013,
+        "maxYear": 2025
+      },
+      {
+        "model": "2600",
+        "minYear": 2015,
+        "maxYear": 2025
+      },
+      {
+        "model": "266",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "288",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "3000",
+        "minYear": 2015,
+        "maxYear": 2025
+      },
+      {
+        "model": "307",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "3500",
+        "minYear": 2012,
+        "maxYear": 2025
+      },
+      {
+        "model": "3510",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "3600",
+        "minYear": 2015,
+        "maxYear": 2025
+      },
+      {
+        "model": "4000",
+        "minYear": 2013,
+        "maxYear": 2023
+      },
+      {
+        "model": "4500",
+        "minYear": 2013,
+        "maxYear": 2025
+      },
+      {
+        "model": "512",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "52",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "5500",
+        "minYear": 2013,
+        "maxYear": 2025
+      },
+      {
+        "model": "612U",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "625U",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "62U",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "725",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "825U",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "83",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "835",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "83U",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "925",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "B17 Bomber",
+        "minYear": 2021,
+        "maxYear": 2025
+      },
+      {
+        "model": "B29 Super Fortress",
+        "minYear": 2021,
+        "maxYear": 2025
+      },
+      {
+        "model": "Best Lane Enterprises dba Ramp Free",
+        "minYear": 2012,
+        "maxYear": 2017
+      },
+      {
+        "model": "Brammo Street Bikes",
+        "minYear": 2009,
+        "maxYear": 2018
+      },
+      {
+        "model": "Burkett's Autorama",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Cargo Van",
+        "minYear": 2013,
+        "maxYear": 2016
+      },
+      {
+        "model": "Chopper",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "CP102B",
+        "minYear": 2010,
+        "maxYear": 2025
+      },
+      {
+        "model": "CP80B",
+        "minYear": 2010,
+        "maxYear": 2025
+      },
+      {
+        "model": "CP90B",
+        "minYear": 2010,
+        "maxYear": 2025
+      },
+      {
+        "model": "Cruiser",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Dual Sport",
+        "minYear": 2007,
+        "maxYear": 2009
+      },
+      {
+        "model": "Easton Custom L.L.C",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "EnduraMax",
+        "minYear": 2006,
+        "maxYear": 2025
+      },
+      {
+        "model": "EZR",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "EZTRJ",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "EZWR",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "Faith",
+        "minYear": 2013,
+        "maxYear": 2025
+      },
+      {
+        "model": "FATT HOGG FRAMES",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Framar",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "FRAMTRAC MANUFACTURING CO. LTD",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Holiday Rambler",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "HX-1000",
+        "minYear": 2015,
+        "maxYear": 2025
+      },
+      {
+        "model": "HX-2000",
+        "minYear": 2015,
+        "maxYear": 2025
+      },
+      {
+        "model": "HX-3000",
+        "minYear": 2015,
+        "maxYear": 2025
+      },
+      {
+        "model": "John Ingram, Inc.",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "JR RAMIRO",
+        "minYear": 2018,
+        "maxYear": 2025
+      },
+      {
+        "model": "JSR",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "KTM Aluminum Frame",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "LXR",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Metro Tram",
+        "minYear": 2021,
+        "maxYear": 2025
+      },
+      {
+        "model": "NEXGEN FRAMING SYSTEM, LLC",
+        "minYear": 2006,
+        "maxYear": 2025
+      },
+      {
+        "model": "P38 Lightning",
+        "minYear": 2021,
+        "maxYear": 2025
+      },
+      {
+        "model": "P40 Warhawk",
+        "minYear": 2021,
+        "maxYear": 2025
+      },
+      {
+        "model": "P47 Thunderbird",
+        "minYear": 2021,
+        "maxYear": 2025
+      },
+      {
+        "model": "P51 Mustang",
+        "minYear": 2021,
+        "maxYear": 2025
+      },
+      {
+        "model": "P63 King Cobra",
+        "minYear": 2021,
+        "maxYear": 2025
+      },
+      {
+        "model": "Paramount Custom Cycles",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "PortAFrame",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "ProMaster 1500",
+        "minYear": 2014,
+        "maxYear": 2025
+      },
+      {
+        "model": "ProMaster 2500",
+        "minYear": 2014,
+        "maxYear": 2025
+      },
+      {
+        "model": "ProMaster 3500",
+        "minYear": 2014,
+        "maxYear": 2025
+      },
+      {
+        "model": "Promaster City",
+        "minYear": 2015,
+        "maxYear": 2025
+      },
+      {
+        "model": "Protorype",
+        "minYear": 2013,
+        "maxYear": 2025
+      },
+      {
+        "model": "Ram Enterprises, LLC",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Ram Fabrication",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Ram Transcorp",
+        "minYear": 2011,
+        "maxYear": 2025
+      },
+      {
+        "model": "Rambler",
+        "minYear": 2020,
+        "maxYear": 2025
+      },
+      {
+        "model": "Ramp Champ",
+        "minYear": 2010,
+        "maxYear": 2025
+      },
+      {
+        "model": "Rampless",
+        "minYear": 2015,
+        "maxYear": 2025
+      },
+      {
+        "model": "RAMSA",
+        "minYear": 2023,
+        "maxYear": 2025
+      },
+      {
+        "model": "Ramsey Fabrication",
+        "minYear": 2011,
+        "maxYear": 2025
+      },
+      {
+        "model": "RAMSHORN WELDING",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Replica",
+        "minYear": 2013,
+        "maxYear": 2025
+      },
+      {
+        "model": "ROAD TRAMPS MC",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "Robert Allen Mowery Ramco LLC",
+        "minYear": 2015,
+        "maxYear": 2025
+      },
+      {
+        "model": "SCHRAMM, INC.",
+        "minYear": 2011,
+        "maxYear": 2025
+      },
+      {
+        "model": "Scooter",
+        "minYear": 2007,
+        "maxYear": 2009
+      },
+      {
+        "model": "Touring",
+        "minYear": 2007,
+        "maxYear": 2009
+      },
+      {
+        "model": "Tram Power Car",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Tramont Corporation",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Tramont Manufacturing LLC",
+        "minYear": 2014,
+        "maxYear": 2025
+      },
+      {
+        "model": "Urban",
+        "minYear": 2007,
+        "maxYear": 2009
+      },
+      {
+        "model": "WVR",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "YWR",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "YWVR",
+        "minYear": 2005,
+        "maxYear": 2009
+      }
+    ],
+    "Saab": [
+      {
+        "model": "9-2X",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "9-3",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "9-4x",
+        "minYear": 2011,
+        "maxYear": 2012
+      },
+      {
+        "model": "9-5",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "9-7X",
+        "minYear": 2005,
+        "maxYear": 2009
+      }
+    ],
+    "Saturn": [
+      {
+        "model": "Astra",
+        "minYear": 2008,
+        "maxYear": 2009
+      },
+      {
+        "model": "Aura",
+        "minYear": 2007,
+        "maxYear": 2010
+      },
+      {
+        "model": "Ion",
+        "minYear": 2005,
+        "maxYear": 2007
+      },
+      {
+        "model": "L300",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "Outlook",
+        "minYear": 2007,
+        "maxYear": 2010
+      },
+      {
+        "model": "Relay",
+        "minYear": 2005,
+        "maxYear": 2007
+      },
+      {
+        "model": "SATURN2016",
+        "minYear": 2016,
+        "maxYear": 2025
+      },
+      {
+        "model": "SATURN2019",
+        "minYear": 2016,
+        "maxYear": 2025
+      },
+      {
+        "model": "Sky",
+        "minYear": 2007,
+        "maxYear": 2010
+      },
+      {
+        "model": "Vue",
+        "minYear": 2005,
+        "maxYear": 2010
+      }
+    ],
+    "Scion": [],
+    "Subaru": [
+      {
+        "model": "Ascent",
+        "minYear": 2019,
+        "maxYear": 2025
+      },
+      {
+        "model": "B9 Tribeca",
+        "minYear": 2006,
+        "maxYear": 2014
+      },
+      {
+        "model": "Baja",
+        "minYear": 2005,
+        "maxYear": 2006
+      },
+      {
+        "model": "BRZ",
+        "minYear": 2013,
+        "maxYear": 2025
+      },
+      {
+        "model": "Crosstrek",
+        "minYear": 2016,
+        "maxYear": 2025
+      },
+      {
+        "model": "Forester",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Impreza",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Legacy",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Outback",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Solterra",
+        "minYear": 2023,
+        "maxYear": 2025
+      },
+      {
+        "model": "WRX",
+        "minYear": 2015,
+        "maxYear": 2025
+      },
+      {
+        "model": "XV CrossTrek",
+        "minYear": 2012,
+        "maxYear": 2015
+      }
+    ],
+    "Tesla": [
+      {
+        "model": "Cybertruck",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "Model 3",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "Model S",
+        "minYear": 2012,
+        "maxYear": 2025
+      },
+      {
+        "model": "Model X",
+        "minYear": 2016,
+        "maxYear": 2025
+      },
+      {
+        "model": "Model Y",
+        "minYear": 2020,
+        "maxYear": 2025
+      },
+      {
+        "model": "Roadster",
+        "minYear": 2008,
+        "maxYear": 2012
+      },
+      {
+        "model": "Semi",
+        "minYear": 2023,
+        "maxYear": 2025
+      }
+    ],
+    "Toyota": [
+      {
+        "model": "4Runner",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "86",
+        "minYear": 2017,
+        "maxYear": 2020
+      },
+      {
+        "model": "Avalon",
+        "minYear": 2005,
+        "maxYear": 2022
+      },
+      {
+        "model": "bZ4X",
+        "minYear": 2023,
+        "maxYear": 2025
+      },
+      {
+        "model": "C-HR",
+        "minYear": 2018,
+        "maxYear": 2025
+      },
+      {
+        "model": "Camry",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Camry Solara",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "Celica",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Corolla",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Corolla Cross",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "COROLLA iM",
+        "minYear": 2017,
+        "maxYear": 2018
+      },
+      {
+        "model": "Corolla Matrix",
+        "minYear": 2005,
+        "maxYear": 2013
+      },
+      {
+        "model": "Crown",
+        "minYear": 2023,
+        "maxYear": 2025
+      },
+      {
+        "model": "Crown Signia",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "Echo",
+        "minYear": 2005,
+        "maxYear": 2005
+      },
+      {
+        "model": "FCHV-adv",
+        "minYear": 2009,
+        "maxYear": 2025
+      },
+      {
+        "model": "FJ Cruiser",
+        "minYear": 2007,
+        "maxYear": 2014
+      },
+      {
+        "model": "GR Corolla",
+        "minYear": 2023,
+        "maxYear": 2025
+      },
+      {
+        "model": "GR86",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "Grand Highlander",
+        "minYear": 2024,
+        "maxYear": 2025
+      },
+      {
+        "model": "Highlander",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Land Cruiser",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Mirai",
+        "minYear": 2016,
+        "maxYear": 2025
+      },
+      {
+        "model": "MR2",
+        "minYear": 2005,
+        "maxYear": 2007
+      },
+      {
+        "model": "Paseo",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Prius",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Prius C",
+        "minYear": 2012,
+        "maxYear": 2020
+      },
+      {
+        "model": "Prius Prime (PHEV)",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "Prius V",
+        "minYear": 2012,
+        "maxYear": 2017
+      },
+      {
+        "model": "RAV4",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "RAV4 Prime (PHEV)",
+        "minYear": 2021,
+        "maxYear": 2025
+      },
+      {
+        "model": "Scion FR-S",
+        "minYear": 2013,
+        "maxYear": 2016
+      },
+      {
+        "model": "Scion iA",
+        "minYear": 2016,
+        "maxYear": 2016
+      },
+      {
+        "model": "Scion iM",
+        "minYear": 2016,
+        "maxYear": 2016
+      },
+      {
+        "model": "Scion iQ",
+        "minYear": 2011,
+        "maxYear": 2015
+      },
+      {
+        "model": "Scion tC",
+        "minYear": 2005,
+        "maxYear": 2016
+      },
+      {
+        "model": "Scion xA",
+        "minYear": 2005,
+        "maxYear": 2006
+      },
+      {
+        "model": "Scion xB",
+        "minYear": 2005,
+        "maxYear": 2015
+      },
+      {
+        "model": "Scion xD",
+        "minYear": 2008,
+        "maxYear": 2014
+      },
+      {
+        "model": "Sequoia",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Sienna",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Supra",
+        "minYear": 2020,
+        "maxYear": 2025
+      },
+      {
+        "model": "Tacoma",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Tundra",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Venza",
+        "minYear": 2009,
+        "maxYear": 2025
+      },
+      {
+        "model": "Yaris",
+        "minYear": 2007,
+        "maxYear": 2025
+      },
+      {
+        "model": "Yaris iA",
+        "minYear": 2017,
+        "maxYear": 2019
+      }
+    ],
+    "Volkswagen": [
+      {
+        "model": "Arteon",
+        "minYear": 2019,
+        "maxYear": 2023
+      },
+      {
+        "model": "Atlas",
+        "minYear": 2018,
+        "maxYear": 2025
+      },
+      {
+        "model": "Atlas Cross Sport",
+        "minYear": 2020,
+        "maxYear": 2025
+      },
+      {
+        "model": "Beetle",
+        "minYear": 2005,
+        "maxYear": 2010
+      },
+      {
+        "model": "Beetle",
+        "minYear": 2012,
+        "maxYear": 2019
+      },
+      {
+        "model": "CC",
+        "minYear": 2012,
+        "maxYear": 2012
+      },
+      {
+        "model": "CC",
+        "minYear": 2014,
+        "maxYear": 2018
+      },
+      {
+        "model": "e-Golf",
+        "minYear": 2015,
+        "maxYear": 2020
+      },
+      {
+        "model": "Eos",
+        "minYear": 2007,
+        "maxYear": 2016
+      },
+      {
+        "model": "GLI",
+        "minYear": 2008,
+        "maxYear": 2009
+      },
+      {
+        "model": "Golf",
+        "minYear": 2005,
+        "maxYear": 2006
+      },
+      {
+        "model": "Golf",
+        "minYear": 2010,
+        "maxYear": 2021
+      },
+      {
+        "model": "Golf Alltrack",
+        "minYear": 2017,
+        "maxYear": 2020
+      },
+      {
+        "model": "Golf GTI",
+        "minYear": 2016,
+        "maxYear": 2024
+      },
+      {
+        "model": "Golf R",
+        "minYear": 2013,
+        "maxYear": 2013
+      },
+      {
+        "model": "Golf R",
+        "minYear": 2016,
+        "maxYear": 2020
+      },
+      {
+        "model": "Golf R",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "Golf SportWagen",
+        "minYear": 2015,
+        "maxYear": 2020
+      },
+      {
+        "model": "GTI",
+        "minYear": 2005,
+        "maxYear": 2015
+      },
+      {
+        "model": "GTI",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "ID. Buzz",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "ID.4",
+        "minYear": 2021,
+        "maxYear": 2025
+      },
+      {
+        "model": "Jetta",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Jetta GLI",
+        "minYear": 2021,
+        "maxYear": 2025
+      },
+      {
+        "model": "Jetta SportWagen",
+        "minYear": 2009,
+        "maxYear": 2014
+      },
+      {
+        "model": "Jetta Wagon",
+        "minYear": 2005,
+        "maxYear": 2006
+      },
+      {
+        "model": "Passat",
+        "minYear": 2005,
+        "maxYear": 2022
+      },
+      {
+        "model": "Phaeton",
+        "minYear": 2005,
+        "maxYear": 2006
+      },
+      {
+        "model": "R32",
+        "minYear": 2008,
+        "maxYear": 2008
+      },
+      {
+        "model": "Rabbit",
+        "minYear": 2006,
+        "maxYear": 2009
+      },
+      {
+        "model": "Routan",
+        "minYear": 2009,
+        "maxYear": 2014
+      },
+      {
+        "model": "Taos",
+        "minYear": 2022,
+        "maxYear": 2025
+      },
+      {
+        "model": "Tiguan",
+        "minYear": 2009,
+        "maxYear": 2025
+      },
+      {
+        "model": "Tiguan Limited",
+        "minYear": 2018,
+        "maxYear": 2018
+      },
+      {
+        "model": "Touareg",
+        "minYear": 2005,
+        "maxYear": 2018
+      }
+    ],
+    "Volvo": [
+      {
+        "model": "ACL",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "B10M",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "B12B",
+        "minYear": 2009,
+        "maxYear": 2025
+      },
+      {
+        "model": "B12M",
+        "minYear": 2009,
+        "maxYear": 2025
+      },
+      {
+        "model": "B12R",
+        "minYear": 2009,
+        "maxYear": 2025
+      },
+      {
+        "model": "B13R",
+        "minYear": 2009,
+        "maxYear": 2025
+      },
+      {
+        "model": "B5R",
+        "minYear": 2009,
+        "maxYear": 2025
+      },
+      {
+        "model": "B5TL",
+        "minYear": 2009,
+        "maxYear": 2025
+      },
+      {
+        "model": "B7R",
+        "minYear": 2009,
+        "maxYear": 2025
+      },
+      {
+        "model": "B8L",
+        "minYear": 2009,
+        "maxYear": 2025
+      },
+      {
+        "model": "B8R",
+        "minYear": 2009,
+        "maxYear": 2025
+      },
+      {
+        "model": "B9L",
+        "minYear": 2009,
+        "maxYear": 2025
+      },
+      {
+        "model": "B9R",
+        "minYear": 2009,
+        "maxYear": 2025
+      },
+      {
+        "model": "B9S",
+        "minYear": 2009,
+        "maxYear": 2025
+      },
+      {
+        "model": "B9TL",
+        "minYear": 2009,
+        "maxYear": 2025
+      },
+      {
+        "model": "BE",
+        "minYear": 2009,
+        "maxYear": 2025
+      },
+      {
+        "model": "BFE",
+        "minYear": 2009,
+        "maxYear": 2025
+      },
+      {
+        "model": "BRH",
+        "minYear": 2009,
+        "maxYear": 2025
+      },
+      {
+        "model": "BRLH",
+        "minYear": 2009,
+        "maxYear": 2025
+      },
+      {
+        "model": "BXR",
+        "minYear": 2009,
+        "maxYear": 2025
+      },
+      {
+        "model": "BXRB",
+        "minYear": 2009,
+        "maxYear": 2025
+      },
+      {
+        "model": "BXXR",
+        "minYear": 2009,
+        "maxYear": 2025
+      },
+      {
+        "model": "C30",
+        "minYear": 2007,
+        "maxYear": 2013
+      },
+      {
+        "model": "C40",
+        "minYear": 2022,
+        "maxYear": 2024
+      },
+      {
+        "model": "C70",
+        "minYear": 2006,
+        "maxYear": 2013
+      },
+      {
+        "model": "C70 / C30",
+        "minYear": 2012,
+        "maxYear": 2012
+      },
+      {
+        "model": "Cab Behind Engine",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Cab Over Engine HT",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "Cab Over Engine LT",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "CACL",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "CWG",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "EC40",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "EX30",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "EX40",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "EX90",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "F12 w/F7 Cab",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "F6 w/F7 Cab",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "FE",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "FM10",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "NE42",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "NE64",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "NR64",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "S40",
+        "minYear": 2005,
+        "maxYear": 2011
+      },
+      {
+        "model": "S60",
+        "minYear": 2005,
+        "maxYear": 2009
+      },
+      {
+        "model": "S60",
+        "minYear": 2011,
+        "maxYear": 2025
+      },
+      {
+        "model": "S60 Cross Country",
+        "minYear": 2016,
+        "maxYear": 2018
+      },
+      {
+        "model": "S80",
+        "minYear": 2005,
+        "maxYear": 2016
+      },
+      {
+        "model": "S90",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "V50",
+        "minYear": 2005,
+        "maxYear": 2011
+      },
+      {
+        "model": "V60",
+        "minYear": 2015,
+        "maxYear": 2025
+      },
+      {
+        "model": "V60CC",
+        "minYear": 2015,
+        "maxYear": 2025
+      },
+      {
+        "model": "V70",
+        "minYear": 2005,
+        "maxYear": 2010
+      },
+      {
+        "model": "V90",
+        "minYear": 2017,
+        "maxYear": 2021
+      },
+      {
+        "model": "V90CC",
+        "minYear": 2017,
+        "maxYear": 2025
+      },
+      {
+        "model": "VAH",
+        "minYear": 2012,
+        "maxYear": 2025
+      },
+      {
+        "model": "VHD",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "VN",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "VNL",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "VNL (4)",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "VNM",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "VNR",
+        "minYear": 2013,
+        "maxYear": 2025
+      },
+      {
+        "model": "VNR (4)",
+        "minYear": 2025,
+        "maxYear": 2025
+      },
+      {
+        "model": "VNX",
+        "minYear": 2013,
+        "maxYear": 2024
+      },
+      {
+        "model": "VS",
+        "minYear": 2019,
+        "maxYear": 2025
+      },
+      {
+        "model": "VT",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "WAH",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "WCA",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "WG",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "WHEB",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "WHL",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "WHLB",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "WHR",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "WIA",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "WX",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "WXLL",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "WXLM",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "WXR",
+        "minYear": 2005,
+        "maxYear": 2025
+      },
+      {
+        "model": "XC40",
+        "minYear": 2019,
+        "maxYear": 2025
+      },
+      {
+        "model": "XC60",
+        "minYear": 2010,
+        "maxYear": 2025
+      },
+      {
+        "model": "XC70",
+        "minYear": 2005,
+        "maxYear": 2016
+      },
+      {
+        "model": "XC90",
+        "minYear": 2005,
+        "maxYear": 2014
+      },
+      {
+        "model": "XC90",
+        "minYear": 2016,
+        "maxYear": 2025
+      }
+    ]
+  }
+}
