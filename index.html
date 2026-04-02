@@ -1104,6 +1104,70 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                         </div>
                     </div>
                 </div>
+
+                <div class="mt-14">
+                    <div class="text-center mb-8">
+                        <h2 class="font-heading text-3xl md:text-4xl font-bold text-white mb-3">Hardware Offer Calculator</h2>
+                        <p class="text-gray-400 text-base md:text-lg">Rough model for bundled equipment economics. Tune these numbers to match your exact offer terms.</p>
+                    </div>
+
+                    <div class="flex flex-col lg:flex-row gap-8">
+                        <div class="lg:w-1/2 glow-card rounded-2xl p-8 border border-amber-500/20 bg-amber-500/5">
+                            <div class="space-y-8">
+                                <div>
+                                    <div class="flex justify-between text-sm mb-2"><span class="text-gray-300">Average Ticket per Hardware-Enabled Job</span><span class="text-amber-300 font-mono font-bold">$<span id="val-hw-ticket">325</span></span></div>
+                                    <input type="range" id="slider-hw-ticket" min="100" max="900" step="25" value="325" class="w-full h-3 md:h-2 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm mb-2"><span class="text-gray-300">Monthly Jobs Closed with New Equipment</span><span class="text-cyan-400 font-mono font-bold"><span id="val-hw-jobs">18</span> jobs</span></div>
+                                    <input type="range" id="slider-hw-jobs" min="2" max="80" step="1" value="18" class="w-full h-3 md:h-2 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-cyan-500">
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm mb-2"><span class="text-gray-300">Gross Profit Margin on Those Jobs</span><span class="text-emerald-400 font-mono font-bold"><span id="val-hw-margin">55</span>%</span></div>
+                                    <input type="range" id="slider-hw-margin" min="20" max="85" step="5" value="55" class="w-full h-3 md:h-2 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-emerald-500">
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm mb-2"><span class="text-gray-300">Equipment Lease Payment</span><span class="text-purple-400 font-mono font-bold">$<span id="val-hw-lease">115</span>/mo</span></div>
+                                    <p class="text-xs text-gray-500 mb-2">Use your expected bundled lease payment here.</p>
+                                    <input type="range" id="slider-hw-lease" min="55" max="350" step="5" value="115" class="w-full h-3 md:h-2 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-purple-500">
+                                </div>
+                                <div class="pt-4 border-t border-white/10">
+                                    <div class="flex justify-between text-sm mb-2"><span class="text-gray-300">Variable Cost / Consumables</span><span class="text-red-400 font-mono font-bold"><span id="val-hw-variable">15</span>%</span></div>
+                                    <p class="text-xs text-gray-500 mb-2">Filters, fluids, disposables, and related variable costs.</p>
+                                    <input type="range" id="slider-hw-variable" min="5" max="45" step="5" value="15" class="w-full h-3 md:h-2 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-red-500">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="lg:w-1/2 flex flex-col gap-5">
+                            <div class="bg-amber-900/10 border border-amber-500/20 rounded-2xl p-6 text-center relative overflow-hidden flex-1 flex flex-col justify-center">
+                                <div class="absolute top-0 right-0 p-4 opacity-10"><i data-lucide="wrench" class="w-24 h-24 text-amber-400"></i></div>
+                                <span class="text-amber-300 text-xs font-mono tracking-widest uppercase mb-1 relative z-10">Monthly Hardware Jobs</span>
+                                <div class="text-4xl sm:text-5xl font-heading font-bold text-white relative z-10"><span id="out-hw-jobs">18</span> <span class="text-lg text-amber-300 font-sans font-normal">Jobs</span></div>
+                                <p class="text-gray-500 text-xs mt-2 mb-3 relative z-10">Jobs completed with bundled equipment capacity.</p>
+                                <div class="inline-block relative z-10 bg-amber-500/10 border border-amber-500/20 text-amber-300 text-[10px] font-mono px-3 py-1 rounded-full">At $<span id="out-hw-ticket">325</span> per ticket.</div>
+                            </div>
+
+                            <div class="bg-cyan-900/10 border border-cyan-500/20 rounded-2xl p-6 text-center relative overflow-hidden flex-1 flex flex-col justify-center">
+                                <div class="absolute top-0 right-0 p-4 opacity-10"><i data-lucide="banknote" class="w-24 h-24 text-cyan-400"></i></div>
+                                <span class="text-cyan-400 text-xs font-mono tracking-widest uppercase mb-1 relative z-10">Gross Revenue from Hardware Services</span>
+                                <div class="text-4xl sm:text-5xl font-heading font-bold text-white relative z-10">$<span id="out-hw-gross">5,850</span></div>
+                                <div class="mt-2 flex items-center justify-center gap-2 text-xs text-gray-400 font-medium relative z-10">Top-line before margin and lease deductions</div>
+                            </div>
+
+                            <div class="bg-gradient-to-br from-[#1A1407] to-[#120D26] border border-amber-500/40 rounded-2xl p-6 text-center relative overflow-hidden flex-1 flex flex-col justify-center shadow-[0_0_40px_rgba(245,158,11,0.15)] group">
+                                <div class="absolute inset-0 bg-gradient-to-tr from-amber-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                <div class="absolute top-0 right-0 p-4 opacity-10"><i data-lucide="sparkles" class="w-24 h-24 text-amber-300"></i></div>
+                                <span class="text-amber-300 text-xs font-mono tracking-widest uppercase mb-1 relative z-10">Estimated Net Hardware Profit</span>
+                                <div class="text-5xl sm:text-6xl font-heading font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-yellow-200 relative z-10">$<span id="out-hw-profit">2,616</span></div>
+                                <div class="mt-3 relative z-10">
+                                    <p class="text-[10px] sm:text-[11px] text-gray-400 font-mono">After <span id="out-hw-costs">-$3,119</span> margin-adjusted costs & <span id="out-hw-lease">-$115</span> lease payment.</p>
+                                    <div class="inline-block mt-2 bg-amber-500/10 border border-amber-500/20 text-amber-200 text-xs font-bold px-3 py-1 rounded-full"><span id="out-hw-roi">22.7</span>x lease ROI</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 
                 <div class="text-center mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
                      <button onclick="navigate('checkout')" class="px-8 py-4 bg-primary text-white rounded-lg font-bold text-lg hover:bg-primaryGlow transition-colors shadow-[0_0_30px_rgba(59,130,246,0.3)]">
@@ -1975,6 +2039,14 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
         
         let currentPlatformCost = 299;
 
+        const hardwareSliders = {
+            ticket: document.getElementById('slider-hw-ticket'),
+            jobs: document.getElementById('slider-hw-jobs'),
+            margin: document.getElementById('slider-hw-margin'),
+            lease: document.getElementById('slider-hw-lease'),
+            variable: document.getElementById('slider-hw-variable')
+        };
+
         function calculateROI() {
             const rate = parseFloat(sliders.rate.value);
             const hours = parseFloat(sliders.hours.value);
@@ -2024,6 +2096,42 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
             }
         }
         Object.values(sliders).forEach(s => s?.addEventListener('input', calculateROI));
+
+        function calculateHardwareROI() {
+            const ticket = parseFloat(hardwareSliders.ticket?.value || 0);
+            const jobs = parseInt(hardwareSliders.jobs?.value || 0, 10);
+            const marginPct = parseFloat(hardwareSliders.margin?.value || 0) / 100;
+            const leaseCost = parseFloat(hardwareSliders.lease?.value || 0);
+            const variablePct = parseFloat(hardwareSliders.variable?.value || 0) / 100;
+
+            const grossRevenue = jobs * ticket;
+            const grossProfit = grossRevenue * marginPct;
+            const variableCosts = grossRevenue * variablePct;
+            const totalCosts = (grossRevenue - grossProfit) + variableCosts;
+            const netProfit = Math.max(0, grossProfit - variableCosts - leaseCost);
+            const roi = leaseCost > 0 ? netProfit / leaseCost : 0;
+
+            const setText = (id, value) => {
+                const el = document.getElementById(id);
+                if (el) el.innerText = value;
+            };
+
+            setText('val-hw-ticket', ticket.toFixed(0));
+            setText('val-hw-jobs', jobs.toString());
+            setText('val-hw-margin', (marginPct * 100).toFixed(0));
+            setText('val-hw-lease', leaseCost.toFixed(0));
+            setText('val-hw-variable', (variablePct * 100).toFixed(0));
+
+            setText('out-hw-jobs', jobs.toString());
+            setText('out-hw-ticket', ticket.toFixed(0));
+            setText('out-hw-gross', Math.round(grossRevenue).toLocaleString());
+            setText('out-hw-profit', Math.round(netProfit).toLocaleString());
+            setText('out-hw-costs', `-$${Math.round(totalCosts).toLocaleString()}`);
+            setText('out-hw-lease', `-$${Math.round(leaseCost).toLocaleString()}`);
+            setText('out-hw-roi', roi.toFixed(1));
+        }
+
+        Object.values(hardwareSliders).forEach(s => s?.addEventListener('input', calculateHardwareROI));
 
         // Plan Switching
         function setPaymentMode(mode, btn) {
@@ -2166,6 +2274,7 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
         // Initialize
         updateTrend('nashville', document.getElementById('btn-nashville'));
         calculateROI();
+        calculateHardwareROI();
 
         // ==========================================
         // STRIPE CHECKOUT LOGIC
