@@ -177,6 +177,26 @@
             opacity: 1;
             transform: translateY(0);
         }
+        
+        /* Side-by-side layout for home and hardware */
+        .page-duo-wrapper {
+            display: flex;
+            gap: 2rem;
+            width: 100%;
+        }
+        .page-duo-wrapper .page-view {
+            flex: 1;
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        @media (max-width: 1280px) {
+            .page-duo-wrapper {
+                flex-direction: column;
+                gap: 3rem;
+            }
+        }
 
         @keyframes page-gradient-flow {
             0% { background-position: 0% 50%; }
@@ -440,6 +460,8 @@
     <!-- Main Content Area -->
     <main class="flex-grow pt-28 pb-20 w-full px-4 sm:px-6 xl:px-10 2xl:px-16 relative">
 
+        <!-- Home and Hardware Side-by-Side Wrapper -->
+        <div class="page-duo-wrapper">
         <!-- ==========================================
              PAGE 1: HOME / LANDING 
         =========================================== -->
@@ -958,6 +980,7 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                 </div>
             </div>
         </section>
+        </div><!-- End page-duo-wrapper -->
 
         <!-- ==========================================
              PAGE 4: ECONOMICS (PROMO ADDED)
@@ -1893,10 +1916,23 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
             document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(link => {
                 const isComingSoon = link.getAttribute('href') === '#coming-soon';
                 if (!isComingSoon) {
-                    link.classList.remove('text-white', 'active', 'text-blue-400', 'text-purple-400');
+                    link.classList.remove('text-white', 'active', 'text-blue-400', 'text-purple-400', 'text-green-400');
                 }
-                if(link.getAttribute('href') === `#${pageId}` && !isComingSoon) {
-                    const activeColor = pageId === 'trends' ? 'text-blue-400' : 'text-white';
+                
+                // When viewing home or hardware, show the appropriate nav link as active
+                let shouldBeActive = false;
+                if (pageId === 'home' && link.getAttribute('href') === '#home') {
+                    shouldBeActive = true;
+                } else if (pageId === 'hardware' && link.getAttribute('href') === '#hardware') {
+                    shouldBeActive = true;
+                } else if (pageId !== 'home' && pageId !== 'hardware' && link.getAttribute('href') === `#${pageId}`) {
+                    shouldBeActive = true;
+                }
+                
+                if(shouldBeActive && !isComingSoon) {
+                    let activeColor = 'text-white';
+                    if (pageId === 'trends') activeColor = 'text-blue-400';
+                    else if (pageId === 'hardware') activeColor = 'text-green-400';
                     link.classList.add(activeColor, 'active');
                 } else if (isComingSoon) {
                     // Always keep Coming Soon purple and pulsing
@@ -1906,8 +1942,18 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
             
             // Switch Page
             document.querySelectorAll('.page-view').forEach(page => page.classList.remove('active'));
-            const target = document.getElementById(`page-${pageId}`);
-            if(target) { target.classList.add('active'); triggerReveals(); }
+            
+            // Special handling for home and hardware - show both together
+            if (pageId === 'home' || pageId === 'hardware') {
+                const homeTarget = document.getElementById('page-home');
+                const hardwareTarget = document.getElementById('page-hardware');
+                if(homeTarget) homeTarget.classList.add('active');
+                if(hardwareTarget) hardwareTarget.classList.add('active');
+                triggerReveals();
+            } else {
+                const target = document.getElementById(`page-${pageId}`);
+                if(target) { target.classList.add('active'); triggerReveals(); }
+            }
             window.scrollTo(0, 0);
 
             // WIDGET ISOLATION: Hide widget on all pages except 'home'
