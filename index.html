@@ -40,14 +40,16 @@
                         { '24': '$283.33 / mo', '36': '$188.89 / mo', '60': '$113.33 / mo' },
                         { '24': '$229.17 / mo', '36': '$152.78 / mo', '60': '$91.67 / mo' },
                         { '24': '$625.00 / mo', '36': '$416.67 / mo', '60': '$250.00 / mo' },
-                        { '24': '$133.33 / mo',  '36': '$88.89 / mo',  '60': '$53.33 / mo' }
+                        { '24': '$133.33 / mo',  '36': '$88.89 / mo',  '60': '$53.33 / mo' },
+                        { '24': '$225.00 / mo',  '36': '$150.00 / mo',  '60': '$90.00 / mo' }
                     ];
                     // Only update the large, bold price
                     const priceEls = [
                         document.querySelector('.hardware-price[data-card="0"]'),
                         document.querySelector('.hardware-price[data-card="1"]'),
                         document.querySelector('.hardware-price[data-card="2"]'),
-                        document.querySelector('.hardware-price[data-card="3"]')
+                        document.querySelector('.hardware-price[data-card="3"]'),
+                        document.querySelector('.hardware-price[data-card="4"]')
                     ];
                     let selectedTerm = '60';
 
@@ -920,6 +922,26 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                         <div class="text-xs text-gray-400 mb-4" style="margin-top:4px;">Requires active VETRA AI Booking Widget</div>
                     </div>
                     <button class="bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold text-base shadow-lg transition-all fintech-btn" onclick="openEligibilityForm('Autel MaxiIM IM608 Pro II')">Check Lease Eligibility</button>
+                </div>
+                <!-- Card 5: The Fluid Specialist -->
+                <div class="glow-card rounded-2xl border border-amber-500/20 bg-amber-900/10 p-8 flex flex-col items-center fintech-card">
+                    <div class="w-40 h-40 mb-6 rounded-2xl border border-amber-400/30 bg-amber-500/10 flex items-center justify-center" style="box-shadow: 0 8px 32px 0 #F59E0B66, 0 2px 8px 0 #0008;">
+                        <i data-lucide="droplets" class="w-16 h-16 text-amber-300"></i>
+                    </div>
+                    <h2 class="font-heading text-2xl font-bold text-white mb-2 text-center">MotorVac TransTech IV+ Plus<br><span class="text-amber-400">The Fluid Specialist</span></h2>
+                    <ul class="text-gray-300 text-base mb-2 list-disc list-inside space-y-1">
+                        <li>Add profitable fluid exchange services in-house.</li>
+                        <li>Drive repeat maintenance revenue.</li>
+                        <li>Fast payback with high-frequency services.</li>
+                    </ul>
+                    <div class="text-amber-400 font-mono text-2xl font-bold mb-2">Retail Cost: ~$5,500</div>
+                    <div class="text-amber-300 font-semibold mb-2">Capture transmission service revenue you are currently missing.</div>
+                    <div class="flex flex-col items-center w-full mb-4">
+                        <div class="text-lg font-semibold text-gray-500 mb-2"><span style="text-decoration: line-through;">$5,500 Upfront CapEx</span></div>
+                        <div class="text-5xl md:text-6xl font-extrabold hardware-price mb-2" data-card="4" style="color:#F59E0B; text-shadow:0 0 16px #F59E0BAA;">$90.00 / mo</div>
+                        <div class="text-xs text-gray-400 mb-4" style="margin-top:4px;">Requires active VETRA AI Booking Widget</div>
+                    </div>
+                    <button class="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-lg font-semibold text-base shadow-lg transition-all fintech-btn" onclick="openEligibilityForm('MotorVac TransTech IV+ Plus')">Check Lease Eligibility</button>
                 </div>
             </div>
                     </div>
