@@ -2116,12 +2116,15 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
             const prefillName = nameFromForm || storedName;
             const prefillEmail = emailFromLeadForm || emailFromCheckout || storedEmail;
 
-            const calendlyUrl = new URL(CALENDLY_BASE_URL);
-            if (prefillName) calendlyUrl.searchParams.set('name', prefillName);
-            if (prefillEmail) calendlyUrl.searchParams.set('email', prefillEmail);
-
             const iframe = document.getElementById('scheduler-iframe');
-            if (iframe) iframe.src = calendlyUrl.toString();
+            if (iframe && (prefillName || prefillEmail)) {
+                // Only reload if we have prefill data to inject
+                const calendlyUrl = new URL(CALENDLY_BASE_URL);
+                if (prefillName) calendlyUrl.searchParams.set('name', prefillName);
+                if (prefillEmail) calendlyUrl.searchParams.set('email', prefillEmail);
+                iframe.src = calendlyUrl.toString();
+            }
+            // Otherwise the iframe is already preloaded from page load — open instantly
 
             const modal = document.getElementById('scheduler-modal');
             if (modal) modal.classList.remove('hidden');
@@ -2278,14 +2281,6 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
             }, 100);
         }
         triggerReveals();
-
-        // Auto-open Book Demo modal on page load (1.5s delay)
-        setTimeout(function() {
-            if (!sessionStorage.getItem('vetra_demo_shown')) {
-                sessionStorage.setItem('vetra_demo_shown', '1');
-                openScheduler();
-            }
-        }, 1500);
 
         // ROI/Economics Logic
         const sliders = { rate: document.getElementById('slider-rate'), hours: document.getElementById('slider-hours'), missed: document.getElementById('slider-missed'), conversion: document.getElementById('slider-conversion'), overhead: document.getElementById('slider-overhead') };
