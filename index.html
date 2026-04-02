@@ -457,7 +457,6 @@
                 <a href="#home" onclick="navigate('home')" class="hover:text-white transition-colors nav-link active">Home</a>
                 <a href="#checkout" onclick="navigate('checkout')" class="hover:text-white transition-colors nav-link">Pricing</a>
                 <a href="#trends" onclick="navigate('trends')" class="hover:text-white transition-colors nav-link text-blue-400">Live Field Data</a>
-                <a href="#security" onclick="navigate('security')" class="hover:text-white transition-colors nav-link">Security</a>
                 <a href="#hardware" onclick="navigate('hardware')" class="hover:text-white transition-colors nav-link text-green-400">Hardware</a>
             </div>
 
@@ -482,7 +481,6 @@
             <a href="#roi" onclick="navigate('roi')" class="mobile-nav-link text-gray-400 hover:text-white font-medium text-lg border-b border-white/5 pb-4 transition-colors">Economics</a>
             <a href="#checkout" onclick="navigate('checkout')" class="mobile-nav-link text-gray-400 hover:text-white font-medium text-lg border-b border-white/5 pb-4 transition-colors">Pricing</a>
             <a href="#trends" onclick="navigate('trends')" class="mobile-nav-link text-blue-400 hover:text-blue-300 font-medium text-lg border-b border-white/5 pb-4 transition-colors">Live Field Data</a>
-            <a href="#security" onclick="navigate('security')" class="mobile-nav-link text-gray-400 hover:text-white font-medium text-lg border-b border-white/5 pb-4 transition-colors">Security</a>
             <a href="#hardware" onclick="navigate('hardware')" class="mobile-nav-link text-green-400 hover:text-green-300 font-medium text-lg border-b border-white/5 pb-4 transition-colors">Hardware</a>
             <button onclick="openScheduler()" class="bg-primary text-white px-5 py-4 rounded-xl font-bold text-base hover:bg-primaryGlow transition-colors mt-4 text-center shadow-[0_0_20px_rgba(59,130,246,0.3)] active:scale-95">
                 Book a Live Demo
@@ -1405,104 +1403,6 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                 </div>
 
             </div>
-        </section>
-
-        <!-- ==========================================
-             PAGE 6: SECURITY
-        =========================================== -->
-        <section id="page-security" class="page-view page-aura">
-            <div class="w-full text-center pt-12 pb-16 reveal">
-                <div class="w-16 h-16 mx-auto bg-emerald-500/10 rounded-full flex items-center justify-center border border-emerald-500/20 mb-6">
-                    <i data-lucide="shield" class="w-8 h-8 text-emerald-400"></i>
-                </div>
-                <h1 class="font-heading text-4xl md:text-5xl font-bold text-white mb-6">Military-Grade <span class="text-emerald-400">Isolation.</span></h1>
-                <p class="text-lg text-gray-400 font-light">Data processed locally on hardware we physically control. Never sent to public clouds.</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
-                <div class="glow-card p-8 rounded-xl text-center reveal border-t-2 border-t-emerald-500/50">
-                    <h4 class="text-lg font-bold text-white mb-3">100% Air-Gapped</h4>
-                    <p class="text-sm text-gray-400 leading-relaxed">The LLM engine has restricted outbound access. Customer data is never used to train global models.</p>
-                </div>
-                <div class="glow-card p-8 rounded-xl text-center reveal border-t-2 border-t-blue-500/50">
-                    <h4 class="text-lg font-bold text-white mb-3">Cloudflare Tunnels</h4>
-                    <p class="text-sm text-gray-400 leading-relaxed">Traffic bypasses public DNS and routes through encrypted Zero Trust Tunnels directly into our node.</p>
-                </div>
-                <div class="glow-card p-8 rounded-xl text-center reveal border-t-2 border-t-purple-500/50">
-                    <h4 class="text-lg font-bold text-white mb-3">Ephemeral Memory</h4>
-                    <p class="text-sm text-gray-400 leading-relaxed">Short-term memory is wiped the moment the session ends. Zero persistent storage of PII.</p>
-                </div>
-            </div>
-
-            <!-- The Reality Check: Cloud vs Edge -->
-            <div class="bg-black/40 border border-white/5 rounded-3xl p-8 lg:p-12 mb-20 reveal overflow-hidden relative">
-                <div class="absolute inset-0 w-full h-full opacity-10 pointer-events-none">
-                    <div class="absolute top-[-50%] left-[50%] w-[10px] h-[200%] bg-white transform rotate-45 blur-[2px]"></div>
-                </div>
-
-                <div class="text-center mb-12 relative z-10">
-                    <h2 class="font-heading text-3xl font-bold text-white mb-3">The Liability of Cloud AI</h2>
-                    <p class="text-gray-400 font-light w-full">Why 99% of generic "AI Service Advisors" are walking data privacy lawsuits waiting to happen.</p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 relative z-10">
-                    <!-- The Cloud Way -->
-                    <div class="bg-red-900/10 border border-red-500/20 rounded-2xl p-8 relative group">
-                        <div class="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-40 transition-opacity">
-                            <i data-lucide="server-crash" class="w-24 h-24 text-red-500"></i>
-                        </div>
-                        <h4 class="text-xl font-bold text-red-400 mb-6 flex items-center gap-3">
-                            <i data-lucide="x-circle" class="w-6 h-6"></i> The SaaS Wrapper Trap
-                        </h4>
-                        <ul class="space-y-5 text-gray-300 relative z-10">
-                            <li class="flex items-start gap-3">
-                                <div class="w-1.5 h-1.5 rounded-full bg-red-500 mt-2 shrink-0"></div>
-                                <p><strong class="text-white">Data Surrender:</strong> When a customer uploads a photo containing a license plate or VIN to a standard bot, it is sent directly to OpenAI's public API servers.</p>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <div class="w-1.5 h-1.5 rounded-full bg-red-500 mt-2 shrink-0"></div>
-                                <p><strong class="text-white">Shadow Training:</strong> Read the fine print. Many third-party wrappers legally allow your shop's proprietary labor rates to train their future global models.</p>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <div class="w-1.5 h-1.5 rounded-full bg-red-500 mt-2 shrink-0"></div>
-                                <p><strong class="text-white">Shared Vulnerability:</strong> If a major cloud provider experiences a data breach, your customers' phone numbers and repair histories are exposed.</p>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- The Apex Way -->
-                    <div class="bg-emerald-900/10 border border-emerald-500/20 rounded-2xl p-8 relative group shadow-[0_0_30px_rgba(16,185,129,0.05)]">
-                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                            <i data-lucide="shield-check" class="w-24 h-24 text-emerald-500"></i>
-                        </div>
-                        <h4 class="text-xl font-bold text-emerald-400 mb-6 flex items-center gap-3">
-                            <i data-lucide="check-circle-2" class="w-6 h-6"></i> The VETRA Edge Guarantee
-                        </h4>
-                        <ul class="space-y-5 text-gray-300 relative z-10">
-                            <li class="flex items-start gap-3">
-                                <div class="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 shrink-0"></div>
-                                <p><strong class="text-white">Total Sovereignty:</strong> Every text token generated, every photo analyzed, and every phone number captured stays entirely on our dedicated hardware.</p>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <div class="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 shrink-0"></div>
-                                <p><strong class="text-white">Proprietary Protection:</strong> Your labor matrix, parts margins, and customer lists are cryptographically walled off. We never use your shop's data to train anything.</p>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <div class="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 shrink-0"></div>
-                                <p><strong class="text-white">Zero Third-Party Risk:</strong> Because we process locally and do not rely on standard SaaS APIs, you are completely shielded from corporate data breaches.</p>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Bottom CTA -->
-            <div class="text-center pb-12 reveal">
-                <button onclick="openScheduler()" class="px-8 py-4 bg-white text-black rounded-lg font-bold text-lg hover:bg-gray-200 transition-colors shadow-[0_0_30px_rgba(255,255,255,0.2)] flex items-center gap-2 mx-auto">
-                    Secure Your Territory Today <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                </button>
-            </div>
-
         </section>
 
         <!-- ==========================================
