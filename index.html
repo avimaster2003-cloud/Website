@@ -1148,7 +1148,7 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                                         <button type="button" onclick="setHardwareTerm(36, this)" data-term="36" class="hw-term-btn px-4 py-2 rounded-lg border border-white/10 bg-surface hover:bg-white/5 text-sm font-semibold text-gray-300 transition-colors">36 Mo</button>
                                         <button type="button" onclick="setHardwareTerm(60, this)" data-term="60" class="hw-term-btn px-4 py-2 rounded-lg border border-emerald-500/30 bg-emerald-500/10 text-sm font-semibold text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.2)] transition-colors">60 Mo</button>
                                     </div>
-                                    <p class="text-xs text-gray-500 mt-3">If a second product is selected, the higher-cost unit gets a 5% APR adjustment.</p>
+                                    <p class="text-xs text-gray-500 mt-3">If a second product is selected, the higher-cost unit gets a 12% APR adjustment.</p>
                                 </div>
 
                                 <div class="rounded-2xl border border-purple-400/20 bg-black/30 p-4">
@@ -1157,7 +1157,7 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                                         <div class="text-right text-purple-300 font-mono font-bold">$<span id="val-hw-base-lease">115</span>/mo</div>
                                         <div class="text-gray-300">APR Applied To</div>
                                         <div class="text-right text-purple-300 font-mono font-bold"><span id="val-hw-apr-target">Primary Unit</span></div>
-                                        <div class="text-gray-300">5% APR Add-On</div>
+                                        <div class="text-gray-300">12% APR Add-On</div>
                                         <div class="text-right text-purple-300 font-mono font-bold">+$<span id="val-hw-apr-add">0</span>/mo</div>
                                         <div class="text-gray-100 font-semibold">Total Lease Payment</div>
                                         <div class="text-right text-emerald-300 font-mono font-bold">$<span id="val-hw-lease">115</span>/mo</div>
@@ -1165,8 +1165,8 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                                 </div>
 
                                 <div>
-                                    <div class="flex justify-between text-sm mb-2"><span class="text-gray-300">Average Ticket per Hardware-Enabled Job</span><span class="text-amber-300 font-mono font-bold">$<span id="val-hw-ticket">325</span></span></div>
-                                    <input type="range" id="slider-hw-ticket" min="100" max="900" step="25" value="325" class="w-full h-3 md:h-2 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                                    <div class="flex justify-between text-sm mb-2"><span class="text-gray-300">Average Ticket per Hardware-Enabled Job</span><span class="text-amber-300 font-mono font-bold">$<span id="val-hw-ticket">200</span></span></div>
+                                    <input type="range" id="slider-hw-ticket" min="100" max="900" step="25" value="200" class="w-full h-3 md:h-2 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-amber-500">
                                 </div>
                                 <div>
                                     <div class="flex justify-between text-sm mb-2"><span class="text-gray-300">Monthly Jobs Closed with New Equipment</span><span class="text-cyan-400 font-mono font-bold"><span id="val-hw-jobs">18</span> jobs</span></div>
@@ -1190,7 +1190,7 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                                 <span class="text-amber-300 text-xs font-mono tracking-widest uppercase mb-1 relative z-10">Monthly Hardware Jobs</span>
                                 <div class="text-4xl sm:text-5xl font-heading font-bold text-white relative z-10"><span id="out-hw-jobs">18</span> <span class="text-lg text-amber-300 font-sans font-normal">Jobs</span></div>
                                 <p class="text-gray-500 text-xs mt-2 mb-3 relative z-10">Jobs completed with bundled equipment capacity.</p>
-                                <div class="inline-block relative z-10 bg-amber-500/10 border border-amber-500/20 text-amber-300 text-[10px] font-mono px-3 py-1 rounded-full">At $<span id="out-hw-ticket">325</span> per ticket.</div>
+                                <div class="inline-block relative z-10 bg-amber-500/10 border border-amber-500/20 text-amber-300 text-[10px] font-mono px-3 py-1 rounded-full">At $<span id="out-hw-ticket">200</span> per ticket.</div>
                             </div>
 
                             <div class="bg-cyan-900/10 border border-cyan-500/20 rounded-2xl p-6 text-center relative overflow-hidden flex-1 flex flex-col justify-center">
@@ -2175,10 +2175,10 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
             if (secondary) {
                 if (secondary.price > primary.price) {
                     aprTargetLabel = 'Second Unit';
-                    aprAddOn = secondaryBase * 0.05;
+                    aprAddOn = secondaryBase * 0.12;
                 } else {
                     aprTargetLabel = 'Primary Unit';
-                    aprAddOn = primaryBase * 0.05;
+                    aprAddOn = primaryBase * 0.12;
                 }
             } else {
                 aprTargetLabel = 'No APR Applied';
