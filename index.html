@@ -1088,8 +1088,8 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                                         <div class="text-xs text-gray-500 mt-1">Select your infrastructure tier.</div>
                                     </div>
                                     <div class="text-right">
-                                        <div class="text-gray-500 text-xs line-through mb-0.5" id="val-platform-old-cost">$399</div>
-                                        <div class="text-blue-400 font-mono font-bold text-xl leading-none">$<span id="val-platform-cost">299</span><span class="text-sm text-gray-500 font-normal">/mo</span></div>
+                                        <div class="text-gray-500 text-xs line-through mb-0.5" id="val-platform-old-cost">$499</div>
+                                        <div class="text-blue-400 font-mono font-bold text-xl leading-none">$<span id="val-platform-cost">399</span><span class="text-sm text-gray-500 font-normal">/mo</span></div>
                                     </div>
                                 </div>
                                 
@@ -1100,43 +1100,43 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
 
                                 <!-- Monthly Pricing Grid -->
                                 <div class="grid grid-cols-3 gap-2 sm:gap-3" id="term-grid-monthly">
-                                    <div onclick="setPlan(299, 399, this)" id="btn-default-monthly" class="plan-btn px-2 py-3 rounded-xl border border-blue-500/40 bg-blue-500/10 text-center cursor-pointer shadow-[0_0_20px_rgba(59,130,246,0.15)]">
+                                    <div onclick="setPlan(399, 499, this)" id="btn-default-monthly" class="plan-btn px-2 py-3 rounded-xl border border-blue-500/40 bg-blue-500/10 text-center cursor-pointer shadow-[0_0_20px_rgba(59,130,246,0.15)]">
                                         <div class="text-[9px] sm:text-[10px] text-blue-400/80 uppercase mb-1 font-bold">No Contract</div>
+                                        <div class="flex items-baseline justify-center gap-1.5">
+                                            <span class="text-[10px] text-gray-500 line-through">$499</span>
+                                            <span class="text-lg sm:text-xl font-bold text-white">$399</span>
+                                        </div>
+                                    </div>
+                                    <div onclick="setPlan(349, 449, this)" class="plan-btn px-2 py-3 rounded-xl border border-white/10 bg-black/40 text-center cursor-pointer hover:bg-white/5 transition-all">
+                                        <div class="text-[9px] sm:text-[10px] text-gray-500 uppercase mb-1 font-bold">3-Month</div>
+                                        <div class="flex items-baseline justify-center gap-1.5">
+                                            <span class="text-[10px] text-gray-500 line-through">$449</span>
+                                            <span class="text-lg sm:text-xl font-bold text-white">$349</span>
+                                        </div>
+                                    </div>
+                                    <div onclick="setPlan(299, 399, this)" class="plan-btn px-2 py-3 rounded-xl border border-white/10 bg-black/40 text-center cursor-pointer hover:bg-white/5 transition-all">
+                                        <div class="text-[9px] sm:text-[10px] text-gray-500 uppercase mb-1 font-bold">12-Month</div>
                                         <div class="flex items-baseline justify-center gap-1.5">
                                             <span class="text-[10px] text-gray-500 line-through">$399</span>
                                             <span class="text-lg sm:text-xl font-bold text-white">$299</span>
-                                        </div>
-                                    </div>
-                                    <div onclick="setPlan(249, 349, this)" class="plan-btn px-2 py-3 rounded-xl border border-white/10 bg-black/40 text-center cursor-pointer hover:bg-white/5 transition-all">
-                                        <div class="text-[9px] sm:text-[10px] text-gray-500 uppercase mb-1 font-bold">3-Month</div>
-                                        <div class="flex items-baseline justify-center gap-1.5">
-                                            <span class="text-[10px] text-gray-500 line-through">$349</span>
-                                            <span class="text-lg sm:text-xl font-bold text-white">$249</span>
-                                        </div>
-                                    </div>
-                                    <div onclick="setPlan(199, 299, this)" class="plan-btn px-2 py-3 rounded-xl border border-white/10 bg-black/40 text-center cursor-pointer hover:bg-white/5 transition-all">
-                                        <div class="text-[9px] sm:text-[10px] text-gray-500 uppercase mb-1 font-bold">12-Month</div>
-                                        <div class="flex items-baseline justify-center gap-1.5">
-                                            <span class="text-[10px] text-gray-500 line-through">$299</span>
-                                            <span class="text-lg sm:text-xl font-bold text-white">$199</span>
                                         </div>
                                     </div>
                                 </div>
                                 
                                 <!-- Upfront Pricing Grid (Updated to 2 Options) -->
                                 <div class="grid grid-cols-2 gap-3 sm:gap-4 hidden" id="term-grid-upfront">
-                                    <div onclick="setPlan(225, 249, this)" class="plan-btn px-2 py-3 rounded-xl border border-white/10 bg-black/40 text-center cursor-pointer hover:bg-white/5 transition-all">
+                                    <div onclick="setPlan(325, 349, this)" class="plan-btn px-2 py-3 rounded-xl border border-white/10 bg-black/40 text-center cursor-pointer hover:bg-white/5 transition-all">
                                         <div class="text-[9px] sm:text-[10px] text-gray-500 uppercase mb-1 font-bold">3-Month</div>
                                         <div class="flex items-baseline justify-center gap-1">
-                                            <span class="text-[10px] text-gray-500 line-through">$249</span>
-                                            <span class="text-lg sm:text-xl font-bold text-emerald-400">$225<span class="text-[10px] font-sans text-gray-500">/mo</span></span>
+                                            <span class="text-[10px] text-gray-500 line-through">$349</span>
+                                            <span class="text-lg sm:text-xl font-bold text-emerald-400">$325<span class="text-[10px] font-sans text-gray-500">/mo</span></span>
                                         </div>
                                     </div>
-                                    <div onclick="setPlan(150, 199, this)" id="btn-default-upfront" class="plan-btn px-2 py-3 rounded-xl border border-emerald-500/40 bg-emerald-500/10 text-center cursor-pointer shadow-[0_0_20px_rgba(16,185,129,0.15)]">
+                                    <div onclick="setPlan(250, 299, this)" id="btn-default-upfront" class="plan-btn px-2 py-3 rounded-xl border border-emerald-500/40 bg-emerald-500/10 text-center cursor-pointer shadow-[0_0_20px_rgba(16,185,129,0.15)]">
                                         <div class="text-[9px] sm:text-[10px] text-emerald-400/80 uppercase mb-1 font-bold">12-Month</div>
                                         <div class="flex items-baseline justify-center gap-1">
-                                            <span class="text-[10px] text-gray-500 line-through">$199</span>
-                                            <span class="text-lg sm:text-xl font-bold text-emerald-400">$150<span class="text-[10px] font-sans text-gray-500">/mo</span></span>
+                                            <span class="text-[10px] text-gray-500 line-through">$299</span>
+                                            <span class="text-lg sm:text-xl font-bold text-emerald-400">$250<span class="text-[10px] font-sans text-gray-500">/mo</span></span>
                                         </div>
                                     </div>
                                 </div>
@@ -1571,7 +1571,7 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                         <h3 class="text-2xl font-bold text-white mb-2">No Contract</h3>
                         <p class="text-gray-400 text-sm mb-6">Cancel anytime</p>
                         <div class="mb-6">
-                            <div class="text-5xl font-heading font-bold text-white">$299<span class="text-lg text-gray-400 font-normal">/mo</span></div>
+                            <div class="text-5xl font-heading font-bold text-white">$399<span class="text-lg text-gray-400 font-normal">/mo</span></div>
                             <p class="text-gray-500 text-xs mt-2">Billed monthly</p>
                         </div>
                         <button class="w-full py-3 bg-blue-500/20 text-blue-400 rounded-lg font-bold hover:bg-blue-500/30 transition-colors mb-6">Select Plan</button>
@@ -1607,8 +1607,8 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                         <h3 class="text-2xl font-bold text-white mb-2">3-Month Contract</h3>
                         <p class="text-gray-400 text-sm mb-6">Short-term commitment, billed monthly</p>
                         <div class="mb-6">
-                            <div class="text-5xl font-heading font-bold text-cyan-400">$249<span class="text-lg text-gray-400 font-normal">/mo</span></div>
-                            <p class="text-gray-500 text-xs mt-2">Total over term: $747</p>
+                            <div class="text-5xl font-heading font-bold text-cyan-400">$349<span class="text-lg text-gray-400 font-normal">/mo</span></div>
+                            <p class="text-gray-500 text-xs mt-2">Total over term: $1,047</p>
                         </div>
                         <button class="w-full py-3 bg-cyan-500/20 text-cyan-400 rounded-lg font-bold hover:bg-cyan-500/30 transition-colors mb-6">Select Plan</button>
                         <ul class="tier-feature-list space-y-3 text-gray-300 text-sm">
@@ -1639,8 +1639,8 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                         <h3 class="text-2xl font-bold text-white mb-2">3 Month Upfront</h3>
                         <p class="text-gray-400 text-sm mb-6">One ACH payment upfront</p>
                         <div class="mb-6">
-                            <div class="text-5xl font-heading font-bold text-emerald-400">$675</div>
-                            <p class="text-gray-500 text-xs mt-2">Equivalent to $225 / mo for 3 months</p>
+                            <div class="text-5xl font-heading font-bold text-emerald-400">$975</div>
+                            <p class="text-gray-500 text-xs mt-2">Equivalent to $325 / mo for 3 months</p>
                         </div>
                         <button class="w-full py-3 bg-emerald-500/20 text-emerald-400 rounded-lg font-bold hover:bg-emerald-500/30 transition-colors mb-6">Select Plan</button>
                         <ul class="tier-feature-list space-y-3 text-gray-300 text-sm">
@@ -1674,8 +1674,8 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                         <h3 class="text-2xl font-bold text-white mb-2">12-Month Contract</h3>
                         <p class="text-gray-400 text-sm mb-6">Lowest monthly software rate, billed monthly</p>
                         <div class="mb-6">
-                            <div class="text-5xl font-heading font-bold text-indigo-400">$199<span class="text-lg text-gray-400 font-normal">/mo</span></div>
-                            <p class="text-gray-500 text-xs mt-2">Total over term: $2,388</p>
+                            <div class="text-5xl font-heading font-bold text-indigo-400">$299<span class="text-lg text-gray-400 font-normal">/mo</span></div>
+                            <p class="text-gray-500 text-xs mt-2">Total over term: $3,588</p>
                         </div>
                         <button class="w-full py-3 bg-indigo-500/20 text-indigo-400 rounded-lg font-bold hover:bg-indigo-500/30 transition-colors mb-6">Select Plan</button>
                         <ul class="tier-feature-list space-y-3 text-gray-300 text-sm">
@@ -1706,8 +1706,8 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                         <h3 class="text-2xl font-bold text-white mb-2">12 Month Upfront</h3>
                         <p class="text-gray-400 text-sm mb-6">One ACH payment upfront</p>
                         <div class="mb-6">
-                            <div class="text-5xl font-heading font-bold text-purple-400">$1,800</div>
-                            <p class="text-gray-500 text-xs mt-2">Equivalent to $150 / mo for 12 months</p>
+                            <div class="text-5xl font-heading font-bold text-purple-400">$3,000</div>
+                            <p class="text-gray-500 text-xs mt-2">Equivalent to $250 / mo for 12 months</p>
                         </div>
                         <button class="w-full py-3 bg-purple-500/20 text-purple-400 rounded-lg font-bold hover:bg-purple-500/30 transition-colors mb-6">Select Plan</button>
                         <ul class="tier-feature-list space-y-3 text-gray-300 text-sm">
@@ -2283,7 +2283,7 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
         const sliders = { rate: document.getElementById('slider-rate'), hours: document.getElementById('slider-hours'), missed: document.getElementById('slider-missed'), conversion: document.getElementById('slider-conversion'), overhead: document.getElementById('slider-overhead') };
         const outputs = { newROs: document.getElementById('out-new-ros'), profit: document.getElementById('out-profit'), roiMult: document.getElementById('out-roi-mult') };
         
-        let currentPlatformCost = 299;
+        let currentPlatformCost = 399;
 
         const hardwareSliders = {
             ticket: document.getElementById('slider-hw-ticket'),
@@ -2606,34 +2606,34 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
         const tierDetails = {
             'no_contract': {
                 name: 'No Contract',
-                price: '$299 / mo',
-                amount: 29900,
+                price: '$399 / mo',
+                amount: 39900,
                 paymentLink: 'https://buy.stripe.com/aFa6oJfIZd4id0B2NG9MY06'
             },
             'three_month_monthly': {
                 name: '3-Month Contract',
-                price: '$249 / mo (ACH first)',
-                amount: 24900,
+                price: '$349 / mo (ACH first)',
+                amount: 34900,
                 paymentLink: null,
                 usesBackend: true
             },
             'three_month_upfront': {
                 name: '3 Month Upfront',
-                price: '$675 upfront (ACH only)',
-                amount: 67500,
+                price: '$975 upfront (ACH only)',
+                amount: 97500,
                 paymentLink: 'https://buy.stripe.com/00wfZj0O50hwf8J8809MY08'
             },
             'twelve_month_monthly': {
                 name: '12-Month Contract',
-                price: '$199 / mo (ACH first)',
-                amount: 19900,
+                price: '$299 / mo (ACH first)',
+                amount: 29900,
                 paymentLink: null,
                 usesBackend: true
             },
             'twelve_month_upfront': {
                 name: '12 Month Upfront',
-                price: '$1,800 upfront (ACH only)',
-                amount: 180000,
+                price: '$3,000 upfront (ACH only)',
+                amount: 300000,
                 paymentLink: 'https://buy.stripe.com/7sYeVfcwN0hwd0Bag89MY0a'
             }
         };
