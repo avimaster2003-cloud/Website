@@ -19,6 +19,59 @@
     <meta name="twitter:title" content="Vetra | Vision-Model Widget That Books More Auto Repair Jobs">
     <meta name="twitter:description" content="Book more repair jobs with a vision-model website widget that gives customers soft quotes and sends instant SMS lead handoffs to your shop. Includes a 30-day money-back guarantee.">
     
+    <!-- Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "name": "Vetra",
+          "url": "https://usevetra.com",
+          "description": "AI booking widget for auto repair shops. Vision-model quoting, SMS lead handoff, and local hardware processing."
+        },
+        {
+          "@type": "Service",
+          "name": "Vetra AI Booking Widget",
+          "provider": { "@type": "Organization", "name": "Vetra" },
+          "description": "Vision-model website widget that gives soft quotes and instant SMS lead handoffs to auto repair shops.",
+          "areaServed": "US",
+          "serviceType": "Auto Repair AI Lead Capture"
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What's the APR policy on hardware leasing?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Your first leased unit is subsidized at 0% APR. If you add a second unit, a 12% APR applies to whichever unit carries the higher retail price." }
+            },
+            {
+              "@type": "Question",
+              "name": "How fast does setup take?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Most shops are live within 48 hours of checkout. Hardware units ship within 3-5 business days." }
+            },
+            {
+              "@type": "Question",
+              "name": "What are the cancellation terms?",
+              "acceptedAnswer": { "@type": "Answer", "text": "No Contract plans cancel anytime with 14 days notice. The first No Contract month includes a full 30-day money-back guarantee. 3-Month and 12-Month contracts are binding for their term." }
+            },
+            {
+              "@type": "Question",
+              "name": "How is my customer data protected?",
+              "acceptedAnswer": { "@type": "Answer", "text": "All vision-model inference runs locally on the hardware unit in your shop — customer vehicle images never leave your network. We do not sell, share, or train on your customer data." }
+            },
+            {
+              "@type": "Question",
+              "name": "How do I know if I qualify for hardware financing?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Requirements: minimum 6 months in business, active commercial bank account, and a verifiable shop address. Most established independent shops qualify within 24 hours." }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -1611,7 +1664,10 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                     </div>
 
                     <!-- 12 Month Monthly (ACH First) -->
-                    <div id="tier-12m-monthly" class="pricing-tier-card glow-card rounded-2xl p-8 border border-indigo-500/20 hover:border-indigo-400/30 transition-all cursor-pointer group relative" onclick="selectTier(this, 'twelve_month_monthly')">
+                    <div id="tier-12m-monthly" class="pricing-tier-card glow-card rounded-2xl p-8 border border-indigo-500/30 hover:border-indigo-400/50 transition-all cursor-pointer group relative ring-2 ring-indigo-500/30" onclick="selectTier(this, 'twelve_month_monthly')">
+                        <div class="absolute top-0 left-0">
+                            <div class="bg-indigo-500/30 text-indigo-200 text-xs font-bold px-3 py-1 rounded-br-lg rounded-tl-lg tracking-wide">★ MOST POPULAR</div>
+                        </div>
                         <div class="absolute top-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity">
                             <div class="bg-indigo-500/20 text-indigo-300 text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">ACH FIRST</div>
                         </div>
@@ -1716,6 +1772,64 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
 
                 <div class="checkout-mobile-spacer md:hidden"></div>
 
+                <!-- FAQ Accordion -->
+                <div class="max-w-3xl mx-auto mb-12 reveal">
+                    <h3 class="text-2xl font-heading font-bold text-white mb-2 text-center">Common Questions</h3>
+                    <p class="text-sm text-gray-500 text-center mb-8">Everything you need to know before signing up.</p>
+                    <div class="space-y-3" id="faq-accordion">
+                        <!-- Q1 -->
+                        <div class="faq-item glow-card rounded-xl border border-white/10 overflow-hidden">
+                            <button class="faq-toggle w-full px-6 py-4 flex items-center justify-between text-left" onclick="toggleFAQ(this)">
+                                <span class="text-white font-semibold">What's the APR policy on hardware leasing?</span>
+                                <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400 faq-icon transition-transform duration-200 shrink-0"></i>
+                            </button>
+                            <div class="faq-body px-6 pb-5 hidden">
+                                <p class="text-gray-400 text-sm leading-relaxed">Your first leased unit is subsidized at 0% APR — no financing cost on the primary piece of equipment. If you add a second unit, a 12% APR applies to whichever unit carries the higher retail price. This structure lets us subsidize entry-point cost-to-acquire while staying viable on multi-unit deals.</p>
+                            </div>
+                        </div>
+                        <!-- Q2 -->
+                        <div class="faq-item glow-card rounded-xl border border-white/10 overflow-hidden">
+                            <button class="faq-toggle w-full px-6 py-4 flex items-center justify-between text-left" onclick="toggleFAQ(this)">
+                                <span class="text-white font-semibold">How fast does setup take?</span>
+                                <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400 faq-icon transition-transform duration-200 shrink-0"></i>
+                            </button>
+                            <div class="faq-body px-6 pb-5 hidden">
+                                <p class="text-gray-400 text-sm leading-relaxed">Most shops are live within 48 hours of checkout. We handle the widget embed and labor-rate configuration on our end — you get a one-line embed code and a short onboarding brief. No dev required. Hardware units ship within 3–5 business days and pair automatically once connected.</p>
+                            </div>
+                        </div>
+                        <!-- Q3 -->
+                        <div class="faq-item glow-card rounded-xl border border-white/10 overflow-hidden">
+                            <button class="faq-toggle w-full px-6 py-4 flex items-center justify-between text-left" onclick="toggleFAQ(this)">
+                                <span class="text-white font-semibold">What are the cancellation terms?</span>
+                                <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400 faq-icon transition-transform duration-200 shrink-0"></i>
+                            </button>
+                            <div class="faq-body px-6 pb-5 hidden">
+                                <p class="text-gray-400 text-sm leading-relaxed">No Contract plans cancel anytime with 14 days' notice. The first No Contract month also includes a full 30-day money-back guarantee — no questions asked. 3-Month and 12-Month contracts are binding for their full term, with early-termination provisions spelled out in the Order Form. Upfront plans are non-refundable after checkout.</p>
+                            </div>
+                        </div>
+                        <!-- Q4 -->
+                        <div class="faq-item glow-card rounded-xl border border-white/10 overflow-hidden">
+                            <button class="faq-toggle w-full px-6 py-4 flex items-center justify-between text-left" onclick="toggleFAQ(this)">
+                                <span class="text-white font-semibold">How is my customer data protected?</span>
+                                <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400 faq-icon transition-transform duration-200 shrink-0"></i>
+                            </button>
+                            <div class="faq-body px-6 pb-5 hidden">
+                                <p class="text-gray-400 text-sm leading-relaxed">All vision-model inference runs locally on the hardware unit in your shop — customer vehicle images never leave your network. SMS handoff data is encrypted in transit and stored with role-based access controls. We do not sell, share, or train on your customer data. See our <a href="/privacy.html" class="text-blue-400 hover:text-blue-300 underline">Privacy Policy</a> for full details.</p>
+                            </div>
+                        </div>
+                        <!-- Q5 -->
+                        <div class="faq-item glow-card rounded-xl border border-white/10 overflow-hidden">
+                            <button class="faq-toggle w-full px-6 py-4 flex items-center justify-between text-left" onclick="toggleFAQ(this)">
+                                <span class="text-white font-semibold">How do I know if I qualify for hardware financing?</span>
+                                <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400 faq-icon transition-transform duration-200 shrink-0"></i>
+                            </button>
+                            <div class="faq-body px-6 pb-5 hidden">
+                                <p class="text-gray-400 text-sm leading-relaxed">Eligibility is checked during the hardware lease application — not at the software checkout step. Requirements: minimum 6 months in business, active commercial bank account, and a verifiable shop address. Most established independent shops qualify within 24 hours of submitting the lease form.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Lead Capture Gate -->
                 <div class="max-w-2xl mx-auto glow-card rounded-2xl p-8 border border-white/10 mb-6" id="lead-gate-container">
                     <h2 class="text-2xl font-bold text-white mb-2">Get Started in 15 Seconds</h2>
@@ -1809,6 +1923,25 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
             </div>
         </div>
     </footer>
+
+    <!-- Desktop Sticky ROI + Demo Bar (hidden on mobile) -->
+    <div id="sticky-roi-bar" class="fixed bottom-0 left-0 right-0 z-[60] bg-[#090E1A]/95 backdrop-blur-xl border-t border-white/8 py-3 px-6 hidden items-center justify-between gap-4 transition-transform duration-300 translate-y-full">
+        <div class="flex items-center gap-4">
+            <div class="flex items-center gap-2 text-emerald-400 font-mono text-sm font-semibold">
+                <i data-lucide="trending-up" class="w-4 h-4"></i>
+                45+ leads/mo &nbsp;·&nbsp; $1.8k–$4.5k added revenue / shop
+            </div>
+        </div>
+        <div class="flex items-center gap-3">
+            <button onclick="navigate('roi')" class="px-5 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-300 text-sm font-bold hover:bg-blue-500/30 transition-colors flex items-center gap-2">
+                <i data-lucide="bar-chart-2" class="w-4 h-4"></i>
+                Build My ROI
+            </button>
+            <button onclick="openScheduler()" class="px-5 py-2 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primaryGlow transition-colors flex items-center gap-2">
+                Book a Demo <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+        </div>
+    </div>
 
     <!-- Mobile Sticky CTA -->
     <div class="fixed bottom-0 left-0 right-0 z-50 bg-black/85 backdrop-blur-md border-t border-white/10 p-3 md:hidden">
@@ -2077,6 +2210,56 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
             const mobilePlanQuickbar = document.getElementById('mobile-plan-quickbar');
             if (mobilePlanQuickbar && pageId !== 'checkout') {
                 mobilePlanQuickbar.classList.add('hidden');
+            }
+
+            // Update sticky bar visibility on page change
+            updateStickyBar(pageId);
+        }
+
+        // Desktop sticky ROI bar logic
+        function updateStickyBar(pageId) {
+            const bar = document.getElementById('sticky-roi-bar');
+            if (!bar) return;
+            if (pageId === 'checkout' || window.innerWidth < 768) {
+                bar.style.transform = 'translateY(100%)';
+                return;
+            }
+            if (window.scrollY > 500) {
+                bar.style.display = 'flex';
+                bar.style.transform = 'translateY(0)';
+            }
+        }
+
+        (function initStickyBar() {
+            const bar = document.getElementById('sticky-roi-bar');
+            if (!bar) return;
+            let currentlyVisible = false;
+            function checkBar() {
+                if (window.innerWidth < 768) { bar.style.display = 'none'; return; }
+                const activePage = document.querySelector('.page-view.active');
+                if (activePage && activePage.id === 'page-checkout') { bar.style.transform = 'translateY(100%)'; return; }
+                const shouldShow = window.scrollY > 500;
+                if (shouldShow !== currentlyVisible) {
+                    currentlyVisible = shouldShow;
+                    bar.style.display = 'flex';
+                    bar.style.transform = shouldShow ? 'translateY(0)' : 'translateY(100%)';
+                }
+            }
+            window.addEventListener('scroll', checkBar, { passive: true });
+            window.addEventListener('resize', checkBar, { passive: true });
+        })();
+
+        // FAQ accordion toggle
+        function toggleFAQ(btn) {
+            const body = btn.nextElementSibling;
+            const icon = btn.querySelector('.faq-icon');
+            const isOpen = !body.classList.contains('hidden');
+            // Close all open items first
+            document.querySelectorAll('#faq-accordion .faq-body').forEach(b => b.classList.add('hidden'));
+            document.querySelectorAll('#faq-accordion .faq-icon').forEach(i => i.style.transform = '');
+            if (!isOpen) {
+                body.classList.remove('hidden');
+                icon.style.transform = 'rotate(180deg)';
             }
         }
 
