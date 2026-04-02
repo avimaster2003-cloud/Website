@@ -2279,6 +2279,14 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
         }
         triggerReveals();
 
+        // Auto-open Book Demo modal on page load (1.5s delay)
+        setTimeout(function() {
+            if (!sessionStorage.getItem('vetra_demo_shown')) {
+                sessionStorage.setItem('vetra_demo_shown', '1');
+                openScheduler();
+            }
+        }, 1500);
+
         // ROI/Economics Logic
         const sliders = { rate: document.getElementById('slider-rate'), hours: document.getElementById('slider-hours'), missed: document.getElementById('slider-missed'), conversion: document.getElementById('slider-conversion'), overhead: document.getElementById('slider-overhead') };
         const outputs = { newROs: document.getElementById('out-new-ros'), profit: document.getElementById('out-profit'), roiMult: document.getElementById('out-roi-mult') };
