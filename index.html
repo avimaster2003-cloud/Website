@@ -594,31 +594,34 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
 
             <!-- DO WE GOT YOUR ATTENTION CTA -->
             <div class="mb-24 reveal">
-                <div class="glow-card rounded-3xl border border-blue-500/30 p-8 md:p-12 relative overflow-hidden text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-8 bg-gradient-to-r from-blue-900/20 to-purple-900/20">
+                <div class="glow-card rounded-3xl border border-blue-500/30 p-8 md:p-12 relative overflow-hidden bg-gradient-to-r from-blue-900/20 to-purple-900/20">
                     <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2000&auto=format&fit=crop')] opacity-5 bg-cover mix-blend-overlay"></div>
                     
-                    <div class="relative z-10 md:w-2/3">
+                    <div class="relative z-10 text-center">
                         <h3 class="font-heading text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">Do We Got Your Attention?</h3>
-                        <p class="text-gray-300 text-lg leading-relaxed">
+                        <p class="text-gray-300 text-lg leading-relaxed mb-8 max-w-3xl mx-auto">
                             We know what you're thinking—this actually works. And we know you're ready to see how it transforms your shop.
                         </p>
-                    </div>
-                    <div class="relative z-10 md:w-1/3 flex flex-col gap-3 justify-center md:justify-end w-full">
-                        <button onclick="navigate('roi')" class="w-full px-8 py-4 bg-surface border border-green-500/30 hover:border-green-400/50 text-green-300 rounded-xl font-bold text-lg transition-all shadow-[0_0_20px_rgba(34,197,94,0.3)] animate-pulse hover:animate-none hover:text-white hover:shadow-[0_0_30px_rgba(34,197,94,0.5)]">
-                            Calculate Lost Revenue <i data-lucide="calculator" class="w-5 h-5"></i>
-                        </button>
-                        <button onclick="navigate('checkout')" class="w-full px-8 py-4 bg-surface border border-green-500/30 hover:border-green-400/50 text-green-300 rounded-xl font-bold text-lg transition-all shadow-[0_0_20px_rgba(34,197,94,0.3)] animate-pulse hover:animate-none hover:text-white hover:shadow-[0_0_30px_rgba(34,197,94,0.5)]">
-                            Subscribe <i data-lucide="badge-check" class="w-5 h-5"></i>
-                        </button>
-                        <button onclick="openScheduler()" class="w-full px-8 py-4 bg-surface border border-green-500/30 hover:border-green-400/50 text-green-300 rounded-xl font-bold text-lg transition-all shadow-[0_0_20px_rgba(34,197,94,0.3)] animate-pulse hover:animate-none hover:text-white hover:shadow-[0_0_30px_rgba(34,197,94,0.5)]">
-                            Book a Live Demo
-                        </button>
-                        <button onclick="navigate('checkout')" class="w-full px-8 py-4 bg-surface border border-green-500/30 hover:border-green-400/50 text-green-300 rounded-xl font-bold text-lg transition-all shadow-[0_0_20px_rgba(34,197,94,0.3)] animate-pulse hover:animate-none hover:text-white hover:shadow-[0_0_30px_rgba(34,197,94,0.5)]">
-                            View Pricing
-                        </button>
-                        <button onclick="navigate('coming-soon')" class="w-full px-8 py-4 bg-surface border border-purple-500/30 hover:border-purple-400/50 text-purple-300 rounded-xl font-bold text-lg transition-all shadow-[0_0_20px_rgba(168,85,247,0.3)] animate-pulse hover:animate-none hover:text-white hover:shadow-[0_0_30px_rgba(168,85,247,0.5)]">
-                            Explore Coming Soon
-                        </button>
+                        <div class="flex flex-col sm:flex-row items-center justify-center gap-5 flex-wrap">
+                            <button onclick="navigate('checkout')" class="px-8 py-4 bg-surface border-2 border-blue-400/40 hover:border-blue-400/80 text-blue-300 hover:text-blue-100 rounded-xl font-bold text-base md:text-lg transition-all shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:shadow-[0_0_40px_rgba(59,130,246,0.6)] animate-pulse hover:animate-none transform hover:scale-105">
+                                <span class="flex items-center gap-2">
+                                    <i data-lucide="badge-check" class="w-5 h-5"></i>
+                                    Subscribe
+                                </span>
+                            </button>
+                            <button onclick="openScheduler()" class="px-8 py-4 bg-surface border-2 border-orange-400/40 hover:border-orange-400/80 text-orange-300 hover:text-orange-100 rounded-xl font-bold text-base md:text-lg transition-all shadow-[0_0_20px_rgba(249,115,22,0.3)] hover:shadow-[0_0_40px_rgba(249,115,22,0.6)] animate-pulse hover:animate-none transform hover:scale-105">
+                                <span class="flex items-center gap-2">
+                                    <i data-lucide="calendar" class="w-5 h-5"></i>
+                                    Book a Live Demo
+                                </span>
+                            </button>
+                            <button onclick="navigate('checkout')" class="px-8 py-4 bg-surface border-2 border-pink-400/40 hover:border-pink-400/80 text-pink-300 hover:text-pink-100 rounded-xl font-bold text-base md:text-lg transition-all shadow-[0_0_20px_rgba(236,72,153,0.3)] hover:shadow-[0_0_40px_rgba(236,72,153,0.6)] animate-pulse hover:animate-none transform hover:scale-105">
+                                <span class="flex items-center gap-2">
+                                    <i data-lucide="tag" class="w-5 h-5"></i>
+                                    View Pricing
+                                </span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
