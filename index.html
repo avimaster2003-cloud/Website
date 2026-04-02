@@ -1177,9 +1177,9 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                                     <input type="range" id="slider-hw-margin" min="20" max="85" step="5" value="55" class="w-full h-3 md:h-2 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-emerald-500">
                                 </div>
                                 <div class="pt-4 border-t border-white/10">
-                                    <div class="flex justify-between text-sm mb-2"><span class="text-gray-300">Variable Cost / Consumables</span><span class="text-red-400 font-mono font-bold"><span id="val-hw-variable">15</span>%</span></div>
+                                    <div class="flex justify-between text-sm mb-2"><span class="text-gray-300">Variable Cost / Consumables</span><span class="text-red-400 font-mono font-bold"><span id="val-hw-variable">20</span>%</span></div>
                                     <p class="text-xs text-gray-500 mb-2">Filters, fluids, disposables, and related variable costs.</p>
-                                    <input type="range" id="slider-hw-variable" min="5" max="45" step="5" value="15" class="w-full h-3 md:h-2 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-red-500">
+                                    <input type="range" id="slider-hw-variable" min="5" max="45" step="5" value="20" class="w-full h-3 md:h-2 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-red-500">
                                 </div>
                             </div>
                         </div>
@@ -2190,6 +2190,15 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
         }
 
         function calculateHardwareROI() {
+            const secondaryKey = document.getElementById('hw-secondary-product')?.value || 'none';
+            const hasSecondProduct = secondaryKey !== 'none';
+
+            if (hasSecondProduct) {
+                if (hardwareSliders.ticket) hardwareSliders.ticket.value = '240';
+                if (hardwareSliders.jobs) hardwareSliders.jobs.value = '34';
+                if (hardwareSliders.variable) hardwareSliders.variable.value = '20';
+            }
+
             const ticket = parseFloat(hardwareSliders.ticket?.value || 0);
             const jobs = parseInt(hardwareSliders.jobs?.value || 0, 10);
             const marginPct = parseFloat(hardwareSliders.margin?.value || 0) / 100;
