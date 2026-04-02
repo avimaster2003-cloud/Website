@@ -37,19 +37,17 @@
                     const termButtons = document.querySelectorAll('.lease-term-btn');
                     // Correct price data for each card and term
                     const priceData = [
-                        { '24': '$285 / mo', '36': '$190 / mo', '60': '$115 / mo' },
-                        { '24': '$230 / mo', '36': '$155 / mo', '60': '$95 / mo' },
-                        { '24': '$625 / mo', '36': '$420 / mo', '60': '$250 / mo' },
-                        { '24': '$135 / mo',  '36': '$90 / mo',  '60': '$55 / mo' },
-                        { '24': '$225 / mo',  '36': '$150 / mo',  '60': '$90 / mo' }
+                        { '24': '$125 / mo', '36': '$115 / mo', '60': '$95 / mo' },
+                        { '24': '$150 / mo', '36': '$125 / mo', '60': '$90 / mo' },
+                        { '24': '$340 / mo', '36': '$295 / mo', '60': '$235 / mo' },
+                        { '24': '$85 / mo',  '36': '$70 / mo',  '60': '$50 / mo' }
                     ];
                     // Only update the large, bold price
                     const priceEls = [
                         document.querySelector('.hardware-price[data-card="0"]'),
                         document.querySelector('.hardware-price[data-card="1"]'),
                         document.querySelector('.hardware-price[data-card="2"]'),
-                        document.querySelector('.hardware-price[data-card="3"]'),
-                        document.querySelector('.hardware-price[data-card="4"]')
+                        document.querySelector('.hardware-price[data-card="3"]')
                     ];
                     let selectedTerm = '60';
 
@@ -176,26 +174,6 @@
             display: block;
             opacity: 1;
             transform: translateY(0);
-        }
-        
-        /* Side-by-side layout for home and hardware */
-        .page-duo-wrapper {
-            display: flex;
-            gap: 2rem;
-            width: 100%;
-        }
-        .page-duo-wrapper .page-view {
-            flex: 1;
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        @media (max-width: 1280px) {
-            .page-duo-wrapper {
-                flex-direction: column;
-                gap: 3rem;
-            }
         }
 
         @keyframes page-gradient-flow {
@@ -420,12 +398,12 @@
             <div class="hidden lg:flex items-center gap-6 xl:gap-8 font-medium text-sm text-gray-400">
                 <a href="#coming-soon" onclick="navigate('coming-soon')" class="text-purple-400 hover:text-purple-300 animate-pulse transition-colors nav-link">Coming Soon</a>
                 <a href="#home" onclick="navigate('home')" class="hover:text-white transition-colors nav-link active">Home</a>
+                <a href="#hardware" onclick="navigate('hardware')" class="hover:text-white transition-colors nav-link text-green-400">Hardware</a>
                 <a href="#features" onclick="navigate('features')" class="hover:text-white transition-colors nav-link">Features</a>
                 <a href="#roi" onclick="navigate('roi')" class="hover:text-white transition-colors nav-link">Economics</a>
                 <a href="#checkout" onclick="navigate('checkout')" class="hover:text-white transition-colors nav-link">Pricing</a>
                 <a href="#trends" onclick="navigate('trends')" class="hover:text-white transition-colors nav-link text-blue-400">Live Field Data</a>
                 <a href="#security" onclick="navigate('security')" class="hover:text-white transition-colors nav-link">Security</a>
-                <a href="#hardware" onclick="navigate('hardware')" class="hover:text-white transition-colors nav-link text-green-400">Hardware</a>
             </div>
 
             <!-- Actions (Desktop) -->
@@ -445,12 +423,12 @@
         <div id="mobile-menu" class="fixed inset-x-0 top-20 bg-[#05050A]/95 backdrop-blur-xl border-b border-white/10 flex-col p-6 gap-6 shadow-2xl lg:hidden opacity-0 pointer-events-none -translate-y-4 transition-all duration-300 ease-in-out z-40 h-[calc(100vh-5rem)] overflow-y-auto">
             <a href="#coming-soon" onclick="navigate('coming-soon')" class="mobile-nav-link text-purple-400 hover:text-purple-300 font-medium text-lg border-b border-white/5 pb-4 transition-colors animate-pulse">Coming Soon</a>
             <a href="#home" onclick="navigate('home')" class="mobile-nav-link text-white font-medium text-lg border-b border-white/5 pb-4">Home</a>
+            <a href="#hardware" onclick="navigate('hardware')" class="mobile-nav-link text-green-400 hover:text-green-300 font-medium text-lg border-b border-white/5 pb-4 transition-colors">Hardware</a>
             <a href="#features" onclick="navigate('features')" class="mobile-nav-link text-gray-400 hover:text-white font-medium text-lg border-b border-white/5 pb-4 transition-colors">Features</a>
             <a href="#roi" onclick="navigate('roi')" class="mobile-nav-link text-gray-400 hover:text-white font-medium text-lg border-b border-white/5 pb-4 transition-colors">Economics</a>
             <a href="#checkout" onclick="navigate('checkout')" class="mobile-nav-link text-gray-400 hover:text-white font-medium text-lg border-b border-white/5 pb-4 transition-colors">Pricing</a>
             <a href="#trends" onclick="navigate('trends')" class="mobile-nav-link text-blue-400 hover:text-blue-300 font-medium text-lg border-b border-white/5 pb-4 transition-colors">Live Field Data</a>
             <a href="#security" onclick="navigate('security')" class="mobile-nav-link text-gray-400 hover:text-white font-medium text-lg border-b border-white/5 pb-4 transition-colors">Security</a>
-            <a href="#hardware" onclick="navigate('hardware')" class="mobile-nav-link text-green-400 hover:text-green-300 font-medium text-lg border-b border-white/5 pb-4 transition-colors">Hardware</a>
             <button onclick="openScheduler()" class="bg-primary text-white px-5 py-4 rounded-xl font-bold text-base hover:bg-primaryGlow transition-colors mt-4 text-center shadow-[0_0_20px_rgba(59,130,246,0.3)] active:scale-95">
                 Book a Live Demo
             </button>
@@ -460,8 +438,6 @@
     <!-- Main Content Area -->
     <main class="flex-grow pt-28 pb-20 w-full px-4 sm:px-6 xl:px-10 2xl:px-16 relative">
 
-        <!-- Home and Hardware Side-by-Side Wrapper -->
-        <div class="page-duo-wrapper">
         <!-- ==========================================
              PAGE 1: HOME / LANDING 
         =========================================== -->
@@ -542,15 +518,15 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                 </div>
                 <div class="flex flex-col md:flex-row items-center justify-center gap-8 mb-6">
                     <div class="flex flex-col items-center gap-2 text-white text-xl font-bold">
-                        <img src="/assets/robinair-ac1234.png" alt="Robinair AC1234-9" class="w-20 h-20 object-contain mb-2" style="filter: drop-shadow(0 0 10px rgba(0,255,194,0.5));">
-                        <div class="text-lg text-gray-400"><span class="line-through">Retail $6,850</span></div>
-                        <div style="color:#00FFC2; text-shadow:0 0 10px #00FFC2AA;">VETRA Rate: $115 / mo</div>
+                        <img src="/assets/robinair-ac1234.png" alt="Robinair AC1234-4" class="w-20 h-20 object-contain mb-2" style="filter: drop-shadow(0 0 10px rgba(0,255,194,0.5));">
+                        <div class="text-lg text-gray-400"><span class="line-through">Retail $6,800</span></div>
+                        <div style="color:#00FFC2; text-shadow:0 0 10px #00FFC2AA;">VETRA Rate: $95/mo</div>
                         <div class="text-base text-white">$0 down</div>
                     </div>
                     <div class="flex flex-col items-center gap-2 text-white text-xl font-bold">
                         <img src="/assets/autel-ultra.png" alt="Autel MaxiSys Ultra" class="w-20 h-20 object-contain mb-2" style="filter: drop-shadow(0 0 10px rgba(124,58,237,0.5));">
                         <div class="text-lg text-gray-400"><span class="line-through">Retail $5,500</span></div>
-                        <div style="color:#7C3AED; text-shadow:0 0 10px #7C3AEDAA;">VETRA Rate: $95 / mo</div>
+                        <div style="color:#7C3AED; text-shadow:0 0 10px #7C3AEDAA;">VETRA Rate: $90/mo</div>
                         <div class="text-base text-white">$0 down</div>
                     </div>
                 </div>
@@ -612,38 +588,54 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                 </div>
             </div>
 
+            <!-- Call to Action Section with secondary buttons -->
+            <div class="mb-24 reveal">
+                <div class="glow-card rounded-3xl border border-blue-500/30 p-8 md:p-12 relative overflow-hidden text-center flex flex-col items-center justify-center gap-8 bg-gradient-to-r from-blue-900/20 to-purple-900/20">
+                    <div class="absolute inset-0 bg-blue-500/10 blur-3xl animate-pulse"></div>
+
+                    <div class="relative z-10 flex flex-col sm:flex-row items-stretch justify-center gap-4 w-full max-w-2xl">
+                        <button onclick="navigate('roi')" class="flex-1 px-8 py-4 bg-primary hover:bg-primaryGlow text-white rounded-lg font-semibold text-lg transition-all shadow-[0_0_30px_rgba(59,130,246,0.3)] hover:shadow-[0_0_40px_rgba(59,130,246,0.5)] transform hover:-translate-y-0.5 flex items-center justify-center gap-2 text-center">
+                            Calculate Lost Revenue <i data-lucide="calculator" class="w-5 h-5"></i>
+                        </button>
+                        <button onclick="navigate('checkout')" class="flex-1 px-8 py-4 bg-primary hover:bg-primaryGlow text-white rounded-lg font-semibold text-lg transition-all shadow-[0_0_30px_rgba(59,130,246,0.3)] hover:shadow-[0_0_40px_rgba(59,130,246,0.5)] transform hover:-translate-y-0.5 flex items-center justify-center gap-2 text-center">
+                            Subscribe <i data-lucide="badge-check" class="w-5 h-5"></i>
+                        </button>
+                        <button onclick="openScheduler()" class="flex-1 px-8 py-4 bg-surface border border-white/10 hover:border-white/30 text-white rounded-lg font-medium text-lg transition-all flex items-center justify-center gap-2 text-center">
+                            Book a Live Demo
+                        </button>
+                    </div>
+                </div>
+            </div>
+
 
 
             <!-- DO WE GOT YOUR ATTENTION CTA -->
             <div class="mb-24 reveal">
-                <div class="glow-card rounded-3xl border border-blue-500/30 p-8 md:p-12 relative overflow-hidden bg-gradient-to-r from-blue-900/20 to-purple-900/20">
+                <div class="glow-card rounded-3xl border border-blue-500/30 p-8 md:p-12 relative overflow-hidden text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-8 bg-gradient-to-r from-blue-900/20 to-purple-900/20">
                     <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2000&auto=format&fit=crop')] opacity-5 bg-cover mix-blend-overlay"></div>
                     
-                    <div class="relative z-10 text-center">
+                    <div class="relative z-10 md:w-2/3">
                         <h3 class="font-heading text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">Do We Got Your Attention?</h3>
-                        <p class="text-gray-300 text-lg leading-relaxed mb-8 max-w-3xl mx-auto">
+                        <p class="text-gray-300 text-lg leading-relaxed">
                             We know what you're thinking—this actually works. And we know you're ready to see how it transforms your shop.
                         </p>
-                        <div class="flex flex-col sm:flex-row items-center justify-center gap-5 flex-wrap">
-                            <button onclick="navigate('checkout')" class="px-8 py-4 bg-surface border-2 border-blue-400/40 hover:border-blue-400/80 text-blue-300 hover:text-blue-100 rounded-xl font-bold text-base md:text-lg transition-all shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:shadow-[0_0_40px_rgba(59,130,246,0.6)] animate-pulse hover:animate-none transform hover:scale-105">
-                                <span class="flex items-center gap-2">
-                                    <i data-lucide="badge-check" class="w-5 h-5"></i>
-                                    Subscribe
-                                </span>
-                            </button>
-                            <button onclick="openScheduler()" class="px-8 py-4 bg-surface border-2 border-orange-400/40 hover:border-orange-400/80 text-orange-300 hover:text-orange-100 rounded-xl font-bold text-base md:text-lg transition-all shadow-[0_0_20px_rgba(249,115,22,0.3)] hover:shadow-[0_0_40px_rgba(249,115,22,0.6)] animate-pulse hover:animate-none transform hover:scale-105">
-                                <span class="flex items-center gap-2">
-                                    <i data-lucide="calendar" class="w-5 h-5"></i>
-                                    Book a Live Demo
-                                </span>
-                            </button>
-                            <button onclick="navigate('checkout')" class="px-8 py-4 bg-surface border-2 border-pink-400/40 hover:border-pink-400/80 text-pink-300 hover:text-pink-100 rounded-xl font-bold text-base md:text-lg transition-all shadow-[0_0_20px_rgba(236,72,153,0.3)] hover:shadow-[0_0_40px_rgba(236,72,153,0.6)] animate-pulse hover:animate-none transform hover:scale-105">
-                                <span class="flex items-center gap-2">
-                                    <i data-lucide="tag" class="w-5 h-5"></i>
-                                    View Pricing
-                                </span>
-                            </button>
-                        </div>
+                    </div>
+                    <div class="relative z-10 md:w-1/3 flex flex-col gap-3 justify-center md:justify-end w-full">
+                        <button onclick="navigate('roi')" class="w-full px-8 py-4 bg-surface border border-green-500/30 hover:border-green-400/50 text-green-300 rounded-xl font-bold text-lg transition-all shadow-[0_0_20px_rgba(34,197,94,0.3)] animate-pulse hover:animate-none hover:text-white hover:shadow-[0_0_30px_rgba(34,197,94,0.5)]">
+                            Calculate Lost Revenue <i data-lucide="calculator" class="w-5 h-5"></i>
+                        </button>
+                        <button onclick="navigate('checkout')" class="w-full px-8 py-4 bg-surface border border-green-500/30 hover:border-green-400/50 text-green-300 rounded-xl font-bold text-lg transition-all shadow-[0_0_20px_rgba(34,197,94,0.3)] animate-pulse hover:animate-none hover:text-white hover:shadow-[0_0_30px_rgba(34,197,94,0.5)]">
+                            Subscribe <i data-lucide="badge-check" class="w-5 h-5"></i>
+                        </button>
+                        <button onclick="openScheduler()" class="w-full px-8 py-4 bg-surface border border-green-500/30 hover:border-green-400/50 text-green-300 rounded-xl font-bold text-lg transition-all shadow-[0_0_20px_rgba(34,197,94,0.3)] animate-pulse hover:animate-none hover:text-white hover:shadow-[0_0_30px_rgba(34,197,94,0.5)]">
+                            Book a Live Demo
+                        </button>
+                        <button onclick="navigate('checkout')" class="w-full px-8 py-4 bg-surface border border-green-500/30 hover:border-green-400/50 text-green-300 rounded-xl font-bold text-lg transition-all shadow-[0_0_20px_rgba(34,197,94,0.3)] animate-pulse hover:animate-none hover:text-white hover:shadow-[0_0_30px_rgba(34,197,94,0.5)]">
+                            View Pricing
+                        </button>
+                        <button onclick="navigate('coming-soon')" class="w-full px-8 py-4 bg-surface border border-purple-500/30 hover:border-purple-400/50 text-purple-300 rounded-xl font-bold text-lg transition-all shadow-[0_0_20px_rgba(168,85,247,0.3)] animate-pulse hover:animate-none hover:text-white hover:shadow-[0_0_30px_rgba(168,85,247,0.5)]">
+                            Explore Coming Soon
+                        </button>
                     </div>
                 </div>
             </div>
@@ -840,20 +832,7 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
             <div class="w-full text-center pt-12 pb-8 reveal">
                 <h1 class="font-heading text-5xl md:text-6xl font-extrabold text-white mb-4">VETRA Tech Refresh Program</h1>
                 <h2 class="text-2xl md:text-3xl font-semibold text-blue-400 mb-4">Let your revenue Grow & Get the industry's best hardware for 0% APR.</h2>
-                <div class="mb-8 flex w-full flex-col items-center gap-2 text-center">
-                    <div class="rounded-full border border-emerald-400/20 bg-emerald-500/10 px-5 py-2 text-lg font-semibold text-emerald-300 shadow-[0_0_20px_rgba(16,185,129,0.12)]">
-                        0% Down
-                    </div>
-                    <div class="rounded-full border border-blue-400/20 bg-blue-500/10 px-7 py-2 text-lg font-semibold text-blue-300 shadow-[0_0_20px_rgba(59,130,246,0.12)]">
-                        100% Tax Deductible
-                    </div>
-                    <div class="rounded-full border border-purple-400/20 bg-purple-500/10 px-6 py-2 text-lg font-semibold text-purple-300 shadow-[0_0_20px_rgba(168,85,247,0.12)]">
-                        Upgrades available for new models every 3-5 years
-                    </div>
-                    <div class="max-w-3xl rounded-2xl border border-rose-400/20 bg-rose-500/10 px-6 py-3 text-base md:text-lg font-semibold text-rose-200 shadow-[0_0_28px_rgba(244,63,94,0.16)] animate-pulse">
-                        Bundle equipment, lock in your rates, and unify your tech stack for seamless upgrades.
-                    </div>
-                </div>
+                <p class="text-lg text-emerald-400 font-semibold mb-8">0% Down. 100% Tax Deductible. Upgrades available for new models every 3-5 years.</p>
                 <div class="flex flex-col items-center mb-8">
                     <div class="inline-flex bg-surface border border-white/10 rounded-xl shadow-[0_0_20px_rgba(59,130,246,0.10)] px-2 py-2 gap-2">
                         <button class="lease-term-btn px-6 py-2 rounded-lg font-semibold text-base transition-all text-blue-400 bg-blue-500/10 hover:bg-blue-500/20 focus:bg-blue-500/30 focus:text-white outline-none" data-term="24">24 Mo</button>
@@ -863,30 +842,30 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                     <div class="text-xs text-gray-500 mt-2">Choose your preferred lease term</div>
                 </div>
             </div>
-            <div class="flex flex-wrap justify-center gap-8 max-w-7xl mx-auto mb-24">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-6xl mx-auto mb-24">
                 <!-- Card 1: The A/C Money Maker -->
-                <div class="glow-card w-full md:w-[calc(50%-1rem)] xl:w-[calc(33.333%-1.34rem)] max-w-[26rem] rounded-2xl border border-blue-500/20 bg-blue-900/10 p-8 flex flex-col items-center fintech-card">
+                <div class="glow-card rounded-2xl border border-blue-500/20 bg-blue-900/10 p-8 flex flex-col items-center fintech-card">
                                         <div class="absolute left-6 top-6 z-10">
                                             <span class="inline-block px-4 py-1 rounded-full bg-gradient-to-r from-emerald-400 to-blue-500 text-white text-xs font-bold shadow-lg tracking-wide">Highest ROI</span>
                                         </div>
-                    <img src="/assets/robinair-ac1234.png" alt="Robinair AC1234-9" class="w-40 h-40 object-contain mb-6 fintech-img" style="background: transparent; border-radius: 1rem; box-shadow: 0 8px 32px 0 #00FFC299, 0 2px 8px 0 #0008;">
-                    <h2 class="font-heading text-2xl font-bold text-white mb-2 text-center">Robinair AC1234-9<br><span class="text-blue-400">The A/C Money Maker</span></h2>
+                    <img src="/assets/robinair-ac1234.png" alt="Robinair AC1234-4" class="w-40 h-40 object-contain mb-6 fintech-img" style="background: transparent; border-radius: 1rem; box-shadow: 0 8px 32px 0 #00FFC299, 0 2px 8px 0 #0008;">
+                    <h2 class="font-heading text-2xl font-bold text-white mb-2 text-center">Robinair AC1234-4/9<br><span class="text-blue-400">The A/C Money Maker</span></h2>
                     <ul class="text-gray-300 text-base mb-2 list-disc list-inside space-y-1">
                         <li>Turn away zero A/C jobs.</li>
                         <li>Pays for itself in 1 job/month.</li>
                         <li>VETRA handles the depreciation.</li>
                     </ul>
-                    <div class="text-blue-400 font-mono text-2xl font-bold mb-2">Retail Cost: ~$6,850</div>
+                    <div class="text-blue-400 font-mono text-2xl font-bold mb-2">Retail Cost: ~$6,800</div>
                     <div class="text-blue-300 font-semibold mb-2">Stop turning away modern A/C jobs.</div>
                     <div class="flex flex-col items-center w-full mb-4">
-                        <div class="text-lg font-semibold text-gray-500 mb-2"><span style="text-decoration: line-through;">$6,850 Upfront CapEx</span></div>
-                        <div class="text-5xl md:text-6xl font-extrabold hardware-price mb-2" data-card="0" style="color:#00FFC2; text-shadow:0 0 16px #00FFC2AA;">$115 / mo</div>
+                        <div class="text-lg font-semibold text-gray-500 mb-2"><span style="text-decoration: line-through;">$6,800 Upfront CapEx</span></div>
+                        <div class="text-5xl md:text-6xl font-extrabold hardware-price mb-2" data-card="0" style="color:#00FFC2; text-shadow:0 0 16px #00FFC2AA;">$95 / mo</div>
                         <div class="text-xs text-gray-400 mb-4" style="margin-top:4px;">Requires active VETRA AI Booking Widget</div>
                     </div>
-                    <button class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold text-base shadow-lg transition-all fintech-btn" onclick="openEligibilityForm('Robinair AC1234-9')">Check Lease Eligibility</button>
+                    <button class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold text-base shadow-lg transition-all fintech-btn" onclick="openEligibilityForm('Robinair AC1234-4/9')">Check Lease Eligibility</button>
                 </div>
                 <!-- Card 2: The Brain -->
-                <div class="glow-card w-full md:w-[calc(50%-1rem)] xl:w-[calc(33.333%-1.34rem)] max-w-[26rem] rounded-2xl border border-purple-500/20 bg-purple-900/10 p-8 flex flex-col items-center fintech-card">
+                <div class="glow-card rounded-2xl border border-purple-500/20 bg-purple-900/10 p-8 flex flex-col items-center fintech-card">
                                         <div class="absolute left-6 top-6 z-10">
                                             <span class="inline-block px-4 py-1 rounded-full bg-gradient-to-r from-purple-400 to-pink-500 text-white text-xs font-bold shadow-lg tracking-wide">Most Popular</span>
                                         </div>
@@ -897,17 +876,17 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                         <li>Advanced module programming included.</li>
                         <li>Own the king of diagnostic tablets.</li>
                     </ul>
-                    <div class="text-purple-400 font-mono text-2xl font-bold mb-2">Retail Cost: ~$5,500</div>
+                    <div class="text-purple-400 font-mono text-2xl font-bold mb-2">Retail Cost: ~$4,800 - $5,500</div>
                     <div class="text-purple-300 font-semibold mb-2">Dealership-level diagnostics without the dealership cash flow.</div>
                     <div class="flex flex-col items-center w-full mb-4">
                         <div class="text-lg font-semibold text-gray-500 mb-2"><span style="text-decoration: line-through;">$5,500 Upfront CapEx</span></div>
-                        <div class="text-5xl md:text-6xl font-extrabold hardware-price mb-2" data-card="1" style="color:#7C3AED; text-shadow:0 0 16px #7C3AEDAA;">$95 / mo</div>
+                        <div class="text-5xl md:text-6xl font-extrabold hardware-price mb-2" data-card="1" style="color:#7C3AED; text-shadow:0 0 16px #7C3AEDAA;">$90 / mo</div>
                         <div class="text-xs text-gray-400 mb-4" style="margin-top:4px;">Requires active VETRA AI Booking Widget</div>
                     </div>
                     <button class="bg-purple-500 hover:bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold text-base shadow-lg transition-all fintech-btn" onclick="openEligibilityForm('Autel MaxiSys Ultra')">Check Lease Eligibility</button>
                 </div>
                 <!-- Card 3: The Calibrator -->
-                <div class="glow-card w-full md:w-[calc(50%-1rem)] xl:w-[calc(33.333%-1.34rem)] max-w-[26rem] rounded-2xl border border-cyan-500/20 bg-cyan-900/10 p-8 flex flex-col items-center fintech-card">
+                <div class="glow-card rounded-2xl border border-cyan-500/20 bg-cyan-900/10 p-8 flex flex-col items-center fintech-card">
                     <img src="/assets/autel-adas.png" alt="Autel MaxiSYS ADAS Calibration Frame System" class="w-40 h-40 object-contain mb-6 fintech-img" style="background: transparent; border-radius: 1rem; box-shadow: 0 8px 32px 0 #06B6D499, 0 2px 8px 0 #0008;">
                     <h2 class="font-heading text-2xl font-bold text-white mb-2 text-center">Autel MaxiSYS ADAS Calibration<br><span class="text-cyan-400">The Calibrator</span></h2>
                     <ul class="text-gray-300 text-base mb-2 list-disc list-inside space-y-1">
@@ -915,17 +894,17 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                         <li>Bill $300–$600 per calibration.</li>
                         <li>Market as ADAS-certified instantly.</li>
                     </ul>
-                    <div class="text-cyan-400 font-mono text-2xl font-bold mb-2">Retail Cost: ~$15,000</div>
+                    <div class="text-cyan-400 font-mono text-2xl font-bold mb-2">Retail Cost: ~$12,000 - $15,000</div>
                     <div class="text-cyan-300 font-semibold mb-2">Keep the ADAS revenue in-house.</div>
                     <div class="flex flex-col items-center w-full mb-4">
                         <div class="text-lg font-semibold text-gray-500 mb-2"><span style="text-decoration: line-through;">$15,000 Upfront CapEx</span></div>
-                        <div class="text-5xl md:text-6xl font-extrabold hardware-price mb-2" data-card="2" style="color:#06B6D4; text-shadow:0 0 16px #06B6D4AA;">$250 / mo</div>
+                        <div class="text-5xl md:text-6xl font-extrabold hardware-price mb-2" data-card="2" style="color:#06B6D4; text-shadow:0 0 16px #06B6D4AA;">$235 / mo</div>
                         <div class="text-xs text-gray-400 mb-4" style="margin-top:4px;">Requires active VETRA AI Booking Widget</div>
                     </div>
                     <button class="bg-cyan-500 hover:bg-cyan-600 text-white px-6 py-3 rounded-lg font-semibold text-base shadow-lg transition-all fintech-btn" onclick="openEligibilityForm('Autel MaxiSYS ADAS Calibration')">Check Lease Eligibility</button>
                 </div>
                 <!-- Card 4: The Key Master -->
-                <div class="glow-card w-full md:w-[calc(50%-1rem)] xl:w-[calc(33.333%-1.34rem)] max-w-[26rem] rounded-2xl border border-emerald-500/20 bg-emerald-900/10 p-8 flex flex-col items-center fintech-card">
+                <div class="glow-card rounded-2xl border border-emerald-500/20 bg-emerald-900/10 p-8 flex flex-col items-center fintech-card">
                     <img src="/assets/autel-im608.png" alt="Autel MaxiIM IM608 Pro II" class="w-40 h-40 object-contain mb-6 fintech-img" style="background: transparent; border-radius: 1rem; box-shadow: 0 8px 32px 0 #10B98199, 0 2px 8px 0 #0008;">
                     <h2 class="font-heading text-2xl font-bold text-white mb-2 text-center">Autel MaxiIM IM608 Pro II<br><span class="text-emerald-400">The Key Master</span></h2>
                     <ul class="text-gray-300 text-base mb-2 list-disc list-inside space-y-1">
@@ -937,30 +916,10 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                     <div class="text-emerald-300 font-semibold mb-2">Unlock pure profit with in-house key programming.</div>
                     <div class="flex flex-col items-center w-full mb-4">
                         <div class="text-lg font-semibold text-gray-500 mb-2"><span style="text-decoration: line-through;">$3,200 Upfront CapEx</span></div>
-                        <div class="text-5xl md:text-6xl font-extrabold hardware-price mb-2" data-card="3" style="color:#10B981; text-shadow:0 0 16px #10B981AA;">$55 / mo</div>
+                        <div class="text-5xl md:text-6xl font-extrabold hardware-price mb-2" data-card="3" style="color:#10B981; text-shadow:0 0 16px #10B981AA;">$50 / mo</div>
                         <div class="text-xs text-gray-400 mb-4" style="margin-top:4px;">Requires active VETRA AI Booking Widget</div>
                     </div>
                     <button class="bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold text-base shadow-lg transition-all fintech-btn" onclick="openEligibilityForm('Autel MaxiIM IM608 Pro II')">Check Lease Eligibility</button>
-                </div>
-                <!-- Card 5: The Fluid Specialist -->
-                <div class="glow-card w-full md:w-[calc(50%-1rem)] xl:w-[calc(33.333%-1.34rem)] max-w-[26rem] rounded-2xl border border-amber-500/20 bg-amber-900/10 p-8 flex flex-col items-center fintech-card">
-                    <div class="w-40 h-40 mb-6 rounded-2xl border border-amber-400/30 bg-amber-500/10 flex items-center justify-center" style="box-shadow: 0 8px 32px 0 #F59E0B66, 0 2px 8px 0 #0008;">
-                        <i data-lucide="droplets" class="w-16 h-16 text-amber-300"></i>
-                    </div>
-                    <h2 class="font-heading text-2xl font-bold text-white mb-2 text-center">MotorVac TransTech IV+ Plus<br><span class="text-amber-400">The Fluid Specialist</span></h2>
-                    <ul class="text-gray-300 text-base mb-2 list-disc list-inside space-y-1">
-                        <li>Add profitable fluid exchange services in-house.</li>
-                        <li>Drive repeat maintenance revenue.</li>
-                        <li>Fast payback with high-frequency services.</li>
-                    </ul>
-                    <div class="text-amber-400 font-mono text-2xl font-bold mb-2">Retail Cost: ~$5,500</div>
-                    <div class="text-amber-300 font-semibold mb-2">Capture transmission service revenue you are currently missing.</div>
-                    <div class="flex flex-col items-center w-full mb-4">
-                        <div class="text-lg font-semibold text-gray-500 mb-2"><span style="text-decoration: line-through;">$5,500 Upfront CapEx</span></div>
-                        <div class="text-5xl md:text-6xl font-extrabold hardware-price mb-2" data-card="4" style="color:#F59E0B; text-shadow:0 0 16px #F59E0BAA;">$90 / mo</div>
-                        <div class="text-xs text-gray-400 mb-4" style="margin-top:4px;">Requires active VETRA AI Booking Widget</div>
-                    </div>
-                    <button class="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-lg font-semibold text-base shadow-lg transition-all fintech-btn" onclick="openEligibilityForm('MotorVac TransTech IV+ Plus')">Check Lease Eligibility</button>
                 </div>
             </div>
                     </div>
@@ -980,7 +939,6 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                 </div>
             </div>
         </section>
-        </div><!-- End page-duo-wrapper -->
 
         <!-- ==========================================
              PAGE 4: ECONOMICS (PROMO ADDED)
@@ -1483,7 +1441,7 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                         <p class="text-gray-400 text-sm mb-6">One ACH payment upfront</p>
                         <div class="mb-6">
                             <div class="text-5xl font-heading font-bold text-emerald-400">$675</div>
-                            <p class="text-gray-500 text-xs mt-2">Equivalent to $225 / mo for 3 months</p>
+                            <p class="text-gray-500 text-xs mt-2">Equivalent to $225/mo for 3 months</p>
                         </div>
                         <button class="w-full py-3 bg-emerald-500/20 text-emerald-400 rounded-lg font-bold hover:bg-emerald-500/30 transition-colors mb-6">Select Plan</button>
                         <ul class="tier-feature-list space-y-3 text-gray-300 text-sm">
@@ -1547,7 +1505,7 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                         <p class="text-gray-400 text-sm mb-6">One ACH payment upfront</p>
                         <div class="mb-6">
                             <div class="text-5xl font-heading font-bold text-purple-400">$1,800</div>
-                            <p class="text-gray-500 text-xs mt-2">Equivalent to $150 / mo for 12 months</p>
+                            <p class="text-gray-500 text-xs mt-2">Equivalent to $150/mo for 12 months</p>
                         </div>
                         <button class="w-full py-3 bg-purple-500/20 text-purple-400 rounded-lg font-bold hover:bg-purple-500/30 transition-colors mb-6">Select Plan</button>
                         <ul class="tier-feature-list space-y-3 text-gray-300 text-sm">
@@ -1916,23 +1874,10 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
             document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(link => {
                 const isComingSoon = link.getAttribute('href') === '#coming-soon';
                 if (!isComingSoon) {
-                    link.classList.remove('text-white', 'active', 'text-blue-400', 'text-purple-400', 'text-green-400');
+                    link.classList.remove('text-white', 'active', 'text-blue-400', 'text-purple-400');
                 }
-                
-                // When viewing home or hardware, show the appropriate nav link as active
-                let shouldBeActive = false;
-                if (pageId === 'home' && link.getAttribute('href') === '#home') {
-                    shouldBeActive = true;
-                } else if (pageId === 'hardware' && link.getAttribute('href') === '#hardware') {
-                    shouldBeActive = true;
-                } else if (pageId !== 'home' && pageId !== 'hardware' && link.getAttribute('href') === `#${pageId}`) {
-                    shouldBeActive = true;
-                }
-                
-                if(shouldBeActive && !isComingSoon) {
-                    let activeColor = 'text-white';
-                    if (pageId === 'trends') activeColor = 'text-blue-400';
-                    else if (pageId === 'hardware') activeColor = 'text-green-400';
+                if(link.getAttribute('href') === `#${pageId}` && !isComingSoon) {
+                    const activeColor = pageId === 'trends' ? 'text-blue-400' : 'text-white';
                     link.classList.add(activeColor, 'active');
                 } else if (isComingSoon) {
                     // Always keep Coming Soon purple and pulsing
@@ -1942,18 +1887,8 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
             
             // Switch Page
             document.querySelectorAll('.page-view').forEach(page => page.classList.remove('active'));
-            
-            // Special handling for home and hardware - show both together
-            if (pageId === 'home' || pageId === 'hardware') {
-                const homeTarget = document.getElementById('page-home');
-                const hardwareTarget = document.getElementById('page-hardware');
-                if(homeTarget) homeTarget.classList.add('active');
-                if(hardwareTarget) hardwareTarget.classList.add('active');
-                triggerReveals();
-            } else {
-                const target = document.getElementById(`page-${pageId}`);
-                if(target) { target.classList.add('active'); triggerReveals(); }
-            }
+            const target = document.getElementById(`page-${pageId}`);
+            if(target) { target.classList.add('active'); triggerReveals(); }
             window.scrollTo(0, 0);
 
             // WIDGET ISOLATION: Hide widget on all pages except 'home'
@@ -2205,13 +2140,13 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
         const tierDetails = {
             'no_contract': {
                 name: 'No Contract',
-                price: '$299 / mo',
+                price: '$299/month',
                 amount: 29900,
                 paymentLink: 'https://buy.stripe.com/aFa6oJfIZd4id0B2NG9MY06'
             },
             'three_month_monthly': {
                 name: '3 Month Commitment',
-                price: '$249 / mo (ACH first)',
+                price: '$249/month (ACH first)',
                 amount: 24900,
                 paymentLink: null,
                 usesBackend: true
@@ -2224,7 +2159,7 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
             },
             'twelve_month_monthly': {
                 name: '12 Month Commitment',
-                price: '$199 / mo (ACH first)',
+                price: '$199/month (ACH first)',
                 amount: 19900,
                 paymentLink: null,
                 usesBackend: true
