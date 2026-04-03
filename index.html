@@ -91,9 +91,10 @@
                     // Correct price data for each card and term
                     const priceData = [
                         { '24': '$285 / mo', '36': '$190 / mo', '60': '$115 / mo' },
-                        { '24': '$230 / mo', '36': '$155 / mo', '60': '$95 / mo' },
+                        { '24': '$160 / mo', '36': '$105 / mo', '60': '$65 / mo' },
                         { '24': '$625 / mo', '36': '$420 / mo', '60': '$250 / mo' },
                         { '24': '$135 / mo',  '36': '$90 / mo',  '60': '$55 / mo' },
+                        { '24': '$225 / mo',  '36': '$150 / mo',  '60': '$90 / mo' },
                         { '24': '$225 / mo',  '36': '$150 / mo',  '60': '$90 / mo' }
                     ];
                     // Only update the large, bold price
@@ -102,7 +103,8 @@
                         document.querySelector('.hardware-price[data-card="1"]'),
                         document.querySelector('.hardware-price[data-card="2"]'),
                         document.querySelector('.hardware-price[data-card="3"]'),
-                        document.querySelector('.hardware-price[data-card="4"]')
+                        document.querySelector('.hardware-price[data-card="4"]'),
+                        document.querySelector('.hardware-price[data-card="5"]')
                     ];
                     let selectedTerm = '60';
 
@@ -578,8 +580,8 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                     </div>
                     <div class="flex flex-col items-center gap-2 text-white text-xl font-bold">
                         <img src="/assets/autel-ultra.png" alt="Autel MaxiSys Ultra" class="w-20 h-20 object-contain mb-2" style="filter: drop-shadow(0 0 10px rgba(124,58,237,0.5));">
-                        <div class="text-lg text-gray-400"><span class="line-through">Retail $5,500</span></div>
-                        <div style="color:#7C3AED; text-shadow:0 0 10px #7C3AEDAA;">VETRA Rate: $95 / mo</div>
+                        <div class="text-lg text-gray-400"><span class="line-through">Retail $3,799</span></div>
+                        <div style="color:#7C3AED; text-shadow:0 0 10px #7C3AEDAA;">VETRA Rate: $65 / mo</div>
                         <div class="text-base text-white">$0 down</div>
                     </div>
                 </div>
@@ -944,14 +946,34 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                         <li>Advanced module programming included.</li>
                         <li>Own the king of diagnostic tablets.</li>
                     </ul>
-                    <div class="text-purple-400 font-mono text-2xl font-bold mb-2">Retail Cost: ~$5,500</div>
+                    <div class="text-purple-400 font-mono text-2xl font-bold mb-2">Retail Cost: ~$3,799</div>
                     <div class="text-purple-300 font-semibold mb-2">Dealership-level diagnostics without the dealership cash flow.</div>
                     <div class="flex flex-col items-center w-full mb-4">
-                        <div class="text-lg font-semibold text-gray-500 mb-2"><span style="text-decoration: line-through;">$5,500 Upfront CapEx</span></div>
-                        <div class="text-5xl md:text-6xl font-extrabold hardware-price mb-2" data-card="1" style="color:#7C3AED; text-shadow:0 0 16px #7C3AEDAA;">$95 / mo</div>
+                        <div class="text-lg font-semibold text-gray-500 mb-2"><span style="text-decoration: line-through;">$3,799 Upfront CapEx</span></div>
+                        <div class="text-5xl md:text-6xl font-extrabold hardware-price mb-2" data-card="1" style="color:#7C3AED; text-shadow:0 0 16px #7C3AEDAA;">$65 / mo</div>
                         <div class="text-xs text-gray-400 mb-4" style="margin-top:4px;">Requires active VETRA AI Booking Widget</div>
                     </div>
                     <button class="bg-purple-500 hover:bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold text-base shadow-lg transition-all fintech-btn" onclick="openEligibilityForm('Autel MaxiSys Ultra')">Check Lease Eligibility</button>
+                </div>
+                <!-- Card 6: The Flagship Upgrade -->
+                <div class="glow-card w-full md:w-[calc(50%-1rem)] xl:w-[calc(33.333%-1.34rem)] max-w-[26rem] rounded-2xl border border-fuchsia-500/20 bg-fuchsia-900/10 p-8 flex flex-col items-center fintech-card">
+                    <div class="w-40 h-40 mb-6 rounded-2xl border border-fuchsia-400/30 bg-fuchsia-500/10 flex items-center justify-center" style="box-shadow: 0 8px 32px 0 #D946EF66, 0 2px 8px 0 #0008;">
+                        <i data-lucide="cpu" class="w-16 h-16 text-fuchsia-300"></i>
+                    </div>
+                    <h2 class="font-heading text-2xl font-bold text-white mb-2 text-center">Autel MaxiSys Ultra S2<br><span class="text-fuchsia-400">The Flagship Upgrade</span></h2>
+                    <ul class="text-gray-300 text-base mb-2 list-disc list-inside space-y-1">
+                        <li>New-gen scan horsepower for faster, deeper diagnostics.</li>
+                        <li>Built for high-volume shops running advanced workflows.</li>
+                        <li>Premium capability without premium upfront cash strain.</li>
+                    </ul>
+                    <div class="text-fuchsia-400 font-mono text-2xl font-bold mb-2">Retail Cost: ~$5,459</div>
+                    <div class="text-fuchsia-300 font-semibold mb-2">Step up to the newest Ultra platform with predictable monthly spend.</div>
+                    <div class="flex flex-col items-center w-full mb-4">
+                        <div class="text-lg font-semibold text-gray-500 mb-2"><span style="text-decoration: line-through;">$5,459 Upfront CapEx</span></div>
+                        <div class="text-5xl md:text-6xl font-extrabold hardware-price mb-2" data-card="5" style="color:#D946EF; text-shadow:0 0 16px #D946EFAA;">$90 / mo</div>
+                        <div class="text-xs text-gray-400 mb-4" style="margin-top:4px;">Requires active VETRA AI Booking Widget</div>
+                    </div>
+                    <button class="bg-fuchsia-500 hover:bg-fuchsia-600 text-white px-6 py-3 rounded-lg font-semibold text-base shadow-lg transition-all fintech-btn" onclick="openEligibilityForm('Autel MaxiSys Ultra S2')">Check Lease Eligibility</button>
                 </div>
                 <!-- Card 3: The Calibrator -->
                 <div class="glow-card w-full md:w-[calc(50%-1rem)] xl:w-[calc(33.333%-1.34rem)] max-w-[26rem] rounded-2xl border border-cyan-500/20 bg-cyan-900/10 p-8 flex flex-col items-center fintech-card">
@@ -1191,6 +1213,7 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                                             <select id="hw-primary-product" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-white text-sm focus:border-amber-500/40 focus:outline-none">
                                                 <option value="robinair">Robinair AC1234-9</option>
                                                 <option value="maxisys">Autel MaxiSys Ultra</option>
+                                                <option value="maxisys_ultra_s2">Autel MaxiSys Ultra S2</option>
                                                 <option value="adas">ADAS Calibration System</option>
                                                 <option value="im608">Autel IM608 Pro II</option>
                                                 <option value="motorvac">MotorVac TransTech IV+</option>
@@ -1202,6 +1225,7 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                                                 <option value="none">None</option>
                                                 <option value="robinair">Robinair AC1234-9</option>
                                                 <option value="maxisys">Autel MaxiSys Ultra</option>
+                                                <option value="maxisys_ultra_s2">Autel MaxiSys Ultra S2</option>
                                                 <option value="adas">ADAS Calibration System</option>
                                                 <option value="im608">Autel IM608 Pro II</option>
                                                 <option value="motorvac">MotorVac TransTech IV+</option>
@@ -2197,7 +2221,8 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
 
         const hardwareCatalog = {
             robinair: { name: 'Robinair AC1234-9', price: 6850, monthly: { 24: 285, 36: 190, 60: 115 } },
-            maxisys: { name: 'Autel MaxiSys Ultra', price: 5500, monthly: { 24: 230, 36: 155, 60: 95 } },
+            maxisys: { name: 'Autel MaxiSys Ultra', price: 3799, monthly: { 24: 160, 36: 105, 60: 65 } },
+            maxisys_ultra_s2: { name: 'Autel MaxiSys Ultra S2', price: 5459, monthly: { 24: 225, 36: 150, 60: 90 } },
             adas: { name: 'ADAS Calibration System', price: 15000, monthly: { 24: 625, 36: 420, 60: 250 } },
             im608: { name: 'Autel IM608 Pro II', price: 3200, monthly: { 24: 135, 36: 90, 60: 55 } },
             motorvac: { name: 'MotorVac TransTech IV+', price: 5500, monthly: { 24: 225, 36: 150, 60: 90 } }

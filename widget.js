@@ -1198,6 +1198,12 @@
             const file = e.target.files[0];
             if (!file) return;
 
+            if (!this.elements.imageDataHolder || !this.elements.imagePreview || !this.elements.imageUploadWrapper || !this.elements.imagePreviewWrapper) {
+                console.warn('[ApexWidget] Image UI elements are missing; cannot process upload');
+                this.appendBotMessage('Photo upload is temporarily unavailable. Please try again in a moment.', false);
+                return;
+            }
+
             // Validate file type
             if (!file.type.startsWith('image/')) {
                 this.appendBotMessage('Please upload an image file.', false);
@@ -1265,7 +1271,7 @@
                         this.appendBotMessage('There was a problem processing that image. Please try again.', false);
                         this.removeImage();
                     }
-                    throw err;
+                    console.warn('[ApexWidget] Image processing failed', err);
                 })
                 .finally(() => {
                     if (uploadToken === this.imageUploadToken) {
@@ -1394,13 +1400,21 @@
             this.imageUploadToken += 1;
             this.imageProcessingPromise = null;
             this.setImageProcessing(false);
-            this.elements.imageDataHolder.dataset.imageBase64 = '';
-            this.elements.imageDataHolder.dataset.imageType = '';
-            this.elements.imagePreview.style.backgroundImage = '';
+            if (this.elements.imageDataHolder) {
+                this.elements.imageDataHolder.dataset.imageBase64 = '';
+                this.elements.imageDataHolder.dataset.imageType = '';
+            }
+            if (this.elements.imagePreview) {
+                this.elements.imagePreview.style.backgroundImage = '';
+            }
             if (this.elements.cameraInput) this.elements.cameraInput.value = '';
             if (this.elements.galleryInput) this.elements.galleryInput.value = '';
-            this.elements.imageUploadWrapper.style.display = 'flex';
-            this.elements.imagePreviewWrapper.style.display = 'none';
+            if (this.elements.imageUploadWrapper) {
+                this.elements.imageUploadWrapper.style.display = 'flex';
+            }
+            if (this.elements.imagePreviewWrapper) {
+                this.elements.imagePreviewWrapper.style.display = 'none';
+            }
         },
 
         applyTestData() {
