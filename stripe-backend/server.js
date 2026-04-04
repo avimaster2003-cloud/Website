@@ -154,6 +154,15 @@ function writeContractArchiveText(record) {
   return { filePath, filename };
 }
 
+function trackEvent(name, payload = {}) {
+  const record = {
+    ts: new Date().toISOString(),
+    name,
+    payload
+  };
+  appendJsonl(EVENTS_FILE, record);
+}
+
 
 
 app.post('/api/event', (req, res) => {
@@ -258,7 +267,7 @@ app.get('/api/contract-packet', requireAdminKey, (req, res) => {
 
 app.post('/api/create-monthly-checkout-session', async (req, res) => {
   try {
-    const { tier, email, shopName } = req.body;
+    const { tier, email, shopName, bundleData } = req.body;
     const plan = MONTHLY_PLANS[tier];
 
     if (!plan) {
@@ -282,7 +291,8 @@ app.post('/api/create-monthly-checkout-session', async (req, res) => {
         metadata: {
           shopName,
           tier,
-          max_cycles: String(plan.maxCycles)
+          max_cycles: String(plan.maxCycles),
+          bundleMode: bundleData?.mode || 'software_only'
         }
       });
     } else {
@@ -291,30 +301,42 @@ app.post('/api/create-monthly-checkout-session', async (req, res) => {
         metadata: {
           shopName,
           tier,
-          max_cycles: String(plan.maxCycles)
+          max_cycles: String(plan.maxCycles),
+          bundleMode: bundleData?.mode || 'software_only'
         }
       });
       customerId = customer.id;
     }
+
+    // Track this checkout session start event
+    trackEvent('monthly_checkout_session_created', {
+      tier,
+      email,
+      shopName,
+      bundleMode: bundleData?.mode || 'software_only'
+    });
 
     const session = await stripe.checkout.sessions.create({
       mode: 'subscription',
       customer: customerId,
       payment_method_types: ['us_bank_account', 'card'],
       line_items: [{ price: plan.priceId, quantity: 1 }],
-      success_url: `${process.env.FRONTEND_URL}/#checkout?success=1`,
-      cancel_url: `${process.env.FRONTEND_URL}/#checkout?canceled=1`,
+      success_url: `${process.env.FRONTEND_URL || 'https://usevetra.com'}/#checkout?success=1`,
+      cancel_url: `${process.env.FRONTEND_URL || 'https://usevetra.com'}/#checkout?canceled=1`,
       subscription_data: {
         metadata: {
           tier,
           max_cycles: String(plan.maxCycles),
-          shopName
+          shopName,
+          bundleMode: bundleData?.mode || 'software_only',
+          bundleData: JSON.stringify(bundleData || {})
         }
       },
       metadata: {
         tier,
         shopName,
-        max_cycles: String(plan.maxCycles)
+        max_cycles: String(plan.maxCycles),
+        bundleMode: bundleData?.mode || 'software_only'
       }
     });
 
@@ -322,6 +344,116 @@ app.post('/api/create-monthly-checkout-session', async (req, res) => {
   } catch (error) {
     console.error('create-monthly-checkout-session error', error);
     return res.status(500).json({ error: error.message || 'Session creation failed' });
+  }
+});
+
+app.post('/api/hardware-bundle-application', async (req, res) => {
+  try {
+    const { tier, email, shopName, bundleData, lead } = req.body;
+
+    if (!email || !shopName || !bundleData) {
+      return res.status(400).json({ error: 'Email, shopName, and bundleData are required' });
+    }
+
+    const bundleRecord = {
+      ts: new Date().toISOString(),
+      tier: tier || '',
+      email,
+      shopName,
+      bundleMode: bundleData.mode || 'software_only',
+      primaryHardware: bundleData.primary || 'none',
+      secondaryHardware: bundleData.secondary || 'none',
+      leaseTerm: bundleData.term || 60,
+      estimatedLease: bundleData.estimatedLease || 0,
+      aprAddOn: bundleData.aprAddOn || 0,
+      leadName: (lead?.ownerName || '').trim(),
+      leadEmail: (lead?.ownerEmail || '').trim(),
+      leadPhone: (lead?.ownerPhone || '').trim(),
+      acknowledgements: {
+        personalGuarantee: Boolean(bundleData.acknowledgements?.personalGuarantee),
+        insuranceBeneficiary: Boolean(bundleData.acknowledgements?.insuranceBeneficiary),
+        achBilling: Boolean(bundleData.acknowledgements?.achBilling)
+      },
+      ip: req.headers['cf-connecting-ip'] || req.ip,
+      userAgent: req.headers['user-agent'] || ''
+    };
+
+    appendJsonl(CONTRACTS_FILE, bundleRecord);
+
+    // Track hardware bundle intake event
+    trackEvent('hardware_bundle_application', {
+      tier,
+      email,
+      shopName,
+      primaryHardware: bundleData.primary,
+      estimatedLease: bundleData.estimatedLease
+    });
+
+    return res.json({
+      ok: true,
+      bundleId: `BUNDLE-${Date.now()}`,
+      message: 'Hardware bundle application recorded'
+    });
+  } catch (error) {
+    console.error('hardware-bundle-application error', error);
+    return res.status(500).json({ error: error.message || 'Failed to process hardware bundle application' });
+  }
+});
+
+app.get('/api/hardware-applications', requireAdminKey, (req, res) => {
+  try {
+    const limit = Number(req.query.limit || 50);
+    const records = readLatestJsonl(CONTRACTS_FILE, limit);
+    const bundleApplications = records.filter(r => r.bundleMode && r.bundleMode !== 'software_only');
+    return res.json({ 
+      count: bundleApplications.length, 
+      applications: bundleApplications,
+      total: records.length
+    });
+  } catch (error) {
+    console.error('hardware-applications fetch error', error);
+    return res.status(500).json({ error: 'Failed to fetch hardware applications' });
+  }
+});
+
+app.get('/api/checkout-analytics', requireAdminKey, (req, res) => {
+  try {
+    const limit = Number(req.query.limit || 500);
+    const events = readLatestJsonl(EVENTS_FILE, limit);
+    
+    const analytics = {
+      totalEvents: events.length,
+      checkoutStarted: 0,
+      checkoutCompleted: 0,
+      contractSigned: 0,
+      hardwareBundlesApplied: 0,
+      conversionRate: 0,
+      eventsByType: {}
+    };
+
+    events.forEach(event => {
+      const name = event.name || 'unknown';
+      analytics.eventsByType[name] = (analytics.eventsByType[name] || 0) + 1;
+      
+      if (name === 'monthly_checkout_session_created') {
+        analytics.checkoutStarted += 1;
+      } else if (name === 'checkout.session.completed') {
+        analytics.checkoutCompleted += 1;
+      } else if (name === 'contract_signed') {
+        analytics.contractSigned += 1;
+      } else if (name === 'hardware_bundle_application') {
+        analytics.hardwareBundlesApplied += 1;
+      }
+    });
+
+    if (analytics.checkoutStarted > 0) {
+      analytics.conversionRate = ((analytics.checkoutCompleted / analytics.checkoutStarted) * 100).toFixed(1) + '%';
+    }
+
+    return res.json(analytics);
+  } catch (error) {
+    console.error('checkout-analytics error', error);
+    return res.status(500).json({ error: 'Failed to fetch checkout analytics' });
   }
 });
 
