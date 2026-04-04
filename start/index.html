@@ -3,21 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vetra | Upgrade Your Shop for $0 Down</title>
-  <meta name="description" content="Get the latest Robinair A/C and Autel diagnostic equipment plus an AI booking assistant for $0 down. One extra job a week pays for the entire system.">
+  <title>Vetra | Welcome</title>
+  <meta name="description" content="Private welcome page for Vetra insiders.">
   <meta name="robots" content="noindex, nofollow">
-  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Google Fonts: Inter UI · Space Grotesk headings · Fira Code mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-
-  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
-
-  <!-- Tailwind config mirrors the main site -->
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -26,812 +19,127 @@
           fontFamily: {
             sans: ['Inter', 'sans-serif'],
             heading: ['Space Grotesk', 'sans-serif'],
-            mono: ['Fira Code', 'monospace'],
+            mono: ['Fira Code', 'monospace']
           },
           colors: {
             bg: '#05050A',
             surface: '#0F111A',
             primary: '#3B82F6',
-            primaryGlow: '#60A5FA',
-            accent: '#10B981',
-          },
+            primaryGlow: '#60A5FA'
+          }
         }
       }
     }
   </script>
-
   <style>
-    html { scroll-behavior: smooth; background-color: #05050A; color: white; }
+    html { background: #05050A; color: white; }
     body { overflow-x: hidden; -webkit-tap-highlight-color: transparent; }
-
     .bg-grid {
       background-size: 40px 40px;
-      background-image:
-        linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-image: linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
       -webkit-mask-image: linear-gradient(to bottom, transparent 5%, black 40%, black 80%, transparent 100%);
       mask-image: linear-gradient(to bottom, transparent 5%, black 40%, black 80%, transparent 100%);
     }
-
-    /* Nav underline */
     .nav-link { position: relative; padding-bottom: 4px; }
     .nav-link::after {
-      content: ''; position: absolute; width: 0; height: 2px;
-      bottom: 0; left: 50%; background-color: #3B82F6;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 50%;
+      background-color: #3B82F6;
       transform: translateX(-50%);
+      transition: all 0.3s ease;
       box-shadow: 0 0 10px rgba(59,130,246,0.8);
-      border-radius: 2px;
     }
     .nav-link:hover::after, .nav-link.active::after { width: 100%; }
-
-    /* Gradient animated headline */
-    @keyframes gradient-shift {
+    .hero-shell {
+      background: linear-gradient(160deg, rgba(15,17,26,0.9), rgba(8,10,16,0.96));
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 24px 90px rgba(0,0,0,0.5), 0 0 42px rgba(59,130,246,0.16);
+    }
+    .text-gradient {
+      background: linear-gradient(90deg, #60A5FA, #8B5CF6, #22D3EE);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradient-flow 7s ease infinite;
+    }
+    @keyframes gradient-flow {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-    .gradient-alive {
-      background: linear-gradient(270deg, #60A5FA, #3B82F6, #8B5CF6, #60A5FA);
-      background-size: 200% 200%;
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: gradient-shift 6s ease infinite;
-    }
-    .text-gradient {
-      background: linear-gradient(90deg, #3B82F6, #10B981);
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    /* Glow cards */
-    .glow-card {
-      background-color: rgba(15,17,26,0.6);
-      border: 1px solid rgba(255,255,255,0.05);
-      position: relative;
-      overflow: hidden;
-      backdrop-filter: blur(12px);
-      transition: all 0.3s ease;
-    }
-    .glow-card::before {
-      content: "";
-      position: absolute; inset: 0;
-      background: radial-gradient(
-        800px circle at var(--mouse-x, 0) var(--mouse-y, 0),
-        rgba(59,130,246,0.08), transparent 40%
-      );
-      z-index: 0; pointer-events: none;
-    }
-    .glow-card > * { position: relative; z-index: 1; }
-
-    /* Scroll reveal */
-    .reveal {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-
-    /* Page aura ambient glow */
-    @keyframes aura-pulse { 0%,100%{opacity:.45;transform:scale(1)} 50%{opacity:.8;transform:scale(1.02)} }
-    @keyframes aura-flow {
-      0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%}
-    }
-    .page-aura { position: relative; isolation: isolate; }
-    .page-aura::before {
-      content: "";
-      position: absolute; inset: 0;
-      background: linear-gradient(90deg,rgba(59,130,246,.08),rgba(14,165,233,.06),rgba(139,92,246,.08),rgba(59,130,246,.08));
-      background-size: 200% 200%;
-      animation: aura-flow 14s ease infinite, aura-pulse 9s ease infinite;
-      pointer-events: none; z-index: 0;
-      -webkit-mask-image: linear-gradient(to bottom,transparent 0%,black 10%,black 90%,transparent 100%);
-      mask-image: linear-gradient(to bottom,transparent 0%,black 10%,black 90%,transparent 100%);
-    }
-    .page-aura::after {
-      content: "";
-      position: absolute; inset: 6% -8% auto; height: 70%;
-      background:
-        radial-gradient(circle at 15% 50%,rgba(59,130,246,.12),transparent 30%),
-        radial-gradient(circle at 50% 50%,rgba(139,92,246,.14),transparent 34%),
-        radial-gradient(circle at 85% 50%,rgba(6,182,212,.10),transparent 28%);
-      filter: blur(72px); pointer-events: none; z-index: 0; opacity: .85;
-    }
-    .page-aura > * { position: relative; z-index: 1; }
-
-    /* iPhone notification mockup */
-    .iphone-mockup {
-      background: #0A0A0F;
-      border: 2px solid rgba(255,255,255,0.14);
-      border-radius: 40px;
-      padding: 12px;
-      box-shadow: 0 0 0 1px rgba(255,255,255,0.04), 0 30px 60px rgba(0,0,0,.6), 0 0 40px rgba(59,130,246,.15);
-    }
-    .iphone-notch {
-      width: 80px; height: 20px;
-      background: #0A0A0F;
-      border-radius: 0 0 14px 14px;
-      margin: 0 auto 8px;
-      border: 2px solid rgba(255,255,255,0.07);
-      border-top: none;
-    }
-    .iphone-screen {
-      background: linear-gradient(160deg, #0F1824, #080E18);
-      border-radius: 28px;
-      overflow: hidden;
-    }
-
-    /* Hardware cards hover lift */
-    .hw-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-    .hw-card:hover { transform: translateY(-4px); }
-
-    /* Equipment chip selection */
-    .equipment-chip { cursor: pointer; transition: all 0.22s; user-select: none; }
-    .equipment-chip.selected { border-color: rgba(59,130,246,.5) !important; background: rgba(59,130,246,.1) !important; }
-    .equipment-chip.selected .chip-check { opacity: 1; }
-    .chip-check { opacity: 0; transition: opacity 0.2s; }
-
-    /* ROI calc plan button */
-    .calc-plan-btn { cursor: pointer; transition: all 0.2s; }
-
-    /* Section divider */
-    .section-label {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 6px 14px; border-radius: 999px;
-      font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
-    }
   </style>
 </head>
 <body class="font-sans antialiased bg-bg text-gray-300 min-h-screen flex flex-col relative selection:bg-primary/30 selection:text-white">
-
-  <!-- Global background layers -->
   <div class="fixed inset-0 bg-grid pointer-events-none z-[-2]"></div>
   <div class="fixed top-[-20%] left-[-10%] w-[50%] h-[50%] bg-blue-900/10 blur-[120px] rounded-full pointer-events-none z-[-1]"></div>
-  <div class="fixed bottom-[-20%] right-[-10%] w-[40%] h-[40%] bg-blue-600/5 blur-[120px] rounded-full pointer-events-none z-[-1]"></div>
+  <div class="fixed bottom-[-20%] right-[-10%] w-[40%] h-[40%] bg-cyan-600/5 blur-[120px] rounded-full pointer-events-none z-[-1]"></div>
 
-  <!-- ============================================================
-       NAVIGATION
-  ============================================================ -->
   <nav class="fixed top-0 w-full z-50 border-b border-white/5 bg-bg/80 backdrop-blur-xl">
     <div class="w-full px-4 sm:px-6 xl:px-10 2xl:px-16 h-20 flex items-center justify-between relative">
-      <!-- Logo -->
-      <a href="/" class="flex items-center gap-3 z-50">
-        <img src="/assets/apex-logo-transparent.png" alt="Vetra logo" class="w-10 h-10 rounded-xl object-cover border border-white/10 shadow-[0_0_20px_rgba(59,130,246,0.25)]">
-        <div class="flex flex-col">
-          <span class="font-heading font-bold text-2xl tracking-tighter text-white leading-none">VETRA</span>
-          <span class="text-[9px] text-gray-500 font-mono tracking-widest leading-tight mt-0.5 uppercase">Apex Conversion Group</span>
-        </div>
+      <a href="/start/" class="cursor-pointer z-50" aria-label="Open welcome page">
+        <img src="/assets/vetra-logo.png" alt="Vetra logo" class="h-20 w-auto object-contain" style="max-width: 200px;">
       </a>
-
-      <!-- Desktop nav -->
       <div class="hidden lg:flex items-center gap-6 xl:gap-8 font-medium text-sm text-gray-400">
-        <a href="/#coming-soon" class="text-purple-400 hover:text-purple-300 animate-pulse transition-colors nav-link">Coming Soon</a>
-        <a href="/start" class="text-cyan-300 nav-link active">Welcome</a>
+        <a href="/#coming-soon" class="text-purple-400 hover:text-purple-300 transition-colors nav-link">Coming Soon</a>
+        <a href="/start/" class="text-cyan-300 transition-colors nav-link active">Welcome</a>
         <a href="/" class="hover:text-white transition-colors nav-link">Home</a>
-        <a href="/#hardware" class="hover:text-white transition-colors nav-link text-green-400">Hardware</a>
-        <a href="/#checkout" class="hover:text-white transition-colors nav-link">Pricing</a>
+        <a href="/#features" class="hover:text-white transition-colors nav-link">Features</a>
+        <a href="/#checkout" class="hover:text-white transition-colors nav-link">Checkout</a>
         <a href="/#trends" class="hover:text-white transition-colors nav-link text-blue-400">Live Field Data</a>
+        <a href="/#hardware" class="hover:text-white transition-colors nav-link text-green-400">Hardware</a>
       </div>
-
-      <!-- Desktop CTA -->
       <div class="hidden lg:flex items-center gap-4">
-        <a href="/#checkout" class="bg-primary text-white px-5 py-2.5 rounded-md font-medium text-sm hover:bg-primaryGlow transition-colors shadow-[0_0_20px_rgba(59,130,246,0.3)]">
-          Get Started
-        </a>
+        <a href="/#checkout" class="bg-primary text-white px-5 py-2.5 rounded-md font-medium text-sm hover:bg-primaryGlow transition-colors shadow-[0_0_20px_rgba(59,130,246,0.3)]">Get Started</a>
       </div>
-
-      <!-- Mobile menu button -->
       <button onclick="toggleMobileMenu()" class="lg:hidden p-2 text-gray-400 hover:text-white z-50 transition-colors active:scale-95">
         <i data-lucide="menu" class="w-6 h-6"></i>
       </button>
     </div>
-
-    <!-- Mobile dropdown -->
     <div id="mobile-menu" class="fixed inset-x-0 top-20 bg-[#05050A]/95 backdrop-blur-xl border-b border-white/10 flex-col p-6 gap-6 shadow-2xl lg:hidden opacity-0 pointer-events-none -translate-y-4 transition-all duration-300 ease-in-out z-40 h-[calc(100vh-5rem)] overflow-y-auto">
-      <a href="/#coming-soon" class="block text-purple-400 font-medium text-lg border-b border-white/5 pb-4 animate-pulse">Coming Soon</a>
-      <a href="/start" class="block text-cyan-300 font-medium text-lg border-b border-white/5 pb-4">Welcome</a>
+      <a href="/#coming-soon" class="block text-purple-400 font-medium text-lg border-b border-white/5 pb-4">Coming Soon</a>
+      <a href="/start/" class="block text-cyan-300 font-medium text-lg border-b border-white/5 pb-4">Welcome</a>
       <a href="/" class="block text-gray-300 hover:text-white font-medium text-lg border-b border-white/5 pb-4 transition-colors">Home</a>
-      <a href="/#hardware" class="block text-green-400 hover:text-green-300 font-medium text-lg border-b border-white/5 pb-4 transition-colors">Hardware</a>
-      <a href="/#checkout" class="block text-gray-300 hover:text-white font-medium text-lg border-b border-white/5 pb-4 transition-colors">Pricing</a>
+      <a href="/#features" class="block text-gray-300 hover:text-white font-medium text-lg border-b border-white/5 pb-4 transition-colors">Features</a>
+      <a href="/#checkout" class="block text-gray-300 hover:text-white font-medium text-lg border-b border-white/5 pb-4 transition-colors">Checkout</a>
       <a href="/#trends" class="block text-blue-400 hover:text-blue-300 font-medium text-lg border-b border-white/5 pb-4 transition-colors">Live Field Data</a>
-      <a href="/#checkout" class="block bg-primary text-white px-5 py-4 rounded-xl font-bold text-base hover:bg-primaryGlow transition-colors mt-4 text-center shadow-[0_0_20px_rgba(59,130,246,0.3)]">
-        Get Started
-      </a>
+      <a href="/#hardware" class="block text-green-400 hover:text-green-300 font-medium text-lg border-b border-white/5 pb-4 transition-colors">Hardware</a>
+      <a href="/#checkout" class="block bg-primary text-white px-5 py-4 rounded-xl font-bold text-base hover:bg-primaryGlow transition-colors mt-4 text-center shadow-[0_0_20px_rgba(59,130,246,0.3)]">Get Started</a>
     </div>
   </nav>
 
-  <!-- ============================================================
-       MAIN CONTENT
-  ============================================================ -->
-  <main class="flex-grow pt-28 pb-20 w-full px-4 sm:px-6 xl:px-10 2xl:px-16 relative">
-
-    <!-- ==========================================
-         SECTION 1 — HERO
-    =========================================== -->
-    <section class="page-aura mb-32">
-      <!-- Headline block -->
-      <div class="text-center pt-12 pb-8 reveal">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono mb-6 tracking-widest uppercase">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-          Vetra Tech Refresh Program · $0 Down
-        </div>
-        <h1 class="font-heading text-5xl md:text-7xl font-bold leading-tight mb-6 text-white tracking-tight">
-          Upgrade Your Shop<br>for <span class="gradient-alive">$0 Down.</span>
+  <main class="flex-grow pt-32 pb-16 w-full px-4 sm:px-6 xl:px-10 2xl:px-16 relative">
+    <section class="max-w-6xl mx-auto">
+      <div class="hero-shell rounded-3xl p-6 md:p-10 lg:p-14 relative overflow-hidden">
+        <div class="absolute -top-20 -right-20 w-72 h-72 bg-blue-500/15 blur-3xl rounded-full pointer-events-none"></div>
+        <div class="absolute -bottom-20 -left-20 w-72 h-72 bg-cyan-500/15 blur-3xl rounded-full pointer-events-none"></div>
+        <p class="uppercase tracking-[0.24em] text-xs text-cyan-300 font-mono mb-4">Private Access · IFYKYK</p>
+        <h1 class="font-heading text-4xl md:text-6xl font-bold leading-tight text-white max-w-4xl">
+          This is the quiet door.
+          <span class="text-gradient block mt-2">Welcome to the insider lane.</span>
         </h1>
-        <p class="text-lg md:text-2xl text-gray-400 mb-5 max-w-3xl mx-auto font-light leading-relaxed">
-          Get the latest Robinair A/C and Autel Diagnostic equipment plus an AI Booking Assistant that <strong class="text-white font-semibold">pays for your lease.</strong>
+        <p class="text-gray-300 text-base md:text-xl mt-6 max-w-3xl leading-relaxed">
+          You found the page built for people who came from the card. Skip the noise and jump straight into the stack.
         </p>
-        <div class="inline-flex items-center gap-3 px-5 py-3 rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-emerald-300 text-base font-semibold mb-8">
-          <i data-lucide="zap" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-          One extra job a week pays for the entire system.
-        </div>
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="/#checkout" class="w-full sm:w-auto px-8 py-4 bg-primary hover:bg-primaryGlow text-white rounded-lg font-bold text-lg transition-all shadow-[0_0_30px_rgba(59,130,246,0.35)] hover:shadow-[0_0_50px_rgba(59,130,246,0.55)] transform hover:-translate-y-0.5 flex items-center justify-center gap-2 max-w-sm mx-auto">
-            Get Started in 60 Seconds <i data-lucide="arrow-right" class="w-5 h-5"></i>
+        <div class="mt-10 flex flex-col sm:flex-row gap-4">
+          <a href="/#checkout" class="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl bg-primary text-white font-semibold hover:bg-primaryGlow transition-colors shadow-[0_0_25px_rgba(59,130,246,0.35)]">
+            Start My Setup
+            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
           </a>
-          <a href="#hardware-section" class="w-full sm:w-auto px-8 py-4 border border-white/15 text-gray-300 hover:text-white hover:border-white/30 rounded-lg font-semibold text-lg transition-all flex items-center justify-center gap-2 max-w-sm mx-auto">
-            View Equipment <i data-lucide="cpu" class="w-5 h-5"></i>
+          <a href="/#trends" class="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl border border-white/15 bg-white/5 text-white font-semibold hover:bg-white/10 transition-colors">
+            View Real Shop Data
+            <i data-lucide="line-chart" class="w-4 h-4"></i>
           </a>
         </div>
       </div>
-
-      <!-- Split-screen visual -->
-      <div class="flex flex-col lg:flex-row gap-6 max-w-5xl mx-auto mt-10 reveal">
-
-        <!-- Left: Robinair machine card -->
-        <div class="lg:w-1/2 glow-card rounded-2xl border border-emerald-500/20 bg-emerald-950/20 p-10 flex flex-col items-center justify-center min-h-[380px]">
-          <div class="section-label bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 mb-5">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-            A/C Package · Summer Money Maker
-          </div>
-          <img src="/assets/robinair-ac1234-9.png" alt="Robinair AC 1234-9"
-               class="w-52 h-52 object-contain mb-5"
-               style="filter: drop-shadow(0 16px 36px rgba(0,255,194,0.34));">
-          <h3 class="font-heading text-2xl font-bold text-white text-center mb-1">Robinair AC 1234-9</h3>
-          <p class="text-gray-500 text-sm text-center mb-4">Retail ~$6,800 · Turn away zero A/C jobs</p>
-          <div class="text-5xl font-extrabold font-heading" style="color:#00FFC2;text-shadow:0 0 18px #00FFC2AA;">
-            $95<span class="text-xl text-gray-400 font-normal">/mo</span>
-          </div>
-          <div class="text-xs text-gray-500 mt-1">0% down · 60-month lease</div>
-        </div>
-
-        <!-- Right: iPhone AI booking notification mockup -->
-        <div class="lg:w-1/2 flex items-center justify-center py-4">
-          <div class="iphone-mockup w-64">
-            <div class="iphone-notch"></div>
-            <div class="iphone-screen p-4 space-y-3">
-              <div class="text-center mb-2">
-                <div class="text-xs text-gray-500 font-mono flex items-center justify-center gap-1.5">
-                  <i data-lucide="wifi" class="w-3 h-3"></i> Vetra AI · Live
-                </div>
-              </div>
-              <!-- Notification: new booking -->
-              <div class="bg-[#161C28] rounded-xl p-3 border border-white/8">
-                <div class="flex items-center gap-2 mb-1.5">
-                  <div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center shrink-0">
-                    <img src="/assets/apex-logo-transparent.png" alt="V" class="w-4 h-4 rounded-sm">
-                  </div>
-                  <span class="text-xs font-bold text-white">VETRA</span>
-                  <span class="text-xs text-gray-500 ml-auto">just now</span>
-                </div>
-                <p class="text-xs text-gray-300 leading-relaxed">🔧 <strong class="text-white">New Booking:</strong> Mike T. — front suspension inspection, Thurs 2PM. Est. $420.</p>
-              </div>
-              <!-- Notification: 5-star review -->
-              <div class="bg-[#161C28] rounded-xl p-3 border border-emerald-500/20">
-                <div class="flex items-center gap-2 mb-1.5">
-                  <div class="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center shrink-0">
-                    <i data-lucide="star" class="w-3 h-3 text-emerald-400"></i>
-                  </div>
-                  <span class="text-xs font-bold text-white">Review Alert</span>
-                  <span class="text-xs text-gray-500 ml-auto">2h ago</span>
-                </div>
-                <p class="text-xs text-gray-300 leading-relaxed">⭐⭐⭐⭐⭐ <strong class="text-emerald-400">5-star from Sarah M.</strong> auto-posted to Google.</p>
-              </div>
-              <!-- Notification: after-hours SMS lead -->
-              <div class="bg-[#161C28] rounded-xl p-3 border border-blue-500/20">
-                <div class="flex items-center gap-2 mb-1.5">
-                  <div class="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center shrink-0">
-                    <i data-lucide="message-square" class="w-3 h-3 text-blue-400"></i>
-                  </div>
-                  <span class="text-xs font-bold text-white">SMS Lead</span>
-                  <span class="text-xs text-gray-500 ml-auto">3h ago</span>
-                </div>
-                <p class="text-xs text-gray-300 leading-relaxed">After-hours lead captured. <strong class="text-white">A/C repair, 2019 F-150.</strong> Confirmed Friday.</p>
-              </div>
-              <div class="text-center pt-1">
-                <div class="inline-flex items-center gap-1.5 text-xs text-emerald-400 font-mono">
-                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                  3 new jobs booked today
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Trust badges -->
-      <div class="flex flex-wrap justify-center gap-8 md:gap-14 mt-14 reveal opacity-60 hover:opacity-100 transition-all duration-500">
-        <div class="flex items-center gap-3 text-gray-400">
-          <div class="w-8 h-8 rounded-full bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20">
-            <i data-lucide="check" class="w-4 h-4 text-emerald-400"></i>
-          </div>
-          <span class="font-mono text-xs uppercase tracking-widest">$0 Down</span>
-        </div>
-        <div class="flex items-center gap-3 text-gray-400">
-          <div class="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center border border-blue-500/20">
-            <i data-lucide="check" class="w-4 h-4 text-blue-400"></i>
-          </div>
-          <span class="font-mono text-xs uppercase tracking-widest">100% Tax Deductible</span>
-        </div>
-        <div class="flex items-center gap-3 text-gray-400">
-          <div class="w-8 h-8 rounded-full bg-purple-500/10 flex items-center justify-center border border-purple-500/20">
-            <i data-lucide="check" class="w-4 h-4 text-purple-400"></i>
-          </div>
-          <span class="font-mono text-xs uppercase tracking-widest">30-Day Guarantee</span>
-        </div>
-        <div class="flex items-center gap-3 text-gray-400">
-          <div class="w-8 h-8 rounded-full bg-cyan-500/10 flex items-center justify-center border border-cyan-500/20">
-            <i data-lucide="check" class="w-4 h-4 text-cyan-400"></i>
-          </div>
-          <span class="font-mono text-xs uppercase tracking-widest">Live in 48 Hours</span>
-        </div>
-      </div>
     </section>
-
-    <!-- ==========================================
-         SECTION 2 — HARDWARE AS A SERVICE
-    =========================================== -->
-    <section id="hardware-section" class="mb-32">
-      <div class="text-center mb-14 reveal">
-        <div class="section-label bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 mb-5">The Metal</div>
-        <h2 class="font-heading text-4xl md:text-5xl font-bold text-white mb-4">
-          Stop Renting Yesterday's Tools.<br><span class="text-gradient">Get Industry-Best Gear Today.</span>
-        </h2>
-        <p class="text-gray-400 text-lg max-w-2xl mx-auto font-light">
-          Free up your cash flow. VETRA absorbs the depreciation. You keep the revenue.
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-
-        <!-- A/C Package -->
-        <div class="glow-card hw-card rounded-2xl border border-emerald-500/25 p-8 flex flex-col reveal">
-          <div class="mb-4">
-            <span class="px-3 py-1 rounded-full bg-emerald-400/15 text-emerald-300 text-xs font-bold border border-emerald-400/25 uppercase tracking-wide">Summer Money Maker</span>
-          </div>
-          <img src="/assets/robinair-ac1234-9.png" alt="Robinair AC 1234-9"
-               class="w-36 h-36 object-contain mx-auto mb-6"
-               style="filter: drop-shadow(0 10px 28px rgba(0,255,194,0.3));">
-          <h3 class="font-heading text-xl font-bold text-white mb-1">The A/C Package</h3>
-          <p class="text-emerald-400 text-sm font-semibold mb-4">Robinair AC 1234-9</p>
-          <ul class="text-gray-400 text-sm space-y-2.5 mb-6 flex-grow">
-            <li class="flex items-start gap-2">
-              <i data-lucide="check" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i>
-              Turn away zero A/C jobs — handle every modern refrigerant
-            </li>
-            <li class="flex items-start gap-2">
-              <i data-lucide="check" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i>
-              Pays for itself with a single A/C service per month
-            </li>
-            <li class="flex items-start gap-2">
-              <i data-lucide="check" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i>
-              Market as "full A/C certified" instantly — attract more jobs
-            </li>
-          </ul>
-          <div class="border-t border-white/10 pt-5">
-            <div class="text-gray-500 text-sm line-through mb-1">$6,800 upfront CapEx</div>
-            <div class="text-4xl font-extrabold font-heading" style="color:#00FFC2;text-shadow:0 0 12px #00FFC2AA;">
-              $95<span class="text-base text-gray-400 font-normal">/mo</span>
-            </div>
-            <div class="text-xs text-gray-500 mt-1">60-month lease · 0% down</div>
-          </div>
-        </div>
-
-        <!-- Diagnostic Package -->
-        <div class="glow-card hw-card rounded-2xl border border-purple-500/25 p-8 flex flex-col reveal" style="animation-delay:80ms">
-          <div class="mb-4">
-            <span class="px-3 py-1 rounded-full bg-purple-400/15 text-purple-300 text-xs font-bold border border-purple-400/25 uppercase tracking-wide">Most Popular</span>
-          </div>
-          <img src="/assets/autel-ultra.png" alt="Autel MaxiSys Ultra"
-               class="w-36 h-36 object-contain mx-auto mb-6"
-               style="filter: drop-shadow(0 10px 28px rgba(124,58,237,0.35));">
-          <h3 class="font-heading text-xl font-bold text-white mb-1">The Diagnostic Package</h3>
-          <p class="text-purple-400 text-sm font-semibold mb-4">Autel MaxiSys Ultra</p>
-          <ul class="text-gray-400 text-sm space-y-2.5 mb-6 flex-grow">
-            <li class="flex items-start gap-2">
-              <i data-lucide="check" class="w-4 h-4 text-purple-400 mt-0.5 shrink-0"></i>
-              Doesn't just read codes — builds full diagnostic reports
-            </li>
-            <li class="flex items-start gap-2">
-              <i data-lucide="check" class="w-4 h-4 text-purple-400 mt-0.5 shrink-0"></i>
-              VETRA's AI uses those reports to <strong class="text-white">sell the job</strong> to your customer
-            </li>
-            <li class="flex items-start gap-2">
-              <i data-lucide="check" class="w-4 h-4 text-purple-400 mt-0.5 shrink-0"></i>
-              Dealership-level scans. No dealership cash flow required.
-            </li>
-          </ul>
-          <div class="border-t border-white/10 pt-5">
-            <div class="text-gray-500 text-sm line-through mb-1">$5,500 upfront CapEx</div>
-            <div class="text-4xl font-extrabold font-heading" style="color:#7C3AED;text-shadow:0 0 12px #7C3AEDAA;">
-              $90<span class="text-base text-gray-400 font-normal">/mo</span>
-            </div>
-            <div class="text-xs text-gray-500 mt-1">60-month lease · 0% down</div>
-          </div>
-        </div>
-
-        <!-- Transmission Package (NEW) -->
-        <div class="glow-card hw-card rounded-2xl border border-amber-500/25 p-8 flex flex-col reveal" style="animation-delay:160ms">
-          <div class="mb-4 flex flex-wrap gap-2">
-            <span class="px-3 py-1 rounded-full bg-amber-400/15 text-amber-300 text-xs font-bold border border-amber-400/25 uppercase tracking-wide">New</span>
-            <span class="px-3 py-1 rounded-full bg-red-400/10 text-red-300 text-xs font-bold border border-red-400/20 uppercase tracking-wide">Stop Losing $5K Jobs</span>
-          </div>
-          <!-- Placeholder until product photo is available -->
-          <div class="w-36 h-36 mx-auto mb-6 flex items-center justify-center rounded-2xl bg-amber-950/40 border border-amber-500/20"
-               style="box-shadow: 0 10px 28px rgba(245,158,11,0.2);">
-            <i data-lucide="cog" class="w-20 h-20 text-amber-400" style="opacity:.65;"></i>
-          </div>
-          <h3 class="font-heading text-xl font-bold text-white mb-1">The Transmission Package</h3>
-          <p class="text-amber-400 text-sm font-semibold mb-4">Autel Transmission Diagnostic Suite</p>
-          <ul class="text-gray-400 text-sm space-y-2.5 mb-6 flex-grow">
-            <li class="flex items-start gap-2">
-              <i data-lucide="check" class="w-4 h-4 text-amber-400 mt-0.5 shrink-0"></i>
-              Stop sending $5,000 jobs to the dealership
-            </li>
-            <li class="flex items-start gap-2">
-              <i data-lucide="check" class="w-4 h-4 text-amber-400 mt-0.5 shrink-0"></i>
-              Transmission jobs are the highest-ticket work in your bays
-            </li>
-            <li class="flex items-start gap-2">
-              <i data-lucide="check" class="w-4 h-4 text-amber-400 mt-0.5 shrink-0"></i>
-              VETRA ensures your bays are ready for complex work — $0 upfront
-            </li>
-          </ul>
-          <div class="border-t border-white/10 pt-5">
-            <div class="text-gray-500 text-sm line-through mb-1">~$8,500 upfront CapEx</div>
-            <div class="text-4xl font-extrabold font-heading" style="color:#F59E0B;text-shadow:0 0 12px #F59E0BAA;">
-              $175<span class="text-base text-gray-400 font-normal">/mo</span>
-            </div>
-            <div class="text-xs text-gray-500 mt-1">60-month lease · 0% down · Launching Q2 2026</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==========================================
-         SECTION 3 — AI BOOKING ENGINE
-    =========================================== -->
-    <section class="mb-32 page-aura">
-      <div class="text-center mb-14 reveal">
-        <div class="section-label bg-blue-500/10 border border-blue-500/20 text-blue-400 mb-5">The Brain</div>
-        <h2 class="font-heading text-4xl md:text-5xl font-bold text-white mb-4">
-          The AI Booking Engine.<br><span class="gradient-alive">In Mechanic Speak.</span>
-        </h2>
-        <p class="text-gray-400 text-lg max-w-2xl mx-auto font-light">
-          No passwords. No dashboards. No learning curve. It just fills your bays.
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-
-        <!-- 24/7 Receptionist -->
-        <div class="glow-card rounded-2xl p-8 border border-blue-500/20 reveal flex flex-col">
-          <div class="w-12 h-12 rounded-xl bg-blue-500/15 flex items-center justify-center border border-blue-500/25 mb-5 shrink-0">
-            <i data-lucide="phone" class="w-6 h-6 text-blue-400"></i>
-          </div>
-          <h3 class="font-heading text-xl font-bold text-white mb-3">The 24/7 Receptionist</h3>
-          <p class="text-gray-400 text-sm leading-relaxed flex-grow">
-            Our AI answers after-hours calls and texts back missed leads <strong class="text-white">instantly</strong>. It never sleeps, it never has a bad day, and it never misses a booking.
-          </p>
-          <div class="mt-6 pt-4 border-t border-white/8">
-            <div class="text-xs font-mono text-blue-400 flex items-center gap-2">
-              <span class="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span>
-              Responds in under 90 seconds
-            </div>
-          </div>
-        </div>
-
-        <!-- Reputation Engine -->
-        <div class="glow-card rounded-2xl p-8 border border-yellow-500/20 reveal flex flex-col" style="animation-delay:80ms">
-          <div class="w-12 h-12 rounded-xl bg-yellow-500/15 flex items-center justify-center border border-yellow-500/25 mb-5 shrink-0">
-            <i data-lucide="star" class="w-6 h-6 text-yellow-400"></i>
-          </div>
-          <h3 class="font-heading text-xl font-bold text-white mb-3">Reputation Engine</h3>
-          <p class="text-gray-400 text-sm leading-relaxed flex-grow">
-            Automatically texts every customer a review link 2 hours after they leave. We turn your 4.2-star shop into a <strong class="text-white">4.9-star local powerhouse</strong> on Google Maps.
-          </p>
-          <div class="mt-6 pt-4 border-t border-white/8">
-            <div class="text-xs font-mono text-yellow-400 flex items-center gap-2">
-              <span class="w-1.5 h-1.5 rounded-full bg-yellow-400 animate-pulse"></span>
-              Auto-posts to Google within hours
-            </div>
-          </div>
-        </div>
-
-        <!-- Zero Technical Overhead -->
-        <div class="glow-card rounded-2xl p-8 border border-emerald-500/20 reveal flex flex-col" style="animation-delay:160ms">
-          <div class="w-12 h-12 rounded-xl bg-emerald-500/15 flex items-center justify-center border border-emerald-500/25 mb-5 shrink-0">
-            <i data-lucide="plug" class="w-6 h-6 text-emerald-400"></i>
-          </div>
-          <h3 class="font-heading text-xl font-bold text-white mb-3">Zero Technical Overhead</h3>
-          <p class="text-gray-400 text-sm leading-relaxed flex-grow">
-            We don't need your passwords. We plug into your existing website in <strong class="text-white">5 minutes</strong>. You go back to turning wrenches. We handle the bookings.
-          </p>
-          <div class="mt-6 pt-4 border-t border-white/8">
-            <div class="text-xs font-mono text-emerald-400 flex items-center gap-2">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              5-minute website integration
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==========================================
-         SECTION 4 — ROI CALCULATOR (2-PANEL)
-    =========================================== -->
-    <section class="mb-32">
-      <div class="text-center mb-14 reveal">
-        <div class="section-label bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 mb-5">The Logic</div>
-        <h2 class="font-heading text-4xl md:text-5xl font-bold text-white mb-4">
-          Show Me the <span class="text-gradient">Numbers.</span>
-        </h2>
-        <p class="text-gray-400 text-lg max-w-2xl mx-auto font-light">
-          See exactly how much the full VETRA system pays back — software and hardware together.
-        </p>
-      </div>
-
-      <div class="max-w-6xl mx-auto space-y-8">
-
-        <!-- ---- Panel 1: Software ROI ---- -->
-        <div class="glow-card rounded-2xl border border-blue-500/15 p-8 reveal">
-          <div class="flex items-center gap-3 mb-8">
-            <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center border border-blue-500/30 text-blue-400 font-bold font-mono text-sm shrink-0">1</div>
-            <h3 class="font-heading text-xl font-bold text-white">Software ROI — AI Booking Widget</h3>
-            <span class="ml-auto px-3 py-1 text-xs font-mono rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 hidden sm:block">Adjust Your Numbers</span>
-          </div>
-
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-
-            <!-- Sliders -->
-            <div class="space-y-6">
-              <div>
-                <div class="flex justify-between text-sm mb-2">
-                  <span class="text-gray-300">Hourly Labor Rate</span>
-                  <span class="text-emerald-400 font-mono font-bold">$<span id="s-val-rate">150</span>/hr</span>
-                </div>
-                <input type="range" id="s-slider-rate" min="80" max="300" step="5" value="150" class="w-full h-2 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-emerald-500">
-              </div>
-              <div>
-                <div class="flex justify-between text-sm mb-2">
-                  <span class="text-gray-300">Average Billed Hours per Job</span>
-                  <span class="text-blue-400 font-mono font-bold"><span id="s-val-hours">2.5</span> hrs</span>
-                </div>
-                <input type="range" id="s-slider-hours" min="1" max="10" step="0.5" value="2.5" class="w-full h-2 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-blue-500">
-              </div>
-              <div>
-                <div class="flex justify-between text-sm mb-2">
-                  <span class="text-gray-300">Missed Inquiries per Week</span>
-                  <span class="text-red-400 font-mono font-bold"><span id="s-val-missed">20</span> leads</span>
-                </div>
-                <p class="text-xs text-gray-500 mb-2">Voicemails, drop-offs, and calls placed on hold.</p>
-                <input type="range" id="s-slider-missed" min="5" max="100" step="5" value="20" class="w-full h-2 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-red-500">
-              </div>
-              <div>
-                <div class="flex justify-between text-sm mb-2">
-                  <span class="text-gray-300">AI Conversion Rate</span>
-                  <span class="text-emerald-400 font-mono font-bold"><span id="s-val-conversion">15</span>%</span>
-                </div>
-                <input type="range" id="s-slider-conversion" min="5" max="60" step="5" value="15" class="w-full h-2 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-emerald-500">
-              </div>
-              <div>
-                <div class="flex justify-between text-sm mb-2">
-                  <span class="text-gray-300">Shop Overhead</span>
-                  <span class="text-orange-400 font-mono font-bold"><span id="s-val-overhead">40</span>%</span>
-                </div>
-                <input type="range" id="s-slider-overhead" min="10" max="80" step="5" value="40" class="w-full h-2 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-orange-500">
-              </div>
-
-              <!-- Software plan selection -->
-              <div class="pt-4 border-t border-white/10">
-                <div class="text-sm text-gray-300 font-medium mb-3">Software Plan</div>
-                <div class="grid grid-cols-3 gap-2">
-                  <div id="sw-plan-299" onclick="selectSoftwarePlan(299, this)" class="calc-plan-btn px-2 py-3 rounded-xl border border-blue-500/40 bg-blue-500/10 text-center">
-                    <div class="text-[9px] text-blue-400 uppercase mb-1 font-bold">No Contract</div>
-                    <div class="text-xl font-bold text-white">$299</div>
-                  </div>
-                  <div id="sw-plan-249" onclick="selectSoftwarePlan(249, this)" class="calc-plan-btn px-2 py-3 rounded-xl border border-white/10 bg-black/40 text-center hover:bg-white/5">
-                    <div class="text-[9px] text-gray-500 uppercase mb-1 font-bold">3-Month</div>
-                    <div class="text-xl font-bold text-white">$249</div>
-                  </div>
-                  <div id="sw-plan-199" onclick="selectSoftwarePlan(199, this)" class="calc-plan-btn px-2 py-3 rounded-xl border border-white/10 bg-black/40 text-center hover:bg-white/5">
-                    <div class="text-[9px] text-gray-500 uppercase mb-1 font-bold">12-Month</div>
-                    <div class="text-xl font-bold text-white">$199</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Software output -->
-            <div class="bg-black/40 rounded-xl border border-white/8 p-6 flex flex-col justify-between">
-              <div class="space-y-3.5 text-sm mb-6">
-                <div class="flex items-center justify-between">
-                  <span class="text-gray-400">New Booked Jobs / Month</span>
-                  <span class="font-mono font-bold text-white" id="s-out-ros">—</span>
-                </div>
-                <div class="flex items-center justify-between">
-                  <span class="text-gray-400">Recovered Revenue</span>
-                  <span class="font-mono font-bold text-emerald-400">+$<span id="s-out-recovered">0</span></span>
-                </div>
-                <div class="flex items-center justify-between">
-                  <span class="text-gray-400">Overhead Deduction</span>
-                  <span class="font-mono font-bold text-orange-400" id="s-out-overhead-ded">-$0</span>
-                </div>
-                <div class="flex items-center justify-between">
-                  <span class="text-gray-400">Software Cost</span>
-                  <span class="font-mono font-bold text-red-400">-$<span id="s-out-sw-cost">299</span>/mo</span>
-                </div>
-                <div class="border-t border-white/10 pt-3 flex items-center justify-between">
-                  <span class="text-white font-semibold">Net Software ROI</span>
-                  <span class="font-mono font-bold text-lg" id="s-out-net-sw">$0</span>
-                </div>
-              </div>
-              <div class="text-center">
-                <div class="text-xs text-gray-500 mb-1">Monthly Net Profit (Software)</div>
-                <div class="text-5xl font-heading font-extrabold bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent" id="s-out-profit">$0</div>
-                <div class="text-xs text-gray-500 mt-2">ROI Multiple: <span id="s-out-roi-mult" class="text-emerald-400 font-mono font-bold">0x</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ---- Panel 2: Equipment ROI ---- -->
-        <div class="glow-card rounded-2xl border border-emerald-500/15 p-8 reveal">
-          <div class="flex items-center gap-3 mb-8">
-            <div class="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center border border-emerald-500/30 text-emerald-400 font-bold font-mono text-sm shrink-0">2</div>
-            <h3 class="font-heading text-xl font-bold text-white">Equipment ROI — Hardware Lease</h3>
-            <span class="ml-auto px-3 py-1 text-xs font-mono rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 hidden sm:block">Select Your Gear</span>
-          </div>
-
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-
-            <!-- Equipment picker -->
-            <div>
-              <p class="text-sm text-gray-400 mb-4">Select the equipment you plan to lease. Toggle to add or remove:</p>
-              <div class="space-y-3 mb-5">
-
-                <!-- A/C -->
-                <div class="equipment-chip selected glow-card rounded-xl border border-white/10 p-4 flex items-center gap-4"
-                     data-cost="95" data-rev="900" onclick="toggleEquipment(this)">
-                  <img src="/assets/robinair-ac1234-9.png" alt="Robinair" class="w-12 h-12 object-contain shrink-0"
-                       style="filter: drop-shadow(0 4px 8px rgba(0,255,194,0.2));">
-                  <div class="flex-grow min-w-0">
-                    <div class="text-white font-semibold text-sm">A/C Package · Robinair AC 1234-9</div>
-                    <div class="text-gray-500 text-xs mt-0.5">~2 extra A/C jobs/mo · Avg $450/job</div>
-                  </div>
-                  <div class="text-right shrink-0 flex flex-col items-end gap-1">
-                    <div class="text-emerald-400 font-mono font-bold text-sm">$95/mo</div>
-                    <i data-lucide="check-circle-2" class="chip-check w-4 h-4 text-emerald-400"></i>
-                  </div>
-                </div>
-
-                <!-- Diagnostic -->
-                <div class="equipment-chip selected glow-card rounded-xl border border-white/10 p-4 flex items-center gap-4"
-                     data-cost="90" data-rev="975" onclick="toggleEquipment(this)">
-                  <img src="/assets/autel-ultra.png" alt="Autel Ultra" class="w-12 h-12 object-contain shrink-0"
-                       style="filter: drop-shadow(0 4px 8px rgba(124,58,237,0.2));">
-                  <div class="flex-grow min-w-0">
-                    <div class="text-white font-semibold text-sm">Diagnostic Package · Autel MaxiSys Ultra</div>
-                    <div class="text-gray-500 text-xs mt-0.5">~1.5 extra diag jobs/mo · Avg $650/job</div>
-                  </div>
-                  <div class="text-right shrink-0 flex flex-col items-end gap-1">
-                    <div class="text-purple-400 font-mono font-bold text-sm">$90/mo</div>
-                    <i data-lucide="check-circle-2" class="chip-check w-4 h-4 text-purple-400"></i>
-                  </div>
-                </div>
-
-                <!-- Transmission -->
-                <div class="equipment-chip glow-card rounded-xl border border-white/10 p-4 flex items-center gap-4"
-                     data-cost="175" data-rev="1760" onclick="toggleEquipment(this)">
-                  <div class="w-12 h-12 rounded-lg bg-amber-950/40 border border-amber-500/20 flex items-center justify-center shrink-0">
-                    <i data-lucide="cog" class="w-7 h-7 text-amber-400"></i>
-                  </div>
-                  <div class="flex-grow min-w-0">
-                    <div class="text-white font-semibold text-sm flex items-center gap-2">
-                      Transmission Package
-                      <span class="text-[10px] text-amber-400 font-bold border border-amber-500/30 px-1.5 py-0.5 rounded">Q2 2026</span>
-                    </div>
-                    <div class="text-gray-500 text-xs mt-0.5">~0.8 transmission jobs/mo · Avg $2,200/job</div>
-                  </div>
-                  <div class="text-right shrink-0 flex flex-col items-end gap-1">
-                    <div class="text-amber-400 font-mono font-bold text-sm">$175/mo</div>
-                    <i data-lucide="check-circle-2" class="chip-check w-4 h-4 text-amber-400"></i>
-                  </div>
-                </div>
-              </div>
-              <p class="text-xs text-gray-600">Revenue estimates are conservative. Actual results vary by market and shop size.</p>
-            </div>
-
-            <!-- Equipment output + combined total -->
-            <div class="flex flex-col gap-4">
-              <div class="bg-black/40 rounded-xl border border-white/8 p-6">
-                <div class="space-y-3.5 text-sm">
-                  <div class="flex items-center justify-between">
-                    <span class="text-gray-400">Monthly Lease Cost</span>
-                    <span class="font-mono font-bold text-red-400">-$<span id="e-out-lease">185</span>/mo</span>
-                  </div>
-                  <div class="flex items-center justify-between">
-                    <span class="text-gray-400">Added Revenue Potential</span>
-                    <span class="font-mono font-bold text-emerald-400">+$<span id="e-out-rev">1,875</span>/mo</span>
-                  </div>
-                  <div class="border-t border-white/10 pt-3 flex items-center justify-between">
-                    <span class="text-white font-semibold">Net Equipment ROI</span>
-                    <span class="font-mono font-bold text-lg" id="e-out-net">+$1,690</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Combined system total -->
-              <div class="bg-gradient-to-br from-blue-950/60 to-emerald-950/60 border border-emerald-500/25 rounded-xl p-6 flex flex-col items-center text-center flex-grow justify-center">
-                <div class="text-xs font-mono text-emerald-400 uppercase tracking-widest mb-3">Total System Monthly ROI</div>
-                <div class="text-6xl font-heading font-extrabold bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent" id="total-out-roi">$0</div>
-                <div class="text-xs text-gray-500 mt-2 mb-6">Software + Equipment combined net return</div>
-                <a href="/#checkout" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-white font-bold hover:bg-primaryGlow transition-colors shadow-[0_0_20px_rgba(59,130,246,0.3)]">
-                  Lock In This ROI <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==========================================
-         BOTTOM CTA
-    =========================================== -->
-    <section class="text-center pb-8 reveal">
-      <div class="glow-card rounded-2xl border border-blue-500/20 p-10 md:p-14 max-w-3xl mx-auto">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-semibold mb-5">
-          <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
-          30-Day Money-Back Guarantee · No Technical Overhead
-        </div>
-        <h2 class="font-heading text-3xl md:text-4xl font-bold text-white mb-4">Ready to Fill Your Bays?</h2>
-        <p class="text-gray-400 mb-8 text-lg font-light max-w-xl mx-auto">
-          Get your AI booking system live in 48 hours and unlock zero-down equipment leases the same day.
-        </p>
-        <a href="/#checkout" class="inline-flex items-center gap-2 px-10 py-4 bg-primary hover:bg-primaryGlow text-white rounded-lg font-bold text-lg transition-all shadow-[0_0_30px_rgba(59,130,246,0.35)] hover:shadow-[0_0_50px_rgba(59,130,246,0.55)] transform hover:-translate-y-0.5">
-          Get Started in 60 Seconds <i data-lucide="arrow-right" class="w-5 h-5"></i>
-        </a>
-      </div>
-    </section>
-
   </main>
 
-  <!-- Footer -->
-  <footer class="border-t border-white/5 bg-bg/50 backdrop-blur-sm mt-auto">
-    <div class="w-full px-4 sm:px-6 xl:px-10 2xl:px-16 py-8 flex flex-col md:flex-row items-center justify-between">
-      <div class="flex items-center gap-2 mb-4 md:mb-0">
-        <img src="/assets/apex-logo.png" alt="Vetra logo" class="w-6 h-6 rounded-md object-cover border border-white/10">
-        <span class="text-white font-heading font-bold tracking-tight uppercase">VETRA</span>
-      </div>
-      <div class="text-gray-500 text-xs font-mono">© 2026 Apex Conversion Group. Systems Nominal.</div>
-      <div class="flex gap-5 text-xs text-gray-600 mt-4 md:mt-0">
-        <a href="/privacy.html" class="hover:text-gray-400 transition-colors">Privacy Policy</a>
-        <a href="/terms.html" class="hover:text-gray-400 transition-colors">Terms of Service</a>
-        <a href="/contract-signature.html" class="hover:text-gray-400 transition-colors">Contract Packet</a>
-      </div>
-    </div>
-    <div class="text-center pb-4 text-xs text-gray-600 font-mono px-4">
-      Hardware pricing reflects a 60-month FMV operating lease promotional rate. Hardware rates are contingent on an active SaaS subscription.
-    </div>
-  </footer>
-
   <script>
-    lucide.createIcons();
-
-    // Mobile menu
     function toggleMobileMenu() {
       const menu = document.getElementById('mobile-menu');
       if (menu.classList.contains('opacity-0')) {
@@ -840,443 +148,15 @@
       } else {
         menu.classList.add('opacity-0', 'pointer-events-none', '-translate-y-4');
         menu.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
-        setTimeout(() => { if (menu.classList.contains('opacity-0')) menu.classList.add('hidden'); }, 300);
+        setTimeout(() => {
+          if (menu.classList.contains('opacity-0')) menu.classList.add('hidden');
+        }, 300);
       }
     }
 
-    // Scroll reveal
-    const revObs = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.08, rootMargin: '0px' });
-    document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
-
-    // Mouse glow
-    document.addEventListener('mousemove', e => {
-      document.querySelectorAll('.glow-card').forEach(card => {
-        const r = card.getBoundingClientRect();
-        card.style.setProperty('--mouse-x', `${e.clientX - r.left}px`);
-        card.style.setProperty('--mouse-y', `${e.clientY - r.top}px`);
-      });
+    document.addEventListener('DOMContentLoaded', function () {
+      if (window.lucide) window.lucide.createIcons();
     });
-
-    // ==========================================
-    // ROI CALCULATOR
-    // ==========================================
-    let softwareCost = 299;
-    let softwareNetROI = 0;
-
-    function calcSoftwareROI() {
-      const rate       = parseFloat(document.getElementById('s-slider-rate').value);
-      const hours      = parseFloat(document.getElementById('s-slider-hours').value);
-      const missed     = parseInt(document.getElementById('s-slider-missed').value);
-      const conversion = parseFloat(document.getElementById('s-slider-conversion').value) / 100;
-      const overhead   = parseFloat(document.getElementById('s-slider-overhead').value) / 100;
-
-      document.getElementById('s-val-rate').textContent       = rate;
-      document.getElementById('s-val-hours').textContent      = hours.toFixed(1);
-      document.getElementById('s-val-missed').textContent     = missed;
-      document.getElementById('s-val-conversion').textContent = (conversion * 100).toFixed(0);
-      document.getElementById('s-val-overhead').textContent   = (overhead * 100).toFixed(0);
-
-      const avgRO          = rate * hours;
-      const newROs         = Math.round(missed * 4.33 * conversion);
-      const recovered      = newROs * avgRO;
-      const overheadAmount = recovered * overhead;
-      const net            = recovered - overheadAmount - softwareCost;
-
-      document.getElementById('s-out-ros').textContent          = newROs;
-      document.getElementById('s-out-recovered').textContent    = Math.round(recovered).toLocaleString();
-      document.getElementById('s-out-overhead-ded').textContent = `-$${Math.round(overheadAmount).toLocaleString()}`;
-      document.getElementById('s-out-sw-cost').textContent      = softwareCost;
-      document.getElementById('s-out-net-sw').textContent       = net > 0
-        ? `+$${Math.round(net).toLocaleString()}` : `-$${Math.round(Math.abs(net)).toLocaleString()}`;
-      document.getElementById('s-out-roi-mult').textContent     = recovered > 0
-        ? `${(recovered / softwareCost).toFixed(1)}x` : '0x';
-
-      softwareNetROI = Math.max(0, net);
-      document.getElementById('s-out-profit').textContent = `$${Math.round(softwareNetROI).toLocaleString()}`;
-      updateTotalROI();
-    }
-
-    function selectSoftwarePlan(cost, el) {
-      softwareCost = cost;
-      document.querySelectorAll('.calc-plan-btn').forEach(b => {
-        b.className = b.className
-          .replace('border-blue-500/40', 'border-white/10')
-          .replace('bg-blue-500/10', 'bg-black/40');
-        const label = b.querySelector('div:first-child');
-        if (label) { label.classList.remove('text-blue-400'); label.classList.add('text-gray-500'); }
-      });
-      el.className = el.className
-        .replace('border-white/10', 'border-blue-500/40')
-        .replace('bg-black/40', 'bg-blue-500/10');
-      const label = el.querySelector('div:first-child');
-      if (label) { label.classList.remove('text-gray-500'); label.classList.add('text-blue-400'); }
-      calcSoftwareROI();
-    }
-
-    ['s-slider-rate','s-slider-hours','s-slider-missed','s-slider-conversion','s-slider-overhead'].forEach(id => {
-      document.getElementById(id)?.addEventListener('input', calcSoftwareROI);
-    });
-
-    // Equipment calculator
-    function calcEquipmentROI() {
-      let totalCost = 0, totalRev = 0;
-      document.querySelectorAll('.equipment-chip.selected').forEach(chip => {
-        totalCost += parseFloat(chip.dataset.cost);
-        totalRev  += parseFloat(chip.dataset.rev);
-      });
-      const net = totalRev - totalCost;
-      document.getElementById('e-out-lease').textContent = totalCost.toLocaleString();
-      document.getElementById('e-out-rev').textContent   = Math.round(totalRev).toLocaleString();
-      document.getElementById('e-out-net').textContent   = net >= 0
-        ? `+$${Math.round(net).toLocaleString()}` : `-$${Math.round(Math.abs(net)).toLocaleString()}`;
-      updateTotalROI(Math.max(0, net));
-    }
-
-    function toggleEquipment(el) {
-      el.classList.toggle('selected');
-      lucide.createIcons(); // re-render check icons
-      calcEquipmentROI();
-    }
-
-    function updateTotalROI(eqROI) {
-      if (eqROI === undefined) {
-        let t = 0, tc = 0;
-        document.querySelectorAll('.equipment-chip.selected').forEach(chip => {
-          t  += parseFloat(chip.dataset.rev);
-          tc += parseFloat(chip.dataset.cost);
-        });
-        eqROI = Math.max(0, t - tc);
-      }
-      document.getElementById('total-out-roi').textContent = `$${Math.round(softwareNetROI + eqROI).toLocaleString()}`;
-    }
-
-    // Boot
-    calcSoftwareROI();
-    calcEquipmentROI();
   </script>
-
-</body>
-</html>
-
-      font-family: "Outfit", sans-serif;
-      background:
-        radial-gradient(1200px 500px at 90% -10%, rgba(40, 182, 255, 0.25), transparent 60%),
-        radial-gradient(900px 500px at -10% 90%, rgba(21, 216, 164, 0.22), transparent 55%),
-        linear-gradient(140deg, #061018, #0c1622 45%, #0a1420);
-      color: var(--text);
-      min-height: 100%;
-    }
-
-    body {
-      display: flex;
-      justify-content: center;
-      padding: 28px 16px 44px;
-    }
-
-    .shell {
-      width: 100%;
-      max-width: 1024px;
-    }
-
-    .hero {
-      border: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(20, 31, 47, 0.78), rgba(7, 14, 21, 0.85));
-      border-radius: 26px;
-      padding: 28px;
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(8px);
-      animation: fadeUp 520ms ease-out both;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(40, 182, 255, 0.14);
-      border: 1px solid rgba(40, 182, 255, 0.4);
-      color: #8bdaff;
-      padding: 8px 12px;
-      border-radius: 999px;
-      letter-spacing: 0.08em;
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 12px;
-    }
-
-    .brand img {
-      width: 34px;
-      height: 34px;
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      object-fit: cover;
-    }
-
-    h1 {
-      margin: 14px 0 10px;
-      font-family: "Sora", sans-serif;
-      font-size: clamp(34px, 6vw, 62px);
-      line-height: 1.02;
-      letter-spacing: -0.03em;
-    }
-
-    .sub {
-      color: var(--muted);
-      font-size: clamp(17px, 2.7vw, 22px);
-      max-width: 760px;
-      line-height: 1.45;
-      margin: 0;
-    }
-
-    .cta-row {
-      margin-top: 20px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      border-radius: 12px;
-      padding: 13px 18px;
-      font-weight: 700;
-      text-decoration: none;
-      border: 1px solid transparent;
-      transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
-    }
-
-    .btn:hover {
-      transform: translateY(-1px);
-    }
-
-    .btn-primary {
-      background: linear-gradient(90deg, var(--primary), #33ccff);
-      color: #062030;
-      box-shadow: 0 14px 30px rgba(40, 182, 255, 0.28);
-    }
-
-    .btn-secondary {
-      border-color: rgba(255, 255, 255, 0.2);
-      color: var(--text);
-      background: rgba(255, 255, 255, 0.03);
-    }
-
-    .grid {
-      margin-top: 18px;
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 14px;
-    }
-
-    .card {
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      background: var(--card);
-      padding: 18px;
-      backdrop-filter: blur(6px);
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.23);
-      animation: fadeUp 650ms ease-out both;
-    }
-
-    .card h2 {
-      margin: 0 0 8px;
-      font-family: "Sora", sans-serif;
-      font-size: 20px;
-      letter-spacing: -0.02em;
-    }
-
-    .card p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    .card ul {
-      margin: 8px 0 0 18px;
-      color: #c7d8ea;
-      line-height: 1.55;
-      padding: 0;
-    }
-
-    .hardware {
-      grid-column: span 7;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hardware img {
-      width: 100%;
-      max-width: 310px;
-      object-fit: contain;
-      margin-top: 12px;
-      filter: drop-shadow(0 6px 26px rgba(0, 255, 194, 0.22));
-    }
-
-    .pipeline {
-      grid-column: span 5;
-    }
-
-    .status {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: #89ffe0;
-      border: 1px solid rgba(21, 216, 164, 0.45);
-      background: rgba(21, 216, 164, 0.12);
-    }
-
-    .quick-links {
-      grid-column: span 12;
-      display: grid;
-      gap: 12px;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-
-    .quick-link {
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 14px;
-      padding: 13px;
-      text-decoration: none;
-      color: #cce4f9;
-      background: rgba(255, 255, 255, 0.03);
-      font-weight: 600;
-    }
-
-    .quick-link span {
-      display: block;
-      color: #95afc8;
-      font-size: 13px;
-      margin-top: 4px;
-      font-weight: 500;
-    }
-
-    .foot {
-      text-align: center;
-      color: #8ba3ba;
-      font-size: 13px;
-      margin-top: 20px;
-      letter-spacing: 0.01em;
-    }
-
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(14px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @media (max-width: 900px) {
-      .hardware,
-      .pipeline,
-      .quick-links {
-        grid-column: span 12;
-      }
-
-      .quick-links {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 560px) {
-      .hero {
-        padding: 22px;
-      }
-
-      .quick-links {
-        grid-template-columns: 1fr;
-      }
-
-      .btn {
-        width: 100%;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="shell">
-    <section class="hero">
-      <div class="brand">
-        <img src="/assets/apex-logo-transparent.png" alt="Vetra logo">
-        <div>
-          <strong style="font-family: Sora, sans-serif; letter-spacing: 0.02em;">VETRA</strong>
-        </div>
-      </div>
-
-      <div class="badge">Business Card Start Page</div>
-      <h1>Welcome to Vetra</h1>
-      <p class="sub">
-        This is your fast start page from the QR code. Explore current pricing, hardware options, and contract flow, plus what is being added next.
-      </p>
-
-      <div class="cta-row">
-        <a class="btn btn-primary" href="/#checkout">View Pricing</a>
-        <a class="btn btn-secondary" href="/#hardware">Hardware Program</a>
-        <a class="btn btn-secondary" href="/contract-signature.html">Contract Packet</a>
-      </div>
-    </section>
-
-    <section class="grid">
-      <article class="card hardware">
-        <h2>Hardware Section Updates</h2>
-        <p>
-          Product photos are being expanded so each tool card has stronger visual detail and cleaner comparison for buyers.
-        </p>
-        <img src="/assets/robinair-ac1234-9.png" alt="Robinair hardware unit preview">
-        <div class="status">Photo Expansion In Progress</div>
-      </article>
-
-      <article class="card pipeline">
-        <h2>What Is Being Updated</h2>
-        <ul>
-          <li>Pricing refresh across plans and checkout presentation</li>
-          <li>New contract versions and signature flow improvements</li>
-          <li>An additional product is being added to the hardware lineup</li>
-          <li>Content improvements for simpler customer onboarding</li>
-        </ul>
-        <div class="status">Rolling Updates Active</div>
-      </article>
-
-      <div class="quick-links">
-        <a class="quick-link" href="/">
-          Main Website
-          <span>Full Vetra overview and live sections</span>
-        </a>
-        <a class="quick-link" href="/#checkout">
-          Current Pricing
-          <span>Review active plans and checkout options</span>
-        </a>
-        <a class="quick-link" href="/#hardware">
-          Hardware Catalog
-          <span>See equipment currently available</span>
-        </a>
-        <a class="quick-link" href="/contract-signature.html">
-          Contracts
-          <span>Open legal packet and e-sign flow</span>
-        </a>
-      </div>
-    </section>
-
-    <p class="foot">Scan URL kept stable at /start for static QR code usage.</p>
-  </div>
 </body>
 </html>
