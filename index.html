@@ -1776,19 +1776,228 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
              PAGE 7: CHECKOUT (STRIPE)
         =========================================== -->
         <section id="page-checkout" class="page-view page-aura">
-            <div class="w-full min-h-screen pb-24 reveal flex items-center justify-center">
-                <div class="relative z-10 text-center max-w-2xl px-6">
-                    <div class="mb-8">
-                        <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-blue-500/20 bg-blue-500/10">
-                            <span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
-                            <span class="text-xs font-mono text-blue-300">UNDER RECONSTRUCTION</span>
-                        </span>
+            <div class="w-full pt-12 pb-20 reveal">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 xl:px-10 2xl:px-16">
+                    <div class="relative overflow-hidden rounded-3xl border border-white/10 bg-[radial-gradient(circle_at_20%_10%,rgba(34,211,238,0.18),transparent_42%),radial-gradient(circle_at_80%_0%,rgba(59,130,246,0.2),transparent_38%),linear-gradient(180deg,#070B14_0%,#070A11_100%)] p-8 md:p-12 mb-8">
+                        <div class="absolute inset-0 opacity-20 pointer-events-none" style="background-image:linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px);background-size:28px 28px"></div>
+                        <div class="relative z-10 text-center">
+                            <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-400/30 bg-cyan-400/10 text-cyan-200 text-xs font-mono tracking-widest uppercase mb-4">
+                                <span class="w-2 h-2 rounded-full bg-cyan-300 animate-pulse"></span>
+                                Checkout Control Plane
+                            </span>
+                            <h1 class="font-heading text-4xl md:text-6xl font-bold text-white mb-4">Secure Checkout</h1>
+                            <p class="text-gray-300 max-w-3xl mx-auto text-sm md:text-base">Finalize the exact configuration from Economics, verify financing assumptions, sign agreement, and launch payment in one guided flow.</p>
+                        </div>
                     </div>
-                    <h1 class="font-heading text-5xl md:text-6xl font-bold text-white mb-4">Checkout Coming Soon</h1>
-                    <p class="text-lg text-gray-400 mb-8">We're redesigning your checkout experience. Check back shortly.</p>
-                    <button onclick="navigate('roi')" class="px-8 py-3 bg-blue-500/20 border border-blue-500/30 text-blue-300 rounded-lg font-bold hover:bg-blue-500/30 transition-colors">
-                        ← Back to Economics
-                    </button>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                        <div class="lg:col-span-4 space-y-6">
+                            <div class="glow-card rounded-2xl border border-cyan-500/20 bg-cyan-500/5 p-5">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="text-white font-semibold">Live Checkout Build</h3>
+                                    <span class="text-[10px] uppercase tracking-wider text-cyan-300 font-mono">From Economics</span>
+                                </div>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2 text-xs">
+                                    <div class="text-gray-400">Software plan</div>
+                                    <div id="preview-cart-software" class="text-cyan-200 font-semibold">Not selected</div>
+                                    <div class="text-gray-400">Hardware mode</div>
+                                    <div id="preview-cart-hardware-mode" class="text-cyan-200 font-semibold">Software only</div>
+                                    <div class="text-gray-400">Hardware monthly est.</div>
+                                    <div id="preview-cart-hardware-est" class="text-amber-300 font-semibold">$0/mo</div>
+                                    <div class="text-gray-400">20% APR benchmark</div>
+                                    <div id="preview-cart-hardware-20apr" class="text-rose-300 font-semibold">$0/mo</div>
+                                    <div class="text-gray-200 font-semibold">Estimated monthly total</div>
+                                    <div id="preview-cart-total" class="text-emerald-300 font-bold">$0/mo</div>
+                                </div>
+                            </div>
+
+                            <div class="glow-card rounded-2xl border border-white/10 bg-black/25 p-5">
+                                <h4 class="text-white font-semibold mb-3">Need to tweak your build?</h4>
+                                <p class="text-gray-400 text-sm mb-4">Adjust assumptions and hardware mix in Economics, then use "Finalize This Build" again to refresh checkout instantly.</p>
+                                <button onclick="navigate('roi')" class="w-full py-2.5 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-200 font-semibold hover:bg-blue-500/30 transition-colors">Back to Economics</button>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-8 space-y-6">
+                            <div class="glow-card rounded-2xl border border-white/10 bg-black/30 p-5">
+                                <div class="inline-flex w-full p-1 bg-[#05050A] rounded-xl border border-white/10 mb-5">
+                                    <button type="button" id="checkout-billing-monthly" onclick="setCheckoutBillingMode('monthly', this)" class="flex-1 py-2 text-xs font-bold rounded-lg bg-blue-500/20 text-blue-300 shadow-[0_0_15px_rgba(59,130,246,0.15)]">Monthly Billing</button>
+                                    <button type="button" id="checkout-billing-upfront" onclick="setCheckoutBillingMode('upfront', this)" class="flex-1 py-2 text-xs font-bold rounded-lg text-gray-400 hover:text-gray-200 transition-colors">Annual Prepay (ACH)</button>
+                                </div>
+
+                                <div id="checkout-tier-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                                    <div id="tier-no-contract" data-billing="monthly" class="pricing-tier-card rounded-xl p-5 border border-blue-500/30 bg-blue-500/8 hover:border-blue-400/50 transition-all cursor-pointer" onclick="selectTier(this, 'no_contract')">
+                                        <div class="text-[11px] font-mono uppercase tracking-wider text-blue-300 mb-2">No Contract</div>
+                                        <div class="text-3xl font-heading font-bold text-white">$399<span class="text-sm text-gray-400">/mo</span></div>
+                                        <p class="text-xs text-gray-400 mt-2">Cancel anytime, 30-day money-back guarantee.</p>
+                                    </div>
+                                    <div id="tier-12m-monthly" data-billing="monthly" class="pricing-tier-card rounded-xl p-5 border border-indigo-500/35 bg-indigo-500/10 hover:border-indigo-400/55 transition-all cursor-pointer" onclick="selectTier(this, 'twelve_month_monthly')">
+                                        <div class="text-[11px] font-mono uppercase tracking-wider text-indigo-300 mb-2">Most Popular</div>
+                                        <div class="text-3xl font-heading font-bold text-white">$299<span class="text-sm text-gray-400">/mo</span></div>
+                                        <p class="text-xs text-gray-400 mt-2">Best recurring rate with 12-month commitment.</p>
+                                    </div>
+                                    <div id="tier-12m-upfront" data-billing="upfront" class="pricing-tier-card rounded-xl p-5 border border-purple-500/35 bg-purple-500/10 hover:border-purple-400/55 transition-all cursor-pointer hidden" onclick="selectTier(this, 'twelve_month_upfront')">
+                                        <div class="text-[11px] font-mono uppercase tracking-wider text-purple-300 mb-2">Annual Prepay</div>
+                                        <div class="text-3xl font-heading font-bold text-white">$3,000</div>
+                                        <p class="text-xs text-gray-400 mt-2">Equivalent to $250/mo, ACH-only checkout.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="mobile-plan-quickbar" class="hidden md:hidden fixed left-3 right-3 bottom-[72px] z-[70] rounded-xl border border-blue-500/40 bg-[#090E1A]/95 backdrop-blur-xl px-3 py-3 shadow-[0_0_20px_rgba(59,130,246,0.25)]">
+                                <div class="flex items-center justify-between gap-3">
+                                    <div id="mobile-plan-label" class="text-xs text-blue-200 font-medium truncate">Select a plan to continue</div>
+                                    <button type="button" onclick="scrollToCheckoutLead()" class="shrink-0 px-3 py-2 rounded-lg bg-blue-500/25 text-blue-200 text-xs font-bold border border-blue-400/40 hover:bg-blue-500/35 transition-colors">Continue</button>
+                                </div>
+                            </div>
+
+                            <div class="checkout-mobile-spacer md:hidden"></div>
+
+                            <div class="glow-card rounded-2xl border border-amber-500/25 bg-amber-500/8 p-5" id="checkout-bundle-mode-container">
+                                <p class="text-sm text-amber-200 mb-3 font-semibold">Checkout Path</p>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
+                                    <button type="button" id="bundle-mode-software" onclick="setCheckoutBundleMode('software_only', this)" class="w-full py-2 rounded-lg text-xs font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30">Software Only</button>
+                                    <button type="button" id="bundle-mode-hardware" onclick="setCheckoutBundleMode('bundle', this)" class="w-full py-2 rounded-lg text-xs font-bold text-gray-400 border border-white/10 hover:text-gray-200">Software + Hardware Bundle</button>
+                                </div>
+                                <p class="text-xs text-gray-400 mb-3">Bundle mode starts hardware underwriting alongside software checkout.</p>
+
+                                <div id="hardware-bundle-config" class="hidden mt-4 pt-4 border-t border-white/10 space-y-4">
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                        <div>
+                                            <label class="block text-xs text-gray-300 mb-1">Primary Hardware</label>
+                                            <select id="checkout-hw-primary" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-white text-sm focus:border-amber-500/40 focus:outline-none">
+                                                <option value="robinair">Robinair AC1234-9</option>
+                                                <option value="maxisys">Autel MaxiSys Ultra</option>
+                                                <option value="maxisys_ultra_s2">Autel MaxiSys Ultra S2</option>
+                                                <option value="adas">ADAS Calibration System</option>
+                                                <option value="im608">Autel IM608 Pro II</option>
+                                                <option value="motorvac">MotorVac TransTech IV+</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs text-gray-300 mb-1">Second Hardware (Optional)</label>
+                                            <select id="checkout-hw-secondary" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-white text-sm focus:border-amber-500/40 focus:outline-none">
+                                                <option value="none">None</option>
+                                                <option value="robinair">Robinair AC1234-9</option>
+                                                <option value="maxisys">Autel MaxiSys Ultra</option>
+                                                <option value="maxisys_ultra_s2">Autel MaxiSys Ultra S2</option>
+                                                <option value="adas">ADAS Calibration System</option>
+                                                <option value="im608">Autel IM608 Pro II</option>
+                                                <option value="motorvac">MotorVac TransTech IV+</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs text-gray-300 mb-1">Lease Term</label>
+                                        <select id="checkout-hw-term" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-white text-sm focus:border-amber-500/40 focus:outline-none">
+                                            <option value="24">24 months</option>
+                                            <option value="36">36 months</option>
+                                            <option value="60" selected>60 months</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="rounded-lg border border-amber-500/20 bg-black/40 px-3 py-3 text-xs text-gray-300">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-gray-400">Estimated hardware lease:</span>
+                                            <span class="text-amber-300 font-bold">$<span id="checkout-hw-estimated">115</span>/mo</span>
+                                        </div>
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-gray-400">20% APR benchmark payment:</span>
+                                            <span class="text-rose-300 font-bold">$<span id="checkout-hw-20apr">138</span>/mo</span>
+                                        </div>
+                                        <div class="text-[11px] text-gray-500">Estimate applies 12% APR to the higher-value unit only when two units are selected.</div>
+                                    </div>
+
+                                    <div class="rounded-lg border border-rose-500/25 bg-rose-500/5 p-3 space-y-2">
+                                        <p class="text-xs text-rose-200 font-semibold">Hardware financing acknowledgements</p>
+                                        <label class="flex items-start gap-2 text-xs text-gray-300">
+                                            <input type="checkbox" id="bundle-ack-pg" class="mt-0.5 w-4 h-4 accent-rose-500">
+                                            <span>Personal guarantee is required for hardware financing.</span>
+                                        </label>
+                                        <label class="flex items-start gap-2 text-xs text-gray-300">
+                                            <input type="checkbox" id="bundle-ack-insurance" class="mt-0.5 w-4 h-4 accent-rose-500">
+                                            <span>Commercial insurance with VETRA listed as beneficiary is required.</span>
+                                        </label>
+                                        <label class="flex items-start gap-2 text-xs text-gray-300">
+                                            <input type="checkbox" id="bundle-ack-ach" class="mt-0.5 w-4 h-4 accent-rose-500">
+                                            <span>Hardware lease billing is ACH.</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="max-w-3xl" id="lead-gate-container">
+                                <div class="glow-card rounded-2xl p-6 border border-white/10 bg-black/30">
+                                    <h2 class="text-xl font-bold text-white mb-2">Get Started in 15 Seconds</h2>
+                                    <p class="text-sm text-gray-400 mb-6">Step 1 of 2: share owner contact details for onboarding and implementation.</p>
+                                    <form id="lead-gate-form" class="space-y-4">
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                            <div>
+                                                <label class="block text-gray-300 font-medium mb-2 text-sm">Owner Name</label>
+                                                <input type="text" id="owner_name" required class="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:border-blue-500/50 focus:outline-none transition-colors" placeholder="Jane Smith">
+                                            </div>
+                                            <div>
+                                                <label class="block text-gray-300 font-medium mb-2 text-sm">Owner Email</label>
+                                                <input type="email" id="owner_email" required class="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:border-blue-500/50 focus:outline-none transition-colors" placeholder="you@company.com">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="block text-gray-300 font-medium mb-2 text-sm">Mobile Number</label>
+                                            <input type="tel" id="owner_phone" required class="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:border-blue-500/50 focus:outline-none transition-colors" placeholder="(555) 123-4567">
+                                        </div>
+                                        <button type="submit" class="w-full py-3 bg-primary text-white rounded-lg font-bold hover:bg-primaryGlow transition-colors">Continue to Checkout</button>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="max-w-3xl hidden" id="checkout-form-container">
+                                <div class="glow-card rounded-2xl p-6 border border-white/10 bg-black/35">
+                                    <h2 class="text-xl font-bold text-white mb-5">Complete Your Checkout</h2>
+                                    <form id="checkout-form" class="space-y-5">
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                            <div>
+                                                <label class="block text-gray-300 font-medium mb-2 text-sm">Email Address</label>
+                                                <input type="email" id="email" name="email" required class="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:border-blue-500/50 focus:outline-none transition-colors" placeholder="you@company.com">
+                                            </div>
+                                            <div>
+                                                <label class="block text-gray-300 font-medium mb-2 text-sm">Shop Name</label>
+                                                <input type="text" id="shop_name" name="shop_name" required class="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:border-blue-500/50 focus:outline-none transition-colors" placeholder="Your auto shop name">
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <label class="block text-gray-300 font-medium mb-2 text-sm">Selected Plan</label>
+                                            <div id="selected-plan-display" class="w-full px-4 py-3 bg-blue-500/10 border border-blue-500/30 rounded-lg text-blue-300 font-medium">Select a tier above to continue</div>
+                                        </div>
+
+                                        <div id="checkout-final-cart" class="p-4 rounded-lg border border-blue-500/30 bg-blue-500/10">
+                                            <p class="text-sm text-blue-200 mb-3 font-semibold">Final Build Summary</p>
+                                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                                                <div class="text-gray-400">Software plan</div>
+                                                <div id="cart-software" class="text-blue-200 font-semibold text-right sm:text-left">Not selected</div>
+                                                <div class="text-gray-400">Hardware mode</div>
+                                                <div id="cart-hardware-mode" class="text-blue-200 font-semibold text-right sm:text-left">Software only</div>
+                                                <div class="text-gray-400">Hardware monthly est.</div>
+                                                <div id="cart-hardware-est" class="text-amber-300 font-semibold text-right sm:text-left">$0/mo</div>
+                                                <div class="text-gray-400">20% APR benchmark</div>
+                                                <div id="cart-hardware-20apr" class="text-rose-300 font-semibold text-right sm:text-left">$0/mo</div>
+                                                <div class="text-gray-200 font-semibold">Estimated monthly total</div>
+                                                <div id="cart-total" class="text-emerald-300 font-bold text-right sm:text-left">$0/mo</div>
+                                            </div>
+                                        </div>
+
+                                        <div id="contract-ack-container" class="p-4 rounded-lg border border-cyan-500/30 bg-cyan-500/10">
+                                            <p class="text-sm text-cyan-200 mb-2 font-semibold">Contract signing is required before checkout.</p>
+                                            <p class="text-xs text-cyan-100">You will review legal terms and provide initials before payment is unlocked.</p>
+                                        </div>
+
+                                        <button type="submit" id="submit-btn" disabled class="w-full py-3 bg-primary text-white rounded-lg font-bold hover:bg-primaryGlow transition-colors disabled:opacity-50 disabled:cursor-not-allowed">Proceed to Payment</button>
+                                        <p class="text-xs text-gray-500 text-center">Secure Stripe checkout. ACH-first on monthly plans, ACH-only on annual prepay.</p>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
