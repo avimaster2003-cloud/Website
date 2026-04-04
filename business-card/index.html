@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vetra Business Card - Avi Patel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .card {
+            /* Standard business card: 3.5" x 2" = 1050px x 600px at 300 DPI */
+            width: 1050px;
+            height: 600px;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            background: #1a1a1a;
+            color: white;
+            font-size: 14px;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 60px 50px;
+            page-break-after: always;
+        }
+
+        /* Front of card */
+        .card-front {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+        }
+
+        .logo-section {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            height: 120px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            border-top: 2px solid #00d4ff;
+            padding-top: 30px;
+        }
+
+        .name {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #ffffff;
+        }
+
+        .title {
+            font-size: 18px;
+            color: #00d4ff;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #e0e0e0;
+        }
+
+        .contact-icon {
+            width: 16px;
+            height: 16px;
+            color: #00d4ff;
+            font-weight: bold;
+        }
+
+        .website {
+            color: #00d4ff;
+            font-weight: 600;
+        }
+
+        /* Back of card */
+        .card-back {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qr-code-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .qr-code {
+            width: 300px;
+            height: 300px;
+            padding: 20px;
+            background: white;
+            border-radius: 4px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .qr-label {
+            font-size: 16px;
+            color: #00d4ff;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .vetra-branding {
+            position: absolute;
+            bottom: 30px;
+            right: 40px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #00d4ff;
+            opacity: 0.6;
+        }
+
+        /* Print styles for PDF generation */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .card-container {
+                display: block;
+                gap: 0;
+                max-width: 100%;
+                margin: 0;
+            }
+
+            .card {
+                width: 3.5in;
+                height: 2in;
+                page-break-inside: avoid;
+                margin: 0.5in;
+                border-radius: 0;
+                box-shadow: none;
+            }
+        }
+
+        /* Responsive for screen viewing */
+        @media (max-width: 1200px) {
+            .card {
+                width: 700px;
+                height: 400px;
+                padding: 40px 35px;
+                font-size: 12px;
+            }
+
+            .name {
+                font-size: 22px;
+            }
+
+            .title {
+                font-size: 14px;
+            }
+
+            .contact-item {
+                font-size: 11px;
+            }
+
+            .logo {
+                height: 80px;
+            }
+
+            .qr-code {
+                width: 200px;
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .card-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <!-- FRONT OF CARD -->
+        <div class="card card-front">
+            <div class="logo-section">
+                <img src="./assets/VETRA.png" alt="Vetra Logo" class="logo">
+            </div>
+
+            <div class="contact-info">
+                <div class="name">Avi Patel</div>
+                <div class="title">FOUNDER</div>
+                <div class="contact-item">
+                    <span class="contact-icon">✉</span>
+                    sales@apexconversiongroup.com
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">☎</span>
+                    423-737-4490
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">🌐</span>
+                    <span class="website">usevetra.com</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- BACK OF CARD -->
+        <div class="card card-back">
+            <div class="qr-code-section">
+                <div class="qr-label">Scan to Learn More</div>
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://usevetra.com/%23home" alt="QR Code" class="qr-code">
+            </div>
+            <div class="vetra-branding">VETRA</div>
+        </div>
+    </div>
+
+    <script>
+        // Instructions for printing and PDF generation
+        console.log(`
+        === VETRA BUSINESS CARD - PRINTING INSTRUCTIONS ===
+        
+        TO GENERATE PDF FOR PRINTING:
+        
+        Option 1: Browser Print Function (Recommended for simple PDF)
+        - Press Ctrl+P (Windows) or Cmd+P (Mac)
+        - Set margins to 0.5 inches on all sides
+        - Paper size: Custom (3.5" x 2")
+        - Select "Background graphics" in the print settings
+        - Save as PDF
+        
+        Option 2: Using wkhtmltopdf (for CMYK support)
+        - Install: brew install wkhtmltopdf (Mac) or apt-get install wkhtmltopdf (Linux)
+        - Run: wkhtmltopdf --page-width 3.5in --page-height 2in business-card.html business-card.pdf
+        
+        SETUP INSTRUCTIONS:
+        1. Copy VETRA.png from ~/Downloads/ to /Website/business-card/assets/ folder
+        2. Adjust colors and text as needed
+        3. Print on 3.5" x 2" cardstock for professional results
+        
+        CMYK CONVERSION:
+        - For true CMYK printing, use a tool like ImageMagick or Ghostscript
+        - Or convert the PDF to CMYK using Adobe Acrobat Pro
+        - Command: convert business-card.pdf -colorspace CMYK business-card-cmyk.pdf
+        `);
+    </script>
+</body>
+</html>
