@@ -18,8 +18,8 @@ Best for quick PDFs, standard RGB output:
 1. Open `index.html` in your web browser
 2. Press `Cmd + P` (Mac) or `Ctrl + P` (Windows)
 3. Configure print settings:
-   - **Paper size**: Custom (3.5" × 2")
-   - **Margins**: 0.5" all sides
+  - **Paper size**: Custom (85.5mm × 54mm)
+  - **Margins**: 0
    - **Scale**: 100%
    - **Background graphics**: ✓ Enable
 4. Click "Save as PDF"
@@ -34,12 +34,12 @@ brew install wkhtmltopdf
 # Then generate the PDF:
 cd /Users/avipatel/Downloads/apex-widget/Website/business-card
 wkhtmltopdf \
-  --page-width 3.5in \
-  --page-height 2in \
-  --margin-top 0.5in \
-  --margin-bottom 0.5in \
-  --margin-left 0.5in \
-  --margin-right 0.5in \
+  --page-width 85.5mm \
+  --page-height 54mm \
+  --margin-top 0 \
+  --margin-bottom 0 \
+  --margin-left 0 \
+  --margin-right 0 \
   --enable-local-file-access \
   index.html business-card.pdf
 ```
@@ -58,7 +58,7 @@ convert -density 300 business-card.pdf -colorspace CMYK business-card-cmyk.pdf
 ## 🎨 Design Details
 
 ### Card Dimensions
-- **Physical Size**: 3.5" × 2" (standard business card)
+- **Physical Size**: 85.5mm × 54mm (ISO / Europe standard business card)
 - **Resolution**: 300 DPI (optimal for printing)
 - **Format**: Digital HTML/CSS with professional styling
 
@@ -85,7 +85,7 @@ Hi [Supplier Name],
 Please find attached the VETRA business card design files for production.
 
 Specifications:
-- Dimensions: 3.5" × 2"
+- Dimensions: 85.5mm × 54mm
 - Color Profile: CMYK
 - Resolution: 300 DPI
 - Stock: Matte cardstock

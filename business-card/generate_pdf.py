@@ -15,12 +15,12 @@ def generate_rgb_pdf(html_file, output_pdf):
     
     cmd = [
         'wkhtmltopdf',
-        '--page-width', '3.5in',
-        '--page-height', '2in',
-        '--margin-top', '0.5in',
-        '--margin-bottom', '0.5in',
-        '--margin-left', '0.5in',
-        '--margin-right', '0.5in',
+        '--page-width', '85.5mm',
+        '--page-height', '54mm',
+        '--margin-top', '0',
+        '--margin-bottom', '0',
+        '--margin-left', '0',
+        '--margin-right', '0',
         '--enable-local-file-access',
         '--dpi', '300',
         html_file,
