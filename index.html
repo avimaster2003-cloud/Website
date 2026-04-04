@@ -1565,6 +1565,8 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                                         <div class="text-right text-purple-300 font-mono font-bold">+$<span id="val-hw-apr-add">0</span>/mo</div>
                                         <div class="text-gray-100 font-semibold">Total Lease Payment</div>
                                         <div class="text-right text-emerald-300 font-mono font-bold">$<span id="val-hw-lease">115</span>/mo</div>
+                                        <div class="text-gray-300">20% APR Benchmark Payment</div>
+                                        <div class="text-right text-red-300 font-mono font-bold">$<span id="val-hw-apr20">138</span>/mo</div>
                                     </div>
                                 </div>
 
@@ -1649,8 +1651,8 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                 </div>
                 
                 <div class="text-center mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
-                     <button onclick="navigate('checkout')" class="px-8 py-4 bg-primary text-white rounded-lg font-bold text-lg hover:bg-primaryGlow transition-colors shadow-[0_0_30px_rgba(59,130,246,0.3)]">
-                        Subscribe Now
+                            <button onclick="finalizeBuildFromEconomics()" class="px-8 py-4 bg-primary text-white rounded-lg font-bold text-lg hover:bg-primaryGlow transition-colors shadow-[0_0_30px_rgba(59,130,246,0.3)]">
+                                Finalize This Build
                     </button>
                      <button onclick="openScheduler()" class="px-8 py-4 bg-surface border border-white/10 hover:border-white/30 text-white rounded-lg font-medium text-lg transition-all">
                         Schedule Demo
@@ -2135,6 +2137,10 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                                         <span class="text-gray-400">Estimated hardware lease:</span>
                                         <span class="text-amber-300 font-bold">$<span id="checkout-hw-estimated">115</span>/mo</span>
                                     </div>
+                                    <div class="flex items-center justify-between mb-1">
+                                        <span class="text-gray-400">20% APR benchmark payment:</span>
+                                        <span class="text-red-300 font-bold">$<span id="checkout-hw-20apr">138</span>/mo</span>
+                                    </div>
                                     <div class="text-[11px] text-gray-500">Estimate uses your selected term and applies 12% APR to the higher-value unit only when two units are selected.</div>
                                 </div>
 
@@ -2153,6 +2159,22 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                                         <span>I acknowledge hardware lease billing is ACH.</span>
                                     </label>
                                 </div>
+                            </div>
+                        </div>
+
+                        <div id="checkout-final-cart" class="p-4 rounded-lg border border-blue-500/30 bg-blue-500/10">
+                            <p class="text-sm text-blue-200 mb-3 font-semibold">Final Build Summary</p>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                                <div class="text-gray-400">Software plan</div>
+                                <div id="cart-software" class="text-blue-200 font-semibold text-right sm:text-left">Not selected</div>
+                                <div class="text-gray-400">Hardware mode</div>
+                                <div id="cart-hardware-mode" class="text-blue-200 font-semibold text-right sm:text-left">Software only</div>
+                                <div class="text-gray-400">Hardware monthly est.</div>
+                                <div id="cart-hardware-est" class="text-amber-300 font-semibold text-right sm:text-left">$0/mo</div>
+                                <div class="text-gray-400">20% APR benchmark</div>
+                                <div id="cart-hardware-20apr" class="text-red-300 font-semibold text-right sm:text-left">$0/mo</div>
+                                <div class="text-gray-200 font-semibold">Estimated monthly total</div>
+                                <div id="cart-total" class="text-emerald-300 font-bold text-right sm:text-left">$0/mo</div>
                             </div>
                         </div>
 
@@ -2521,6 +2543,18 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
             if(target) { target.classList.add('active'); triggerReveals(); }
             window.scrollTo(0, 0);
 
+            if (pageId === 'checkout') {
+                if (!checkoutBuildSnapshot) {
+                    try {
+                        const saved = localStorage.getItem('vetra_checkout_build');
+                        if (saved) checkoutBuildSnapshot = JSON.parse(saved);
+                    } catch (_) {
+                        // Ignore parse/storage errors.
+                    }
+                }
+                if (checkoutBuildSnapshot) applyEconomicsBuildToCheckout();
+            }
+
             // WIDGET ISOLATION: Hide widget on all pages except 'home'
             if (pageId === 'home') {
                 document.body.classList.remove('hide-n8n-widget');
@@ -2606,6 +2640,10 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
         const economicsState = { aiRecoveredMonthly: 0, aiNetProfit: 0, hardwareGrossRevenue: 0, hardwareNetProfit: 0, hardwareLeaseCost: 0 };
         
         let currentPlatformCost = 399;
+        let currentPaymentMode = 'monthly';
+        let currentPlatformOldCost = 499;
+        let selectedEconomicsTierKey = 'no_contract';
+        let checkoutBuildSnapshot = null;
 
         const hardwareSliders = {
             ticket: document.getElementById('slider-hw-ticket'),
@@ -2775,6 +2813,7 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
             setText('val-hw-apr-target', leaseSummary.aprTargetLabel);
             setText('val-hw-apr-add', Math.round(leaseSummary.aprAddOn).toString());
             setText('val-hw-lease', Math.round(leaseSummary.totalLease).toString());
+            setText('val-hw-apr20', Math.round(leaseSummary.totalLease * 1.2).toString());
             setText('val-hw-variable', (variablePct * 100).toFixed(0));
 
             setText('out-hw-jobs', jobs.toString());
@@ -2786,6 +2825,7 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
             setText('out-hw-roi', roi.toFixed(1));
 
             updateBundleEconomics();
+            syncBuildFromEconomics();
         }
 
         Object.values(hardwareSliders).forEach(s => s?.addEventListener('input', calculateHardwareROI));
@@ -2794,6 +2834,7 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
 
         // Plan Switching
         function setPaymentMode(mode, btn) {
+            currentPaymentMode = mode;
             document.getElementById('btn-pay-monthly').className = "flex-1 py-2 text-xs font-bold rounded-lg text-gray-500 hover:text-gray-300 transition-all border border-transparent";
             document.getElementById('btn-pay-upfront').className = "flex-1 py-2 text-xs font-bold rounded-lg text-gray-500 hover:text-gray-300 transition-all border border-transparent";
             btn.className = mode === 'upfront'
@@ -2808,6 +2849,7 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
             document.getElementById('term-grid-monthly').classList.toggle('hidden', mode === 'upfront');
             document.getElementById('term-grid-upfront').classList.toggle('hidden', mode === 'monthly');
             document.getElementById(mode === 'monthly' ? 'btn-default-monthly' : 'btn-default-upfront').click();
+            syncBuildFromEconomics();
         }
 
         function setCheckoutBillingMode(mode, btn) {
@@ -2845,6 +2887,7 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
 
         function setPlan(cost, oldCost, btn) {
             currentPlatformCost = cost;
+            currentPlatformOldCost = oldCost;
             document.getElementById('val-platform-cost').innerText = cost;
             document.getElementById('val-platform-old-cost').innerText = `$${oldCost}`;
             
@@ -2868,7 +2911,98 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
             title.classList.remove('text-gray-500');
             title.classList.add(isUpfront ? 'text-emerald-400/80' : 'text-blue-400/80');
 
+            if (currentPaymentMode === 'upfront') {
+                selectedEconomicsTierKey = 'twelve_month_upfront';
+            } else if (cost <= 299) {
+                selectedEconomicsTierKey = 'twelve_month_monthly';
+            } else {
+                selectedEconomicsTierKey = 'no_contract';
+            }
+
             calculateROI();
+            syncBuildFromEconomics();
+        }
+
+        function getEconomicsBuildSnapshot() {
+            const primary = document.getElementById('hw-primary-product')?.value || 'robinair';
+            const secondary = document.getElementById('hw-secondary-product')?.value || 'none';
+            const leaseSummary = calculateHardwareLease();
+            return {
+                paymentMode: currentPaymentMode,
+                platformCost: currentPlatformCost,
+                platformOldCost: currentPlatformOldCost,
+                tierKey: selectedEconomicsTierKey,
+                hardwarePrimary: primary,
+                hardwareSecondary: secondary,
+                hardwareTerm: currentHardwareTerm,
+                hardwareEstimatedLease: Math.round(leaseSummary.totalLease)
+            };
+        }
+
+        function syncBuildFromEconomics() {
+            checkoutBuildSnapshot = getEconomicsBuildSnapshot();
+            try {
+                localStorage.setItem('vetra_checkout_build', JSON.stringify(checkoutBuildSnapshot));
+            } catch (_) {
+                // Ignore storage errors.
+            }
+        }
+
+        function updateCheckoutCartSummary() {
+            const softwareText = selectedTier ? `${tierDetails[selectedTier].name} - ${tierDetails[selectedTier].price}` : 'Not selected';
+            const modeText = checkoutBundleMode === 'bundle' ? 'Software + hardware bundle' : 'Software only';
+            const hardwareMonthly = checkoutBundleMode === 'bundle' ? Number(document.getElementById('checkout-hw-estimated')?.textContent || '0') : 0;
+            const hardware20Apr = Math.round(hardwareMonthly * 1.2);
+            const softwareMonthly = selectedTier === 'twelve_month_upfront' ? 250 : currentPlatformCost;
+            const totalMonthly = softwareMonthly + hardwareMonthly;
+
+            const setText = (id, value) => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = value;
+            };
+
+            setText('cart-software', softwareText);
+            setText('cart-hardware-mode', modeText);
+            setText('cart-hardware-est', `$${hardwareMonthly.toLocaleString()}/mo`);
+            setText('cart-hardware-20apr', `$${hardware20Apr.toLocaleString()}/mo`);
+            setText('cart-total', `$${totalMonthly.toLocaleString()}/mo`);
+        }
+
+        function applyEconomicsBuildToCheckout() {
+            const build = checkoutBuildSnapshot || getEconomicsBuildSnapshot();
+
+            const billingMode = build.tierKey === 'twelve_month_upfront' ? 'upfront' : 'monthly';
+            setCheckoutBillingMode(billingMode, document.getElementById(billingMode === 'upfront' ? 'checkout-billing-upfront' : 'checkout-billing-monthly'));
+
+            const tierMap = {
+                no_contract: 'tier-no-contract',
+                twelve_month_monthly: 'tier-12m-monthly',
+                twelve_month_upfront: 'tier-12m-upfront'
+            };
+            const tierEl = document.getElementById(tierMap[build.tierKey] || 'tier-no-contract');
+            if (tierEl) {
+                const tierKey = build.tierKey || 'no_contract';
+                selectTier(tierEl, tierKey);
+            }
+
+            setCheckoutBundleMode('bundle', document.getElementById('bundle-mode-hardware'));
+            const primaryEl = document.getElementById('checkout-hw-primary');
+            const secondaryEl = document.getElementById('checkout-hw-secondary');
+            const termEl = document.getElementById('checkout-hw-term');
+            if (primaryEl) primaryEl.value = build.hardwarePrimary || 'robinair';
+            if (secondaryEl) secondaryEl.value = build.hardwareSecondary || 'none';
+            if (termEl) termEl.value = String(build.hardwareTerm || 60);
+
+            updateCheckoutHardwareEstimate();
+            updateCheckoutCartSummary();
+        }
+
+        function finalizeBuildFromEconomics() {
+            syncBuildFromEconomics();
+            navigate('checkout');
+            applyEconomicsBuildToCheckout();
+            const leadGate = document.getElementById('lead-gate-container');
+            if (leadGate) leadGate.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         function setROIPreset(bays, btn) {
@@ -3021,8 +3155,10 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
         initInnovationRotator();
         calculateROI();
         calculateHardwareROI();
+        syncBuildFromEconomics();
         setCheckoutBillingMode('monthly', document.getElementById('checkout-billing-monthly'));
         setCheckoutBundleMode('software_only', document.getElementById('bundle-mode-software'));
+        updateCheckoutCartSummary();
 
         // ==========================================
         // STRIPE CHECKOUT LOGIC
@@ -3148,6 +3284,8 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                 mobilePlanLabel.textContent = `${tierDetails[tier].name} - ${tierDetails[tier].price}`;
                 mobilePlanQuickbar.classList.remove('hidden');
             }
+
+            updateCheckoutCartSummary();
         }
 
         function computeLeasePayment(primaryKey, secondaryKey, term) {
@@ -3174,10 +3312,13 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
             const secondary = document.getElementById('checkout-hw-secondary')?.value || 'none';
             const term = document.getElementById('checkout-hw-term')?.value || '60';
             const estimateEl = document.getElementById('checkout-hw-estimated');
+            const apr20El = document.getElementById('checkout-hw-20apr');
             if (!estimateEl) return;
 
             const lease = computeLeasePayment(primary, secondary, term);
             estimateEl.textContent = lease.totalLease.toLocaleString();
+            if (apr20El) apr20El.textContent = Math.round(lease.totalLease * 1.2).toLocaleString();
+            updateCheckoutCartSummary();
         }
 
         function setCheckoutBundleMode(mode, btn) {
@@ -3200,6 +3341,7 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
 
             if (config) config.classList.toggle('hidden', mode !== 'bundle');
             if (mode === 'bundle') updateCheckoutHardwareEstimate();
+            updateCheckoutCartSummary();
         }
 
         function getCheckoutBundleData() {
