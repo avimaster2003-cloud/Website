@@ -2087,6 +2087,75 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                             </div>
                         </div>
 
+                        <div class="p-4 rounded-lg border border-amber-500/30 bg-amber-500/10" id="checkout-bundle-mode-container">
+                            <p class="text-sm text-amber-200 mb-3 font-semibold">Checkout Path</p>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
+                                <button type="button" id="bundle-mode-software" onclick="setCheckoutBundleMode('software_only', this)" class="w-full py-2 rounded-lg text-xs font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30">Software Only</button>
+                                <button type="button" id="bundle-mode-hardware" onclick="setCheckoutBundleMode('bundle', this)" class="w-full py-2 rounded-lg text-xs font-bold text-gray-400 border border-white/10 hover:text-gray-200">Software + Hardware Bundle</button>
+                            </div>
+                            <p class="text-xs text-gray-400">Choose bundle if you want lease underwriting started with this checkout.</p>
+
+                            <div id="hardware-bundle-config" class="hidden mt-4 pt-4 border-t border-white/10 space-y-4">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="block text-xs text-gray-300 mb-1">Primary Hardware</label>
+                                        <select id="checkout-hw-primary" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-white text-sm focus:border-amber-500/40 focus:outline-none">
+                                            <option value="robinair">Robinair AC1234-9</option>
+                                            <option value="maxisys">Autel MaxiSys Ultra</option>
+                                            <option value="maxisys_ultra_s2">Autel MaxiSys Ultra S2</option>
+                                            <option value="adas">ADAS Calibration System</option>
+                                            <option value="im608">Autel IM608 Pro II</option>
+                                            <option value="motorvac">MotorVac TransTech IV+</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs text-gray-300 mb-1">Second Hardware (Optional)</label>
+                                        <select id="checkout-hw-secondary" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-white text-sm focus:border-amber-500/40 focus:outline-none">
+                                            <option value="none">None</option>
+                                            <option value="robinair">Robinair AC1234-9</option>
+                                            <option value="maxisys">Autel MaxiSys Ultra</option>
+                                            <option value="maxisys_ultra_s2">Autel MaxiSys Ultra S2</option>
+                                            <option value="adas">ADAS Calibration System</option>
+                                            <option value="im608">Autel IM608 Pro II</option>
+                                            <option value="motorvac">MotorVac TransTech IV+</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-gray-300 mb-1">Lease Term</label>
+                                    <select id="checkout-hw-term" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-white text-sm focus:border-amber-500/40 focus:outline-none">
+                                        <option value="24">24 months</option>
+                                        <option value="36">36 months</option>
+                                        <option value="60" selected>60 months</option>
+                                    </select>
+                                </div>
+
+                                <div class="rounded-lg border border-amber-500/20 bg-black/40 px-3 py-3 text-xs text-gray-300">
+                                    <div class="flex items-center justify-between mb-1">
+                                        <span class="text-gray-400">Estimated hardware lease:</span>
+                                        <span class="text-amber-300 font-bold">$<span id="checkout-hw-estimated">115</span>/mo</span>
+                                    </div>
+                                    <div class="text-[11px] text-gray-500">Estimate uses your selected term and applies 12% APR to the higher-value unit only when two units are selected.</div>
+                                </div>
+
+                                <div class="rounded-lg border border-red-500/25 bg-red-500/5 p-3 space-y-2">
+                                    <p class="text-xs text-red-200 font-semibold">Hardware financing requirements (required)</p>
+                                    <label class="flex items-start gap-2 text-xs text-gray-300">
+                                        <input type="checkbox" id="bundle-ack-pg" class="mt-0.5 w-4 h-4 accent-red-500">
+                                        <span>I acknowledge a personal guarantee is required for hardware financing.</span>
+                                    </label>
+                                    <label class="flex items-start gap-2 text-xs text-gray-300">
+                                        <input type="checkbox" id="bundle-ack-insurance" class="mt-0.5 w-4 h-4 accent-red-500">
+                                        <span>I acknowledge active commercial insurance is required with VETRA listed as beneficiary on financed units.</span>
+                                    </label>
+                                    <label class="flex items-start gap-2 text-xs text-gray-300">
+                                        <input type="checkbox" id="bundle-ack-ach" class="mt-0.5 w-4 h-4 accent-red-500">
+                                        <span>I acknowledge hardware lease billing is ACH.</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
                         <div id="contract-ack-container" class="p-4 rounded-lg border border-cyan-500/30 bg-cyan-500/10">
                             <p class="text-sm text-cyan-200 mb-3 font-semibold">&#9888;&#65039; Contract signing is required before checkout.</p>
                             <p class="text-sm text-cyan-100 mb-3">When you click &ldquo;Proceed to Payment&rdquo; you will be shown a contract form. You must initial four key clauses, check three acknowledgments, and type your full legal name before the payment button unlocks.</p>
@@ -2953,12 +3022,14 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
         calculateROI();
         calculateHardwareROI();
         setCheckoutBillingMode('monthly', document.getElementById('checkout-billing-monthly'));
+        setCheckoutBundleMode('software_only', document.getElementById('bundle-mode-software'));
 
         // ==========================================
         // STRIPE CHECKOUT LOGIC
         // ==========================================
         let selectedTier = null;
         let pendingCheckoutData = null;
+        let checkoutBundleMode = 'software_only';
         const SUBSCRIPTION_API_BASE = window.APEX_SUBSCRIPTION_API_BASE || 'https://pay.usevetra.com';
 
         async function trackEvent(name, payload = {}) {
@@ -3007,7 +3078,8 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
             const planDisplay = document.getElementById('contract-plan-display');
             if (planDisplay && selectedTier) {
                 const t = tierDetails[selectedTier];
-                planDisplay.textContent = `Selected Plan: ${t.name} - ${t.price}`;
+                const bundleLabel = pendingCheckoutData?.bundleData?.mode === 'bundle' ? ' + Hardware Bundle Intake' : '';
+                planDisplay.textContent = `Selected Plan: ${t.name} - ${t.price}${bundleLabel}`;
             }
 
             // Pre-fill signer name from lead capture
@@ -3078,6 +3150,93 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
             }
         }
 
+        function computeLeasePayment(primaryKey, secondaryKey, term) {
+            const primary = hardwareCatalog[primaryKey];
+            const secondary = secondaryKey !== 'none' ? hardwareCatalog[secondaryKey] : null;
+            const leaseTerm = Number(term || 60);
+
+            const primaryBase = primary?.monthly[leaseTerm] || 0;
+            const secondaryBase = secondary ? (secondary.monthly[leaseTerm] || 0) : 0;
+            let aprAddOn = 0;
+
+            if (secondary) {
+                aprAddOn = (secondary.price > primary.price ? secondaryBase : primaryBase) * 0.12;
+            }
+
+            return {
+                totalLease: Math.round(primaryBase + secondaryBase + aprAddOn),
+                aprAddOn: Math.round(aprAddOn)
+            };
+        }
+
+        function updateCheckoutHardwareEstimate() {
+            const primary = document.getElementById('checkout-hw-primary')?.value || 'robinair';
+            const secondary = document.getElementById('checkout-hw-secondary')?.value || 'none';
+            const term = document.getElementById('checkout-hw-term')?.value || '60';
+            const estimateEl = document.getElementById('checkout-hw-estimated');
+            if (!estimateEl) return;
+
+            const lease = computeLeasePayment(primary, secondary, term);
+            estimateEl.textContent = lease.totalLease.toLocaleString();
+        }
+
+        function setCheckoutBundleMode(mode, btn) {
+            checkoutBundleMode = mode;
+
+            const softwareBtn = document.getElementById('bundle-mode-software');
+            const bundleBtn = document.getElementById('bundle-mode-hardware');
+            const config = document.getElementById('hardware-bundle-config');
+
+            if (softwareBtn) {
+                softwareBtn.className = mode === 'software_only'
+                    ? 'w-full py-2 rounded-lg text-xs font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30'
+                    : 'w-full py-2 rounded-lg text-xs font-bold text-gray-400 border border-white/10 hover:text-gray-200';
+            }
+            if (bundleBtn) {
+                bundleBtn.className = mode === 'bundle'
+                    ? 'w-full py-2 rounded-lg text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                    : 'w-full py-2 rounded-lg text-xs font-bold text-gray-400 border border-white/10 hover:text-gray-200';
+            }
+
+            if (config) config.classList.toggle('hidden', mode !== 'bundle');
+            if (mode === 'bundle') updateCheckoutHardwareEstimate();
+        }
+
+        function getCheckoutBundleData() {
+            if (checkoutBundleMode !== 'bundle') {
+                return { mode: 'software_only' };
+            }
+
+            const primary = document.getElementById('checkout-hw-primary')?.value || 'robinair';
+            const secondary = document.getElementById('checkout-hw-secondary')?.value || 'none';
+            const term = document.getElementById('checkout-hw-term')?.value || '60';
+            const lease = computeLeasePayment(primary, secondary, term);
+
+            return {
+                mode: 'bundle',
+                primary,
+                secondary,
+                term: Number(term),
+                estimatedLease: lease.totalLease,
+                aprAddOn: lease.aprAddOn,
+                acknowledgements: {
+                    personalGuarantee: !!document.getElementById('bundle-ack-pg')?.checked,
+                    insuranceBeneficiary: !!document.getElementById('bundle-ack-insurance')?.checked,
+                    achBilling: !!document.getElementById('bundle-ack-ach')?.checked
+                }
+            };
+        }
+
+        function validateBundleRequirements(bundleData) {
+            if (bundleData.mode !== 'bundle') return true;
+            const acks = bundleData.acknowledgements || {};
+            if (!acks.personalGuarantee || !acks.insuranceBeneficiary || !acks.achBilling) {
+                alert('For hardware bundle checkout, please acknowledge personal guarantee, insurance beneficiary requirement, and ACH billing.');
+                return false;
+            }
+            return true;
+        }
+
         function scrollToCheckoutLead() {
             const leadGate = document.getElementById('lead-gate-container');
             if (leadGate) {
@@ -3085,7 +3244,7 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
             }
         }
 
-        async function startCheckout(email, shopName) {
+        async function startCheckout(email, shopName, bundleData = { mode: 'software_only' }) {
             const btn = document.getElementById('submit-btn');
             btn.disabled = true;
             btn.textContent = 'Processing...';
@@ -3100,7 +3259,8 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                         body: JSON.stringify({
                             tier: selectedTier,
                             email,
-                            shopName
+                            shopName,
+                            bundleData
                         })
                     });
 
@@ -3118,9 +3278,32 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                     return;
                 }
 
+                if (bundleData.mode === 'bundle') {
+                    try {
+                        await fetch(`${SUBSCRIPTION_API_BASE}/api/hardware-bundle-application`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                tier: selectedTier,
+                                email,
+                                shopName,
+                                bundleData,
+                                lead: {
+                                    ownerName: localStorage.getItem('vetra_lead_name') || '',
+                                    ownerEmail: localStorage.getItem('vetra_lead_email') || '',
+                                    ownerPhone: localStorage.getItem('vetra_lead_phone') || ''
+                                }
+                            })
+                        });
+                    } catch (_) {
+                        // Bundle intake API is best-effort and must not block software checkout.
+                    }
+                }
+
                 const redirectUrl = new URL(selected.paymentLink);
                 if (email) redirectUrl.searchParams.set('prefilled_email', email);
                 if (shopName) redirectUrl.searchParams.set('client_reference_id', shopName);
+                redirectUrl.searchParams.set('bundle_mode', bundleData.mode || 'software_only');
                 window.location.href = redirectUrl.toString();
             } catch (error) {
                 console.error('Checkout error:', error);
@@ -3132,6 +3315,7 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
 
         function buildCheckoutContractPacket(contractData, leadData = {}) {
             const selected = tierDetails[selectedTier] || { name: 'Unknown', price: 'Unknown' };
+            const bundleData = contractData.bundleData || { mode: 'software_only' };
             return [
                 'VETRA CHECKOUT CONTRACT ACKNOWLEDGEMENT',
                 'Submitted At (UTC): ' + new Date().toISOString(),
@@ -3140,6 +3324,17 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                 'Tier Key: ' + (contractData.plan || ''),
                 'Plan Name: ' + selected.name,
                 'Plan Price: ' + selected.price,
+                '',
+                'BUNDLE INTAKE',
+                'Mode: ' + (bundleData.mode || 'software_only'),
+                'Primary Hardware: ' + (bundleData.primary || ''),
+                'Second Hardware: ' + (bundleData.secondary || ''),
+                'Lease Term: ' + (bundleData.term || ''),
+                'Estimated Lease: ' + (bundleData.estimatedLease || ''),
+                'APR Add-On: ' + (bundleData.aprAddOn || ''),
+                'Acknowledged Personal Guarantee: ' + (bundleData.acknowledgements?.personalGuarantee ? 'yes' : 'no'),
+                'Acknowledged Insurance Beneficiary Requirement: ' + (bundleData.acknowledgements?.insuranceBeneficiary ? 'yes' : 'no'),
+                'Acknowledged ACH Billing: ' + (bundleData.acknowledgements?.achBilling ? 'yes' : 'no'),
                 '',
                 'BUSINESS + SIGNER',
                 'Legal Business Name: ' + (contractData.legal_name || ''),
@@ -3182,7 +3377,8 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                 initials_tcpa: document.getElementById('cs_init_tcpa').value.trim().toUpperCase(),
                 initials_liability: document.getElementById('cs_init_liability').value.trim().toUpperCase(),
                 typed_signature: document.getElementById('cs_typed_signature').value.trim(),
-                signed_at: document.getElementById('cs-timestamp').textContent
+                signed_at: document.getElementById('cs-timestamp').textContent,
+                bundleData: pendingCheckoutData.bundleData
             };
 
             const leadData = {
@@ -3218,10 +3414,10 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                 // Do not block checkout on archival failure; event tracking still captures the signature action.
             }
 
-            const { email, shopName } = pendingCheckoutData;
+            const { email, shopName, bundleData } = pendingCheckoutData;
             pendingCheckoutData = null;
             closeContractReviewModal();
-            await startCheckout(email, shopName);
+            await startCheckout(email, shopName, bundleData);
         });
 
         document.getElementById('checkout-form')?.addEventListener('submit', async (e) => {
@@ -3235,12 +3431,21 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
             const email = document.getElementById('email').value;
             const shopName = document.getElementById('shop_name').value;
             const btn = document.getElementById('submit-btn');
+            const bundleData = getCheckoutBundleData();
 
-            pendingCheckoutData = { email, shopName };
+            if (!validateBundleRequirements(bundleData)) {
+                return;
+            }
+
+            pendingCheckoutData = { email, shopName, bundleData };
             btn.disabled = true;
             btn.textContent = 'Reviewing Contract...';
             openContractReviewModal();
         });
+
+        document.getElementById('checkout-hw-primary')?.addEventListener('change', updateCheckoutHardwareEstimate);
+        document.getElementById('checkout-hw-secondary')?.addEventListener('change', updateCheckoutHardwareEstimate);
+        document.getElementById('checkout-hw-term')?.addEventListener('change', updateCheckoutHardwareEstimate);
 
         document.getElementById('lead-gate-form')?.addEventListener('submit', (e) => {
             e.preventDefault();
