@@ -141,45 +141,70 @@
             letter-spacing: 0.08em;
             text-transform: uppercase;
             margin-top: calc(1mm * var(--preview-scale));
+            border: calc(0.22mm * var(--preview-scale)) solid rgba(62, 184, 255, 0.45);
+            border-radius: calc(0.8mm * var(--preview-scale));
+            padding: calc(0.5mm * var(--preview-scale)) calc(1mm * var(--preview-scale));
         }
 
         .contact-info {
             display: flex;
             flex-direction: column;
-            gap: calc(1.2mm * var(--preview-scale));
+            gap: calc(0.8mm * var(--preview-scale));
             border-top: calc(0.5mm * var(--preview-scale)) solid rgba(230, 234, 242, 0.32);
-            padding-top: calc(2.8mm * var(--preview-scale));
+            padding-top: calc(2.2mm * var(--preview-scale));
             position: relative;
             z-index: 1;
         }
 
+        .identity-row {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: calc(1.2mm * var(--preview-scale));
+            margin-bottom: calc(0.4mm * var(--preview-scale));
+        }
+
         .name {
-            font-size: calc(4.2mm * var(--preview-scale));
+            font-size: calc(3.55mm * var(--preview-scale));
             font-weight: 800;
-            letter-spacing: 0.04em;
+            letter-spacing: 0.02em;
             color: #ffffff;
         }
 
         .title {
-            font-size: calc(2.2mm * var(--preview-scale));
-            color: #d4d9e0;
-            font-weight: 600;
-            letter-spacing: 0.15em;
+            font-size: calc(1.5mm * var(--preview-scale));
+            color: #b9c2d2;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: calc(0.25mm * var(--preview-scale)) calc(0.8mm * var(--preview-scale));
+            border: calc(0.18mm * var(--preview-scale)) solid rgba(185, 194, 210, 0.35);
+            border-radius: calc(0.55mm * var(--preview-scale));
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: calc(0.55mm * var(--preview-scale)) calc(1.3mm * var(--preview-scale));
+            align-items: center;
         }
 
         .contact-item {
             display: flex;
             align-items: center;
-            gap: calc(1.2mm * var(--preview-scale));
-            font-size: calc(1.9mm * var(--preview-scale));
+            gap: calc(0.75mm * var(--preview-scale));
+            font-size: calc(1.52mm * var(--preview-scale));
             color: #d4dff2;
+            white-space: nowrap;
         }
 
         .contact-icon {
-            width: calc(1.9mm * var(--preview-scale));
-            height: calc(1.9mm * var(--preview-scale));
-            color: #f4f6f9;
-            font-weight: bold;
+            width: calc(0.95mm * var(--preview-scale));
+            height: calc(0.95mm * var(--preview-scale));
+            border-radius: 50%;
+            background: rgba(143, 93, 255, 0.85);
+            box-shadow: 0 0 0 calc(0.22mm * var(--preview-scale)) rgba(143, 93, 255, 0.2);
+            flex-shrink: 0;
         }
 
         .website {
@@ -262,6 +287,12 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.12em;
+        }
+
+        @media (max-width: 900px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .vetra-branding {
@@ -349,23 +380,27 @@
             <div class="hero-copy">
                 <div class="hero-headline">Turn Empty Bays Into Revenue</div>
                 <div class="hero-subline">24/7 AI booking + zero-down equipment financing</div>
-                <div class="proof-badge">Trusted by 500+ shops</div>
+                <div class="proof-badge">Launching with major industry partners</div>
             </div>
 
             <div class="contact-info">
-                <div class="name">Avi Patel</div>
-                <div class="title">FOUNDER</div>
-                <div class="contact-item">
-                    <span class="contact-icon">✉</span>
-                    sales@apexconversiongroup.com
+                <div class="identity-row">
+                    <div class="name">Avi Patel</div>
+                    <div class="title">Founder</div>
                 </div>
-                <div class="contact-item">
-                    <span class="contact-icon">☎</span>
-                    423-737-4490
-                </div>
-                <div class="contact-item">
-                    <span class="contact-icon">🌐</span>
-                    <span class="website">usevetra.com</span>
+                <div class="contact-grid">
+                    <div class="contact-item">
+                        <span class="contact-icon"></span>
+                        sales@apexconversiongroup.com
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon"></span>
+                        423-737-4490
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon"></span>
+                        <span class="website">usevetra.com</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -373,8 +408,8 @@
         <!-- BACK OF CARD -->
         <div class="card card-back">
             <div class="qr-code-section">
-                <div class="back-cta">See How 500+ Shops Book More in 30 Days</div>
-                <div class="back-subtext">Avg +$8K/month revenue impact</div>
+                <div class="back-cta">See how our launch partners fill more bays in 30 days</div>
+                <div class="back-subtext">Avg revenue impact: $30K+ annual revenue</div>
                 <img src="./assets/qr-usevetra-home.png" alt="QR Code" class="qr-code">
                 <div class="qr-label">Unlock Your Revenue</div>
             </div>
