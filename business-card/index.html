@@ -149,7 +149,7 @@
         .contact-info {
             display: flex;
             flex-direction: column;
-            gap: calc(0.8mm * var(--preview-scale));
+            gap: calc(0.65mm * var(--preview-scale));
             border-top: calc(0.5mm * var(--preview-scale)) solid rgba(230, 234, 242, 0.32);
             padding-top: calc(2.2mm * var(--preview-scale));
             position: relative;
@@ -168,58 +168,57 @@
         .name {
             font-size: calc(3.2mm * var(--preview-scale));
             font-weight: 800;
-            letter-spacing: 0.02em;
-            color: #ffffff;
+            letter-spacing: 0.015em;
+            background: var(--back-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-fill-color: transparent;
         }
 
         .title {
             font-size: calc(1.5mm * var(--preview-scale));
-            color: #b9c2d2;
+            color: #c7cfdd;
             font-weight: 700;
             letter-spacing: 0.12em;
             text-transform: uppercase;
-            padding: calc(0.25mm * var(--preview-scale)) calc(0.8mm * var(--preview-scale));
-            border: calc(0.18mm * var(--preview-scale)) solid rgba(185, 194, 210, 0.35);
-            border-radius: calc(0.55mm * var(--preview-scale));
+            padding: 0;
         }
 
-        .contact-grid {
+        .contact-list {
             display: grid;
             grid-template-columns: 1fr;
-            gap: calc(0.55mm * var(--preview-scale));
-            align-items: center;
+            gap: calc(0.4mm * var(--preview-scale));
         }
 
-        .contact-item {
+        .contact-line {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: calc(1mm * var(--preview-scale));
-            font-size: calc(1.3mm * var(--preview-scale));
-            color: #d4dff2;
-            padding: calc(0.55mm * var(--preview-scale)) calc(0.9mm * var(--preview-scale));
-            border-radius: calc(0.55mm * var(--preview-scale));
-            border: calc(0.16mm * var(--preview-scale)) solid rgba(203, 211, 224, 0.22);
-            background: rgba(255, 255, 255, 0.03);
-        }
-
-        .contact-label {
-            font-size: calc(1.05mm * var(--preview-scale));
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: #9ca6b7;
-            font-weight: 700;
-        }
-
-        .contact-value {
-            font-weight: 600;
-            color: #eef3ff;
-            white-space: nowrap;
+            gap: calc(0.9mm * var(--preview-scale));
+            font-size: calc(1.32mm * var(--preview-scale));
+            color: #dce4f3;
+            line-height: 1.25;
             letter-spacing: 0.01em;
         }
 
+        .contact-key {
+            color: #92a0b6;
+            font-size: calc(1.02mm * var(--preview-scale));
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .contact-val {
+            font-weight: 600;
+            color: #f3f7ff;
+            white-space: nowrap;
+            margin-left: auto;
+        }
+
         .website,
-        .contact-value.website {
+        .contact-val.website {
             color: #f4f6f9;
             font-weight: 600;
         }
@@ -302,12 +301,6 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.12em;
-        }
-
-        @media (max-width: 900px) {
-            .contact-grid {
-                grid-template-columns: 1fr;
-            }
         }
 
         .vetra-branding {
@@ -403,18 +396,18 @@
                     <div class="name">Avi Patel</div>
                     <div class="title">Founder</div>
                 </div>
-                <div class="contact-grid">
-                    <div class="contact-item">
-                        <span class="contact-label">Email</span>
-                        <span class="contact-value">sales@apexconversiongroup.com</span>
+                <div class="contact-list">
+                    <div class="contact-line">
+                        <span class="contact-key">Email</span>
+                        <span class="contact-val">sales@apexconversiongroup.com</span>
                     </div>
-                    <div class="contact-item">
-                        <span class="contact-label">Phone</span>
-                        <span class="contact-value">423-737-4490</span>
+                    <div class="contact-line">
+                        <span class="contact-key">Phone</span>
+                        <span class="contact-val">423-737-4490</span>
                     </div>
-                    <div class="contact-item">
-                        <span class="contact-label">Web</span>
-                        <span class="contact-value website">usevetra.com</span>
+                    <div class="contact-line">
+                        <span class="contact-key">Web</span>
+                        <span class="contact-val website">usevetra.com</span>
                     </div>
                 </div>
             </div>
