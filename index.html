@@ -2320,6 +2320,24 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
 
         const CALENDLY_BASE_URL = 'https://calendly.com/apelec12/30min?hide_event_type_details=1&hide_gdpr_banner=1';
 
+        // Ensure reloads always start at top instead of browser-restored scroll positions.
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+
+        function resetScrollOnLoad() {
+            window.scrollTo(0, 0);
+            requestAnimationFrame(() => window.scrollTo(0, 0));
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', resetScrollOnLoad, { once: true });
+        } else {
+            resetScrollOnLoad();
+        }
+
+        window.addEventListener('pageshow', resetScrollOnLoad);
+
         function openScheduler() {
             const nameFromForm = document.getElementById('owner_name')?.value?.trim();
             const emailFromLeadForm = document.getElementById('owner_email')?.value?.trim();
