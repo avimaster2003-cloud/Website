@@ -11,13 +11,16 @@
             --card-width: 85.5mm;
             --card-height: 54mm;
             --preview-scale: 2.35;
-            --matte-black-a: #101010;
-            --matte-black-b: #151515;
-            --matte-black-c: #1a1a1a;
+            --dark-bg: #0a0a0b;
+            --matte-black: #131314;
+            --matte-gray: #1a1a1c;
+            --accent-purple: #8f5dff;
+            --accent-blue: #4f8bff;
+            --accent-cyan: #3eb8ff;
             --cool-ice: #d5d8df;
             --soft-white: #ecf3ff;
+            --front-gradient: linear-gradient(135deg, #8f5dff 0%, #4f8bff 50%, #3eb8ff 100%);
             --back-gradient: linear-gradient(94deg, #8f5dff 8%, #4f8bff 52%, #3eb8ff 95%);
-            --front-gradient: linear-gradient(92deg, #ffffff 0%, #bfd6ff 50%, #7bd4ff 100%);
         }
 
         * {
@@ -75,169 +78,100 @@
 
         /* Front of card */
         .card-front {
-            background: linear-gradient(135deg, var(--matte-black-a) 0%, var(--matte-black-b) 55%, var(--matte-black-c) 100%);
+            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--matte-black) 55%, var(--matte-gray) 100%);
+            position: relative;
+        }
+
+        .card-front::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 45%;
+            height: 100%;
+            background: var(--front-gradient);
+            opacity: 0.08;
+            pointer-events: none;
         }
 
         .logo-section {
             display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            margin-bottom: calc(2.2mm * var(--preview-scale));
+            align-items: center;
+            margin-bottom: calc(2mm * var(--preview-scale));
             position: relative;
             z-index: 1;
         }
 
         .logo {
-            height: calc(7.6mm * var(--preview-scale));
+            height: calc(10.5mm * var(--preview-scale));
             width: auto;
             object-fit: contain;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: calc(0.9mm * var(--preview-scale));
-            padding: calc(0.9mm * var(--preview-scale)) calc(1.5mm * var(--preview-scale));
-            border-radius: 999px;
-            border: 1px solid rgba(123, 212, 255, 0.24);
-            background: rgba(95, 160, 255, 0.1);
-            font-size: calc(1.35mm * var(--preview-scale));
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-            color: #cbe8ff;
-        }
-
-        .hero-badge::before {
-            content: "";
-            width: calc(1.2mm * var(--preview-scale));
-            height: calc(1.2mm * var(--preview-scale));
-            border-radius: 999px;
-            background: #6ce7ff;
-            box-shadow: 0 0 18px rgba(108, 231, 255, 0.6);
-        }
-
-        .front-content {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            flex: 1;
-            position: relative;
-            z-index: 1;
+            filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
         }
 
         .hero-copy {
             font-family: 'Sora', sans-serif;
-            margin-bottom: calc(2.1mm * var(--preview-scale));
-            max-width: 100%;
-        }
-
-        .hero-copy .line-strong {
-            display: block;
-            font-size: calc(4.25mm * var(--preview-scale));
-            line-height: 1.02;
-            font-weight: 700;
-            letter-spacing: -0.03em;
-            background: var(--front-gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-fill-color: transparent;
-            text-wrap: balance;
-            margin-bottom: calc(1.1mm * var(--preview-scale));
-        }
-
-        .hero-copy .line-support {
-            display: block;
-            max-width: 94%;
-            font-size: calc(1.85mm * var(--preview-scale));
-            line-height: 1.34;
-            font-weight: 500;
-            color: #b8c1ce;
-        }
-
-        .guarantee-line {
-            font-family: 'Sora', sans-serif;
-            font-size: calc(1.95mm * var(--preview-scale));
-            line-height: 1.28;
-            font-weight: 700;
-            max-width: 96%;
             margin-bottom: calc(2.2mm * var(--preview-scale));
-            background: var(--back-gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-fill-color: transparent;
+            max-width: 90%;
+            position: relative;
+            z-index: 1;
         }
 
-        .proof-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: calc(1mm * var(--preview-scale));
-            margin-bottom: calc(2.3mm * var(--preview-scale));
+        .hero-headline {
+            font-size: calc(2.8mm * var(--preview-scale));
+            font-weight: 800;
+            line-height: 1.2;
+            color: #ffffff;
+            margin-bottom: calc(0.8mm * var(--preview-scale));
+            letter-spacing: -0.02em;
         }
 
-        .proof-pill {
-            border-radius: 999px;
-            padding: calc(0.95mm * var(--preview-scale)) calc(1.35mm * var(--preview-scale));
-            font-size: calc(1.35mm * var(--preview-scale));
+        .hero-subline {
+            font-size: calc(1.85mm * var(--preview-scale));
+            font-weight: 500;
+            color: #cbd3e0;
+            line-height: 1.3;
+        }
+
+        .proof-badge {
+            display: inline-block;
+            font-size: calc(1.5mm * var(--preview-scale));
             font-weight: 700;
+            color: var(--accent-cyan);
             letter-spacing: 0.08em;
             text-transform: uppercase;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            background: rgba(255, 255, 255, 0.04);
-            color: #d8e7fb;
-        }
-
-        .proof-pill.blue {
-            border-color: rgba(96, 165, 250, 0.25);
-            background: rgba(59, 130, 246, 0.12);
-            color: #bdd8ff;
-        }
-
-        .proof-pill.purple {
-            border-color: rgba(168, 85, 247, 0.25);
-            background: rgba(168, 85, 247, 0.12);
-            color: #dcc4ff;
-        }
-
-        .proof-pill.green {
-            border-color: rgba(52, 211, 153, 0.24);
-            background: rgba(16, 185, 129, 0.12);
-            color: #b9f0d5;
+            margin-top: calc(1mm * var(--preview-scale));
         }
 
         .contact-info {
             display: flex;
-            flex-wrap: wrap;
-            gap: calc(1.15mm * var(--preview-scale)) calc(2mm * var(--preview-scale));
-            border-top: calc(0.35mm * var(--preview-scale)) solid rgba(230, 234, 242, 0.22);
-            padding-top: calc(2.1mm * var(--preview-scale));
+            flex-direction: column;
+            gap: calc(1.2mm * var(--preview-scale));
+            border-top: calc(0.5mm * var(--preview-scale)) solid rgba(230, 234, 242, 0.32);
+            padding-top: calc(2.8mm * var(--preview-scale));
             position: relative;
             z-index: 1;
         }
 
         .name {
-            width: 100%;
-            font-size: calc(2.7mm * var(--preview-scale));
-            font-weight: 700;
-            letter-spacing: 0.03em;
+            font-size: calc(4.2mm * var(--preview-scale));
+            font-weight: 800;
+            letter-spacing: 0.04em;
             color: #ffffff;
         }
 
         .title {
-            width: 100%;
-            font-size: calc(1.55mm * var(--preview-scale));
-            color: #95a0af;
+            font-size: calc(2.2mm * var(--preview-scale));
+            color: #d4d9e0;
             font-weight: 600;
             letter-spacing: 0.15em;
-            margin-top: calc(-0.7mm * var(--preview-scale));
         }
 
         .contact-item {
             display: flex;
             align-items: center;
             gap: calc(1.2mm * var(--preview-scale));
-            font-size: calc(1.55mm * var(--preview-scale));
+            font-size: calc(1.9mm * var(--preview-scale));
             color: #d4dff2;
         }
 
@@ -255,11 +189,23 @@
 
         /* Back of card */
         .card-back {
-            background: linear-gradient(135deg, var(--matte-black-a) 0%, var(--matte-black-b) 58%, var(--matte-black-c) 100%);
+            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--matte-black) 58%, var(--matte-gray) 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            position: relative;
+        }
+
+        .card-back::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--back-gradient);
+            pointer-events: none;
         }
 
         .qr-code-section {
@@ -267,26 +213,19 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: calc(1.45mm * var(--preview-scale));
+            gap: calc(1.6mm * var(--preview-scale));
             position: relative;
             z-index: 1;
             width: 100%;
             height: 100%;
         }
 
-        .back-kicker {
-            font-size: calc(1.4mm * var(--preview-scale));
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: #c7d2df;
-        }
-
-        .back-message {
+        .back-cta {
             font-family: 'Sora', sans-serif;
-            font-size: calc(2.45mm * var(--preview-scale));
+            font-size: calc(1.75mm * var(--preview-scale));
             text-align: center;
-            max-width: 84%;
-            line-height: 1.14;
+            max-width: 92%;
+            line-height: 1.3;
             font-weight: 700;
             background: var(--back-gradient);
             -webkit-background-clip: text;
@@ -294,19 +233,22 @@
             -webkit-text-fill-color: transparent;
             text-fill-color: transparent;
             text-wrap: balance;
+            margin-bottom: calc(1mm * var(--preview-scale));
         }
 
-        .back-subcopy {
-            max-width: 80%;
+        .back-subtext {
+            font-family: 'Sora', sans-serif;
+            font-size: calc(1.35mm * var(--preview-scale));
             text-align: center;
-            font-size: calc(1.55mm * var(--preview-scale));
-            line-height: 1.35;
-            color: #aeb9c8;
+            max-width: 90%;
+            color: #9ba3ad;
+            line-height: 1.25;
+            font-weight: 500;
         }
 
         .qr-code {
-            width: calc(24.2mm * var(--preview-scale));
-            height: calc(24.2mm * var(--preview-scale));
+            width: calc(23.5mm * var(--preview-scale));
+            height: calc(23.5mm * var(--preview-scale));
             padding: calc(1.4mm * var(--preview-scale));
             background: white;
             border-radius: calc(0.8mm * var(--preview-scale));
@@ -315,11 +257,11 @@
         }
 
         .qr-label {
-            font-size: calc(1.5mm * var(--preview-scale));
-            color: #d7e1ed;
+            font-size: calc(1.6mm * var(--preview-scale));
+            color: #9ba3ad;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.14em;
+            letter-spacing: 0.12em;
         }
 
         .vetra-branding {
@@ -402,40 +344,28 @@
         <div class="card card-front">
             <div class="logo-section">
                 <img src="./assets/VETRA.png" alt="Vetra Logo" class="logo">
-                <div class="hero-badge">24/7 AI Booking + 0% APR</div>
             </div>
 
-            <div class="front-content">
-                <div>
-                    <div class="hero-copy">
-                        <span class="line-strong">Book More Jobs. Upgrade Your Bays. All at 0% APR.</span>
-                        <span class="line-support">The only platform that combines a 24/7 AI-booking front desk with zero-down equipment leasing for modern auto shops.</span>
-                    </div>
+            <div class="hero-copy">
+                <div class="hero-headline">Turn Empty Bays Into Revenue</div>
+                <div class="hero-subline">24/7 AI booking + zero-down equipment financing</div>
+                <div class="proof-badge">Trusted by 500+ shops</div>
+            </div>
 
-                    <div class="guarantee-line">Pays for itself in 1 to 2 shop hours. The 30-Day First-Bay-Filled Guarantee.</div>
-
-                    <div class="proof-row">
-                        <div class="proof-pill blue">0% Down</div>
-                        <div class="proof-pill purple">Booked Bays</div>
-                        <div class="proof-pill green">30-Day Guarantee</div>
-                    </div>
+            <div class="contact-info">
+                <div class="name">Avi Patel</div>
+                <div class="title">FOUNDER</div>
+                <div class="contact-item">
+                    <span class="contact-icon">✉</span>
+                    sales@apexconversiongroup.com
                 </div>
-
-                <div class="contact-info">
-                    <div class="name">Avi Patel</div>
-                    <div class="title">FOUNDER</div>
-                    <div class="contact-item">
-                        <span class="contact-icon">✉</span>
-                        sales@apexconversiongroup.com
-                    </div>
-                    <div class="contact-item">
-                        <span class="contact-icon">☎</span>
-                        423-737-4490
-                    </div>
-                    <div class="contact-item">
-                        <span class="contact-icon">🌐</span>
-                        <span class="website">usevetra.com</span>
-                    </div>
+                <div class="contact-item">
+                    <span class="contact-icon">☎</span>
+                    423-737-4490
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">🌐</span>
+                    <span class="website">usevetra.com</span>
                 </div>
             </div>
         </div>
@@ -443,11 +373,10 @@
         <!-- BACK OF CARD -->
         <div class="card card-back">
             <div class="qr-code-section">
-                <div class="back-kicker">Scan To See It Live</div>
-                <div class="back-message">We don't sell bloated software. We sell booked bays.</div>
-                <div class="back-subcopy">See how Vetra captures missed calls, books better jobs, and upgrades your shop without upfront capex.</div>
+                <div class="back-cta">See How 500+ Shops Book More in 30 Days</div>
+                <div class="back-subtext">Avg +$8K/month revenue impact</div>
                 <img src="./assets/qr-usevetra-home.png" alt="QR Code" class="qr-code">
-                <div class="qr-label">Tracked QR to usevetra.com</div>
+                <div class="qr-label">Unlock Your Revenue</div>
             </div>
             <div class="vetra-branding">VETRA</div>
         </div>
