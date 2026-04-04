@@ -154,18 +154,19 @@
             padding-top: calc(2.2mm * var(--preview-scale));
             position: relative;
             z-index: 1;
+            font-family: 'Sora', sans-serif;
         }
 
         .identity-row {
             display: flex;
-            align-items: baseline;
+            align-items: center;
             justify-content: space-between;
             gap: calc(1.2mm * var(--preview-scale));
             margin-bottom: calc(0.4mm * var(--preview-scale));
         }
 
         .name {
-            font-size: calc(3.55mm * var(--preview-scale));
+            font-size: calc(3.2mm * var(--preview-scale));
             font-weight: 800;
             letter-spacing: 0.02em;
             color: #ffffff;
@@ -184,30 +185,41 @@
 
         .contact-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: calc(0.55mm * var(--preview-scale)) calc(1.3mm * var(--preview-scale));
+            grid-template-columns: 1fr;
+            gap: calc(0.55mm * var(--preview-scale));
             align-items: center;
         }
 
         .contact-item {
             display: flex;
             align-items: center;
-            gap: calc(0.75mm * var(--preview-scale));
-            font-size: calc(1.52mm * var(--preview-scale));
+            justify-content: space-between;
+            gap: calc(1mm * var(--preview-scale));
+            font-size: calc(1.3mm * var(--preview-scale));
             color: #d4dff2;
+            padding: calc(0.55mm * var(--preview-scale)) calc(0.9mm * var(--preview-scale));
+            border-radius: calc(0.55mm * var(--preview-scale));
+            border: calc(0.16mm * var(--preview-scale)) solid rgba(203, 211, 224, 0.22);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .contact-label {
+            font-size: calc(1.05mm * var(--preview-scale));
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #9ca6b7;
+            font-weight: 700;
+        }
+
+        .contact-value {
+            font-weight: 600;
+            color: #eef3ff;
             white-space: nowrap;
+            letter-spacing: 0.01em;
         }
 
-        .contact-icon {
-            width: calc(0.95mm * var(--preview-scale));
-            height: calc(0.95mm * var(--preview-scale));
-            border-radius: 50%;
-            background: rgba(143, 93, 255, 0.85);
-            box-shadow: 0 0 0 calc(0.22mm * var(--preview-scale)) rgba(143, 93, 255, 0.2);
-            flex-shrink: 0;
-        }
-
-        .website {
+        .website,
+        .contact-value.website {
             color: #f4f6f9;
             font-weight: 600;
         }
@@ -393,16 +405,16 @@
                 </div>
                 <div class="contact-grid">
                     <div class="contact-item">
-                        <span class="contact-icon"></span>
-                        sales@apexconversiongroup.com
+                        <span class="contact-label">Email</span>
+                        <span class="contact-value">sales@apexconversiongroup.com</span>
                     </div>
                     <div class="contact-item">
-                        <span class="contact-icon"></span>
-                        423-737-4490
+                        <span class="contact-label">Phone</span>
+                        <span class="contact-value">423-737-4490</span>
                     </div>
                     <div class="contact-item">
-                        <span class="contact-icon"></span>
-                        <span class="website">usevetra.com</span>
+                        <span class="contact-label">Web</span>
+                        <span class="contact-value website">usevetra.com</span>
                     </div>
                 </div>
             </div>
