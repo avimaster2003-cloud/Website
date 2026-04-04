@@ -94,25 +94,24 @@
             pointer-events: none;
         }
 
-        .logo-section {
-            display: flex;
-            align-items: center;
-            margin-bottom: calc(2mm * var(--preview-scale));
-            position: relative;
-            z-index: 1;
-        }
-
         .logo {
+            position: absolute;
+            top: calc(-8mm * var(--preview-scale));
+            left: calc(50% - 12mm * var(--preview-scale) / 2);
             height: calc(14.7mm * var(--preview-scale));
             width: auto;
             object-fit: contain;
             filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
+            z-index: 0;
+            pointer-events: none;
         }
 
         .hero-copy {
             font-family: 'Sora', sans-serif;
             margin-bottom: calc(2.2mm * var(--preview-scale));
             max-width: 90%;
+            position: relative;
+            z-index: 1;
             position: relative;
             z-index: 1;
         }
@@ -378,9 +377,7 @@
     <div class="card-container">
         <!-- FRONT OF CARD -->
         <div class="card card-front">
-            <div class="logo-section">
-                <img src="../assets/vetra-logo.png" alt="Vetra Logo" class="logo">
-            </div>
+            <img src="../assets/vetra-logo.png" alt="Vetra Logo" class="logo">
 
             <div class="hero-copy">
                 <div class="hero-headline">Turn Empty Bays Into Revenue</div>
