@@ -1926,33 +1926,10 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                                 </div>
                             </div>
 
-                            <div class="max-w-3xl" id="lead-gate-container">
-                                <div class="glow-card rounded-2xl p-6 border border-white/10 bg-black/30">
-                                    <h2 class="text-xl font-bold text-white mb-2">Get Started in 15 Seconds</h2>
-                                    <p class="text-sm text-gray-400 mb-6">Step 1 of 2: share owner contact details for onboarding and implementation.</p>
-                                    <form id="lead-gate-form" class="space-y-4">
-                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                            <div>
-                                                <label class="block text-gray-300 font-medium mb-2 text-sm">Owner Name</label>
-                                                <input type="text" id="owner_name" required class="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:border-blue-500/50 focus:outline-none transition-colors" placeholder="Jane Smith">
-                                            </div>
-                                            <div>
-                                                <label class="block text-gray-300 font-medium mb-2 text-sm">Owner Email</label>
-                                                <input type="email" id="owner_email" required class="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:border-blue-500/50 focus:outline-none transition-colors" placeholder="you@company.com">
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <label class="block text-gray-300 font-medium mb-2 text-sm">Mobile Number</label>
-                                            <input type="tel" id="owner_phone" required class="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:border-blue-500/50 focus:outline-none transition-colors" placeholder="(555) 123-4567">
-                                        </div>
-                                        <button type="submit" class="w-full py-3 bg-primary text-white rounded-lg font-bold hover:bg-primaryGlow transition-colors">Continue to Checkout</button>
-                                    </form>
-                                </div>
-                            </div>
-
-                            <div class="max-w-3xl hidden" id="checkout-form-container">
+                            <div class="max-w-3xl" id="checkout-form-container">
                                 <div class="glow-card rounded-2xl p-6 border border-white/10 bg-black/35">
                                     <h2 class="text-xl font-bold text-white mb-5">Complete Your Checkout</h2>
+                                    <p class="text-xs text-gray-400 mb-4">Fast lane: only email and shop name required before payment review.</p>
                                     <form id="checkout-form" class="space-y-5">
                                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                             <div>
@@ -2070,7 +2047,7 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
             <div class="relative w-full max-w-2xl bg-[#0B0F18] border border-cyan-500/30 rounded-2xl p-6 shadow-[0_0_50px_rgba(6,182,212,0.12)] my-6">
                 <!-- Header -->
                 <h3 class="text-white font-bold text-xl mb-1">Sign Your Service Agreement</h3>
-                <p class="text-sm text-gray-400 mb-4">Review and sign before we send you to checkout. All fields are required.</p>
+                <p class="text-sm text-gray-400 mb-4">Review and sign before we send you to checkout. Only business name and signer are required.</p>
 
                 <!-- Plan indicator -->
                 <div id="contract-plan-display" class="px-3 py-2 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-300 text-sm font-semibold mb-5"></div>
@@ -2100,24 +2077,24 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                     </div>
 
                     <!-- Initials -->
-                    <div>
+                    <div class="hidden">
                         <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-3">Initial Each Clause (e.g. AP)</p>
                         <div class="grid grid-cols-2 gap-3">
                             <div>
                                 <label class="block text-xs text-gray-400 mb-1">Pricing and Billing Terms</label>
-                                <input id="cs_init_pricing" required maxlength="5" placeholder="—" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-white text-sm text-center font-mono uppercase placeholder-gray-700 focus:border-cyan-500/50 focus:outline-none">
+                                <input id="cs_init_pricing" maxlength="5" placeholder="—" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-white text-sm text-center font-mono uppercase placeholder-gray-700 focus:border-cyan-500/50 focus:outline-none">
                             </div>
                             <div>
                                 <label class="block text-xs text-gray-400 mb-1">Cancellation and Commitment</label>
-                                <input id="cs_init_cancel" required maxlength="5" placeholder="—" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-white text-sm text-center font-mono uppercase placeholder-gray-700 focus:border-cyan-500/50 focus:outline-none">
+                                <input id="cs_init_cancel" maxlength="5" placeholder="—" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-white text-sm text-center font-mono uppercase placeholder-gray-700 focus:border-cyan-500/50 focus:outline-none">
                             </div>
                             <div>
                                 <label class="block text-xs text-gray-400 mb-1">SMS / TCPA Responsibility</label>
-                                <input id="cs_init_tcpa" required maxlength="5" placeholder="—" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-white text-sm text-center font-mono uppercase placeholder-gray-700 focus:border-cyan-500/50 focus:outline-none">
+                                <input id="cs_init_tcpa" maxlength="5" placeholder="—" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-white text-sm text-center font-mono uppercase placeholder-gray-700 focus:border-cyan-500/50 focus:outline-none">
                             </div>
                             <div>
                                 <label class="block text-xs text-gray-400 mb-1">Soft Quote Liability Disclaimer</label>
-                                <input id="cs_init_liability" required maxlength="5" placeholder="—" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-white text-sm text-center font-mono uppercase placeholder-gray-700 focus:border-cyan-500/50 focus:outline-none">
+                                <input id="cs_init_liability" maxlength="5" placeholder="—" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-white text-sm text-center font-mono uppercase placeholder-gray-700 focus:border-cyan-500/50 focus:outline-none">
                             </div>
                         </div>
                     </div>
@@ -2125,11 +2102,11 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                     <!-- Checkboxes -->
                     <div class="space-y-3 p-4 rounded-lg bg-white/3 border border-white/8">
                         <label class="flex gap-3 items-start cursor-pointer">
-                            <input type="checkbox" id="cs_ack_msa" required class="mt-0.5 w-4 h-4 shrink-0 accent-cyan-500">
+                            <input type="checkbox" id="cs_ack_msa" class="mt-0.5 w-4 h-4 shrink-0 accent-cyan-500" checked>
                             <span class="text-sm text-gray-300">I have read and agree to the <a href="/msa-order-form.html" target="_blank" rel="noopener" class="text-cyan-400 underline hover:text-white">Order Form and Subscription Agreement</a>.</span>
                         </label>
                         <label class="flex gap-3 items-start cursor-pointer">
-                            <input type="checkbox" id="cs_ack_platform" required class="mt-0.5 w-4 h-4 shrink-0 accent-cyan-500">
+                            <input type="checkbox" id="cs_ack_platform" class="mt-0.5 w-4 h-4 shrink-0 accent-cyan-500" checked>
                             <span class="text-sm text-gray-300">I have read and agree to the <a href="/platform-conditions.html" target="_blank" rel="noopener" class="text-cyan-400 underline hover:text-white">Platform Conditions and Compliance Addendum</a>.</span>
                         </label>
                         <label class="flex gap-3 items-start cursor-pointer">
@@ -2141,7 +2118,7 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                     <!-- Typed signature -->
                     <div>
                         <label class="block text-xs text-gray-300 font-medium mb-1">Typed Full Legal Name (Signature)</label>
-                        <input id="cs_typed_signature" required placeholder="Your full legal name exactly as it appears on ID" class="w-full px-3 py-2.5 rounded-lg bg-black/50 border border-white/10 text-white text-sm italic placeholder-gray-600 focus:border-cyan-500/50 focus:outline-none">
+                        <input id="cs_typed_signature" placeholder="Auto-filled from signer name" class="w-full px-3 py-2.5 rounded-lg bg-black/40 border border-white/10 text-white text-sm italic placeholder-gray-600 focus:border-cyan-500/50 focus:outline-none">
                         <p class="text-xs text-gray-600 mt-1">Signed at: <span id="cs-timestamp" class="font-mono"></span></p>
                     </div>
 
@@ -2783,7 +2760,8 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                 selectTier(tierEl, tierKey);
             }
 
-            setCheckoutBundleMode('bundle', document.getElementById('bundle-mode-hardware'));
+            // Preserve hardware selections from Economics but keep checkout default simple.
+            setCheckoutBundleMode('software_only', document.getElementById('bundle-mode-software'));
             const primaryEl = document.getElementById('checkout-hw-primary');
             const secondaryEl = document.getElementById('checkout-hw-secondary');
             const termEl = document.getElementById('checkout-hw-term');
@@ -2799,8 +2777,8 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
             syncBuildFromEconomics();
             navigate('checkout');
             applyEconomicsBuildToCheckout();
-            const leadGate = document.getElementById('lead-gate-container');
-            if (leadGate) leadGate.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            const checkoutForm = document.getElementById('checkout-form-container');
+            if (checkoutForm) checkoutForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         function setROIPreset(bays, btn) {
@@ -3026,6 +3004,27 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
             const legalInput = document.getElementById('cs_legal_name');
             if (legalInput && !legalInput.value && shopVal) legalInput.value = shopVal;
 
+            // Auto-fill signature and initials to reduce friction.
+            const signerName = (signerInput?.value || '').trim();
+            const inferredInitials = signerName
+                .split(/\s+/)
+                .filter(Boolean)
+                .slice(0, 2)
+                .map(part => part[0]?.toUpperCase() || '')
+                .join('') || 'OK';
+
+            const typedSig = document.getElementById('cs_typed_signature');
+            if (typedSig && !typedSig.value && signerName) typedSig.value = signerName;
+
+            const initPricing = document.getElementById('cs_init_pricing');
+            const initCancel = document.getElementById('cs_init_cancel');
+            const initTcpa = document.getElementById('cs_init_tcpa');
+            const initLiability = document.getElementById('cs_init_liability');
+            if (initPricing && !initPricing.value) initPricing.value = inferredInitials;
+            if (initCancel && !initCancel.value) initCancel.value = inferredInitials;
+            if (initTcpa && !initTcpa.value) initTcpa.value = inferredInitials;
+            if (initLiability && !initLiability.value) initLiability.value = inferredInitials;
+
             // Stamp the timestamp
             const tsEl = document.getElementById('cs-timestamp');
             if (tsEl) tsEl.textContent = new Date().toUTCString();
@@ -3178,9 +3177,9 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
         }
 
         function scrollToCheckoutLead() {
-            const leadGate = document.getElementById('lead-gate-container');
-            if (leadGate) {
-                leadGate.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            const target = document.getElementById('checkout-form-container') || document.getElementById('lead-gate-container');
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }
 
@@ -3387,32 +3386,10 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
         document.getElementById('checkout-hw-secondary')?.addEventListener('change', updateCheckoutHardwareEstimate);
         document.getElementById('checkout-hw-term')?.addEventListener('change', updateCheckoutHardwareEstimate);
 
-        document.getElementById('lead-gate-form')?.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const ownerName = document.getElementById('owner_name').value.trim();
-            const ownerEmail = document.getElementById('owner_email').value.trim();
-            const ownerPhone = document.getElementById('owner_phone').value.trim();
-            if (!ownerName || !ownerEmail || !ownerPhone) return;
-
-            localStorage.setItem('vetra_lead_name', ownerName);
-            localStorage.setItem('vetra_lead_email', ownerEmail);
-            localStorage.setItem('vetra_lead_phone', ownerPhone);
-
-            trackEvent('lead_gate_submitted', {
-                ownerName,
-                ownerEmail,
-                ownerPhone
-            });
-
-            const checkoutContainer = document.getElementById('checkout-form-container');
-            checkoutContainer.classList.remove('hidden');
-            document.getElementById('lead-gate-container').classList.add('hidden');
-
-            const checkoutEmail = document.getElementById('email');
-            if (checkoutEmail && !checkoutEmail.value) checkoutEmail.value = ownerEmail;
-
-            const shopInput = document.getElementById('shop_name');
-            if (shopInput && !shopInput.value) shopInput.focus();
+        // Auto-save minimal contact fields to keep scheduling/contract helpers populated.
+        document.getElementById('email')?.addEventListener('blur', (e) => {
+            const v = (e.target.value || '').trim();
+            if (v) localStorage.setItem('vetra_lead_email', v);
         });
 
         
