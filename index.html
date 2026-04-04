@@ -2046,6 +2046,25 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                     </div>
                 </div>
 
+                <div class="max-w-2xl mx-auto glow-card rounded-2xl p-6 border border-blue-500/20 mb-6" id="pricing-live-build-preview">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-bold text-white">Live Pricing Build</h3>
+                        <span class="text-[10px] uppercase tracking-widest text-blue-300 font-mono">From Economics</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        <div class="text-gray-400">Software plan</div>
+                        <div id="preview-cart-software" class="text-blue-200 font-semibold text-right sm:text-left">Not selected</div>
+                        <div class="text-gray-400">Hardware mode</div>
+                        <div id="preview-cart-hardware-mode" class="text-blue-200 font-semibold text-right sm:text-left">Software only</div>
+                        <div class="text-gray-400">Hardware monthly est.</div>
+                        <div id="preview-cart-hardware-est" class="text-amber-300 font-semibold text-right sm:text-left">$0/mo</div>
+                        <div class="text-gray-400">20% APR benchmark</div>
+                        <div id="preview-cart-hardware-20apr" class="text-red-300 font-semibold text-right sm:text-left">$0/mo</div>
+                        <div class="text-gray-200 font-semibold">Estimated monthly total</div>
+                        <div id="preview-cart-total" class="text-emerald-300 font-bold text-right sm:text-left">$0/mo</div>
+                    </div>
+                </div>
+
                 <!-- Lead Capture Gate -->
                 <div class="max-w-2xl mx-auto glow-card rounded-2xl p-8 border border-white/10 mb-6" id="lead-gate-container">
                     <h2 class="text-2xl font-bold text-white mb-2">Get Started in 15 Seconds</h2>
@@ -2961,11 +2980,16 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                 if (el) el.textContent = value;
             };
 
-            setText('cart-software', softwareText);
-            setText('cart-hardware-mode', modeText);
-            setText('cart-hardware-est', `$${hardwareMonthly.toLocaleString()}/mo`);
-            setText('cart-hardware-20apr', `$${hardware20Apr.toLocaleString()}/mo`);
-            setText('cart-total', `$${totalMonthly.toLocaleString()}/mo`);
+            const setTextBoth = (a, b, value) => {
+                setText(a, value);
+                setText(b, value);
+            };
+
+            setTextBoth('cart-software', 'preview-cart-software', softwareText);
+            setTextBoth('cart-hardware-mode', 'preview-cart-hardware-mode', modeText);
+            setTextBoth('cart-hardware-est', 'preview-cart-hardware-est', `$${hardwareMonthly.toLocaleString()}/mo`);
+            setTextBoth('cart-hardware-20apr', 'preview-cart-hardware-20apr', `$${hardware20Apr.toLocaleString()}/mo`);
+            setTextBoth('cart-total', 'preview-cart-total', `$${totalMonthly.toLocaleString()}/mo`);
         }
 
         function applyEconomicsBuildToCheckout() {
