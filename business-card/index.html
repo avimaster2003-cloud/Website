@@ -11,12 +11,12 @@
             --card-width: 85.5mm;
             --card-height: 54mm;
             --preview-scale: 2.35;
-            --matte-black-a: #0b0f14;
-            --matte-black-b: #121a24;
-            --matte-black-c: #1c2431;
-            --electric-cyan: #53d4ff;
-            --cool-ice: #b6eeff;
+            --matte-black-a: #101010;
+            --matte-black-b: #151515;
+            --matte-black-c: #1a1a1a;
+            --cool-ice: #d5d8df;
             --soft-white: #ecf3ff;
+            --back-gradient: linear-gradient(94deg, #8f5dff 8%, #4f8bff 52%, #3eb8ff 95%);
         }
 
         * {
@@ -67,14 +67,14 @@
             position: absolute;
             inset: 0;
             background:
-                radial-gradient(circle at 80% 5%, rgba(84, 212, 255, 0.22), transparent 45%),
-                radial-gradient(circle at 5% 92%, rgba(77, 255, 228, 0.18), transparent 40%);
+                radial-gradient(circle at 82% 7%, rgba(255, 255, 255, 0.07), transparent 45%),
+                radial-gradient(circle at 5% 92%, rgba(255, 255, 255, 0.04), transparent 40%);
             pointer-events: none;
         }
 
         /* Front of card */
         .card-front {
-            background: linear-gradient(125deg, var(--matte-black-a) 0%, var(--matte-black-b) 55%, var(--matte-black-c) 100%);
+            background: linear-gradient(135deg, var(--matte-black-a) 0%, var(--matte-black-b) 55%, var(--matte-black-c) 100%);
         }
 
         .logo-section {
@@ -90,32 +90,28 @@
             object-fit: contain;
         }
 
-        .guarantee-copy {
+        .hero-copy {
             font-family: 'Sora', sans-serif;
-            font-size: calc(2.2mm * var(--preview-scale));
-            letter-spacing: 0.02em;
-            margin-bottom: calc(2.8mm * var(--preview-scale));
-            max-width: 92%;
-            line-height: 1.35;
-            color: #d8e6ff;
+            font-size: calc(3mm * var(--preview-scale));
+            letter-spacing: 0.01em;
+            margin-bottom: calc(3mm * var(--preview-scale));
+            max-width: 88%;
+            line-height: 1.26;
+            color: #f7f9fc;
+            text-wrap: balance;
         }
 
-        .gradient-words {
+        .hero-copy .line-strong {
             display: block;
-            margin-top: calc(0.9mm * var(--preview-scale));
             font-weight: 700;
-            background: linear-gradient(92deg, #66ecff 5%, #8dbdff 48%, #8dfff5 95%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-fill-color: transparent;
+            margin-bottom: calc(0.6mm * var(--preview-scale));
         }
 
         .contact-info {
             display: flex;
             flex-direction: column;
             gap: calc(1.2mm * var(--preview-scale));
-            border-top: calc(0.5mm * var(--preview-scale)) solid rgba(83, 212, 255, 0.72);
+            border-top: calc(0.5mm * var(--preview-scale)) solid rgba(230, 234, 242, 0.32);
             padding-top: calc(2.8mm * var(--preview-scale));
             position: relative;
             z-index: 1;
@@ -130,7 +126,7 @@
 
         .title {
             font-size: calc(2.2mm * var(--preview-scale));
-            color: var(--electric-cyan);
+            color: #d4d9e0;
             font-weight: 600;
             letter-spacing: 0.15em;
         }
@@ -146,18 +142,18 @@
         .contact-icon {
             width: calc(1.9mm * var(--preview-scale));
             height: calc(1.9mm * var(--preview-scale));
-            color: var(--electric-cyan);
+            color: #f4f6f9;
             font-weight: bold;
         }
 
         .website {
-            color: var(--electric-cyan);
+            color: #f4f6f9;
             font-weight: 600;
         }
 
         /* Back of card */
         .card-back {
-            background: linear-gradient(125deg, var(--matte-black-a) 0%, var(--matte-black-b) 58%, var(--matte-black-c) 100%);
+            background: linear-gradient(135deg, var(--matte-black-a) 0%, var(--matte-black-b) 58%, var(--matte-black-c) 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -168,26 +164,44 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: calc(2.8mm * var(--preview-scale));
+            justify-content: center;
+            gap: calc(2.1mm * var(--preview-scale));
             position: relative;
             z-index: 1;
+            width: 100%;
+            height: 100%;
+        }
+
+        .back-message {
+            font-family: 'Sora', sans-serif;
+            font-size: calc(2.18mm * var(--preview-scale));
+            text-align: center;
+            max-width: 90%;
+            line-height: 1.34;
+            font-weight: 700;
+            background: var(--back-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-fill-color: transparent;
+            text-wrap: balance;
         }
 
         .qr-code {
-            width: calc(23mm * var(--preview-scale));
-            height: calc(23mm * var(--preview-scale));
+            width: calc(24.5mm * var(--preview-scale));
+            height: calc(24.5mm * var(--preview-scale));
             padding: calc(1.4mm * var(--preview-scale));
             background: white;
             border-radius: calc(0.8mm * var(--preview-scale));
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 7px 22px rgba(0, 0, 0, 0.45);
         }
 
         .qr-label {
-            font-size: calc(2mm * var(--preview-scale));
-            color: var(--electric-cyan);
+            font-size: calc(1.85mm * var(--preview-scale));
+            color: #ced5df;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.18em;
+            letter-spacing: 0.15em;
         }
 
         .vetra-branding {
@@ -199,16 +213,6 @@
             color: var(--cool-ice);
             letter-spacing: 0.18em;
             opacity: 0.68;
-        }
-
-        .back-note {
-            font-family: 'Sora', sans-serif;
-            font-size: calc(1.75mm * var(--preview-scale));
-            text-align: center;
-            max-width: 85%;
-            color: #d2e8ff;
-            line-height: 1.4;
-            margin-top: calc(2.2mm * var(--preview-scale));
         }
 
         /* Print styles for PDF generation */
@@ -280,9 +284,8 @@
                 <img src="./assets/VETRA.png" alt="Vetra Logo" class="logo">
             </div>
 
-            <div class="guarantee-copy">
-                Pays for itself in 1 to 2 shop hours.
-                <span class="gradient-words">The 30-Day First-Bay-Filled Guarantee.</span>
+            <div class="hero-copy">
+                <span class="line-strong">Book More Jobs. Upgrade Your Bays. All at 0% APR</span>
             </div>
 
             <div class="contact-info">
@@ -306,9 +309,9 @@
         <!-- BACK OF CARD -->
         <div class="card card-back">
             <div class="qr-code-section">
-                <div class="qr-label">Scan to Learn More</div>
+                <div class="back-message">The only platform that combines a 24/7 AI-booking front desk with a zero-down equipment leasing program.</div>
                 <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://usevetra.com/%23home" alt="QR Code" class="qr-code">
-                <div class="back-note">Built for high-output shops that want predictable bay fill.</div>
+                <div class="qr-label">Scan to Book More Jobs</div>
             </div>
             <div class="vetra-branding">VETRA</div>
         </div>
