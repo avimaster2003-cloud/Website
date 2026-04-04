@@ -76,6 +76,16 @@ convert -density 300 business-card.pdf -colorspace CMYK business-card-cmyk.pdf
 - **PDF file type** with CMYK color profile for professional printing
 - High-resolution (300 DPI)
 
+## 📈 QR Scan Tracking
+
+The QR now routes through a trackable URL before sending visitors to your site.
+
+- QR destination: `https://usevetra.com/scan/`
+- Final redirect: `https://usevetra.com/#home`
+- View live scan count: `https://api.countapi.xyz/get/usevetra/qr-card-main`
+
+Tip: open the count URL anytime and check the `value` field to see total scans.
+
 ### Email Template
 ```
 Subject: Vetra Business Card - Print Files
