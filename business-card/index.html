@@ -168,6 +168,13 @@
             margin-bottom: calc(0.4mm * var(--preview-scale));
         }
 
+        .identity-stack {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: calc(0.3mm * var(--preview-scale));
+        }
+
         .name {
             font-family: 'Manrope', sans-serif;
             font-size: calc(3.1mm * var(--preview-scale));
@@ -392,8 +399,10 @@
 
             <div class="contact-info">
                 <div class="identity-row">
-                    <div class="name">AVI PATEL</div>
-                    <div class="title">Founder</div>
+                    <div class="identity-stack">
+                        <div class="name">AVI PATEL</div>
+                        <div class="title">Founder</div>
+                    </div>
                 </div>
                 <div class="contact-list">
                     <div class="contact-line">
