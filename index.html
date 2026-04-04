@@ -1515,6 +1515,7 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                                         <div>
                                             <label for="hw-primary-product" class="block text-xs text-gray-400 mb-1">Primary Product</label>
                                             <select id="hw-primary-product" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-white text-sm focus:border-amber-500/40 focus:outline-none">
+                                                <option value="none" selected>None</option>
                                                 <option value="robinair">Robinair AC1234-9</option>
                                                 <option value="maxisys">Autel MaxiSys Ultra</option>
                                                 <option value="maxisys_ultra_s2">Autel MaxiSys Ultra S2</option>
@@ -1859,6 +1860,7 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                                         <div>
                                             <label class="block text-xs text-gray-300 mb-1">Primary Hardware</label>
                                             <select id="checkout-hw-primary" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-white text-sm focus:border-amber-500/40 focus:outline-none">
+                                                <option value="none" selected>None</option>
                                                 <option value="robinair">Robinair AC1234-9</option>
                                                 <option value="maxisys">Autel MaxiSys Ultra</option>
                                                 <option value="maxisys_ultra_s2">Autel MaxiSys Ultra S2</option>
@@ -2508,8 +2510,17 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
         }
 
         function calculateHardwareLease() {
-            const primaryKey = document.getElementById('hw-primary-product')?.value || 'robinair';
+            const primaryKey = document.getElementById('hw-primary-product')?.value || 'none';
             const secondaryKey = document.getElementById('hw-secondary-product')?.value || 'none';
+
+            if (primaryKey === 'none') {
+                return {
+                    baseLease: 0,
+                    aprAddOn: 0,
+                    totalLease: 0,
+                    aprTargetLabel: 'No hardware selected'
+                };
+            }
 
             const primary = hardwareCatalog[primaryKey];
             const secondary = secondaryKey !== 'none' ? hardwareCatalog[secondaryKey] : null;
@@ -2698,8 +2709,9 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
         }
 
         function getEconomicsBuildSnapshot() {
-            const primary = document.getElementById('hw-primary-product')?.value || 'robinair';
-            const secondary = document.getElementById('hw-secondary-product')?.value || 'none';
+            const primary = document.getElementById('hw-primary-product')?.value || 'none';
+            const secondaryRaw = document.getElementById('hw-secondary-product')?.value || 'none';
+            const secondary = primary === 'none' ? 'none' : secondaryRaw;
             const leaseSummary = calculateHardwareLease();
             return {
                 paymentMode: currentPaymentMode,
@@ -2764,12 +2776,12 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                 selectTier(tierEl, tierKey);
             }
 
-            // Preserve hardware selections from Economics but keep checkout default simple.
-            setCheckoutBundleMode('software_only', document.getElementById('bundle-mode-software'));
+            const hasHardware = build.hardwarePrimary && build.hardwarePrimary !== 'none';
+            setCheckoutBundleMode(hasHardware ? 'bundle' : 'software_only', document.getElementById(hasHardware ? 'bundle-mode-hardware' : 'bundle-mode-software'));
             const primaryEl = document.getElementById('checkout-hw-primary');
             const secondaryEl = document.getElementById('checkout-hw-secondary');
             const termEl = document.getElementById('checkout-hw-term');
-            if (primaryEl) primaryEl.value = build.hardwarePrimary || 'robinair';
+            if (primaryEl) primaryEl.value = build.hardwarePrimary || 'none';
             if (secondaryEl) secondaryEl.value = build.hardwareSecondary || 'none';
             if (termEl) termEl.value = String(build.hardwareTerm || 60);
 
@@ -3090,6 +3102,10 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
         }
 
         function computeLeasePayment(primaryKey, secondaryKey, term) {
+            if (primaryKey === 'none') {
+                return { totalLease: 0, aprAddOn: 0 };
+            }
+
             const primary = hardwareCatalog[primaryKey];
             const secondary = secondaryKey !== 'none' ? hardwareCatalog[secondaryKey] : null;
             const leaseTerm = Number(term || 60);
@@ -3109,7 +3125,7 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
         }
 
         function updateCheckoutHardwareEstimate() {
-            const primary = document.getElementById('checkout-hw-primary')?.value || 'robinair';
+            const primary = document.getElementById('checkout-hw-primary')?.value || 'none';
             const secondary = document.getElementById('checkout-hw-secondary')?.value || 'none';
             const term = document.getElementById('checkout-hw-term')?.value || '60';
             const estimateEl = document.getElementById('checkout-hw-estimated');
@@ -3150,7 +3166,7 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
                 return { mode: 'software_only' };
             }
 
-            const primary = document.getElementById('checkout-hw-primary')?.value || 'robinair';
+            const primary = document.getElementById('checkout-hw-primary')?.value || 'none';
             const secondary = document.getElementById('checkout-hw-secondary')?.value || 'none';
             const term = document.getElementById('checkout-hw-term')?.value || '60';
             const lease = computeLeasePayment(primary, secondary, term);
@@ -3172,6 +3188,10 @@ The only platform that combines a 24/7 AI-booking front desk with a zero-down eq
 
         function validateBundleRequirements(bundleData) {
             if (bundleData.mode !== 'bundle') return true;
+            if (!bundleData.primary || bundleData.primary === 'none') {
+                alert('Please select primary hardware for bundle checkout.');
+                return false;
+            }
             const acks = bundleData.acknowledgements || {};
             if (!acks.personalGuarantee || !acks.insuranceBeneficiary || !acks.achBilling) {
                 alert('For hardware bundle checkout, please acknowledge personal guarantee, insurance beneficiary requirement, and ACH billing.');
