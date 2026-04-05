@@ -436,7 +436,6 @@
         },
 
         setupListeners() {
-            console.log('[ApexWidget] Setting up event listeners with delegation');
             const { backdrop, makeSelect, yearSelect, mileageRange, chatButton, inputField, sendBtn } = this.elements;
             const self = this;
             
@@ -537,7 +536,6 @@
         },
 
         init() {
-            console.log(`[ApexWidget] Build ${this.BUILD_VERSION} loaded`);
             this.appendBotMessage("Hi! I'm Vetra your Virtual Service Advisor. I can help with repair estimates, diagnostics, or answer any questions about your vehicle. What can I help you with today?", false);
             this.populateYears();
             this.elements.makeSelect.disabled = true;
@@ -1254,16 +1252,6 @@
                             ? Number(((savedBytes / originalBytes) * 100).toFixed(1))
                             : 0;
 
-                        console.log('[ApexWidget] Compressed image payload prepared:', {
-                            original_size_bytes: originalBytes,
-                            compressed_size_bytes: compressedBytes,
-                            saved_bytes: savedBytes,
-                            reduction_percent: reductionPercent,
-                            original_mime_type: file.type,
-                            mime_type: parsed.mimeType,
-                            base64_length: parsed.base64.length,
-                            estimated_bytes: parsed.estimatedBytes
-                        });
                     }
                 })
                 .catch((err) => {
@@ -1333,8 +1321,17 @@
         buildMultipartPayload(payload, parsedImage) {
             const formData = new FormData();
 
+            const payloadForJson = {
+                ...payload,
+                image_present: !!parsedImage,
+                image_base64: null,
+                image_data_url: null,
+                image_mime_type: parsedImage ? (parsedImage.mimeType || 'image/jpeg') : (payload.image_mime_type || null),
+                image_estimated_bytes: parsedImage ? (parsedImage.estimatedBytes || 0) : (payload.image_estimated_bytes || null)
+            };
+
             // Keep the original JSON contract available to backend parsers.
-            formData.append('payload_json', JSON.stringify(payload));
+            formData.append('payload_json', JSON.stringify(payloadForJson));
 
             // Also include common fields directly for simpler n8n mapping.
             formData.append('message', payload.message || '');
@@ -1552,9 +1549,8 @@
                     sms_consent: true
                 },
                 image_present: !!parsedImage,
-                image_base64: parsedImage ? parsedImage.base64 : null,
                 image_mime_type: parsedImage ? parsedImage.mimeType : null,
-                image_data_url: parsedImage ? parsedImage.dataUrl : null,
+                image_data_url: null,
                 image_estimated_bytes: parsedImage ? parsedImage.estimatedBytes : null
             };
 
@@ -1569,6 +1565,8 @@
                 this.IMAGE_TRANSPORT === 'file'
             );
 
+            payload.image_base64 = (!useMultipartForImage && parsedImage) ? parsedImage.base64 : null;
+
             const requestOptions = useMultipartForImage
                 ? {
                     method: 'POST',
@@ -1579,20 +1577,14 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 };
-
-            console.log('[ApexWidget] Sending payload to n8n:', payload);
-            console.log('[ApexWidget] Webhook URL:', this.N8N_WEBHOOK_URL);
-            console.log('[ApexWidget] Image transport mode:', useMultipartForImage ? 'multipart-binary' : 'json-base64');
             
             fetch(this.N8N_WEBHOOK_URL, requestOptions)
             .then(response => {
-                console.log('[ApexWidget] Response status:', response.status);
                 if (!response.ok) throw new Error(`HTTP ${response.status}`);
                 return response.json();
             })
             .then(data => {
                 self.removeTypingIndicator();
-                console.log('[ApexWidget] Response from n8n:', data);
 
                 // Only display if there's a proper message field
                 const message = data.output || data.message || data.text;
@@ -1602,7 +1594,7 @@
                 } else {
                     // If no proper message, show generic success
                     self.appendBotMessage("Thanks! We've received your request and will get back to you shortly.", true, bookingUrl);
-                    console.warn('[ApexWidget] Unexpected response format:', data);
+                    console.warn('[ApexWidget] Unexpected response format received');
                 }
 
                 // Clear image after successful send
@@ -1615,8 +1607,7 @@
             .catch(err => {
                 self.removeTypingIndicator();
                 self.appendBotMessage("I'm sorry, this quote needs a Master Tech right now. Please call us directly!", false);
-                console.error('[ApexWidget] Webhook error:', err);
-                console.error('[ApexWidget] Failed payload:', payload);
+                console.error('[ApexWidget] Webhook request failed', err);
                 self.elements.inputField.disabled = false;
                 self.elements.sendBtn.disabled = false;
             });
