@@ -155,18 +155,22 @@
             color: var(--accent-cyan);
             letter-spacing: 0.08em;
             text-transform: uppercase;
-            margin-top: calc(1.1mm * var(--preview-scale));
+            margin-bottom: calc(0.9mm * var(--preview-scale));
             border: calc(0.22mm * var(--preview-scale)) solid rgba(62, 184, 255, 0.45);
             border-radius: calc(0.8mm * var(--preview-scale));
             padding: calc(0.5mm * var(--preview-scale)) calc(1mm * var(--preview-scale));
+        }
+
+        .contact-divider {
+            border: none;
+            border-top: calc(0.5mm * var(--preview-scale)) solid rgba(230, 234, 242, 0.32);
+            margin: 0 0 calc(1.0mm * var(--preview-scale)) 0;
         }
 
         .contact-info {
             display: flex;
             flex-direction: column;
             gap: calc(0.3mm * var(--preview-scale));
-            border-top: calc(0.5mm * var(--preview-scale)) solid rgba(230, 234, 242, 0.32);
-            padding-top: calc(1.0mm * var(--preview-scale));
             position: relative;
             z-index: 1;
             font-family: 'Sora', sans-serif;
@@ -430,10 +434,11 @@
             <div class="hero-copy">
                 <div class="hero-headline">Turn Empty Bays Into Revenue</div>
                 <div class="hero-subline">Convert inbound traffic into confirmed appointments.</div>
-                <div class="proof-badge">No New CRM to Learn | Instant SMS Lead Alerts</div>
             </div>
 
             <div class="contact-info">
+                <div class="proof-badge">No New CRM to Learn | Instant SMS Lead Alerts</div>
+                <hr class="contact-divider">
                 <div class="identity-row">
                     <div class="identity-stack">
                         <div class="name">AVI PATEL</div>
