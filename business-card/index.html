@@ -304,11 +304,12 @@
         .card-back::before {
             content: "";
             position: absolute;
-            top: 0;
+            top: calc(0.8mm * var(--preview-scale));
             left: 0;
             right: 0;
-            height: 2px;
+            height: calc(0.5mm * var(--preview-scale));
             background: var(--back-gradient);
+            box-shadow: 0 0 calc(2.2mm * var(--preview-scale)) rgba(79, 139, 255, 0.25);
             pointer-events: none;
         }
 
