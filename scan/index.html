@@ -4,7 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Opening Vetra...</title>
-  <meta http-equiv="refresh" content="3;url=https://usevetra.com/start/?utm_source=qr&utm_medium=offline&utm_campaign=business_card&utm_content=founder_card" />
+  <meta http-equiv="refresh" content="4;url=https://usevetra.com/start/?utm_source=qr&utm_medium=offline&utm_campaign=business_card&utm_content=founder_card" />
+
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-S7NV78PHSK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-S7NV78PHSK');
+  </script>
   <style>
     body {
       margin: 0;
@@ -43,14 +52,23 @@
   <script>
     (function() {
       var redirectUrl = "https://usevetra.com/start/?utm_source=qr&utm_medium=offline&utm_campaign=business_card&utm_content=founder_card";
-      var counterHitUrl = "https://api.countapi.xyz/hit/usevetra/qr-card-main";
 
-      // Fire-and-forget scan counter, then continue to destination.
-      fetch(counterHitUrl, { method: "GET", mode: "cors", cache: "no-store" })
-        .catch(function() {})
-        .finally(function() {
-          window.location.replace(redirectUrl);
+      // Fire GA4 QR scan event, then redirect
+      function doRedirect() {
+        window.location.replace(redirectUrl);
+      }
+
+      if (typeof gtag === 'function') {
+        gtag('event', 'qr_scan', {
+          event_category: 'offline',
+          event_label: 'founder_card',
+          campaign: 'business_card'
         });
+        // Give GA4 ~800ms to send the event before navigating
+        setTimeout(doRedirect, 800);
+      } else {
+        doRedirect();
+      }
     })();
   </script>
 </body>
