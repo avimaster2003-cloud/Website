@@ -14,23 +14,23 @@
             --dark-bg: #0a0a0b;
             --matte-black: #131314;
             --matte-gray: #1a1a1c;
-            --accent-purple: #8f5dff;
-            --accent-blue: #4f8bff;
-            --accent-cyan: #3eb8ff;
+            --accent-purple: #a96eff;
+            --accent-blue: #63aaff;
+            --accent-cyan: #48d6ff;
             --cool-ice: #d5d8df;
             --soft-white: #ecf3ff;
-            --front-gradient: linear-gradient(135deg, #8f5dff 0%, #4f8bff 50%, #3eb8ff 100%);
-            --back-gradient: linear-gradient(94deg, #8f5dff 8%, #4f8bff 52%, #3eb8ff 95%);
+            --front-gradient: linear-gradient(135deg, #a96eff 0%, #63aaff 50%, #48d6ff 100%);
+            --back-gradient: linear-gradient(94deg, #a96eff 8%, #63aaff 52%, #48d6ff 95%);
         }
 
         /* Display P3 wide-gamut enhancement — optimized for Apple Studio Display */
         @media (color-gamut: p3) {
             :root {
-                --accent-purple: color(display-p3 0.52 0.24 1.00);
-                --accent-blue: color(display-p3 0.20 0.50 1.00);
-                --accent-cyan: color(display-p3 0.05 0.69 1.00);
-                --front-gradient: linear-gradient(135deg, color(display-p3 0.52 0.24 1.00) 0%, color(display-p3 0.20 0.50 1.00) 50%, color(display-p3 0.05 0.69 1.00) 100%);
-                --back-gradient: linear-gradient(94deg, color(display-p3 0.52 0.24 1.00) 8%, color(display-p3 0.20 0.50 1.00) 52%, color(display-p3 0.05 0.69 1.00) 95%);
+                --accent-purple: color(display-p3 0.63 0.35 1.00);
+                --accent-blue: color(display-p3 0.30 0.62 1.00);
+                --accent-cyan: color(display-p3 0.12 0.80 1.00);
+                --front-gradient: linear-gradient(135deg, color(display-p3 0.63 0.35 1.00) 0%, color(display-p3 0.30 0.62 1.00) 50%, color(display-p3 0.12 0.80 1.00) 100%);
+                --back-gradient: linear-gradient(94deg, color(display-p3 0.63 0.35 1.00) 8%, color(display-p3 0.30 0.62 1.00) 52%, color(display-p3 0.12 0.80 1.00) 95%);
             }
         }
 
@@ -172,7 +172,7 @@
             letter-spacing: 0.08em;
             text-transform: uppercase;
             margin-bottom: calc(0.9mm * var(--preview-scale));
-            border: calc(0.22mm * var(--preview-scale)) solid rgba(62, 184, 255, 0.45);
+            border: calc(0.22mm * var(--preview-scale)) solid rgba(72, 214, 255, 0.55);
             border-radius: calc(0.8mm * var(--preview-scale));
             padding: calc(0.5mm * var(--preview-scale)) calc(1mm * var(--preview-scale));
         }
@@ -310,8 +310,8 @@
             height: calc(0.95mm * var(--preview-scale));
             background: var(--back-gradient);
             box-shadow:
-                0 0 calc(2.8mm * var(--preview-scale)) rgba(79, 139, 255, 0.34),
-                0 0 calc(1.6mm * var(--preview-scale)) rgba(143, 93, 255, 0.24);
+                0 0 calc(2.8mm * var(--preview-scale)) rgba(99, 170, 255, 0.44),
+                0 0 calc(1.6mm * var(--preview-scale)) rgba(169, 110, 255, 0.30);
             pointer-events: none;
         }
 
@@ -445,14 +445,14 @@
 
         .guide-btn:hover,
         .guide-btn.active {
-            background: rgba(79, 139, 255, 0.16);
-            border-color: rgba(79, 139, 255, 0.4);
-            color: #6fa6ff;
+            background: rgba(99, 170, 255, 0.22);
+            border-color: rgba(99, 170, 255, 0.48);
+            color: #84b8ff;
         }
 
         .print-btn {
             color: #ecf3ff;
-            background: linear-gradient(135deg, rgba(143, 93, 255, 0.65) 0%, rgba(62, 184, 255, 0.65) 100%);
+            background: linear-gradient(135deg, rgba(169, 110, 255, 0.72) 0%, rgba(72, 214, 255, 0.72) 100%);
             border: 1px solid rgba(255, 255, 255, 0.12);
         }
 
@@ -465,7 +465,7 @@
             display: none;
             position: absolute;
             inset: calc(3mm * var(--preview-scale));
-            border: 0.75px dashed rgba(62, 184, 255, 0.6);
+            border: 0.75px dashed rgba(72, 214, 255, 0.72);
             pointer-events: none;
             z-index: 200;
         }
@@ -478,7 +478,7 @@
             font-weight: 800;
             letter-spacing: 0.1em;
             text-transform: uppercase;
-            color: rgba(62, 184, 255, 0.75);
+            color: rgba(72, 214, 255, 0.84);
             white-space: nowrap;
         }
 
