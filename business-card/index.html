@@ -23,6 +23,17 @@
             --back-gradient: linear-gradient(94deg, #8f5dff 8%, #4f8bff 52%, #3eb8ff 95%);
         }
 
+        /* Display P3 wide-gamut enhancement — optimized for Apple Studio Display */
+        @media (color-gamut: p3) {
+            :root {
+                --accent-purple: color(display-p3 0.52 0.24 1.00);
+                --accent-blue: color(display-p3 0.20 0.50 1.00);
+                --accent-cyan: color(display-p3 0.05 0.69 1.00);
+                --front-gradient: linear-gradient(135deg, color(display-p3 0.52 0.24 1.00) 0%, color(display-p3 0.20 0.50 1.00) 50%, color(display-p3 0.05 0.69 1.00) 100%);
+                --back-gradient: linear-gradient(94deg, color(display-p3 0.52 0.24 1.00) 8%, color(display-p3 0.20 0.50 1.00) 52%, color(display-p3 0.05 0.69 1.00) 95%);
+            }
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -32,16 +43,15 @@
         body {
             font-family: 'Manrope', sans-serif;
             background:
-                radial-gradient(circle at 18% 18%, rgba(82, 167, 255, 0.28), transparent 40%),
-                radial-gradient(circle at 85% 82%, rgba(40, 246, 215, 0.2), transparent 36%),
-                linear-gradient(120deg, #09111a 0%, #111928 60%, #0a1119 100%);
+                radial-gradient(ellipse 100% 40% at 50% 0%, rgba(236, 243, 255, 0.025) 0%, transparent 60%),
+                linear-gradient(180deg, #1d1e22 0%, #161718 55%, #131415 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            gap: 16px;
+            gap: 20px;
             min-height: 100vh;
-            padding: 24px;
+            padding: 32px 24px;
         }
 
         .preview-note {
@@ -63,7 +73,12 @@
             width: calc(var(--card-width) * var(--preview-scale));
             height: calc(var(--card-height) * var(--preview-scale));
             border-radius: 16px;
-            box-shadow: 0 22px 64px rgba(0, 0, 0, 0.55);
+            box-shadow:
+                0 2px 4px rgba(0, 0, 0, 0.45),
+                0 8px 20px rgba(0, 0, 0, 0.5),
+                0 24px 56px rgba(0, 0, 0, 0.55),
+                0 48px 96px rgba(0, 0, 0, 0.38),
+                inset 0 0 0 0.5px rgba(255, 255, 255, 0.06);
             position: relative;
             overflow: hidden;
             color: var(--soft-white);
@@ -366,6 +381,113 @@
             opacity: 0.68;
         }
 
+        /* Studio chrome bar */
+        .studio-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 780px;
+            background: rgba(255, 255, 255, 0.045);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 9px 18px;
+            gap: 16px;
+        }
+
+        .studio-bar-left,
+        .studio-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .studio-title {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            color: rgba(236, 243, 255, 0.88);
+            text-transform: uppercase;
+        }
+
+        .studio-meta {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            color: rgba(236, 243, 255, 0.38);
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .guide-btn,
+        .print-btn {
+            font-family: 'Manrope', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            border-radius: 7px;
+            padding: 5px 13px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .guide-btn {
+            color: rgba(236, 243, 255, 0.65);
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+        }
+
+        .guide-btn:hover,
+        .guide-btn.active {
+            background: rgba(79, 139, 255, 0.16);
+            border-color: rgba(79, 139, 255, 0.4);
+            color: #6fa6ff;
+        }
+
+        .print-btn {
+            color: #ecf3ff;
+            background: linear-gradient(135deg, rgba(143, 93, 255, 0.65) 0%, rgba(62, 184, 255, 0.65) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .print-btn:hover {
+            opacity: 0.82;
+        }
+
+        /* Safe zone guide overlay */
+        .guide-safe {
+            display: none;
+            position: absolute;
+            inset: calc(3mm * var(--preview-scale));
+            border: 0.75px dashed rgba(62, 184, 255, 0.6);
+            pointer-events: none;
+            z-index: 200;
+        }
+
+        .guide-safe-label {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            font-size: 6px;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(62, 184, 255, 0.75);
+            white-space: nowrap;
+        }
+
+        body.guides-active .guide-safe {
+            display: block;
+        }
+
+        body.guides-active .card {
+            outline: 1.5px solid rgba(255, 90, 70, 0.55);
+            outline-offset: 0;
+        }
+
         /* Print styles for PDF generation */
         @page {
             size: 85.5mm 54mm;
@@ -382,8 +504,9 @@
                 padding: 0;
             }
 
-            .preview-note {
-                display: none;
+            .studio-bar,
+            .guide-safe {
+                display: none !important;
             }
 
             .card-container {
@@ -426,10 +549,20 @@
     </style>
 </head>
 <body>
-    <div class="preview-note">Screen preview is now set to true-size card dimensions. For the closest match to what you will hold in your hand, view this page at 100% browser zoom on desktop. Actual physical size can still vary slightly based on display scaling, but print/PDF output uses the exact mm values.</div>
+    <div class="studio-bar">
+        <div class="studio-bar-left">
+            <span class="studio-title">Vetra Business Card</span>
+        </div>
+        <span class="studio-meta">85.5 × 54 mm &nbsp;·&nbsp; 1:1 Scale at 100% Zoom &nbsp;·&nbsp; P3 Enhanced</span>
+        <div class="studio-bar-right">
+            <button class="guide-btn" id="guideToggle" onclick="toggleGuides()">Show Guides</button>
+            <button class="print-btn" onclick="window.print()">Print / Export PDF</button>
+        </div>
+    </div>
     <div class="card-container">
         <!-- FRONT OF CARD -->
         <div class="card card-front">
+            <div class="guide-safe"><span class="guide-safe-label">Safe Zone · 3mm</span></div>
             <div class="logo-section">
                 <img src="../assets/vetra-logo.png" alt="Vetra Logo" class="logo">
             </div>
@@ -467,6 +600,7 @@
 
         <!-- BACK OF CARD -->
         <div class="card card-back">
+            <div class="guide-safe"><span class="guide-safe-label">Safe Zone · 3mm</span></div>
             <div class="qr-code-section">
                 <div class="back-cta">See how our launch partners fill more bays in 30 days</div>
                 <div class="back-subtext">Grow Faster with 0% APR Hardware Leasing</div>
@@ -478,33 +612,12 @@
     </div>
 
     <script>
-        // Instructions for printing and PDF generation
-        console.log(`
-        === VETRA BUSINESS CARD - PRINTING INSTRUCTIONS ===
-        
-        TO GENERATE PDF FOR PRINTING:
-        
-        Option 1: Browser Print Function (Recommended for simple PDF)
-        - Press Ctrl+P (Windows) or Cmd+P (Mac)
-        - Set margins to 0
-        - Paper size: Custom (85.5mm x 54mm)
-        - Select "Background graphics" in the print settings
-        - Save as PDF
-        
-        Option 2: Using wkhtmltopdf (for CMYK support)
-        - Install: brew install wkhtmltopdf (Mac) or apt-get install wkhtmltopdf (Linux)
-        - Run: wkhtmltopdf --page-width 85.5mm --page-height 54mm --margin-top 0 --margin-bottom 0 --margin-left 0 --margin-right 0 index.html business-card.pdf
-        
-        SETUP INSTRUCTIONS:
-        1. Copy VETRA.png from ~/Downloads/ to /Website/business-card/assets/ folder
-        2. Adjust colors and text as needed
-        3. Print on 85.5mm x 54mm cardstock for professional results
-        
-        CMYK CONVERSION:
-        - For true CMYK printing, use a tool like ImageMagick or Ghostscript
-        - Or convert the PDF to CMYK using Adobe Acrobat Pro
-        - Command: convert business-card.pdf -colorspace CMYK business-card-cmyk.pdf
-        `);
+        function toggleGuides() {
+            const btn = document.getElementById('guideToggle');
+            const active = document.body.classList.toggle('guides-active');
+            btn.textContent = active ? 'Hide Guides' : 'Show Guides';
+            btn.classList.toggle('active', active);
+        }
     </script>
 </body>
 </html>
