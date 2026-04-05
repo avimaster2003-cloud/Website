@@ -307,9 +307,11 @@
             top: calc(0.8mm * var(--preview-scale));
             left: 0;
             right: 0;
-            height: calc(0.5mm * var(--preview-scale));
+            height: calc(0.58mm * var(--preview-scale));
             background: var(--back-gradient);
-            box-shadow: 0 0 calc(2.2mm * var(--preview-scale)) rgba(79, 139, 255, 0.25);
+            box-shadow:
+                0 0 calc(2.8mm * var(--preview-scale)) rgba(79, 139, 255, 0.34),
+                0 0 calc(1.6mm * var(--preview-scale)) rgba(143, 93, 255, 0.24);
             pointer-events: none;
         }
 
@@ -370,6 +372,19 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.12em;
+            position: relative;
+            padding-bottom: calc(1.1mm * var(--preview-scale));
+        }
+
+        .qr-label::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 0;
+            width: calc(16mm * var(--preview-scale));
+            height: calc(0.22mm * var(--preview-scale));
+            background: linear-gradient(90deg, rgba(143, 93, 255, 0.0) 0%, rgba(143, 93, 255, 0.45) 35%, rgba(62, 184, 255, 0.45) 65%, rgba(62, 184, 255, 0.0) 100%);
         }
 
         .vetra-branding {
