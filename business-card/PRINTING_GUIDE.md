@@ -37,7 +37,7 @@ RGB PDF generation supports either:
 
 #### **Option A: Browser Print (Simplest)**
 Best for quick PDFs, standard RGB output:
-1. Open `index.html` in your web browser
+1. Open `index.html?export=1` in your web browser
 2. Press `Cmd + P` (Mac) or `Ctrl + P` (Windows)
 3. Configure print settings:
   - **Paper size**: Custom (85.5mm × 54mm)
@@ -59,7 +59,7 @@ wkhtmltopdf \
   --margin-left 0 \
   --margin-right 0 \
   --enable-local-file-access \
-  index.html business-card-rgb.pdf
+  "file://$PWD/index.html?export=1" business-card-rgb.pdf
 ```
 
 #### **Option C: Manual CMYK Conversion (Advanced)**
@@ -80,7 +80,6 @@ gs \
   -sColorConversionStrategy=CMYK \
   -dProcessColorModel=/DeviceCMYK \
   -dConvertCMYKImagesToRGB=false \
-  -dUseCIEColor=true \
   -sOutputFile=business-card-cmyk.pdf \
   business-card-rgb.pdf
 ```
