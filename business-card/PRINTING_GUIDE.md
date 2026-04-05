@@ -81,7 +81,7 @@ convert -density 300 business-card.pdf -colorspace CMYK business-card-cmyk.pdf
 The QR now routes through a trackable URL before sending visitors to your site.
 
 - QR destination: `https://usevetra.com/scan/`
-- Final redirect: `https://usevetra.com/#home`
+- Final redirect: `https://usevetra.com/start/`
 - View live scan count: `https://api.countapi.xyz/get/usevetra/qr-card-main`
 
 Tip: open the count URL anytime and check the `value` field to see total scans.
@@ -134,7 +134,7 @@ To modify the business card:
 - [ ] Resolution confirmed at 300 DPI
 - [ ] Colors verified (black background with cyan accents)
 - [ ] Text is clear and readable
-- [ ] QR code scans correctly to usevetra.com/#home
+- [ ] QR code scans correctly to usevetra.com/start/
 - [ ] Print provider confirms specifications
 
 ## 📞 Support
