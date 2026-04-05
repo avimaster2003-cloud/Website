@@ -3,6 +3,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
+EXPORT_URL="file://$SCRIPT_DIR/index.html?export=1"
 
 if ! command -v gs >/dev/null 2>&1; then
   echo "Missing dependency: ghostscript (gs)"
@@ -20,14 +21,14 @@ if command -v wkhtmltopdf >/dev/null 2>&1; then
     --margin-left 0 \
     --margin-right 0 \
     --enable-local-file-access \
-    index.html business-card-rgb.pdf
+    "$EXPORT_URL" business-card-rgb.pdf
 elif [[ -x "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" ]]; then
   "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
     --headless=new \
     --disable-gpu \
     --print-to-pdf-no-header \
     --print-to-pdf="$SCRIPT_DIR/business-card-rgb.pdf" \
-    "file://$SCRIPT_DIR/index.html"
+    "$EXPORT_URL"
 else
   echo "Missing HTML-to-PDF tool. Install one of:"
   echo "- wkhtmltopdf (if available on your system), or"

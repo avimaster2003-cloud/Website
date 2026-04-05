@@ -513,6 +513,41 @@
             outline-offset: 0;
         }
 
+        /* Export mode mirrors print layout even when print media is unavailable */
+        body.export-mode {
+            background: white;
+            padding: 0;
+            display: block;
+            min-height: auto;
+        }
+
+        body.export-mode .studio-bar,
+        body.export-mode .import-btn,
+        body.export-mode .guide-safe {
+            display: none !important;
+        }
+
+        body.export-mode .card-container {
+            display: block;
+            gap: 0;
+            max-width: 100%;
+            margin: 0;
+        }
+
+        body.export-mode .card {
+            width: var(--card-width);
+            height: var(--card-height);
+            margin: 0;
+            border-radius: 0;
+            box-shadow: none;
+            page-break-inside: avoid;
+            page-break-after: always;
+        }
+
+        body.export-mode .card:last-child {
+            page-break-after: auto;
+        }
+
         /* Print styles for PDF generation */
         @page {
             size: 85.5mm 54mm;
@@ -552,67 +587,10 @@
                 margin: 0;
                 border-radius: 0;
                 box-shadow: none;
-                padding: 4.2mm 4.4mm;
-                overflow: hidden;
             }
 
             .card:last-child {
                 page-break-after: auto;
-            }
-
-            .card::before,
-            .card-front::after {
-                opacity: 0.04;
-            }
-
-            .logo-section {
-                top: 1.2mm;
-                left: 4.4mm;
-            }
-
-            .logo {
-                height: 8.6mm;
-                filter: none;
-                opacity: 0.95;
-            }
-
-            .hero-copy {
-                margin-top: 9.2mm;
-            }
-
-            .contact-list {
-                width: auto;
-                grid-template-columns: 1fr;
-                gap: 0.55mm;
-            }
-
-            .contact-val {
-                white-space: normal;
-                overflow: visible;
-                text-overflow: clip;
-            }
-
-            .back-cta {
-                background: none;
-                -webkit-background-clip: border-box;
-                background-clip: border-box;
-                -webkit-text-fill-color: #8cd8ff;
-                color: #8cd8ff;
-                white-space: normal;
-                line-height: 1.08;
-            }
-
-            .back-subtext {
-                max-width: 90%;
-                line-height: 1.12;
-            }
-
-            .qr-code {
-                box-shadow: none;
-            }
-
-            .vetra-branding {
-                opacity: 0.9;
             }
         }
 
@@ -702,6 +680,13 @@
     </div>
 
     <script>
+        (function initExportMode() {
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('export') === '1') {
+                document.body.classList.add('export-mode');
+            }
+        })();
+
         function toggleGuides() {
             const btn = document.getElementById('guideToggle');
             const active = document.body.classList.toggle('guides-active');
