@@ -209,7 +209,7 @@
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: calc(0.75mm * var(--preview-scale));
-            width: calc(38mm * var(--preview-scale));
+            width: calc(44mm * var(--preview-scale));
             max-width: 100%;
         }
 
@@ -255,6 +255,8 @@
             font-weight: 600;
             color: #f3f7ff;
             white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
             margin-left: 0;
         }
 
