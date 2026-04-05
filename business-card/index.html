@@ -162,9 +162,11 @@
         }
 
         .contact-divider {
-            border: none;
-            border-top: calc(0.5mm * var(--preview-scale)) solid rgba(230, 234, 242, 0.32);
+            width: 100%;
+            height: calc(0.5mm * var(--preview-scale));
+            background: rgba(230, 234, 242, 0.32);
             margin: 0 0 calc(1.0mm * var(--preview-scale)) 0;
+            flex-shrink: 0;
         }
 
         .contact-info {
@@ -438,7 +440,7 @@
 
             <div class="contact-info">
                 <div class="proof-badge">No New CRM to Learn | Instant SMS Lead Alerts</div>
-                <hr class="contact-divider">
+                <div class="contact-divider"></div>
                 <div class="identity-row">
                     <div class="identity-stack">
                         <div class="name">AVI PATEL</div>
