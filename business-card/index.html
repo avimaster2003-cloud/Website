@@ -527,6 +527,8 @@
             body {
                 background: white;
                 padding: 0;
+                display: block;
+                min-height: auto;
             }
 
             .studio-bar,
@@ -546,11 +548,52 @@
                 width: var(--card-width);
                 height: var(--card-height);
                 page-break-inside: avoid;
+                page-break-after: always;
                 margin: 0;
                 border-radius: 0;
                 box-shadow: none;
                 padding: 4.2mm 4.4mm;
                 overflow: visible;
+            }
+
+            .card:last-child {
+                page-break-after: auto;
+            }
+
+            .card::before,
+            .card-front::after {
+                opacity: 0.04;
+            }
+
+            .logo {
+                height: 21mm;
+            }
+
+            .contact-list {
+                width: auto;
+                grid-template-columns: 1fr;
+                gap: 0.55mm;
+            }
+
+            .contact-val {
+                white-space: normal;
+                overflow: visible;
+                text-overflow: clip;
+            }
+
+            .back-cta {
+                background: none;
+                -webkit-background-clip: border-box;
+                background-clip: border-box;
+                -webkit-text-fill-color: #8cd8ff;
+                color: #8cd8ff;
+                white-space: normal;
+                line-height: 1.08;
+            }
+
+            .back-subtext {
+                max-width: 90%;
+                line-height: 1.12;
             }
         }
 
