@@ -13,6 +13,9 @@
 
 ### Step 2: Generate PDF for Printing
 
+For an output that matches your mockup as closely as possible, use the script below.
+It forces Chrome rendering and export mode so you get consistent layout.
+
 #### **Recommended (Fastest + Lowest Mistake Risk)**
 Run one command from Terminal:
 
@@ -25,18 +28,18 @@ This creates:
 - `business-card-rgb.pdf` (intermediate)
 - `business-card-cmyk.pdf` (final print-ready file)
 
+This is the only recommended path for exact transfer.
+
 If tools are missing, install once:
 
 ```bash
 brew install ghostscript
 ```
 
-RGB PDF generation supports either:
-- `wkhtmltopdf` (if installed), or
-- Google Chrome (already works on this Mac setup)
+RGB PDF generation is done with Google Chrome for closest visual match.
 
 #### **Option A: Browser Print (Simplest)**
-Best for quick PDFs, standard RGB output:
+Only use this for quick checks (not final supplier file):
 1. Open `index.html?export=1` in your web browser
 2. Press `Cmd + P` (Mac) or `Ctrl + P` (Windows)
 3. Configure print settings:
@@ -47,7 +50,7 @@ Best for quick PDFs, standard RGB output:
 4. Click "Save as PDF"
 
 #### **Option B: Manual RGB PDF Build (Advanced)**
-Only needed if you want to run each step manually:
+Only needed for debugging/manual steps:
 
 ```bash
 cd /Users/avipatel/Downloads/apex-widget/Website/business-card

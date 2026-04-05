@@ -12,7 +12,17 @@ if ! command -v gs >/dev/null 2>&1; then
 fi
 
 echo "[1/2] Building RGB source PDF from HTML..."
-if command -v wkhtmltopdf >/dev/null 2>&1; then
+if [[ -x "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" ]]; then
+  echo "Using Chrome renderer for closest match to on-screen mockup."
+  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+    --headless=new \
+    --disable-gpu \
+    --virtual-time-budget=3000 \
+    --print-to-pdf-no-header \
+    --print-to-pdf="$SCRIPT_DIR/business-card-rgb.pdf" \
+    "$EXPORT_URL"
+elif command -v wkhtmltopdf >/dev/null 2>&1; then
+  echo "Chrome not found, falling back to wkhtmltopdf (layout may differ slightly)."
   wkhtmltopdf \
     --page-width 85.5mm \
     --page-height 54mm \
@@ -22,17 +32,10 @@ if command -v wkhtmltopdf >/dev/null 2>&1; then
     --margin-right 0 \
     --enable-local-file-access \
     "$EXPORT_URL" business-card-rgb.pdf
-elif [[ -x "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" ]]; then
-  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
-    --headless=new \
-    --disable-gpu \
-    --print-to-pdf-no-header \
-    --print-to-pdf="$SCRIPT_DIR/business-card-rgb.pdf" \
-    "$EXPORT_URL"
 else
   echo "Missing HTML-to-PDF tool. Install one of:"
-  echo "- wkhtmltopdf (if available on your system), or"
-  echo "- Google Chrome app"
+  echo "- Google Chrome app (recommended for exact output), or"
+  echo "- wkhtmltopdf"
   exit 1
 fi
 
