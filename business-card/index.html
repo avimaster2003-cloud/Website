@@ -10,7 +10,7 @@
         :root {
             --card-width: 85.5mm;
             --card-height: 54mm;
-            --preview-scale: 2.35;
+            --preview-scale: 1;
             --dark-bg: #0a0a0b;
             --matte-black: #131314;
             --matte-gray: #1a1a1c;
@@ -36,10 +36,20 @@
                 radial-gradient(circle at 85% 82%, rgba(40, 246, 215, 0.2), transparent 36%),
                 linear-gradient(120deg, #09111a 0%, #111928 60%, #0a1119 100%);
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
+            gap: 16px;
             min-height: 100vh;
             padding: 24px;
+        }
+
+        .preview-note {
+            max-width: 760px;
+            color: rgba(236, 243, 255, 0.82);
+            font-size: 14px;
+            line-height: 1.45;
+            text-align: center;
         }
 
         .card-container {
@@ -361,6 +371,10 @@
                 padding: 0;
             }
 
+            .preview-note {
+                display: none;
+            }
+
             .card-container {
                 display: block;
                 gap: 0;
@@ -382,26 +396,18 @@
 
         /* Responsive for screen viewing */
         @media (max-width: 1200px) {
-            :root {
-                --preview-scale: 1.95;
+            .card-container {
+                gap: 20px;
             }
         }
 
         @media (max-width: 900px) {
-            :root {
-                --preview-scale: 1.55;
-            }
-
             .card-container {
                 grid-template-columns: 1fr;
             }
         }
 
         @media (max-width: 600px) {
-            :root {
-                --preview-scale: 1.15;
-            }
-
             .card-container {
                 gap: 20px;
             }
@@ -409,6 +415,7 @@
     </style>
 </head>
 <body>
+    <div class="preview-note">Screen preview is now set to true-size card dimensions. For the closest match to what you will hold in your hand, view this page at 100% browser zoom on desktop. Actual physical size can still vary slightly based on display scaling, but print/PDF output uses the exact mm values.</div>
     <div class="card-container">
         <!-- FRONT OF CARD -->
         <div class="card card-front">
