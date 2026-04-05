@@ -582,7 +582,7 @@
         <span class="studio-meta">85.5 × 54 mm &nbsp;·&nbsp; 1:1 Scale at 100% Zoom &nbsp;·&nbsp; P3 Enhanced</span>
         <div class="studio-bar-right">
             <a class="import-btn" href="../avi-patel.vcf" download="avi-patel.vcf">Import Contact (.vcf)</a>
-            <button class="cmyk-btn" id="copyCmykBtn" onclick="copyCmykCommand()">Copy CMYK Export Command</button>
+            <a class="cmyk-btn" href="./business-card-cmyk.pdf" download="business-card-cmyk.pdf">Download CMYK Print File</a>
             <button class="guide-btn" id="guideToggle" onclick="toggleGuides()">Show Guides</button>
             <button class="print-btn" onclick="window.print()">Print / Export PDF</button>
         </div>
@@ -640,30 +640,11 @@
     </div>
 
     <script>
-        const cmykCommand = 'cd /Users/avipatel/Downloads/apex-widget/Website/business-card && ./export-cmyk.sh';
-
         function toggleGuides() {
             const btn = document.getElementById('guideToggle');
             const active = document.body.classList.toggle('guides-active');
             btn.textContent = active ? 'Hide Guides' : 'Show Guides';
             btn.classList.toggle('active', active);
-        }
-
-        async function copyCmykCommand() {
-            const btn = document.getElementById('copyCmykBtn');
-
-            try {
-                await navigator.clipboard.writeText(cmykCommand);
-                btn.textContent = 'CMYK Command Copied';
-            } catch (err) {
-                window.prompt('Copy this command:', cmykCommand);
-                btn.textContent = 'Copy CMYK Export Command';
-                return;
-            }
-
-            setTimeout(() => {
-                btn.textContent = 'Copy CMYK Export Command';
-            }, 1800);
         }
     </script>
 </body>
