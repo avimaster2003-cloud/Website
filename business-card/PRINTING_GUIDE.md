@@ -13,6 +13,28 @@
 
 ### Step 2: Generate PDF for Printing
 
+#### **Recommended (Fastest + Lowest Mistake Risk)**
+Run one command from Terminal:
+
+```bash
+cd /Users/avipatel/Downloads/apex-widget/Website/business-card
+./export-cmyk.sh
+```
+
+This creates:
+- `business-card-rgb.pdf` (intermediate)
+- `business-card-cmyk.pdf` (final print-ready file)
+
+If tools are missing, install once:
+
+```bash
+brew install ghostscript
+```
+
+RGB PDF generation supports either:
+- `wkhtmltopdf` (if installed), or
+- Google Chrome (already works on this Mac setup)
+
 #### **Option A: Browser Print (Simplest)**
 Best for quick PDFs, standard RGB output:
 1. Open `index.html` in your web browser
@@ -24,14 +46,10 @@ Best for quick PDFs, standard RGB output:
    - **Background graphics**: ✓ Enable
 4. Click "Save as PDF"
 
-#### **Option B: Terminal Command (Advanced)**
-For CMYK color profile support (best for professional printing):
+#### **Option B: Manual RGB PDF Build (Advanced)**
+Only needed if you want to run each step manually:
 
 ```bash
-# First, install wkhtmltopdf if you don't have it:
-brew install wkhtmltopdf
-
-# Then generate the PDF:
 cd /Users/avipatel/Downloads/apex-widget/Website/business-card
 wkhtmltopdf \
   --page-width 85.5mm \
@@ -41,18 +59,30 @@ wkhtmltopdf \
   --margin-left 0 \
   --margin-right 0 \
   --enable-local-file-access \
-  index.html business-card.pdf
+  index.html business-card-rgb.pdf
 ```
 
-#### **Option C: CMYK Conversion (Professional Printing)**
-If your print supplier specifically requires CMYK:
+#### **Option C: Manual CMYK Conversion (Advanced)**
+If your print supplier specifically requires CMYK and you are not using the script:
 
 ```bash
-# Install ImageMagick if needed:
-brew install imagemagick
+# Install Ghostscript if needed:
+brew install ghostscript
 
 # Convert RGB PDF to CMYK:
-convert -density 300 business-card.pdf -colorspace CMYK business-card-cmyk.pdf
+gs \
+  -dSAFER \
+  -dBATCH \
+  -dNOPAUSE \
+  -dAutoRotatePages=/None \
+  -dCompatibilityLevel=1.4 \
+  -sDEVICE=pdfwrite \
+  -sColorConversionStrategy=CMYK \
+  -dProcessColorModel=/DeviceCMYK \
+  -dConvertCMYKImagesToRGB=false \
+  -dUseCIEColor=true \
+  -sOutputFile=business-card-cmyk.pdf \
+  business-card-rgb.pdf
 ```
 
 ## 🎨 Design Details
@@ -101,7 +131,7 @@ Specifications:
 - Stock: Matte cardstock
 
 Files included:
-- business-card.pdf (CMYK) — Use this for printing
+- business-card-cmyk.pdf (CMYK) — Use this for printing
 - index.html (source file, for reference)
 
 Please confirm receipt and let me know about production timeline.
@@ -130,7 +160,7 @@ To modify the business card:
 ## 🖨️ Final Checklist Before Sending to Printer
 
 - [ ] Logo (VETRA.png) is added to assets folder
-- [ ] PDF generated in CMYK format
+- [ ] `business-card-cmyk.pdf` generated
 - [ ] Resolution confirmed at 300 DPI
 - [ ] Colors verified (black background with cyan accents)
 - [ ] Text is clear and readable

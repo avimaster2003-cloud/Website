@@ -1,0 +1,12 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Patel;Avi;;;
+FN:Avi Patel
+ORG:Vetra
+TITLE:Founder
+TEL;TYPE=CELL:+1-423-737-4490
+EMAIL;TYPE=INTERNET:avi@usevetra.com
+URL:https://usevetra.com/start/
+URL;TYPE=WORK:https://usevetra.com/
+NOTE:Turn empty bays into revenue with Vetra.
+END:VCARD

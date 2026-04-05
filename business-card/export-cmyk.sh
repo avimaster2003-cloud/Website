@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR"
+
+if ! command -v gs >/dev/null 2>&1; then
+  echo "Missing dependency: ghostscript (gs)"
+  echo "Install with: brew install ghostscript"
+  exit 1
+fi
+
+echo "[1/2] Building RGB source PDF from HTML..."
+if command -v wkhtmltopdf >/dev/null 2>&1; then
+  wkhtmltopdf \
+    --page-width 85.5mm \
+    --page-height 54mm \
+    --margin-top 0 \
+    --margin-bottom 0 \
+    --margin-left 0 \
+    --margin-right 0 \
+    --enable-local-file-access \
+    index.html business-card-rgb.pdf
+elif [[ -x "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" ]]; then
+  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+    --headless=new \
+    --disable-gpu \
+    --print-to-pdf-no-header \
+    --print-to-pdf="$SCRIPT_DIR/business-card-rgb.pdf" \
+    "file://$SCRIPT_DIR/index.html"
+else
+  echo "Missing HTML-to-PDF tool. Install one of:"
+  echo "- wkhtmltopdf (if available on your system), or"
+  echo "- Google Chrome app"
+  exit 1
+fi
+
+echo "[2/2] Converting PDF to CMYK..."
+gs \
+  -dSAFER \
+  -dBATCH \
+  -dNOPAUSE \
+  -dAutoRotatePages=/None \
+  -dCompatibilityLevel=1.4 \
+  -sDEVICE=pdfwrite \
+  -sColorConversionStrategy=CMYK \
+  -dProcessColorModel=/DeviceCMYK \
+  -dConvertCMYKImagesToRGB=false \
+  -sOutputFile=business-card-cmyk.pdf \
+  business-card-rgb.pdf
+
+echo "Done: business-card-cmyk.pdf is ready to send to print."
